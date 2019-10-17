@@ -1,0 +1,8 @@
+# un commentaire, cette ligne est ignorée
+# pas de fichier .a
+*.a
+# pas de fichier se terminant par un ~
+*~
+# ignorer le dossier .idea
+.idea
+
