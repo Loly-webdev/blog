@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>article</title>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a class="nav-link" href="../index.html">Accueil</a></li>
+            <li><a class="nav-link" href="blog.html">Blog</a></li>
+            <li><a class="nav-link" href="connexion.html">Connexion</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <article>
+        <h2>Titre de l'article</h2>
+        <div>Phrase d'accroche</div>
+        <p>Contenu de l'article</p>
+        <aside>
+            <div>Auteur de l'article</div>
+            <p>Date de modification de l'article :
+                <time datetime="2019-10-17"></time>
+            </p>
+        </aside>
+    </article>
+    <form action="#" id="article_form" method="post">
+        <h3>Commentaires :</h3>
+        <label for="name">Votre nom :</label>
+        <input id="name" name="name" placeholder="Nom" type="text"/>
+        <label for="message">Votre commentaire :</label>
+        <textarea id="message" name="message" placeholder="Message" rows="9"></textarea>
+        <input id="bouton" type="submit" value="Envoyer !"/>
+    </form>
+    <section>liste des commentaires.</section>
+    <section>
+        <h4>Liens de retour :</h4>
+        <a href="blog.html">Retour au blog</a>
+        <a href="../index.html">Retour à l'acceuil</a>
+    </section>
+</main>
+<footer>
+    <p id="credit">
+        <strong aria-hidden="true" class="fa fa-copyright"> Eloïse RUIZ-RODRIGUEZ | 2019</strong><br>
+        Dans le cadre de ma formation avec OpenClassrooms.<br>
+        Ce site n'a donc aucun but commercial, simplement pédagogique.<br>
+    </p>
+</footer>
+</body>
+</html>
