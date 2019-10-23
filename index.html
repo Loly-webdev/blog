@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>accueil</title>
+    <!-- Favicon -->
+    <link href="images/favicon.png" rel="icon" type="image/png"/>
+    <!-- Css files -->
+    <link href="css/style.css" rel="stylesheet"/>
+    <!--Viewport -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
 <body>
 <header>
-    <nav id="navigation">
+    <nav class="flex">
         <img alt="logo du blog" id="logo" src="images/logo.png">
-        <ul class="navbar-nav">
-            <li><a class="nav-link" href="#home">Accueil</a></li>
-            <li><a class="nav-link" href="#cv">Mon CV</a></li>
-            <li><a class="nav-link" href="pages/blog.html">News</a></li>
-            <li><a class="nav-link" href="pages/contact.html">Contact</a></li>
-            <li><a class="nav-link" href="pages/connexion.html">Connexion</a></li>
+        <ul class="flex">
+            <li><a href="#home">Accueil</a></li>
+            <li><a href="#cv">Mon CV</a></li>
+            <li><a href="pages/blog.html">News</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
+            <li><a href="pages/connexion.html">Connexion</a></li>
         </ul>
     </nav>
 </header>
@@ -21,7 +27,7 @@
 <main id="home">
     <!-- Presentation -->
     <section id="about">
-        <img alt="Eloïse RUIZ-RODRIGUEZ" id="profile-picture" src="images/profile.png">
+        <img alt="Eloïse RUIZ-RODRIGUEZ" src="images/profile.png">
         <article>
             <h1>Eloïse RUIZ-RODRIGUEZ</h1>
             <h2>Développeur / Intégrateur Web</h2>
@@ -38,7 +44,7 @@
     <section id="cv">
         <h3>Télécharger mon CV :</h3>
         <div>
-            <a class="button1" href="docs/CV_Eloïse_RUIZ-RODRIGUEZ.pdf" target="_blank">
+            <a href="docs/CV_Eloïse_RUIZ-RODRIGUEZ.pdf" target="_blank">
                 Télécharger mon CV</a>
         </div>
     </section>
