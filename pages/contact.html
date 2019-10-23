@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>connexion</title>
+    <title>contact</title>
 </head>
 <body>
 <header>
@@ -21,11 +21,15 @@
     <section id="contact">
         <h3>Contactez-moi :</h3>
         <form action="#" id="contact_infos" method="post">
-            <label for="login">Nom :</label>
-            <input id="login" name="login" placeholder="Identifiant" type="text"/>
-            <label for="pass">E-mail :</label>
-            <input id="pass" name="pass" placeholder="Mot de passe" type="secret"/>
-            <input id="bouton" type="submit" value="Connexion !"/>
+            <label for="name">Nom :</label>
+            <input id="name" name="name" placeholder="Nom" type="text"/>
+            <label for="email">E-mail :</label>
+            <input id="email" name="email" placeholder="Email" type="email"/>
+            <label for="subject">Sujet :</label>
+            <input id="subject" name="subject" placeholder="Sujet" type="text"/>
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" placeholder="Message" rows="9"></textarea>
+            <input id="bouton" type="submit" value="Envoyer !"/>
         </form>
     </section>
 </main>
