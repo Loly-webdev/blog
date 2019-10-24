@@ -18,7 +18,7 @@
 <body>
 <header>
     <nav class="flex">
-        <img alt="logo du blog Eloïse" id="logo" src="../images/logo_blanc.png">
+        <img alt="logo du blog Eloïse" src="../images/logo_blanc.png">
         <ul class="flex">
             <li><a href="../index.html">Accueil</a></li>
             <li><a href="blog.html">News</a></li>
@@ -39,12 +39,12 @@
             </p>
         </aside>
     </article>
-    <form class="flex" action="#" id="article_form" method="post">
+    <form class="flex" action="#" method="post">
         <h3>Commentaires :</h3>
-        <label class="space" for="name">Votre nom :</label>
-        <input class="space" id="name" name="name" placeholder="Nom" type="text"/>
-        <label class="space" for="message">Votre commentaire :</label>
-        <textarea class="space" id="message" name="message" placeholder="Message" rows="9"></textarea>
+        <label for="name">Votre nom :</label>
+        <input id="name" name="name" placeholder="Nom" type="text"/>
+        <label for="message">Votre commentaire :</label>
+        <textarea id="message" name="message" placeholder="Message" rows="9"></textarea>
         <input class="button" type="submit" value="Envoyer"/>
     </form>
     <section>liste des commentaires.</section>
@@ -57,8 +57,7 @@
 <footer>
     <p>
         <strong> © Eloïse RUIZ-RODRIGUEZ | 2019</strong><br>
-        Dans le cadre de ma formation avec OpenClassrooms.<br>
-        Ce site n'a donc aucun but commercial, simplement pédagogique.
+        Dans le cadre de ma formation avec OpenClassrooms.
     </p>
     <hr>
     <p>
