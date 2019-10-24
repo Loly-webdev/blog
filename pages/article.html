@@ -3,36 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>article</title>
+    <!-- Favicon -->
+    <link href="../images/favicon.png" rel="icon" type="image/png"/>
+    <!-- Css files -->
+    <link href="../css/style.css" rel="stylesheet"/>
+    <!--Viewport -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- Meta description -->
+    <meta content="Mon blog professionnel" name="description">
+    <meta content="Eloïse RUIZ-RODRIGUEZ" name="author">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap|Roboto|Open+Sans" rel="stylesheet">
 </head>
 <body>
 <header>
-    <nav>
-        <ul>
-            <li><a class="nav-link" href="../index.html">Accueil</a></li>
-            <li><a class="nav-link" href="blog.html">Blog</a></li>
-            <li><a class="nav-link" href="connexion.html">Connexion</a></li>
+    <nav class="flex">
+        <img alt="logo du blog Eloïse" id="logo" src="../images/logo_blanc.png">
+        <ul class="flex">
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="blog.html">News</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="connexion.html">Connexion</a></li>
         </ul>
     </nav>
 </header>
 <main>
     <article>
         <h2>Titre de l'article</h2>
-        <div>Phrase d'accroche</div>
+        <p>Phrase d'accroche</p>
         <p>Contenu de l'article</p>
         <aside>
             <div>Auteur de l'article</div>
             <p>Date de modification de l'article :
-                <time datetime="2019-10-17"></time>
+                <time>17/10/2019</time>
             </p>
         </aside>
     </article>
-    <form action="#" id="article_form" method="post">
+    <form class="flex" action="#" id="article_form" method="post">
         <h3>Commentaires :</h3>
-        <label for="name">Votre nom :</label>
-        <input id="name" name="name" placeholder="Nom" type="text"/>
-        <label for="message">Votre commentaire :</label>
-        <textarea id="message" name="message" placeholder="Message" rows="9"></textarea>
-        <input id="bouton" type="submit" value="Envoyer !"/>
+        <label class="space" for="name">Votre nom :</label>
+        <input class="space" id="name" name="name" placeholder="Nom" type="text"/>
+        <label class="space" for="message">Votre commentaire :</label>
+        <textarea class="space" id="message" name="message" placeholder="Message" rows="9"></textarea>
+        <input class="button" type="submit" value="Envoyer"/>
     </form>
     <section>liste des commentaires.</section>
     <section>
@@ -42,10 +55,14 @@
     </section>
 </main>
 <footer>
-    <p id="credit">
-        <strong aria-hidden="true" class="fa fa-copyright"> Eloïse RUIZ-RODRIGUEZ | 2019</strong><br>
+    <p>
+        <strong> © Eloïse RUIZ-RODRIGUEZ | 2019</strong><br>
         Dans le cadre de ma formation avec OpenClassrooms.<br>
-        Ce site n'a donc aucun but commercial, simplement pédagogique.<br>
+        Ce site n'a donc aucun but commercial, simplement pédagogique.
+    </p>
+    <hr>
+    <p>
+        <a href="connexion.html">Connexion</a>
     </p>
 </footer>
 </body>
