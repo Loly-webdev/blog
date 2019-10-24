@@ -77,7 +77,7 @@ nav {
     margin-top: -1rem;
 }
 
-#logo {
+nav img {
     width: 100px;
     height: auto;
 }
@@ -164,6 +164,25 @@ footer a:hover {
     -webkit-filter: saturate(6);
 }
 
+/* FORM */
+form {
+    flex-direction: column;
+}
+
+input,
+label,
+textarea {
+    margin: 0.5rem 9rem 0.3rem 9rem;
+}
+
+.button {
+    padding: 0.3rem;
+    border-radius: 25px;
+    width: 14%;
+    margin: 10px auto;
+    font-size: 0.9rem;
+}
+
 /* CREDIT */
 footer {
     position: fixed;
@@ -182,19 +201,3 @@ footer a {
     font-weight: bold;
 }
 
-/* FORM */
-form {
-    flex-direction: column;
-}
-
-.space {
-    margin: 0.2rem 9rem;
-}
-
-.button {
-    padding: 0.3rem;
-    border-radius: 25px;
-    width: 14%;
-    margin: 10px auto;
-    font-size: 0.9rem;
-}
