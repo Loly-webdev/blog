@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>contact</title>
+    <?php include("../includes/_head.php"); ?>
+</head>
+<body>
+<header>
+    <?php include("../includes/_nav.php"); ?>
+</header>
+<main>
+    <!-- Contact form -->
+    <section id="contact">
+        <h3>Contactez-moi :</h3>
+        <form class="flex" action="#" method="post">
+            <label for="name">Nom :</label>
+            <input id="name" name="name" placeholder="Nom" type="text"/>
+            <label for="email">E-mail :</label>
+            <input id="email" name="email" placeholder="Email" type="email"/>
+            <label for="subject">Sujet :</label>
+            <input id="subject" name="subject" placeholder="Sujet" type="text"/>
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" placeholder="Message" rows="9"></textarea>
+            <input class="button" type="submit" value="Envoyer !"/>
+        </form>
+    </section>
+</main>
+<!-- Footer -->
+<footer>
+    <?php include("../includes/_footer.php"); ?>
+</footer>
+</body>
+</html>

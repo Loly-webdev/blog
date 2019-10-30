@@ -1,32 +1,14 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
     <title>accueil</title>
-    <!-- Favicon -->
-    <link href="images/favicon.png" rel="icon" type="image/png"/>
-    <!-- Css files -->
-    <link href="css/style.css" rel="stylesheet"/>
-    <!--Viewport -->
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <!-- Meta description -->
-    <meta content="Mon blog professionnel" name="description">
-    <meta content="Eloïse RUIZ-RODRIGUEZ" name="author">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap|Roboto|Open+Sans" rel="stylesheet">
+    <?php include("includes/_head.php"); ?>
 </head>
 <body>
 <header>
-    <nav class="flex">
-        <img alt="logo du blog Eloïse" src="images/logo_blanc.png">
-        <ul class="flex">
-            <li><a href="#home">Accueil</a></li>
-            <li><a href="#cv">Mon CV</a></li>
-            <li><a href="pages/blog.html">News</a></li>
-            <li><a href="pages/contact.html">Contact</a></li>
-            <li><a href="pages/connexion.html">Connexion</a></li>
-        </ul>
-    </nav>
+    <?php include("includes/_nav.php"); ?>
 </header>
 <!-- Contenu du corps de la page-->
 <main id="home">
@@ -66,14 +48,7 @@
 </main>
 <!-- Footer -->
 <footer>
-    <p>
-        <strong> © Eloïse RUIZ-RODRIGUEZ | 2019</strong><br>
-        Dans le cadre de ma formation avec OpenClassrooms.
-    </p>
-    <hr>
-    <p>
-        <a href="pages/connexion.html">Connexion</a>
-    </p>
+    <?php include("includes/_footer.php"); ?>
 </footer>
 </body>
 </html>
