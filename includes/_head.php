@@ -1,5 +1,3 @@
-<?php
-?>
 <meta charset="UTF-8">
 <!-- Favicon -->
 <link href="../images/favicon.png" rel="icon" type="image/png"/>
