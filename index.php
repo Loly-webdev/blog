@@ -12,26 +12,15 @@
 <main id="home">
     <?php
     // Place the value from ?page=value in the URL to the variable $page.
-    $page = $_GET['page'];
+    $server = $_SERVER["REQUEST_URI"];
+    $serverData = trim(parse_url($server, PHP_URL_PATH),"/");
+    $params = explode('/', $serverData);
+    $page = reset($params);
 
-    // Create an array of the only pages allowed.
-    $pageArray = array(
-        'home',
-        'blog',
-        'contact',
-        'connexion',
-        'comment',
-        'post'
-    );
-
-    // Is $page in the array?
-    $inArray = in_array($page, $pageArray);
-
-    // If so, include it, if not, emit error.
-    if ($inArray == true) {
+    if ('' != $page) {
         require('pages/'. $page .'.php');
     } else {
-        require('pages/home.php');
+        echo "error !";
     }
     ?>
 </main>
