@@ -7,3 +7,4 @@
     <textarea id="message" name="message" placeholder="Message" rows="9"></textarea>
     <input class="button" type="submit" value="Envoyer"/>
 </form>
+
