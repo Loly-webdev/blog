@@ -201,3 +201,14 @@ footer a {
     font-weight: bold;
 }
 
+/*blog*/
+.news p
+{
+    background-color:#CCCCCC;
+    margin-top:0px;
+}
+.news
+{
+    width:70%;
+    margin:auto;
+}
