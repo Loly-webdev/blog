@@ -42,4 +42,3 @@ while ($donnees = $req->fetch()) {
 $req->closeCursor();
 ?>
 <?php include("comment.php"); ?>
-
