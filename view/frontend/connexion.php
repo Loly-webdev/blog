@@ -1,3 +1,6 @@
+<?php $title = 'Mon blog'; ?>
+
+<?php ob_start(); ?>
 <!-- Contact form -->
 <section id="contact">
     <h3>Contactez-moi :</h3>
@@ -9,4 +12,8 @@
         <input class="button" type="submit" value="Connexion"/>
     </form>
 </section>
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require('template.php'); ?>
 

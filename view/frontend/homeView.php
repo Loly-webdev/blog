@@ -1,6 +1,9 @@
-<!-- Presentation -->
+<?php $title = 'Bienvenu !'; ?>
+
+<?php ob_start(); ?>
+
 <section id="about">
-    <img alt="Eloïse RUIZ-RODRIGUEZ" src="../images/profile.png">
+    <img alt="Eloïse RUIZ-RODRIGUEZ" src="../../public/images/profile.png">
     <article>
         <h1>Eloïse RUIZ-RODRIGUEZ</h1>
         <h2>Développeur / Intégrateur Web</h2>
@@ -17,7 +20,7 @@
 <section id="cv">
     <h3>Télécharger mon CV :</h3>
     <div>
-        <a href="../docs/CV_Eloïse_RUIZ-RODRIGUEZ.pdf" target="_blank">
+        <a href="../../public/docs/CV_Eloïse_RUIZ-RODRIGUEZ.pdf" target="_blank">
             Télécharger mon CV</a>
     </div>
 </section>
@@ -26,8 +29,12 @@
     <h3>Suivez-moi :</h3>
     <div>
         <a href="https://www.linkedin.com/in/eloïse-ruiz-rodriguez" target="_blank">
-            <img alt="icone linkedin" src="../images/ico_in.png"></a>
+            <img alt="icone linkedin" src="../../public/images/ico_in.png"></a>
         <a href="https://github.com/Loly-webdev" target="_blank">
-            <img alt="icone github" src="../images/ico_git.png"></a>
+            <img alt="icone github" src="../../public/images/ico_git.png"></a>
     </div>
 </section>
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require('template.php'); ?>
