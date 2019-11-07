@@ -1,8 +1,8 @@
 <meta charset="UTF-8">
 <!-- Favicon -->
-<link href="../images/favicon.png" rel="icon" type="image/png"/>
+<link href="../public/images/favicon.png" rel="icon" type="image/png"/>
 <!-- Css files -->
-<link href="../css/style.css" rel="stylesheet"/>
+<link href="../public/css/style.css" rel="stylesheet"/>
 <!--Viewport -->
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <!-- Meta description -->

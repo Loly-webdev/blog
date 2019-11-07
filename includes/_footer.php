@@ -4,5 +4,5 @@
 </p>
 <hr>
 <p>
-    <a href="../pages/connexion.php">Connexion</a>
+    <a href="../view/frontend/connexion.php">Connexion</a>
 </p>
