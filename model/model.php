@@ -26,19 +26,6 @@ function getComments($postId)
     return $comments;
 }
 
-function dbConnect()
-{
-    try
-    {
-        $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', '', '');
-        return $db;
-    }
-    catch(Exception $e)
-    {
-        die('Erreur : '.$e->getMessage());
-    }
-}
-
 function postComment($postId, $author, $comment)
 {
     $db = dbConnect();
@@ -46,4 +33,10 @@ function postComment($postId, $author, $comment)
     $affectedLines = $comments->execute(array($postId, $author, $comment));
 
     return $affectedLines;
+}
+
+function dbConnect()
+{
+    $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', '', '');
+    return $db;
 }

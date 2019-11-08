@@ -10,7 +10,7 @@
     <?php require("includes/_nav.php"); ?>
 </header>
 <!-- Contenu du corps de la page-->
-<main id="home">
+<main>
     <?= $content ?>
 </main>
 <!-- Footer -->
