@@ -1,19 +1,18 @@
 <?php
-require('PostController.php');
 
-if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'listPosts') {
-        listPosts();
-    }
-    elseif ($_GET['action'] == 'post') {
-        if (isset($_GET['id']) && $_GET['id'] > 0) {
-            post();
-        }
-        else {
-            echo 'Erreur : aucun identifiant de billet envoyé';
-        }
-    }
+require('../model/model.php');
+
+function listPosts()
+{
+    $posts = getPosts();
+
+    require('../view/frontend/listPostsView.php');
 }
-else {
-    listPosts();
+
+function post()
+{
+    $post = getPost($_GET['id']);
+    $comments = getComments($_GET['id']);
+
+    require('../view/frontend/postView.php');
 }
