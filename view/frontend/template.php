@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title><?= $title ?></title>
     <?php require("includes/_head.php"); ?>
+    <title><?= $title ?></title>
 </head>
 
 <body>
