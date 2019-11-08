@@ -1,4 +1,4 @@
-<?php $title = 'Bienvenu !'; ?>
+<?php $title = 'Home'; ?>
 
 <?php ob_start(); ?>
 

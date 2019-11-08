@@ -3,7 +3,6 @@
 <?php ob_start(); ?>
 <h2>Derniers billets du blog :</h2>
 
-
 <?php
 while ($data = $posts->fetch())
 {
@@ -24,7 +23,6 @@ while ($data = $posts->fetch())
 }
 $posts->closeCursor();
 ?>
-
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>

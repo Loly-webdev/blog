@@ -1,4 +1,4 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Connexion'; ?>
 
 <?php ob_start(); ?>
 <!-- Contact form -->
