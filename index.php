@@ -1,43 +1,33 @@
 <?php
 
-require('core/DefaultController.php');
+//tester et a supprimer avant de mettre en prod
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 1);
+
+define('PROJECT_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
+var_dump(PROJECT_ROOT);
 
 // Place the value from ?page=value in the URL to the variable $page.
 $server = $_SERVER["REQUEST_URI"];
 $serverData = trim(parse_url($server, PHP_URL_PATH), "/");
 $params = explode('/', $serverData);
-$page = reset($params);
-if ('' != $page) {
-    require('view/frontend/' . $page . '.php');
-} elseif ($page = 'listPostsView') {
-    require('controller/BlogController.php');
-    try {
-        if (isset($_GET['action'])) {
-            if ($_GET['action'] == 'listPosts') {
-                listPosts();
-            } elseif ($_GET['action'] == 'post') {
-                if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    post();
-                } else {
-                    throw new Exception('Aucun identifiant de billet envoyé');
-                }
-            } elseif ($_GET['action'] == 'addComment') {
-                if (isset($_GET['id']) && $_GET['id'] > 0) {
-                    if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-                        addComment($_GET['id'], $_POST['author'], $_POST['comment']);
-                    } else {
-                        throw new Exception('Tous les champs ne sont pas remplis !');
-                    }
-                } else {
-                    throw new Exception('Aucun identifiant de billet envoyé');
-                }
-            }
-        } else {
-            require('view/frontend/homeView.php');
-        }
-    } catch (Exception $e) {
-        echo 'Erreur : ' . $e->getMessage();
-    }
+$paramController = $params[0] ?? 'home';
+$paramAction = $params[1] ?? 'index';
+
+//inclure le controller $paramController
+require('controller/'. ucfirst($paramController) . 'Controller.php');
+$controllerName = $paramController .'Controller';
+$controller = new $controllerName;
+//faire un filexist de pour tester si le fichier controller existe bien pour eviter les erreurs
+
+
+
+//executer la méthode $paramAction du contrôleur $controller
+if ($controller instanceof DefaultControllerInterface) {
+    call_user_func([$controller, $paramAction . 'Action']);
 }
 
+var_dump($controllerName, $controller);
 
+
+//nettoyer toutes les routes + faire les trow exception des erreurs

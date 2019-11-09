@@ -1,7 +1,5 @@
 <?php $title = 'Home'; ?>
 
-<?php ob_start(); ?>
-
 <section id="about">
     <img alt="Eloïse RUIZ-RODRIGUEZ" src="../../public/images/profile.png">
     <article>
@@ -34,7 +32,3 @@
             <img alt="icone github" src="../../public/images/ico_git.png"></a>
     </div>
 </section>
-
-<?php $content = ob_get_clean(); ?>
-
-<?php require('template.php'); ?>
