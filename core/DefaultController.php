@@ -1,37 +1,17 @@
 <?php
 
-abstract class DefaultController
+require(PROJECT_ROOT . 'core/DefaultControllerInterface.php');
+
+abstract class DefaultController implements DefaultControllerInterface
 {
-    abstract function index();
-}
-
-$server = $_SERVER["REQUEST_URI"];
-$serverData = trim(parse_url($uri, PHP_URL_PATH),"/");
-$params = explode('/', $uri);
-$controllerName = $params[0] ?? 'home';
-$methodeName = $params[1] ?? 'index';
-
-$controllerName = null;
-if (isset($params[0])) {
-    $controllerName = $params[0];
-}
-
-class HomeController {
-    public function index()
+    public function renderView($partial, $template = '/view/frontend/template')
     {
+        ob_start();
+        include($partial); // -> /view/front/mavue...
+        $content = ob_get_clean();
 
+        include(PROJECT_ROOT . $template);
     }
 }
 
-class PostsController {
-    public function shaw()
-    {
-        $articleId = $_GET['id'];
-    }
-
-    public function index()
-    {
-
-    }
-}
-
+//faire une methode renderview

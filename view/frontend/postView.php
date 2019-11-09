@@ -1,6 +1,5 @@
 <?php $title = htmlspecialchars($post['title']); ?>
 
-<?php ob_start(); ?>
 <h1>Mon super blog !</h1>
 <p><a href="listPostsView.php">Retour à la liste des billets</a></p>
 
@@ -42,7 +41,3 @@ while ($comment = $comments->fetch())
     </div>
 </form>
 
-<?php
-$content = ob_get_clean();
-
-require('template.php');
