@@ -1,5 +1,10 @@
 <?php $title = htmlspecialchars($post['title']); ?>
 
+<?php
+$post = getPost($_GET['id']);
+$comments = getComments($_GET['id']);
+?>
+
 <h1>Mon super blog !</h1>
 <p><a href="listPostsView.php">Retour à la liste des billets</a></p>
 

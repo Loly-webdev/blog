@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <?php require("includes/_head.php"); ?>
+    <?php require(PROJECT_ROOT . "includes/_head.php"); ?>
     <title><?= $title ?></title>
 </head>
 
 <body>
 <header>
-    <?php require("includes/_nav.php"); ?>
+    <?php require(PROJECT_ROOT . "includes/_nav.php"); ?>
 </header>
 <!-- Contenu du corps de la page-->
 <main>
@@ -15,7 +15,7 @@
 </main>
 <!-- Footer -->
 <footer>
-    <?php require("includes/_footer.php"); ?>
+    <?php require(PROJECT_ROOT . "includes/_footer.php"); ?>
 </footer>
 </body>
 </html>

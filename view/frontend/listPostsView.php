@@ -3,6 +3,9 @@
 <h2>Derniers billets du blog :</h2>
 
 <?php
+
+$posts = getPosts();
+
 while ($data = $posts->fetch())
 {
     ?>
