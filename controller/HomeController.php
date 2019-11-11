@@ -6,13 +6,15 @@ class HomeController extends DefaultController
 {
     public function indexAction()
     {
-        echo 'HomeController';
+        $this->renderView(
+            PROJECT_ROOT . 'view/frontend/homeView.php'
+        );
     }
 
     public function home()
     {
         $this->renderView(
-            '/view/frontend/postView.php'
+            PROJECT_ROOT . 'view/frontend/homeView.php'
         );
     }
 }
