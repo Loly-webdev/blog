@@ -3,15 +3,15 @@
 <head>
     <?php require(PROJECT_ROOT . "includes/_head.php"); ?>
     <title><?= $title ?></title>
-</head>
 
-<body>
-<header>
-    <?php require(PROJECT_ROOT . "includes/_nav.php"); ?>
-</header>
-<!-- Contenu du corps de la page-->
-<main>
-    <?= $content ?>
+    <?= $content ?></head>
+
+    <body>
+    <header>
+        <?php require(PROJECT_ROOT . "includes/_nav.php"); ?>
+    </header>
+    <!-- Contenu du corps de la page-->
+    <main>
 </main>
 <!-- Footer -->
 <footer>
