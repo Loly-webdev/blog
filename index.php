@@ -31,5 +31,6 @@ try {
     call_user_func([$controller, $paramAction . 'Action']);
 
 } catch (Exception $e) {
-    echo 'Caught exception: ', $e->getMessage(), "\n";
+    $errorMessage = $e->getMessage();
+    require(PROJECT_ROOT . 'view/frontend/errorView.php');
 }
