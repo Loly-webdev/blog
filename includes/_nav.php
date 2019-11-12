@@ -1,5 +1,5 @@
 <nav class="flex">
-    <a href="/home"><img alt="logo du blog Eloïse" src="../public/images/logo_blanc.png" href="../index.php?page=home"></a>
+    <a href="/home"><img alt="logo du blog Eloïse" src="../public/images/logo_blanc.png" href="/home"></a>
     <ul class="flex">
         <li><a href="/home">Accueil</a></li>
         <li><a href="/blog">Blog</a></li>
