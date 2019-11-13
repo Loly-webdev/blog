@@ -1,6 +1,6 @@
 <?php
 
-require(PROJECT_ROOT . 'core/DefaultController.php');
+require (PROJECT_ROOT . 'core/DefaultController.php');
 
 class ConnexionController extends DefaultController
 {
