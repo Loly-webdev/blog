@@ -3,12 +3,9 @@
 <h2>Derniers billets du blog :</h2>
 
 <?php
-
-$posts = getPosts();
-
 while ($data = $posts->fetch())
 {
-    ?>
+?>
     <div class="news">
         <h3>
             <?= htmlspecialchars($data['title']) ?>
@@ -21,7 +18,8 @@ while ($data = $posts->fetch())
             <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Commentaires</a></em>
         </p>
     </div>
-    <?php
+<?php
 }
 $posts->closeCursor();
+
 

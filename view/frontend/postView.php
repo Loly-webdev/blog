@@ -1,12 +1,7 @@
 <?php $title = htmlspecialchars($post['title']); ?>
 
-<?php
-$post = getPost($_GET['id']);
-$comments = getComments($_GET['id']);
-?>
-
 <h1>Mon super blog !</h1>
-<p><a href="listPostsView.php">Retour à la liste des billets</a></p>
+<p><a href="/listPostsView.php">Retour à la liste des billets</a></p>
 
 <div class="news">
     <h3>
@@ -20,6 +15,20 @@ $comments = getComments($_GET['id']);
 </div>
 
 <h2>Commentaires</h2>
+
+<form action="blog?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
+    <div>
+        <label for="author">Auteur</label><br />
+        <input type="text" id="author" name="author" />
+    </div>
+    <div>
+        <label for="comment">Commentaire</label><br />
+        <textarea id="comment" name="comment"></textarea>
+    </div>
+    <div>
+        <input type="submit" />
+    </div>
+</form>
 
 <?php
 while ($comment = $comments->fetch())
