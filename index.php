@@ -8,14 +8,17 @@ try {
     // Defined PROJECT_ROOT
     define('PROJECT_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
-    require PROJECT_ROOT . 'core/Request.php';
-    require PROJECT_ROOT . 'core/Router.php';
+    require_once PROJECT_ROOT . 'Core/Request.php';
+    require_once PROJECT_ROOT . 'Core/Router.php';
+    require_once PROJECT_ROOT . 'Core/Dispatcher.php';
 
     $request = new Request();
-    //$router = new Router($request);
-
-    echo "Bonjour!";
+    $router = new Router($request);
+    $dispatcher = new Dispatcher($router);
+    $dispatcher->dispatch();
 
 } catch (Exception $e) {
-    echo 'Détail de l\' exception: ', $e->getMessage(), "\n";
+    $errorMessage = $e->getMessage();
+    echo 'Caught exception: ', $errorMessage, "\n";
+    require PROJECT_ROOT . 'View/Front/errorView.php';
 }

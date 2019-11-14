@@ -1,6 +1,6 @@
 <?php
 
-require (PROJECT_ROOT . 'model/Manager.php');
+require PROJECT_ROOT . 'Repository/Manager.php';
 
 class CommentManager extends Manager
 {

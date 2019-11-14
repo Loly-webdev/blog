@@ -1,8 +1,8 @@
 <?php
 
-require (PROJECT_ROOT . 'core/DefaultController.php');
-require (PROJECT_ROOT . 'model/CommentManager.php');
-require (PROJECT_ROOT . 'model/PostManager.php');
+require PROJECT_ROOT . 'Core/DefaultController.php';
+require PROJECT_ROOT . 'Repository/CommentManager.php';
+require PROJECT_ROOT . 'Repository/PostManager.php';
 
 class BlogController extends DefaultController
 {
@@ -12,7 +12,7 @@ class BlogController extends DefaultController
         $posts = $postManager->getPosts();
 
         $this->renderView(
-            PROJECT_ROOT . 'view/frontend/listPostsView.php'
+            PROJECT_ROOT . 'View/Front/listPostsView.php'
         );
     }
 
@@ -25,7 +25,7 @@ class BlogController extends DefaultController
         $comments = $commentManager->getComments($_GET['id']);
 
         $this->renderView(
-            PROJECT_ROOT . 'view/frontend/postView.php'
+            PROJECT_ROOT . 'View/Front/postView.php'
         );
     }
 
