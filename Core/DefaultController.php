@@ -1,10 +1,10 @@
 <?php
 
-require_once PROJECT_ROOT . 'core/DefaultControllerInterface.php';
+require_once PROJECT_ROOT . 'Core/DefaultControllerInterface.php';
 
 abstract class DefaultController implements DefaultControllerInterface
 {
-    public function renderView($partial, $template = PROJECT_ROOT . 'view/frontend/template.php')
+    public function renderView($partial, $template = PROJECT_ROOT . 'View/Front/template.php')
     {
         ob_start();
         include($partial);
