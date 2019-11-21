@@ -1,18 +1,20 @@
 <?php
 
-require_once PROJECT_ROOT . 'Core/DefaultController.php';
+require_once PROJECT_CORE . 'DefaultController.php';
 
 class Request
 {
-    /**
-     * Construct analyse the URL path and decomposed it to get Url components.
-     * The first element [0] of the URL is the controller name
-     * The second element [1] is the action name
-     */
+    private $URLComponents;
+    private $URLComponentsByKey;
+
     public function __construct()
     {
-        $this->controllerName = !empty($this->getURLComponents()[0]) ? ucfirst($this->getURLComponents()[0].'Controller') : null;
-        $this->actionName = $this->getURLComponents()[1] ?? null;
+        $URLComponents = !empty($this->getURLComponents()[0]) ? $this->getURLComponents()[0]: null;
+        $URLComponentsByKey = $this->getURLComponents()[1] ?? null;
+
+        $this->setURLComponents($URLComponents)
+             ->setURLComponentsByKey($URLComponentsByKey);
+
     }
 
     public function getURLComponents()
@@ -22,11 +24,27 @@ class Request
         $serverData = trim(parse_url($server, PHP_URL_PATH), "/");
         $params = explode('/', $serverData);
 
-        var_dump($params);
+        return $params;
     }
 
-    //+3 méthodes
-//getParam
-//getGetParam
-//getPostParam
+    public function setURLComponents($URLComponents)
+    {
+        $this->URLComponents = $URLComponents;
+
+        return $this;
+    }
+
+    public function getURLComponentByKey($key, $defaultValue = null)
+    {
+        $params = $this->getURLComponents();
+
+        return $params[$key] ?? $defaultValue;
+    }
+
+    public function setURLComponentsByKey($URLComponentsByKey)
+    {
+        $this->URLComponentsByKey = $URLComponentsByKey;
+
+        return $this;
+    }
 }

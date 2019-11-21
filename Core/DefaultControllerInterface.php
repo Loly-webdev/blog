@@ -3,5 +3,5 @@
 interface DefaultControllerInterface
 {
     public function indexAction();
-    public function renderView($partial, $template);
+    public function renderView($partial, array $params);
 }

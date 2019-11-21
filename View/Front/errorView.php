@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <?php require PROJECT_ROOT . "View/Partial/_head.php"; ?>
+    <?php require PROJECT_VIEW . "Partial/_head.php"; ?>
     <?php $title = 'Error'; ?>
 </head>
 <body>
@@ -13,7 +13,7 @@
                 <br>
             </p>
         </strong>
-        <img alt="Page d'erreur" src="Public/images/error_code.jpg">
+        <img alt="Page d'erreur" src="../../Public/images/error_code.jpg">
         <p>
             <br>
             <strong>

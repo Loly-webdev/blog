@@ -1,10 +1,10 @@
 <?php
 
-require PROJECT_ROOT . 'Core/DefaultController.php';
-require PROJECT_ROOT . 'Repository/CommentManager.php';
-require PROJECT_ROOT . 'Repository/PostManager.php';
+require_once PROJECT_CORE . 'DefaultController.php';
+require_once PROJECT_REPOSITORY. 'CommentManager.php';
+require_once PROJECT_REPOSITORY . 'PostManager.php';
 
-class BlogController extends DefaultController
+class PostController extends DefaultController
 {
     public function indexAction()
     {
@@ -12,7 +12,10 @@ class BlogController extends DefaultController
         $posts = $postManager->getPosts();
 
         $this->renderView(
-            PROJECT_ROOT . 'View/Front/listPostsView.php'
+            PROJECT_VIEW . 'Front/listPostsView.php',
+            [
+                'posts' => $posts
+            ]
         );
     }
 
@@ -25,7 +28,7 @@ class BlogController extends DefaultController
         $comments = $commentManager->getComments($_GET['id']);
 
         $this->renderView(
-            PROJECT_ROOT . 'View/Front/postView.php'
+            PROJECT_VIEW . 'Front/postView.php'
         );
     }
 
@@ -38,7 +41,7 @@ class BlogController extends DefaultController
             throw new \Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
-            header('Location: blog?action=post&id=' . $postId);
+            header('Location: /post/id=' . $postId);
         }
     }
 }

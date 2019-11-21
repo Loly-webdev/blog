@@ -3,23 +3,23 @@
 <h2>Derniers billets du blog :</h2>
 
 <?php
-while ($data = $posts->fetch())
+foreach ($posts as $post)
 {
 ?>
     <div class="news">
         <h3>
-            <?= htmlspecialchars($data['title']) ?>
-            <em>le <?= $data['creation_date_fr'] ?></em>
+            <?= htmlspecialchars($post['title']) ?>
+            <em>le <?= $post['creation_date_fr'] ?></em>
         </h3>
 
         <p>
-            <?= nl2br(htmlspecialchars($data['content'])) ?>
+            <?= nl2br(htmlspecialchars($post['content'])) ?>
             <br />
-            <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Commentaires</a></em>
+            <em><a href="/post/id=<?= $post['id'] ?>">Commentaires</a></em>
         </p>
     </div>
 <?php
 }
-$posts->closeCursor();
+
 
 
