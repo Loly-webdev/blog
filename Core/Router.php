@@ -30,7 +30,7 @@ class Router
 
     public function getActionName(): string
     {
-        return $this->controllerName;
+        return $this->actionName;
     }
 
     public function setActionName(string $actionName)
