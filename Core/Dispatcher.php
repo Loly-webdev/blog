@@ -76,18 +76,20 @@ class Dispatcher
     public function callControllerAction()
     {
         $router = $this->getRouter();
+        $controller = $this->getController();
+        $actionName = $router->getActionName();
+
         // Execute the method $paramAction of controller
-        if (false === $router->getControllerName() instanceof DefaultControllerInterface) {
+        if (false === $controller instanceof DefaultControllerInterface) {
             throw new Exception(
                 'Le controller n\'est pas compatible avec DefaultControllerInterface'
             );
         }
-
+        
+        var_dump($controller, $actionName);
         //call controller's method
         call_user_func(array($controller, $actionName));
 
         return $this;
     }
-
-
 }

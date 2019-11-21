@@ -14,7 +14,5 @@ abstract class DefaultController implements DefaultControllerInterface
         $content = ob_get_clean();
 
         include($template);
-
-
     }
 }
