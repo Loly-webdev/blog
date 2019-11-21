@@ -19,16 +19,18 @@ class PostController extends DefaultController
         );
     }
 
-    function post()
+    function post($postManager)
     {
-        $postManager = new PostManager();
-        $commentManager = new CommentManager();
-
         $post = $postManager->getPost($_GET['id']);
+        $commentManager = new CommentManager();
         $comments = $commentManager->getComments($_GET['id']);
 
         $this->renderView(
-            PROJECT_VIEW . 'Front/postView.php'
+            PROJECT_VIEW . 'Front/postView.php',
+            [
+                'post' => $post,
+                'comments'=> $comments
+            ]
         );
     }
 

@@ -19,7 +19,6 @@ class PostManager extends Manager
 
         $req->execute();
 
-        /* Récupération de toutes les lignes d'un jeu de résultats */
         return $req->fetchAll();
     }
 
