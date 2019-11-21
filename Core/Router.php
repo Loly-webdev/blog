@@ -1,23 +1,42 @@
 <?php
 
-require_once PROJECT_ROOT . 'Core/DefaultController.php';
+require_once PROJECT_CORE . 'DefaultController.php';
 
 class Router
 {
-    public $controllerName;
-    public $actionName;
+    private $controllerName;
+    private $actionName;
 
     public function __construct(Request $request)
     {
-        $params = $request->getURLComponents();
+        $controllerName = $request->getURLComponentByKey(0, 'home');
+        $actionName = $request->getURLComponentByKey(1, 'index');
 
-        $this->controllerName = $params[0] ?
-            ucfirst($this->getURLComponents()[0] . 'Controller') :
-            'HomeController';
-        $this->actionName = $params[1] ?? 'index';
+        $this->setControllerName($controllerName)
+             ->setActionName($actionName);
     }
 
-    private function getURLComponents()
+    public function getControllerName(): string
     {
+        return $this->controllerName;
+    }
+
+    public function setControllerName(string $controllerName)
+    {
+        $this->controllerName = ucfirst($controllerName) . 'Controller';
+
+        return $this;
+    }
+
+    public function getActionName(): string
+    {
+        return $this->controllerName;
+    }
+
+    public function setActionName(string $actionName)
+    {
+        $this->actionName = $actionName . 'Action';
+
+        return $this;
     }
 }

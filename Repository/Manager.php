@@ -4,21 +4,17 @@ class Manager
 {
     protected function dbConnect()
     {
-        ob_start();
-        session_start();
+        $driverOptions = [
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ];
 
-        //database credentials
-        define('DBHOST', 'localhost');
-        define('DBUSER', '');
-        define('DBPASS', '');
-        define('DBNAME', 'blog');
-
-        $db = new PDO("mysql:host=" . DBHOST . ";dbname=" . DBNAME . ";charset=utf8", DBUSER, DBPASS);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        //set timezone
-        date_default_timezone_set('Europe/London');
-
-        return $db;
+        return new PDO(
+            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
+            DB_USER,
+            DB_PASS,
+            $driverOptions
+        );
     }
 }
