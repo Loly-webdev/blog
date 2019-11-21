@@ -10,11 +10,4 @@ class HomeController extends DefaultController
             PROJECT_VIEW . 'Front/homeView.php'
         );
     }
-
-    public function home()
-    {
-        $this->renderView(
-            PROJECT_VIEW. 'Front/homeView.php'
-        );
-    }
 }

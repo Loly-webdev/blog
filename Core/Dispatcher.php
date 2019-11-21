@@ -12,7 +12,6 @@ class Dispatcher
     {
         //new controler
         $controller = $router->getControllerName();
-
         $this->setRouter($router)
              ->existController()
              ->setController($controller)
@@ -48,12 +47,12 @@ class Dispatcher
         return $this;
     }
 
-    public function getController()
+    public function getController(): string
     {
         return $this->controller;
     }
 
-    public function setController( $controller)
+    public function setController(string $controller)
     {
         $this->controller = $controller;
 
@@ -78,15 +77,14 @@ class Dispatcher
         $router = $this->getRouter();
         $controller = $this->getController();
         $actionName = $router->getActionName();
-
+        var_dump($controller, $actionName);
         // Execute the method $paramAction of controller
         if (false === $controller instanceof DefaultControllerInterface) {
             throw new Exception(
                 'Le controller n\'est pas compatible avec DefaultControllerInterface'
             );
         }
-        
-        var_dump($controller, $actionName);
+
         //call controller's method
         call_user_func(array($controller, $actionName));
 

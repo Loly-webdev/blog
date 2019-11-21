@@ -27,7 +27,7 @@ try {
     $request = new Request();
     $router = new Router($request);
     $dispatcher = new Dispatcher($router);
-    var_dump($request, $router, $dispatcher);
+    //var_dump($request, $router, $dispatcher);
     $dispatcher->callControllerAction();
 
 } catch (Exception $e) {
