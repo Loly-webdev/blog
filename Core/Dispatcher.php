@@ -1,6 +1,6 @@
 <?php
 
-require_once PROJECT_CORE. 'DefaultController.php';
+require_once PROJECT_CORE . 'DefaultController.php';
 require_once PROJECT_CORE . 'Router.php';
 
 class Dispatcher
@@ -8,15 +8,17 @@ class Dispatcher
     private $router;
     private $controller;
 
-    public function __construct(Router $router)
+    public function __construct()
     {
-        //new controler
+        $router = new Router();
+
         $controller = $router->getControllerName();
+        $controller = new $controller;
+
         $this->setRouter($router)
              ->existController()
-             ->setController($controller)
-             ->existAction()
-             ->callControllerAction();
+             ->setController()
+             ->existAction();
     }
 
     public function getRouter(): Router
@@ -47,12 +49,12 @@ class Dispatcher
         return $this;
     }
 
-    public function getController(): string
+    public function getController()
     {
         return $this->controller;
     }
 
-    public function setController(string $controller)
+    public function setController($controller)
     {
         $this->controller = $controller;
 
@@ -72,16 +74,16 @@ class Dispatcher
         return $this;
     }
 
-    public function callControllerAction()
+    public function dispatch()
     {
         $router = $this->getRouter();
         $controller = $this->getController();
         $actionName = $router->getActionName();
-        var_dump($controller, $actionName);
+        $controllerCompatible = is_subclass_of($controller, 'DefaultControllerInterface');
         // Execute the method $paramAction of controller
-        if (false === $controller instanceof DefaultControllerInterface) {
+        if (false === $controllerCompatible) {
             throw new Exception(
-                'Le controller n\'est pas compatible avec DefaultControllerInterface'
+                'Le controller' . $controller .  ' n\'est pas compatible avec DefaultControllerInterface'
             );
         }
 
