@@ -1,19 +1,33 @@
 <?php
 
 require_once PROJECT_CORE . 'DefaultController.php';
+require_once PROJECT_CORE . 'Request.php';
 
 class Router
 {
+    const POSITION_CONTROLLER_NAME = 0;
+    const POSITION_ACTION_NAME = 1;
     private $controllerName;
     private $actionName;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $controllerName = $request->getURLComponentByKey(0, 'home');
-        $actionName = $request->getURLComponentByKey(1, 'index');
+        $request = Request::getInstance();
 
-        $this->setControllerName($controllerName)
-             ->setActionName($actionName);
+        $controllerName = $request->getPathByKey(self::POSITION_CONTROLLER_NAME);
+
+        $actionName = $request->getPathByKey(self::POSITION_ACTION_NAME);
+
+        $this->setControllerName($controllerName);
+        $this->setActionName($actionName);
+
+    }
+
+    private function setControllerName($controllerName)
+    {
+        $this->controllerName = ucfirst($controllerName) . 'Controller';
+
+        return $this;
     }
 
     public function getControllerName(): string
@@ -21,9 +35,9 @@ class Router
         return $this->controllerName;
     }
 
-    public function setControllerName(string $controllerName)
+    private function setActionName($actionName)
     {
-        $this->controllerName = ucfirst($controllerName) . 'Controller';
+        $this->actionName = $actionName . 'Action';
 
         return $this;
     }
@@ -31,12 +45,5 @@ class Router
     public function getActionName(): string
     {
         return $this->actionName;
-    }
-
-    public function setActionName(string $actionName)
-    {
-        $this->actionName = $actionName . 'Action';
-
-        return $this;
     }
 }

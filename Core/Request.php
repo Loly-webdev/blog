@@ -4,47 +4,67 @@ require_once PROJECT_CORE . 'DefaultController.php';
 
 class Request
 {
-    private $URLComponents;
-    private $URLComponentsByKey;
+    private $server;
+    private $path;
+    private $query;
+    private static $instance = null;
 
-    public function __construct()
+    private function __construct()
     {
-        $URLComponents = !empty($this->getURLComponents()[0]) ? $this->getURLComponents()[0]: null;
-        $URLComponentsByKey = $this->getURLComponents()[1] ?? null;
+        $server = $this->getUrlData();
 
-        $this->setURLComponents($URLComponents)
-             ->setURLComponentsByKey($URLComponentsByKey);
+        $path = $server['path'] ?? null;
+        $query = $server['query'] ?? null;
 
+        $this->setServer($server)
+             ->setPath($path)
+             ->setQuery($query);
     }
 
-    public function getURLComponents()
+    public function setServer($server)
     {
-        //Place the value from ?params=value in the URL.
+        $this->server = $server;
+
+        return $this;
+    }
+
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    public function setQuery($query)
+    {
+        $this->query = $query;
+
+        return $this;
+    }
+
+    private function getUrlData()
+    {
         $server = $_SERVER["REQUEST_URI"];
         $serverData = trim(parse_url($server, PHP_URL_PATH), "/");
-        $params = explode('/', $serverData);
 
-        return $params;
+        return explode('/', $serverData);
     }
 
-    public function setURLComponents($URLComponents)
+    public function getPathByKey($key, $defaultValue = null)
     {
-        $this->URLComponents = $URLComponents;
+        //$path = $this->path; //ça doit retourner /home/test
 
-        return $this;
+        $data = ['home', 'test'];
+
+        return $data[$key] ?? $defaultValue;
     }
 
-    public function getURLComponentByKey($key, $defaultValue = null)
-    {
-        $params = $this->getURLComponents();
+    public static function getInstance() {
 
-        return $params[$key] ?? $defaultValue;
-    }
+        if(is_null(self::$instance)) {
+            self::$instance = new Request();
+        }
 
-    public function setURLComponentsByKey($URLComponentsByKey)
-    {
-        $this->URLComponentsByKey = $URLComponentsByKey;
-
-        return $this;
+        return self::$instance;
     }
 }
