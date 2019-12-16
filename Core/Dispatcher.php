@@ -11,14 +11,17 @@ class Dispatcher
     public function __construct()
     {
         $router = new Router();
+        var_dump($router);
 
         $controller = $router->getControllerName();
         $controller = new $controller;
 
         $this->setRouter($router)
              ->existController()
-             ->setController()
+             ->setController($controller)
              ->existAction();
+
+        var_dump($this);
     }
 
     public function getRouter(): Router

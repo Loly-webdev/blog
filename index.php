@@ -21,13 +21,11 @@ try {
     date_default_timezone_set('Europe/London');
 
     require_once PROJECT_CORE . 'Dispatcher.php';
-
-
     require_once PROJECT_CORE . 'Router.php';
-
-    $router = new Router();
-    var_dump($router);
+    
     //(new Dispatcher())->dispatch();
+    $dispatcher = new dispatcher();
+    var_dump($dispatcher);
 
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();
