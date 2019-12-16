@@ -6,6 +6,7 @@ class Request
 {
     private $server;
     private $path;
+    private $paths;
     private $query;
     private static $instance = null;
 
@@ -13,11 +14,16 @@ class Request
     {
         $server = $this->getUrlData();
 
-        $path = $server['path'] ?? null;
+        if (!empty($server['path'])) {
+            $path = trim($server['path'], "/");
+            $paths = explode('/', $path);
+        }
+
         $query = $server['query'] ?? null;
 
         $this->setServer($server)
              ->setPath($path)
+             ->setPaths($paths)
              ->setQuery($query);
     }
 
@@ -35,6 +41,13 @@ class Request
         return $this;
     }
 
+    private function setPaths($paths)
+    {
+        $this->paths = $paths;
+
+        return $this;
+    }
+
     public function setQuery($query)
     {
         $this->query = $query;
@@ -45,16 +58,13 @@ class Request
     private function getUrlData()
     {
         $server = $_SERVER["REQUEST_URI"];
-        $serverData = trim(parse_url($server, PHP_URL_PATH), "/");
 
-        return explode('/', $serverData);
+        return parse_url($server);
     }
 
     public function getPathByKey($key, $defaultValue = null)
     {
-        //$path = $this->path; //ça doit retourner /home/test
-
-        $data = ['home', 'test'];
+        $data = $this->paths;
 
         return $data[$key] ?? $defaultValue;
     }
