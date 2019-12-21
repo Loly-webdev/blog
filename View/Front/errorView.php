@@ -19,7 +19,7 @@
             <strong>
                 Détail de l'erreur :
             </strong>
-            <?php echo $errorMessage; ?>
+            <?php echo $error; ?>
         </p>
     </section>
 </main>

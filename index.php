@@ -22,14 +22,12 @@ try {
 
     require_once PROJECT_CORE . 'Dispatcher.php';
     require_once PROJECT_CORE . 'Router.php';
-    
-    //(new Dispatcher())->dispatch();
-    $dispatcher = new dispatcher();
-    var_dump($dispatcher);
+
+    (new Dispatcher())->dispatch();
 
 } catch (Exception $e) {
-    $errorMessage = $e->getMessage();
-    echo 'Caught exception: ', $errorMessage, "\n";
     require_once PROJECT_VIEW . 'Front/errorView.php';
-}
+    $error = $e->getMessage();
 
+    echo 'Caught exception: ', $error, "\n";
+}

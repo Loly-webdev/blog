@@ -3,6 +3,9 @@
 require_once PROJECT_CORE . 'DefaultController.php';
 require_once PROJECT_CORE . 'Router.php';
 
+/**
+ *
+ */
 class Dispatcher
 {
     private $router;
@@ -11,10 +14,8 @@ class Dispatcher
     public function __construct()
     {
         $router = new Router();
-        var_dump($router);
 
         $controller = $router->getControllerName();
-        $controller = new $controller;
 
         $this->setRouter($router)
              ->existController()

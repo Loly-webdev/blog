@@ -40,7 +40,7 @@ class PostController extends DefaultController
         $affectedLines = $commentManager->postComment($postId, $author, $comment);
 
         if ($affectedLines === false) {
-            throw new \Exception('Impossible d\'ajouter le commentaire !');
+            throw new Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
             header('Location: /post/id=' . $postId);
