@@ -2,6 +2,9 @@
 
 require_once PROJECT_CORE . 'DefaultController.php';
 
+/**
+ *
+ */
 class Request
 {
     private $server;
@@ -25,6 +28,8 @@ class Request
              ->setPath($path)
              ->setPaths($paths)
              ->setQuery($query);
+
+        var_dump($this);
     }
 
     public function setServer($server)
@@ -41,7 +46,7 @@ class Request
         return $this;
     }
 
-    private function setPaths($paths)
+    public function setPaths($paths)
     {
         $this->paths = $paths;
 
@@ -55,7 +60,7 @@ class Request
         return $this;
     }
 
-    private function getUrlData()
+    public function getUrlData()
     {
         $server = $_SERVER["REQUEST_URI"];
 

@@ -3,6 +3,19 @@
 require_once PROJECT_CORE . 'DefaultController.php';
 require_once PROJECT_CORE . 'Request.php';
 
+/**
+ * Class Router
+ *
+ * Get from request the controller and action names
+ *
+ * For exemple :
+ * <code>
+ * $requestURL = "monsite.fr/home/test"
+ * $router = new Router();
+ * $router->controllerName = "HomeController";
+ * $router->actionName = "testAction";
+ * </code>
+ */
 class Router
 {
     const POSITION_CONTROLLER_NAME = 0;
@@ -18,12 +31,11 @@ class Router
 
         $actionName = $request->getPathByKey(self::POSITION_ACTION_NAME);
 
-        $this->setControllerName($controllerName);
-        $this->setActionName($actionName);
-
+        $this->setControllerName($controllerName)
+             ->setActionName($actionName);
     }
 
-    private function setControllerName($controllerName)
+    public function setControllerName($controllerName)
     {
         $this->controllerName = ucfirst($controllerName) . 'Controller';
 
@@ -35,7 +47,7 @@ class Router
         return $this->controllerName;
     }
 
-    private function setActionName($actionName)
+    public function setActionName($actionName)
     {
         $this->actionName = $actionName . 'Action';
 
