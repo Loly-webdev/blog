@@ -20,6 +20,10 @@
                 Détail de l'erreur :
             </strong>
             <?php echo $error; ?>
+            <br>
+        </p>
+        <p>
+            <a href="/home">Retour à l'Accueil</a>
         </p>
     </section>
 </main>

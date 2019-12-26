@@ -3,7 +3,20 @@
 require_once PROJECT_CORE . 'DefaultController.php';
 
 /**
+ * Class Request
  *
+ * Get informations of URL
+ *
+ * For exemple :
+ * <code>
+ * $requestURL = "monsite.fr/home/test"
+ * $server->getUrlData() = parse_url($server);
+ * $server->path = trim($server['path']);
+ * $server->paths = explode(trim($server['path']));
+ * $server->query = $server['query'];
+ * $server->getPathByKey() = $data[$key] ?? $defaultValue;
+ *
+ * </code>
  */
 class Request
 {
@@ -28,8 +41,6 @@ class Request
              ->setPath($path)
              ->setPaths($paths)
              ->setQuery($query);
-
-        var_dump($this);
     }
 
     public function setServer($server)
