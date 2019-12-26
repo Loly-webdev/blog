@@ -21,13 +21,10 @@ try {
     date_default_timezone_set('Europe/London');
 
     require_once PROJECT_CORE . 'Dispatcher.php';
-    require_once PROJECT_CORE . 'Router.php';
 
     (new Dispatcher())->dispatch();
 
 } catch (Exception $e) {
-    require_once PROJECT_VIEW . 'Front/errorView.php';
     $error = $e->getMessage();
-
-    echo 'Caught exception: ', $error, "\n";
+    require_once PROJECT_VIEW . 'Front/errorView.php';
 }
