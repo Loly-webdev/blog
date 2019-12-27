@@ -30,16 +30,20 @@ class Request
     {
         $server = $this->getUrlData();
 
-        if (!empty($server['path'])) {
+        if (isset($server['path']) && ("/" !== ($server['path']))) {
             $path = trim($server['path'], "/");
             $paths = explode('/', $path);
+
+            var_dump($this->setPath($path)
+                          ->setPaths($paths));
+
+            $this->setPath($path)
+                 ->setPaths($paths);
         }
 
         $query = $server['query'] ?? null;
 
         $this->setServer($server)
-             ->setPath($path)
-             ->setPaths($paths)
              ->setQuery($query);
     }
 
@@ -80,9 +84,9 @@ class Request
 
     public function getPathByKey($key, $defaultValue = null)
     {
-        $data = $this->paths;
+        $paths = $this->paths;
 
-        return $data[$key] ?? $defaultValue;
+        return $paths[$key] ?? $defaultValue;
     }
 
     public static function getInstance() {
