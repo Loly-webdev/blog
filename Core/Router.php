@@ -10,9 +10,14 @@ require_once PROJECT_CORE . 'Request.php';
  *
  * For exemple :
  * <code>
- * $requestURL = "monsite.fr/home/test"
+ * $requestURL = "monsite.fr"
  * $router = new Router();
  * $router->controllerName = "HomeController";
+ * $router->actionName = "indexAction";
+ *
+ * $requestURL = "monsite.fr/blog/test"
+ * $router = new Router();
+ * $router->controllerName = "BlogController";
  * $router->actionName = "testAction";
  * </code>
  */
@@ -27,9 +32,12 @@ class Router
     {
         $request = Request::getInstance();
 
-        $controllerName = $request->getPathByKey(self::POSITION_CONTROLLER_NAME);
+        $controllerName = $request->getPathByKey(self::POSITION_CONTROLLER_NAME) ?? "Home";
 
-        $actionName = $request->getPathByKey(self::POSITION_ACTION_NAME);
+        $actionName = $request->getPathByKey(self::POSITION_ACTION_NAME) ?? "index";
+
+        var_dump($this->setControllerName($controllerName)
+                      ->setActionName($actionName));
 
         $this->setControllerName($controllerName)
              ->setActionName($actionName);
