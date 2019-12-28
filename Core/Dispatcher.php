@@ -9,32 +9,29 @@ require_once PROJECT_CORE . 'Router.php';
 class Dispatcher
 {
     private $router;
+    private $controller;
 
     public function __construct()
     {
-        $router = new Router();
-
-        $controllerName = $router->getControllerName();
-        $actionName = $router->getActionName();
-
-        $this->setRouter($router)
-             ->existController($controllerName)
-             ->existAction($actionName)
-             ->dispatch();
+        $this->initRouter()
+             ->initController();
     }
 
-    //je récupère les infos du router
-    public function setRouter(Router $router)
+    public function getRouter()
     {
-        $this->router = $router;
+        return $this->router;
+    }
+
+    public function initRouter()
+    {
+        $this->router = new Router();
 
         return $this;
     }
 
-    //je test si elles sont valables
-    //si non j'affiche un message d'erreur via exception
-    public function existController(string $controllerName)
+    public function initController()
     {
+        $controllerName = $this->getRouter()->getControllerName();
         $filename = PROJECT_ROOT . 'Controller/' . $controllerName . '.php';
 
         if (false === file_exists($filename)) {
@@ -43,37 +40,37 @@ class Dispatcher
 
         require_once($filename);
 
-        return $this;
-    }
+        //on récupere l'instance du controller
+        $controller = new $controllerName;
+        $this->controller = $controller;
 
-    public function existAction($actionName)
-    {
-        if (isset($actionName)) {
-            throw new Exception("L'argument $actionName n'existe pas.");
-        }
+        //on vérifie que le controller et compatible
+        $controllerIsCompatible = is_subclass_of($controller, 'DefaultControllerInterface');
 
-        return $this;
-    }
-
-    //si oui je les dispatch pour que l'index puisse les afficher
-    public function dispatch()
-    {
-        $router = new Router();
-        $controllerName = $router->getControllerName();
-        $actionName = $router->getActionName();
-
-        //je vérifie que le controller et compatible
-        $controllerCompatible = is_subclass_of($controllerName, 'DefaultControllerInterface');
-
-        if (false === $controllerCompatible) {
+        if (false === $controllerIsCompatible) {
             throw new Exception(
                 'Le controller ' . $controllerName .  ' n\'est pas compatible avec DefaultControllerInterface'
             );
         }
 
-        var_dump($controllerName, $actionName);
+        return $this;
+    }
 
-        call_user_func(array($controllerName, $actionName));
+    public function dispatch()
+    {
+        $controllerName = get_class($this->controller);
+        $actionName = $this->getRouter()->getActionName();
+        $methodExist = method_exists($this->controller, $actionName);
+
+        //On regarde si $controller posséde une methode $actionName
+        if (false === $methodExist) {
+            throw new Exception(
+                "L'argument $actionName n'existe pas dans le controleur $controllerName."
+            );
+        }
+
+        //Dispatch de l'action du controleur
+        call_user_func(array($this->controller, $actionName));
 
         return $this;
     }

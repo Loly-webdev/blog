@@ -33,11 +33,7 @@ class Router
         $request = Request::getInstance();
 
         $controllerName = $request->getPathByKey(self::POSITION_CONTROLLER_NAME) ?? "Home";
-
         $actionName = $request->getPathByKey(self::POSITION_ACTION_NAME) ?? "index";
-
-        var_dump($this->setControllerName($controllerName)
-                      ->setActionName($actionName));
 
         $this->setControllerName($controllerName)
              ->setActionName($actionName);
