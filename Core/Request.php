@@ -9,13 +9,15 @@ require_once PROJECT_CORE . 'DefaultController.php';
  *
  * For exemple :
  * <code>
- * $requestURL = "monsite.fr/home/test"
- * $server->getUrlData() = parse_url($server);
- * $server->path = trim($server['path']);
- * $server->paths = explode(trim($server['path']));
- * $server->query = $server['query'];
- * $server->getPathByKey() = $data[$key] ?? $defaultValue;
- *
+ * $requestURL = "monsite.fr/home/test?param1=value1&param2=value2"
+ * $request = new Request();
+ * $request = {
+ *     $server = ['path' => '/home/test', 'query' => 'param1=value1&param2=value2'];
+ *     $path = "/home/test";
+ *     $paths => [0 => "home", 1 => "test"];
+ *     $query => 'param1=value1&param2=value2';
+ *     $queries => ['param1 => "value1", 'param2' => "value2"];
+ * }
  * </code>
  */
 class Request
@@ -24,6 +26,7 @@ class Request
     private $path;
     private $paths;
     private $query;
+    private $queries;
     private static $instance = null;
 
     private function __construct()
@@ -33,9 +36,6 @@ class Request
         if (isset($server['path']) && ("/" !== ($server['path']))) {
             $path = trim($server['path'], "/");
             $paths = explode('/', $path);
-
-            var_dump($this->setPath($path)
-                          ->setPaths($paths));
 
             $this->setPath($path)
                  ->setPaths($paths);

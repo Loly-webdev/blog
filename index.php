@@ -24,7 +24,7 @@ try {
 
     (new Dispatcher())->dispatch();
 
-} catch (Exception $e) {
-    $error = $e->getMessage();
+} catch (Throwable $t) {
+    $error = $t->getMessage();
     require_once PROJECT_VIEW . 'Front/errorView.php';
 }
