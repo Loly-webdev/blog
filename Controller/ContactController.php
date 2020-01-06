@@ -7,7 +7,8 @@ class ContactController extends DefaultController
     public function indexAction()
     {
         $this->renderView(
-            PROJECT_VIEW . 'Front/contactView.php'
+            'Front/contact.html.twig',
+            ['test' => 'Hello World !!!']
         );
     }
 

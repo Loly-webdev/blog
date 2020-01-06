@@ -10,6 +10,8 @@ try {
     define('PROJECT_CORE', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR);
     define('PROJECT_VIEW', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR);
     define('PROJECT_REPOSITORY', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'Repository' . DIRECTORY_SEPARATOR);
+    define('PROJECT_VENDOR', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR);
+    define('PROJECT_TWIG', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'twig' . DIRECTORY_SEPARATOR);
 
     //database credentials
     define('DB_HOST', 'localhost');
@@ -20,11 +22,13 @@ try {
     //set timezone
     date_default_timezone_set('Europe/London');
 
+    require_once PROJECT_VENDOR . 'autoload.php';
     require_once PROJECT_CORE . 'Dispatcher.php';
 
     (new Dispatcher())->dispatch();
 
 } catch (Throwable $t) {
     $error = $t->getMessage();
-    require_once PROJECT_VIEW . 'Front/errorView.php';
+    require_once PROJECT_VIEW . 'Front/error.php';
 }
+
