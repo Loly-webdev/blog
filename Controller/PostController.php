@@ -12,7 +12,7 @@ class PostController extends DefaultController
         $posts = $postManager->getPosts();
 
         $this->renderView(
-            PROJECT_VIEW . 'Front/listPostsView.php',
+            'Front/listPosts.html.twig',
             [
                 'posts' => $posts
             ]
@@ -26,7 +26,7 @@ class PostController extends DefaultController
         $comments = $commentManager->getComments($_GET['id']);
 
         $this->renderView(
-            PROJECT_VIEW . 'Front/postView.php',
+            'Front/post.html.twig',
             [
                 'post' => $post,
                 'comments'=> $comments

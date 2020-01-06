@@ -1,0 +1,32 @@
+{% extends "Front/template.html.twig" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+
+    <h2>Derniers billets du blog :</h2>
+
+    {% for post in posts %}
+        <div class="news">
+            <h3>
+                {% block postTitle %}
+                    {{ post['title'] }}
+                {% endblock %}
+
+                {% block dateTitle %}
+                    <em>le {{ post['creation_date_fr'] }}</em>
+                {% endblock %}
+            </h3>
+            <p>
+                {% block postContent %}
+                    {{ post['content'] }}
+                {% endblock %}
+                <br/>
+                {% block postComment %}
+                    <em><a href="{{ post['id'] }}">Commentaires</a></em>
+                {% endblock %}
+            </p>
+        </div>
+    {% endfor %}
+
+{% endblock %}

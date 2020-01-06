@@ -4,15 +4,16 @@ require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 
 abstract class DefaultController implements DefaultControllerInterface
 {
+    private $twig;
+
+    public function __construct()
+    {
+        $loader = new \Twig\Loader\FilesystemLoader('View/');
+        $this->twig = new \Twig\Environment($loader, []);
+    }
+
     public function renderView($partial, array $params = [])
     {
-        extract($params);
-
-        $template = PROJECT_VIEW. 'Front/template.php';
-        ob_start();
-        include($partial);
-        $content = ob_get_clean();
-
-        include($template);
+        echo $this->twig->render($partial, $params);
     }
 }
