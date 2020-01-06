@@ -9,7 +9,9 @@ abstract class DefaultController implements DefaultControllerInterface
     public function __construct()
     {
         $loader = new \Twig\Loader\FilesystemLoader('View/');
-        $this->twig = new \Twig\Environment($loader, []);
+        $this->twig = new \Twig\Environment($loader, [
+            'cache' => 'Cache',
+        ]);
     }
 
     public function renderView($partial, array $params = [])
