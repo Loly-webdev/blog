@@ -9,7 +9,7 @@ try {
     define('PROJECT_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
     define('PROJECT_CORE', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR);
     define('PROJECT_VIEW', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR);
-    define('PROJECT_REPOSITORY', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'Repository' . DIRECTORY_SEPARATOR);
+    define('PROJECT_MANAGER', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'Manager' . DIRECTORY_SEPARATOR);
     define('PROJECT_VENDOR', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR);
     define('PROJECT_TWIG', PROJECT_ROOT . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'twig' . DIRECTORY_SEPARATOR);
 
@@ -28,7 +28,10 @@ try {
     (new Dispatcher())->dispatch();
 
 } catch (Throwable $t) {
-    $error = $t->getMessage();
+    $errorMessage = $t->getMessage();
+    $errorFile = $t->getFile();
+    $errorLine = $t->getLine();
+
     require_once PROJECT_VIEW . 'Front/error.php';
 }
 

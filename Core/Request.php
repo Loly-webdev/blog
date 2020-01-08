@@ -22,12 +22,14 @@ require_once PROJECT_CORE . 'DefaultController.php';
  */
 class Request
 {
-    private $server;
     private $path;
     private $paths;
     private $query;
     private $queries;
+    private $getParam;
+    private $postParam;
     private static $instance = null;
+
 
     private function __construct()
     {
@@ -41,17 +43,13 @@ class Request
                  ->setPaths($paths);
         }
 
-        $query = $server['query'] ?? null;
+        if (isset($query)) {
+            $query = trim($server['query']);
+            $queries = explode("&", $query);
 
-        $this->setServer($server)
-             ->setQuery($query);
-    }
-
-    public function setServer($server)
-    {
-        $this->server = $server;
-
-        return $this;
+            $this->setQuery($query)
+                 ->setQueries($queries);
+        }
     }
 
     public function setPath($path)
@@ -75,6 +73,13 @@ class Request
         return $this;
     }
 
+    public function setQueries($queries)
+    {
+        $this->queries = $queries;
+
+        return $this;
+    }
+
     public function getUrlData()
     {
         $server = $_SERVER["REQUEST_URI"];
@@ -87,6 +92,16 @@ class Request
         $paths = $this->paths;
 
         return $paths[$key] ?? $defaultValue;
+    }
+
+    public function getGetParam()
+    {
+        return $this->getParam;
+    }
+
+    public function getPostParam()
+    {
+        return $this->postParam;
     }
 
     public static function getInstance() {

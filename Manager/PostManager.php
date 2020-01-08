@@ -1,6 +1,6 @@
 <?php
 
-require_once PROJECT_REPOSITORY . 'Manager.php';
+require_once PROJECT_MANAGER . 'Manager.php';
 
 class PostManager extends Manager
 {

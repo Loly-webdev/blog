@@ -1,8 +1,8 @@
 <?php
 
 require_once PROJECT_CORE . 'DefaultController.php';
-require_once PROJECT_REPOSITORY. 'CommentManager.php';
-require_once PROJECT_REPOSITORY . 'PostManager.php';
+require_once PROJECT_MANAGER. 'CommentManager.php';
+require_once PROJECT_MANAGER . 'PostManager.php';
 
 class PostController extends DefaultController
 {
