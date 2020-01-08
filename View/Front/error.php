@@ -30,8 +30,10 @@
             <strong>
                 Détail de l'erreur :
             </strong>
-            <?php echo $error; ?>
-            <br>
+            <?php echo "<br><strong>Message : </strong>" . $errorMessage .
+                       "<br><strong>Fichier : </strong>" . $errorFile .
+                       "<br><strong>Ligne : </strong>" . $errorLine;
+            ?>
         </p>
         <p>
             <a href="/home">Retour à l'Accueil</a>
