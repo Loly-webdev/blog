@@ -1,5 +1,7 @@
 <?php
 
+require_once PROJECT_CONFIG . 'dbSetting.php';
+
 class Manager
 {
     protected function dbConnect()

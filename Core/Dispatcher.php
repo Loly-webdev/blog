@@ -32,7 +32,7 @@ class Dispatcher
     public function initController()
     {
         $controllerName = $this->getRouter()->getControllerName();
-        $filename = PROJECT_ROOT . 'Controller/' . $controllerName . '.php';
+        $filename = PROJECT_CONTROLLER . $controllerName . '.php';
 
         if (false === file_exists($filename)) {
             throw new Exception("Le fichier $filename n'existe pas.");
