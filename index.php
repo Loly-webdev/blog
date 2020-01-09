@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 try {
     define("DS", DIRECTORY_SEPARATOR);
     define('PROJECT_ROOT', dirname(__FILE__) . DS);
-    include_once 'Config/rootSetting.php';
+    include_once 'Config/rootConfig.php';
 
     require_once PROJECT_VENDOR . 'autoload.php';
     require_once PROJECT_CORE . 'Dispatcher.php';
