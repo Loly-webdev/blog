@@ -36,7 +36,7 @@
             ?>
         </p>
         <p>
-            <a href="/home">Retour à l'Accueil</a>
+            <a href="../../index.php">Retour à l'Accueil</a>
         </p>
     </section>
 </main>
