@@ -1,6 +1,6 @@
 <?php
 
-require_once PROJECT_CONFIG . 'dbSetting.php';
+require_once PROJECT_CONFIG . 'dbConfig.php';
 
 class Manager
 {
