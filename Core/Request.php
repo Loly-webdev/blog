@@ -22,90 +22,11 @@ require_once PROJECT_CORE . 'DefaultController.php';
  */
 class Request
 {
-    private $path;
-    private $paths;
-    private $query;
-    private $queries;
-    private $getParam;
-    private $postParam;
     private static $instance = null;
-
 
     private function __construct()
     {
-        $server = $this->getUrlData();
 
-        if (isset($server['path']) && ("/" !== ($server['path']))) {
-            $path = trim($server['path'], "/");
-            $paths = explode('/', $path);
-
-            $this->setPath($path)
-                 ->setPaths($paths);
-        }
-
-        if (isset($query)) {
-            $query = trim($server['query']);
-            $queries = explode("&", $query);
-
-            $this->setQuery($query)
-                 ->setQueries($queries);
-        }
-    }
-
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    public function setPaths($paths)
-    {
-        $this->paths = $paths;
-
-        return $this;
-    }
-
-    public function setQuery($query)
-    {
-        $this->query = $query;
-
-        return $this;
-    }
-
-    public function setQueries($queries)
-    {
-        $this->queries = $queries;
-
-        return $this;
-    }
-
-    public function getUrlData()
-    {
-        $server = $_SERVER["REQUEST_URI"];
-
-        return parse_url($server);
-    }
-
-    public function getPathByKey($key, $defaultValue = null)
-    {
-        $paths = $this->paths;
-
-        return $paths[$key] ?? $defaultValue;
-    }
-
-    public function getGetParam($key, $defaultValue = null)
-    {
-        return isset($_GET[$key]) ?
-            ($_GET[$key]) :
-            $defaultValue;
-    }
-
-    public function getPostParam($key, $defaultValue = null)
-    {
-        return isset($_POST[$key]) && '' !== $_POST[$key] ?
-            ($_POST[$key]) :
-            $defaultValue;
     }
 
     public static function getInstance() {
@@ -115,5 +36,33 @@ class Request
         }
 
         return self::$instance;
+    }
+
+    public function getUrlComponents()
+    {
+        $server = parse_url($_SERVER["REQUEST_URI"]);
+        $path = trim($server['path'], "/");
+        return explode('/', $path);
+    }
+
+    public function getParam($key, $defaultValue = null)
+    {
+        return $this->getGetParam($key) ??
+               $this->getPostParam($key) ??
+               $defaultValue;
+    }
+
+    public function getGetParam($key, $defaultValue = null)
+    {
+        return isset($_GET[$key]) ?
+                    ($_GET[$key]) :
+                    $defaultValue;
+    }
+
+    public function getPostParam($key, $defaultValue = null)
+    {
+        return isset($_POST[$key]) && '' !== $_POST[$key] ?
+                    ($_POST[$key]) :
+                    $defaultValue;
     }
 }
