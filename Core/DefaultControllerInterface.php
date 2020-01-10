@@ -3,5 +3,5 @@
 interface DefaultControllerInterface
 {
     public function indexAction();
-    public function renderView($partial, array $params);
+    public function renderView(string $view, array $params, string $viewFolder = null ) : void;
 }

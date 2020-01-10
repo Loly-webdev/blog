@@ -7,7 +7,7 @@ class HomeController extends DefaultController
     public function indexAction()
     {
         $this->renderView(
-            'Front/home.html.twig',
+            'home.html.twig',
             ['test' => 'Hello World !!!']
         );
     }

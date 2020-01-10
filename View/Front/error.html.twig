@@ -3,7 +3,7 @@
 <head>
     {% block head %}
         {{ include('Partial/head.html.twig') }}
-        {% block title %}Error{% endblock %}
+        <title>{% block title %}Error{% endblock %}</title>
     {% endblock %}
 </head>
 
@@ -11,25 +11,30 @@
 <main>
     {% block content %}
         <section>
-            <strong>
-                <p>
-                    Franchement, déchirer une page web, c'est pas sérieux !
-                    <br>
-                </p>
-            </strong>
+            <h3>Franchement, déchirer une page web, c'est pas sérieux !</h3>
+
             <img alt="Page d'erreur" src="../../Public/images/error_code.jpg">
+
+            <h3>Détail de l'erreur : </h3>
             <p>
+                <strong>Message : </strong>
+                {% block message %}
+                     {{ message }}
+                {% endblock %}
                 <br>
-                <strong>
-                    Détail de l'erreur :
-                </strong>
-                <?php echo "<br><strong>Message : </strong>" . $errorMessage .
-                "<br><strong>Fichier : </strong>" . $errorFile .
-                "<br><strong>Ligne : </strong>" . $errorLine;
-                ?>
-            </p>
-            <p>
-                <a href="../../index.php">Retour à l'Accueil</a>
+
+                <strong>Fichier : </strong>
+                {% block file %}
+                    {{ file }}
+                {% endblock %}
+                <br>
+
+                <strong>Ligne : </strong>
+                {% block line %}
+                    {{ line }}
+                {% endblock %}
+            <hr>
+            <a href="/home">Retour à l'Accueil</a>
             </p>
         </section>
     {% endblock %}

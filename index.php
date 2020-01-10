@@ -9,16 +9,15 @@ try {
     define('PROJECT_ROOT', dirname(__FILE__) . DS);
     include_once 'Config/rootConfig.php';
 
-    require_once PROJECT_VENDOR . 'autoload.php';
     require_once PROJECT_CORE . 'Dispatcher.php';
 
     (new Dispatcher())->dispatch();
 
 } catch (Throwable $t) {
-    $errorMessage = $t->getMessage();
-    $errorFile = $t->getFile();
-    $errorLine = $t->getLine();
 
-    require_once PROJECT_VIEW_F . 'error.php';
+    require_once PROJECT_CONTROLLER . 'ErrorController.php';
+    $error = new ErrorController();
+    $error->error($t);
+
 }
 

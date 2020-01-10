@@ -94,14 +94,18 @@ class Request
         return $paths[$key] ?? $defaultValue;
     }
 
-    public function getGetParam()
+    public function getGetParam($key, $defaultValue = null)
     {
-        return $this->getParam;
+        return isset($_GET[$key]) ?
+            ($_GET[$key]) :
+            $defaultValue;
     }
 
-    public function getPostParam()
+    public function getPostParam($key, $defaultValue = null)
     {
-        return $this->postParam;
+        return isset($_POST[$key]) && '' !== $_POST[$key] ?
+            ($_POST[$key]) :
+            $defaultValue;
     }
 
     public static function getInstance() {
