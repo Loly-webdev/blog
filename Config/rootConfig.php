@@ -14,5 +14,6 @@ define('PROJECT_MODEL', PROJECT_ROOT . 'Model' . DS);
 
 define('PROJECT_VENDOR', PROJECT_ROOT . 'vendor' . DS);
 
+define('PROJECT_VIEW', PROJECT_ROOT . 'View' . DS);
 define('PROJECT_VIEW_F', PROJECT_ROOT . 'View' . DS . 'Front' . DS);
 define('PROJECT_VIEW_B', PROJECT_ROOT . 'View' . DS . 'Back' . DS);
