@@ -23,17 +23,17 @@ require_once PROJECT_CORE . 'Request.php';
  */
 class Router
 {
-    const POSITION_CONTROLLER_NAME = 0;
-    const POSITION_ACTION_NAME = 1;
     private $controllerName;
     private $actionName;
 
     public function __construct()
     {
         $request = Request::getInstance();
+        $controllerName = $request->getUrLComponents()[0] ?? "Home";
+        $actionName = $request->getUrLComponents()[1] ?? "index";
 
-        $controllerName = $request->getPathByKey(self::POSITION_CONTROLLER_NAME) ?? "Home";
-        $actionName = $request->getPathByKey(self::POSITION_ACTION_NAME) ?? "index";
+        //$controllerName = $request->getParam(0, "Home");
+        //$actionName = $request->getParam(1, "index");
 
         $this->setControllerName($controllerName)
              ->setActionName($actionName);
