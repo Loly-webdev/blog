@@ -6,10 +6,6 @@ class Database
 {
     private static $bdd = null;
 
-    private function __construct()
-    {
-    }
-
     public static function getBdd()
     {
         $driverOptions = [
