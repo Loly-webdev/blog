@@ -18,6 +18,5 @@ try {
     require_once PROJECT_CONTROLLER . 'ErrorController.php';
     $error = new ErrorController();
     $error->error($t);
-
 }
 

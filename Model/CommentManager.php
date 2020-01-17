@@ -1,42 +1,53 @@
 <?php
+require_once PROJECT_MODEL . 'DefaultManager.php';
 
-require_once PROJECT_MODEL . 'Manager.php';
-
-class CommentManager extends Manager
+/**
+ * Make the database requests relative to the comments
+ */
+class CommentManager extends DefaultManager
 {
-    public function getComments($postId)
+    //protected static $tableName = 'comments';
+
+    /**
+     * Find the 50 last comments that belongs to the selected article
+     * @param $id [the id of the article]
+     * @return array
+     * @throws Exception
+     */
+    public static function findComments($id)
     {
-        $db = $this->dbConnect();
-        $comments = $db->prepare('
-            SELECT id, 
-                   author, 
-                   comment, 
-                   DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr 
+        $req = static::getPDO()->prepare("
+            SELECT * 
             FROM comments 
-            WHERE post_id = ? 
-            ORDER BY comment_date DESC
-            ');
-
-        $comments->execute(array($postId));
-
-        return $comments;
+            WHERE post_id
+            ORDER BY comment_date DESC 
+            LIMIT 0,30
+        ");
+        $req->execute(array($id));
+        return $req->fetchAll();
     }
 
-    public function postComment($postId, $author, $comment)
+    /**
+     * Add a comment to the database
+     * @param $articleId
+     * @param $comment [an array of the params of the new comment]
+     * @return bool
+     * @throws Exception
+     */
+    public static function add($articleId, $comment)
     {
-        $db = $this->dbConnect();
-        $comments = $db->prepare('
+        $req = static::getPDO()->prepare("
             INSERT INTO comments(
                                  post_id, 
                                  author, 
                                  comment, 
-                                 comment_date
-                                 ) 
+                                 comment_date)
             VALUES(?, ?, ?, NOW())
-            ');
-
-        $affectedLines = $comments->execute(array($postId, $author, $comment));
-
-        return $affectedLines;
+        ");
+        return $req->execute(array(
+            $articleId,
+            $comment['name'],
+            $comment['message']
+        ));
     }
 }

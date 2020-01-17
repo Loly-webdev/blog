@@ -76,7 +76,7 @@ nav {
     justify-content: space-between;
     position: fixed;
     width: 100%;
-    margin-top: -1.4rem;
+    top: 0;
 }
 
 nav img {

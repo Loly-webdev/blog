@@ -8,7 +8,7 @@ class HomeController extends DefaultController
     {
         $this->renderView(
             'home.html.twig',
-            ['test' => 'Hello World !!!']
+            ['']
         );
     }
 }

@@ -6,13 +6,12 @@ class ErrorController extends DefaultController
 {
     public function indexAction()
     {
-        // TODO: Implement indexAction() method.
     }
 
     public function error($t)
     {
         $this->renderView(
-            'error.html.twig',
+            '../error.html.twig',
             [
                 'message' => $t->getMessage(),
                 'file' => $t->getFile(),
