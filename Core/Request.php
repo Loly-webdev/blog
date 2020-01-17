@@ -12,11 +12,10 @@ require_once PROJECT_CORE . 'DefaultController.php';
  * $requestURL = "monsite.fr/home/test?param1=value1&param2=value2"
  * $request = new Request();
  * $request = {
- *     $server = ['path' => '/home/test', 'query' => 'param1=value1&param2=value2'];
- *     $path = "/home/test";
- *     $paths => [0 => "home", 1 => "test"];
- *     $query => 'param1=value1&param2=value2';
- *     $queries => ['param1 => "value1", 'param2' => "value2"];
+ *     $server = [
+ *          'path' => '/home/test',
+ *          'query' => 'param1=value1&param2=value2', // $_GET
+ *     ];
  * }
  * </code>
  */
@@ -24,9 +23,7 @@ class Request
 {
     private static $instance = null;
 
-    private function __construct()
-    {
-
+    private function __construct(){
     }
 
     public static function getInstance() {
@@ -42,27 +39,28 @@ class Request
     {
         $server = parse_url($_SERVER["REQUEST_URI"]);
         $path = trim($server['path'], "/");
-        return explode('/', $path);
+        return "" !== $path ? explode('/', $path) : [];
     }
 
     public function getParam($key, $defaultValue = null)
     {
-        return $this->getGetParam($key) ??
-               $this->getPostParam($key) ??
+        return $this->getRequestParam($key) ??
+               $this->getQueryParam($key) ??
                $defaultValue;
     }
 
-    public function getGetParam($key, $defaultValue = null)
+    public function getRequestParam($key, $defaultValue = null)
     {
-        return isset($_GET[$key]) ?
-                    ($_GET[$key]) :
+        return isset($_POST[$key]) && '' !== $_POST[$key] ?
+                    $_POST[$key] :
                     $defaultValue;
     }
 
-    public function getPostParam($key, $defaultValue = null)
+    public function getQueryParam($key, $defaultValue = null)
     {
-        return isset($_POST[$key]) && '' !== $_POST[$key] ?
-                    ($_POST[$key]) :
+        // $_GET = parse_url($_SERVER["REQUEST_URI"])['query'];
+        return isset($_GET[$key]) && '' !== $_GET[$key] ?
+                    $_GET[$key] :
                     $defaultValue;
     }
 }

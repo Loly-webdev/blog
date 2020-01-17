@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     {% block head %}
-        {{ include('Partial/head.html.twig') }}
+        {{ include('template/partial/_head.html.twig') }}
         <title>{% block title %}{% endblock %}</title>
     {% endblock %}
 </head>
@@ -10,7 +10,7 @@
 
 <header>
         {% block nav %}
-                {{ include('Partial/nav.html.twig') }}
+                {{ include('template/partial/_nav.html.twig') }}
         {% endblock %}
 </header>
 
@@ -20,7 +20,7 @@
 
 <footer>
         {% block footer %}
-            {{ include('Partial/footer.html.twig') }}
+                {{ include('template/partial/_footer.html.twig') }}
         {% endblock %}
 </footer>
 

@@ -1,11 +1,11 @@
-{% extends "Front/template.html.twig" %}
+{% extends "template/base.html.twig" %}
 
 {% block title %}Contact{% endblock %}
 
 {% block content %}
     <section>
         <h3>Contactez-moi :</h3>
-        <form class="flex" action="#" method="post">
+        <form class="flex" action="../../../index.php" method="POST">
             <label for="name">Nom :</label>
             <input id="name" name="name" placeholder="Nom" type="text"/>
             <label for="email">E-mail :</label>

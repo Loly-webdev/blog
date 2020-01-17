@@ -1,6 +1,5 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultController.php';
 require_once PROJECT_CORE . 'Request.php';
 
 /**
@@ -31,9 +30,6 @@ class Router
         $request = Request::getInstance();
         $controllerName = $request->getUrLComponents()[0] ?? "Home";
         $actionName = $request->getUrLComponents()[1] ?? "index";
-
-        //$controllerName = $request->getParam(0, "Home");
-        //$actionName = $request->getParam(1, "index");
 
         $this->setControllerName($controllerName)
              ->setActionName($actionName);

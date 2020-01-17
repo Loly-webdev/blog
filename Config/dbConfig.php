@@ -1,9 +1,12 @@
 <?php
-//database credentials
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'blog');
-define('DB_USER', '');
-define('DB_PASS', '');
+$hosts = [
+    'default' => [
+        'host' => 'localhost',
+        'name' => 'blog',
+        'user' => '',
+        'pass' => ''
+    ]
+];
 
-//set timezone
-date_default_timezone_set('Europe/London');
+//database credentials
+define('HOSTS', $hosts);
