@@ -8,7 +8,7 @@ define('PROJECT_CONTROLLER', PROJECT_ROOT . 'Controller' . DS);
 
 define('PROJECT_CORE', PROJECT_ROOT . 'Core' . DS);
 
-define('PROJECT_MODEL', PROJECT_ROOT . 'Model' . DS);
+define('PROJECT_REPOSITORY', PROJECT_ROOT . 'Repository' . DS);
 
 //define('PROJECT_TEST', PROJECT_ROOT . 'Test' . DS);
 

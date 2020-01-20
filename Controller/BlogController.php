@@ -1,17 +1,18 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultController.php';
-require_once PROJECT_MODEL . 'ArticleManager.php';
+require_once PROJECT_CORE . 'DefaultAbstractController.php';
+require_once PROJECT_REPOSITORY . 'ArticleRepository.php';
+require_once PROJECT_REPOSITORY . 'CommentRepository.php';
 
-class BlogController extends DefaultController
+class BlogController extends DefaultAbstractController
 {
     public function indexAction()
     {
         try {
-            $posts = ArticleManager::findAll();
+            $posts = ArticleRepository::findAll();
 
             $this->renderView(
-                'listPosts.html.twig',
+                'blog.html.twig',
                 [
                     'posts' => $posts
                 ]

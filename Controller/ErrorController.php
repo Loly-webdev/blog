@@ -1,8 +1,8 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultController.php';
+require_once PROJECT_CORE . 'DefaultAbstractController.php';
 
-class ErrorController extends DefaultController
+class ErrorController extends DefaultAbstractController
 {
     public function indexAction()
     {
