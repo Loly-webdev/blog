@@ -1,9 +1,9 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultController.php';
-require_once PROJECT_MODEL . 'CommentManager.php';
+require_once PROJECT_CORE . 'DefaultAbstractController.php';
+require_once PROJECT_REPOSITORY . 'CommentRepository.php';
 
-class CommentController extends DefaultController
+class CommentController extends DefaultAbstractController
 {
     const ADD_COMMENT_SUCCESS = "Votre commentaire a bien été ajouté";
     const FAIL = 'Nous n\'avons pas pu ajouté votre commentaire, veuillez rééssayer ultérieurement';
@@ -11,10 +11,10 @@ class CommentController extends DefaultController
     public function indexAction()
     {
         try {
-            $posts = CommentManager::findComments($id);
+            $posts = CommentRepository::findById($id);
 
             $this->renderView(
-                'listPosts.html.twig',
+                'comment.html.twig',
                 [
                     'posts' => $posts
                 ]
@@ -28,19 +28,17 @@ class CommentController extends DefaultController
         }
     }
 
-
     /**
      * function to add a comment on the display article
      * Display the article page
      * @throws Exception
      */
-    public
-    static function add()
+    public static function add()
     {
         $request = Request::getInstance();
         $postId = $request->getParam('id');
         $comment = $request->getParam('comment');
-        $add = CommentManager::add($postId, $comment);
+        $add = CommentRepository::add($postId, $comment);
         if ($add == true) {
             $message = static::ADD_COMMENT_SUCCESS;
             $alert = 'success';
@@ -52,20 +50,4 @@ class CommentController extends DefaultController
         $postController = new ArticleController();
         $postController->post($alert, $message);
     }
-
-    /**
-     * function to report a comment
-     * @throws Exception
-     */
-    public
-    static function report()
-    {
-        $request = Request::getInstance();
-        $commentId = $request->getParam('id');
-        $postNumber = $request->getParam('post');
-        CommentManager::report($commentId);
-        header("Location: /post/post?post=$postNumber#commentForm");
-    }
-
-
 }

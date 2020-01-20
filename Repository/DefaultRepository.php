@@ -1,15 +1,28 @@
 <?php
 
-require_once PROJECT_MODEL . 'DefaultManager.php';
+require_once PROJECT_CORE . 'DefaultPDO.php';
+require_once PROJECT_REPOSITORY . 'DefaultRepositoryInterface.php';
 
-/**
- * This class make the sql request common tot the different Entitymanagers.
- * All of the EntityManagers have to extend this class
- */
-abstract class Manager extends DefaultManager
+abstract class DefaultRepository extends DefaultPDO implements DefaultRepositoryInterface
 {
-    // default constant of the database table name
-    protected static $tableName;
+    /**
+     * This method make the connection to the database and load the Request class
+     * @throws Exception
+     */
+    public static function getPDO()
+    {
+        return DefaultPDO::PDOConnect();
+    }
+
+    public static function getTablePk()
+    {
+        return 'id';
+    }
+
+    public static function getOrderBy()
+    {
+        return 'id';
+    }
 
     /**
      * This function find all the informations contained in the table
@@ -19,8 +32,8 @@ abstract class Manager extends DefaultManager
     {
         $req = static::getPDO()->query('
             SELECT *
-            FROM ' . static::$tableName . '
-            ORDER BY creation_date DESC
+            FROM ' . static::getTableName() . '
+            ORDER BY ' . static::getOrderBy() . ' DESC
         ');
 
         $req->execute();
@@ -34,12 +47,13 @@ abstract class Manager extends DefaultManager
      * @return mixed
      * @throws Exception
      */
-    public static function findOneById($id)
+
+    public static function findById($id)
     {
         $req = static::getPDO()->prepare('
             SELECT *
-            FROM ' . static::$tableName . '
-            WHERE id = ?
+            FROM ' . static::getTableName() . '
+            WHERE ' . static::getTablePk() . ' = ?
             ');
 
         $req->execute(array($id));
@@ -57,8 +71,8 @@ abstract class Manager extends DefaultManager
     {
         $req = static::getPDO()->prepare('
             DELETE
-            FROM ' . static::$tableName . '
-            WHERE id = ?
+            FROM ' . static::getTableName() . '
+            WHERE ' . static::getTablePk() . ' = ?
             ');
 
         return $req->execute(array($id));

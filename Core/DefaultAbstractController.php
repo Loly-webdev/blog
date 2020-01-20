@@ -5,7 +5,7 @@ use Twig\Loader\FilesystemLoader;
 
 require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 
-abstract class DefaultController implements DefaultControllerInterface
+abstract class DefaultAbstractController implements DefaultControllerInterface
 {
     protected static $twig = null;
 

@@ -1,8 +1,8 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultController.php';
+require_once PROJECT_CORE . 'DefaultAbstractController.php';
 
-class HomeController extends DefaultController
+class HomeController extends DefaultAbstractController
 {
     public function indexAction()
     {

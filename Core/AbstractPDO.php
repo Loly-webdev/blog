@@ -4,9 +4,14 @@ require_once PROJECT_CONFIG . 'dbConfig.php';
 
 abstract class AbstractPDO
 {
-    public abstract function getHostKey(): string;
-
     private static $cnx;
+
+    abstract public static function getHostKey(): string;
+
+    public static function getKey()
+    {
+        return static::getHostKey();
+    }
 
     public static function PDOConnect()
     {
@@ -16,7 +21,7 @@ abstract class AbstractPDO
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ];
 
-        $cnxData = HOSTS[(new DefaultPDO)->getHostKey()];
+        $cnxData = HOSTS[static::getKey()];
 
         if (is_null(self::$cnx)) {
             self::$cnx = new PDO(

@@ -7,7 +7,7 @@
 {% block content %}
 
     <h1>Mon Blog !</h1>
-    <p><a href="../../../index.php">Retour à la liste des billets</a></p>
+    <p><a href="/blog">Retour à la liste des billets</a></p>
 
     <div class="news">
         <h3>
@@ -46,7 +46,7 @@
     {% endblock %}
 
     {% for comment in comments %}
-        <p><strong>{{ comment['author'] }}</strong> le {{ comment['comment_date_fr'] }}</p>
+        <p><strong>{{ comment['author'] }}</strong> le {{ comment['comment_date'] }}</p>
         <p>{{ comment['comment'] }}</p>
     {% endfor %}
 
