@@ -14,16 +14,6 @@ abstract class DefaultRepository extends DefaultPDO implements DefaultRepository
         return DefaultPDO::PDOConnect();
     }
 
-    public static function getTablePk()
-    {
-        return 'id';
-    }
-
-    public static function getOrderBy()
-    {
-        return 'id';
-    }
-
     /**
      * This function find all the informations contained in the table
      * @throws Exception
@@ -37,6 +27,25 @@ abstract class DefaultRepository extends DefaultPDO implements DefaultRepository
         ');
 
         $req->execute();
+
+        return $req->fetchAll();
+    }
+
+    /**
+     * This function find all comments to an article
+     * @param $articleId
+     * @return array
+     * @throws Exception
+     */
+    public static function findArticleComments($articleId)
+    {
+        $req = static::getPDO()->prepare('
+            SELECT * 
+            FROM ' . static::getTableName() . ' 
+            WHERE ' . static::getTablePk() . ' = ?
+            ORDER BY ' . static::getOrderBy() . ' DESC 
+        ');
+        $req->execute(array($articleId));
 
         return $req->fetchAll();
     }

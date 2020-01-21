@@ -8,11 +8,6 @@ abstract class AbstractPDO
 
     abstract public static function getHostKey(): string;
 
-    public static function getKey()
-    {
-        return static::getHostKey();
-    }
-
     public static function PDOConnect()
     {
         $driverOptions = [
@@ -21,7 +16,7 @@ abstract class AbstractPDO
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ];
 
-        $cnxData = HOSTS[static::getKey()];
+        $cnxData = HOSTS[static::getHostKey()];
 
         if (is_null(self::$cnx)) {
             self::$cnx = new PDO(

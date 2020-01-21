@@ -2,7 +2,6 @@
 
 require_once PROJECT_CORE . 'DefaultAbstractController.php';
 require_once PROJECT_REPOSITORY . 'ArticleRepository.php';
-require_once PROJECT_REPOSITORY . 'CommentRepository.php';
 
 class BlogController extends DefaultAbstractController
 {

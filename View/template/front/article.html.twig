@@ -12,60 +12,48 @@
     <div class="news">
         <h3>
             {% block postTitle %}
-                {{ post['title'] }}
+                {{ article['title'] }}
             {% endblock %}
 
             {% block dateTitle %}
-                <em>le {{ post['creation_date_fr'] }}</em>
+                <em>le {{ article['creation_date'] }}</em>
             {% endblock %}
         </h3>
 
         <p>
             {% block postContent %}
-                {{ post['content'] }}
+                {{ article['content'] }}
             {% endblock %}
         </p>
     </div>
+<div>
+    {% block commentContent %}
+        {{ include('template/front/comment.html.twig') }}
 
-    <h2>Commentaires</h2>
+        <!-- {% for comment in comments %}
+            <p><strong>{{ comment['author'] }}</strong> le {{ comment['comment_date'] }}</p>
+            <p>{{ comment['comment'] }}</p>
+        {% endfor %}
 
-    {% block form %}
-        <form action="{{ post['id'] }}" method="post">
-            <div>
-                <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="author"/>
-            </div>
-            <div>
-                <label for="comment">Commentaire</label><br/>
-                <textarea id="comment" name="comment"></textarea>
-            </div>
-            <div>
-                <input type="submit"/>
-            </div>
-        </form>
+        <h3>Laisser un commentaire :</h3>
+
+        {% block formComments %}
+            <form action="{{ comment['post_id'] }}" method="post">
+                <div>
+                    <label for="author">Auteur</label><br/>
+                    <input type="text" id="author" name="author"/>
+                </div>
+                <div>
+                    <label for="comment">Commentaire</label><br/>
+                    <textarea id="comment" name="comment"></textarea>
+                </div>
+                <div>
+                    <input type="submit"/>
+                </div>
+            </form>
+        {% endblock %} -->
+
     {% endblock %}
-
-    {% for comment in comments %}
-        <p><strong>{{ comment['author'] }}</strong> le {{ comment['comment_date'] }}</p>
-        <p>{{ comment['comment'] }}</p>
-    {% endfor %}
-
-    <h2>Commentaires</h2>
-
-    {% block formComments %}
-        <form action="{{ post['id'] }}" method="post">
-            <div>
-                <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="author"/>
-            </div>
-            <div>
-                <label for="comment">Commentaire</label><br/>
-                <textarea id="comment" name="comment"></textarea>
-            </div>
-            <div>
-                <input type="submit"/>
-            </div>
-        </form>
-    {% endblock %}
+</div>
 
 {% endblock %}
