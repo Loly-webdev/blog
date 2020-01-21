@@ -12,6 +12,16 @@ class CommentRepository extends DefaultRepository
         return 'comments';
     }
 
+    public static function getTablePk()
+    {
+        return 'post_id';
+    }
+
+    public static function getOrderBy()
+    {
+        return 'comment_date';
+    }
+
     /**
      * Add a comment to the database
      * @param $articleId
@@ -19,7 +29,7 @@ class CommentRepository extends DefaultRepository
      * @return bool
      * @throws Exception
      */
-    public static function add($articleId, $comment)
+    public static function addComment($articleId, $comment)
     {
         $req = static::getPDO()->prepare('
             INSERT INTO ' . static::getTableName() . '

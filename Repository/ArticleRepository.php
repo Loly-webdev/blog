@@ -12,6 +12,16 @@ class ArticleRepository extends DefaultRepository
         return 'posts';
     }
 
+    public static function getTablePk()
+    {
+        return 'id';
+    }
+
+    public static function getOrderBy()
+    {
+        return 'creation_date';
+    }
+
     /**
      * Add the entry with the id find by the getParams method
      * @param $article
@@ -37,5 +47,4 @@ class ArticleRepository extends DefaultRepository
             $article['creation_date'],
         ));
     }
-
 }

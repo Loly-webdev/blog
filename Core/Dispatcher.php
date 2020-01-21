@@ -59,10 +59,9 @@ class Dispatcher
     {
         $controllerName = get_class($this->controller);
         $actionName = $this->getRouter()->getActionName();
-        $methodExist = method_exists($this->controller, $actionName);
 
         //On regarde si $controller posséde une methode $actionName
-        if (false === $methodExist) {
+        if (false === method_exists($this->controller, $actionName)) {
             throw new Exception(
                 "L'argument $actionName n'existe pas dans le controleur $controllerName."
             );

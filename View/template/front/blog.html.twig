@@ -23,10 +23,28 @@
                 {% endblock %}
                 <br/>
                 {% block postComment %}
-                    <em><a href="{{ post['id'] }}">Commentaires</a></em>
+                    <em><a href="/article/article?id={{ post['id'] }}?comment={{ comment['content'] }}">Voir les commentaires associés</a></em>
                 {% endblock %}
             </p>
         </div>
     {% endfor %}
+
+    <h3>Ecrire un nouvel article :</h3>
+
+    {% block formPost %}
+        <form action="{{ post['id'] }}" method="post">
+            <div>
+                <label for="author">Auteur</label><br/>
+                <input type="text" id="author" name="author"/>
+            </div>
+            <div>
+                <label for="comment">Article</label><br/>
+                <textarea id="comment" name="comment"></textarea>
+            </div>
+            <div>
+                <input type="submit"/>
+            </div>
+        </form>
+    {% endblock %}
 
 {% endblock %}
