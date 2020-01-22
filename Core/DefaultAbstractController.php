@@ -8,25 +8,25 @@ require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
     private $request;
-    protected static $twig = null;
+    private static $twig = null;
 
     public function getRequest()
     {
         return $this->request = Request::getInstance();
     }
 
-    public function getTwig()
+    public static function getTwig()
     {
-        if (null === static::$twig) {
+        if (null === self::$twig) {
             require_once PROJECT_VENDOR . 'autoload.php';
             $loader = new FilesystemLoader('View/');
-            static::$twig = new Environment($loader
+            self::$twig = new Environment($loader
             /*, [
             'cache' => 'Cache',
              ]*/
             );
         }
-        return static::$twig;
+        return self::$twig;
     }
 
     public function renderView($view, array $params = [], string $viewFolder = null): void

@@ -3,7 +3,7 @@
 require_once PROJECT_CORE . 'DefaultPDO.php';
 require_once PROJECT_REPOSITORY . 'DefaultRepositoryInterface.php';
 
-abstract class DefaultRepository extends DefaultPDO implements DefaultRepositoryInterface
+abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRepositoryInterface
 {
     /**
      * This method make the connection to the database and load the Request class
