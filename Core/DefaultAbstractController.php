@@ -7,7 +7,13 @@ require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
+    private $request;
     protected static $twig = null;
+
+    public function getRequest()
+    {
+        return $this->request = Request::getInstance();
+    }
 
     public function getTwig()
     {
@@ -33,7 +39,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         }
     }
 
-    public function getFolderView() : string
+    public function getFolderView(): string
     {
         return 'template/front/';
     }

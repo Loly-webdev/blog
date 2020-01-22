@@ -25,10 +25,11 @@ class ArticleRepository extends DefaultRepository
     /**
      * Add the entry with the id find by the getParams method
      * @param $article
+     * @param $articleId
      * @return bool
      * @throws Exception
      */
-    public static function addArticle($article)
+    public static function addArticle($article, $articleId)
     {
         $req = static::getPDO()->prepare('
             INSERT INTO ' . static::getTableName() . '
@@ -37,14 +38,14 @@ class ArticleRepository extends DefaultRepository
             content, 
             creation_date) 
             VALUES(?,?,?,?,NOW())
-            WHERE ' . static::getTablePk() . ' = ?
             ');
 
         return $req->execute(array(
+            $articleId,
             $article['id'],
             $article['title'],
             $article['content'],
-            $article['creation_date'],
+            $article['creation_date']
         ));
     }
 }

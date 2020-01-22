@@ -7,21 +7,13 @@ class BlogController extends DefaultAbstractController
 {
     public function indexAction()
     {
-        try {
-            $posts = ArticleRepository::findAll();
+        $posts = ArticleRepository::findAll();
 
-            $this->renderView(
-                'blog.html.twig',
-                [
-                    'posts' => $posts
-                ]
-            );
-
-        } catch (Throwable $t) {
-
-            require_once PROJECT_CONTROLLER . 'ErrorController.php';
-            $error = new ErrorController();
-            $error->error($t);
-        }
+        $this->renderView(
+            'blog.html.twig',
+            [
+                'posts' => $posts
+            ]
+        );
     }
 }
