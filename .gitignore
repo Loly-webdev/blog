@@ -1,9 +1,11 @@
-# un commentaire, cette ligne est ignorée
-# pas de fichier .a
+# ignorer les fichier
 *.a
-# pas de fichier se terminant par un ~
+dbConfig
+# ignorer les fichiers se terminant par un ~
 *~
-# ignorer le dossier .idea
+# ignorer les dossier
 .idea
-Cache
+vendor
+# ignorer le contenu des dossiers
+Cache/*
 
