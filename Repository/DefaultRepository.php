@@ -32,7 +32,7 @@ abstract class DefaultRepository extends DefaultPDO implements DefaultRepository
     }
 
     /**
-     * This function find all comments to an article
+     * This function find all comments in an article
      * @param $articleId
      * @return array
      * @throws Exception
@@ -52,12 +52,12 @@ abstract class DefaultRepository extends DefaultPDO implements DefaultRepository
 
     /**
      * Find all the informations of the table where id is equal to the id find by the getParams method
-     * @param $id [id of the element]
+     * @param $articleId
      * @return mixed
      * @throws Exception
      */
 
-    public static function findById($id)
+    public static function findById($articleId)
     {
         $req = static::getPDO()->prepare('
             SELECT *
@@ -65,18 +65,18 @@ abstract class DefaultRepository extends DefaultPDO implements DefaultRepository
             WHERE ' . static::getTablePk() . ' = ?
             ');
 
-        $req->execute(array($id));
+        $req->execute(array($articleId));
 
         return $req->fetch();
     }
 
     /**
      * Delete the entry with the id find by the getParams method
-     * @param $id [id of the element]
+     * @param $articleId [id of the element]
      * @return bool
      * @throws Exception
      */
-    public static function deleteById($id)
+    public static function deleteById($articleId)
     {
         $req = static::getPDO()->prepare('
             DELETE
@@ -84,6 +84,6 @@ abstract class DefaultRepository extends DefaultPDO implements DefaultRepository
             WHERE ' . static::getTablePk() . ' = ?
             ');
 
-        return $req->execute(array($id));
+        return $req->execute(array($articleId));
     }
 }

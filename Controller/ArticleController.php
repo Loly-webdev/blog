@@ -9,31 +9,31 @@ class ArticleController extends DefaultAbstractController
 {
     public function indexAction()
     {
-        try {
+        // on recupere l'id dans l'url
+        $articleId = $this->getRequest()->getParam('articleId');
 
-            $id = $_GET['id'];
-            $article = ArticleRepository::findById($id);
-
-            if (!empty($article[''])) {
-                throw new Exception('La page que vous recherchez n\'existe pas');
-            }
-
-            //$comments = CommentRepository::findArticleComments($id);
-            //var_dump($comments);
-
-            $this->renderView(
-                'article.html.twig',
-                [
-                    'article' => $article,
-                    //'comments' => $comments
-                ]
-            );
-
-        } catch (Throwable $t) {
-
-            require_once PROJECT_CONTROLLER . 'ErrorController.php';
-            $error = new ErrorController();
-            $error->error($t);
+        if (null === $articleId) {
+            throw new \InvalidArgumentException('La valeur de l\'article soumise n\'est pas valide.');
         }
+
+        // on cherche les données en bdd associees a l'id (null si rien trouve)
+        $article = ArticleRepository::findById($articleId);
+
+        if (null === $article) {
+            // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
+            // Ce type d'exceptions doit obligatoirement faire l'objet d'une correction de votre code.
+            throw new \LogicException('La page que vous recherchez n\'existe pas');
+        }
+
+        // on affiche les commentaires associes
+        $comments = CommentRepository::findArticleComments($articleId);
+
+        $this->renderView(
+            'article.html.twig',
+            [
+                'article' => $article,
+                'comments' => $comments
+            ]
+        );
     }
 }
