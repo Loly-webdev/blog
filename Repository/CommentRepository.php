@@ -1,11 +1,11 @@
 <?php
 
-require_once PROJECT_REPOSITORY . 'DefaultRepository.php';
+require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
 
 /**
  * Make the database requests relative to the comments
  */
-class CommentRepository extends DefaultRepository
+class CommentRepository extends DefaultAbstractRepository
 {
     public static function getTableName()
     {

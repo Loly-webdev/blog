@@ -1,11 +1,11 @@
 <?php
 
-require_once PROJECT_REPOSITORY . 'DefaultRepository.php';
+require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
 
 /**
  * Make the database requests relative to the articles
  */
-class ArticleRepository extends DefaultRepository
+class ArticleRepository extends DefaultAbstractRepository
 {
     public static function getTableName()
     {

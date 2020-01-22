@@ -1,10 +1,7 @@
 # ignorer les fichier
-*.a
 config.env
-# ignorer les fichiers se terminant par un ~
-*~
 # ignorer les dossier
 .idea
+vendor/
 # ignorer le contenu des dossiers
-Cache/*
-vendor/*
+Cache/**
