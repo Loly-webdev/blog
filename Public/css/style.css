@@ -1,9 +1,11 @@
 /* GENERAL */
 body {
     margin: 0;
+    padding: 0;
     font-family: "Roboto", sans-serif;
     letter-spacing: 1px;
 }
+
 main {
     margin: 1rem;
     padding: 7rem 0 12rem 0;
@@ -74,7 +76,7 @@ nav {
     justify-content: space-between;
     position: fixed;
     width: 100%;
-    margin-top: -1rem;
+    top: 0;
 }
 
 nav img {
@@ -202,13 +204,11 @@ footer a {
 }
 
 /*blog*/
-.news p
-{
+.news p {
     background-color:#CCCCCC;
     margin-top:0px;
 }
-.news
-{
+.news {
     width:70%;
     margin:auto;
 }

@@ -1,0 +1,50 @@
+{% extends "template/base.html.twig" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+
+    <h2>Derniers billets du blog :</h2>
+
+    {% for post in posts %}
+        <div class="news">
+            <h3>
+                {% block postTitle %}
+                    {{ post['title'] }}
+                {% endblock %}
+                <br>
+                {% block dateTitle %}
+                    <em>le {{ post['creation_date'] }}</em>
+                {% endblock %}
+            </h3>
+            <p>
+                {% block postContent %}
+                    {{ post['content'] }}
+                {% endblock %}
+                <br/>
+                {% block postComment %}
+                    <em><a href="/article/index?articleId={{ post['id'] }}">Voir les commentaires associés</a></em>
+                {% endblock %}
+            </p>
+        </div>
+    {% endfor %}
+
+    <h3>Ecrire un nouvel article :</h3>
+
+    {% block formPost %}
+        <form action="{{ post['id'] }}" method="post">
+            <div>
+                <label for="author">Auteur</label><br/>
+                <input type="text" id="author" name="author"/>
+            </div>
+            <div>
+                <label for="comment">Article</label><br/>
+                <textarea id="comment" name="comment"></textarea>
+            </div>
+            <div>
+                <input type="submit"/>
+            </div>
+        </form>
+    {% endblock %}
+
+{% endblock %}
