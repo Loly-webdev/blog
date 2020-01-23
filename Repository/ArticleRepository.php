@@ -7,32 +7,25 @@ require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
  */
 class ArticleRepository extends DefaultAbstractRepository
 {
-    public static function getTableName()
+    public static function getTableData()
     {
-        return 'posts';
-    }
-
-    public static function getTablePk()
-    {
-        return 'id';
-    }
-
-    public static function getOrderBy()
-    {
-        return 'creation_date';
+        return array(
+                'name' => 'posts',
+                'pk' => 'id',
+                'order' => 'creation_date'
+        );
     }
 
     /**
      * Add the entry with the id find by the getParams method
      * @param $article
-     * @param $articleId
      * @return bool
      * @throws Exception
      */
-    public static function addArticle($article, $articleId)
+    public static function addArticle($article)
     {
         $req = static::getPDO()->prepare('
-            INSERT INTO ' . static::getTableName() . '
+            INSERT INTO ' . static::getTableData()['name'] . '
             (id,
             title, 
             content, 
@@ -41,7 +34,6 @@ class ArticleRepository extends DefaultAbstractRepository
             ');
 
         return $req->execute(array(
-            $articleId,
             $article['id'],
             $article['title'],
             $article['content'],

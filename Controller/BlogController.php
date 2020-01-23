@@ -7,7 +7,7 @@ class BlogController extends DefaultAbstractController
 {
     public function indexAction()
     {
-        $posts = ArticleRepository::findAll();
+        $posts = ArticleRepository::find();
 
         $this->renderView(
             'blog.html.twig',
