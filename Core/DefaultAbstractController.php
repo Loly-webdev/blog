@@ -20,10 +20,13 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         if (null === self::$twig) {
             require_once PROJECT_VENDOR . 'autoload.php';
             $loader = new FilesystemLoader('View/');
-            self::$twig = new Environment($loader
-            /*, [
-            'cache' => 'Cache',
-             ]*/
+            self::$twig = new Environment($loader,
+                // le cache est utile en prod mais pas en dev,
+                // le laisser  en false pour le dev
+                // et indiquer le nom du dossier ('Cache') pour la prod
+                [
+                    'cache' => false
+                ]
             );
         }
         return self::$twig;

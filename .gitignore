@@ -4,4 +4,4 @@ config.env
 .idea
 vendor/
 # ignorer le contenu des dossiers
-Cache/**
+
