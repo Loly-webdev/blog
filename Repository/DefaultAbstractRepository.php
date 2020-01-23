@@ -18,34 +18,15 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
      * This function find all the informations contained in the table
      * @throws Exception
      */
-    public static function findAll()
+    public static function find()
     {
         $req = static::getPDO()->query('
             SELECT *
-            FROM ' . static::getTableName() . '
-            ORDER BY ' . static::getOrderBy() . ' DESC
+            FROM ' . static::getTableData()['name'] . '
+            ORDER BY ' . static::getTableData()['order'] . ' DESC
         ');
 
         $req->execute();
-
-        return $req->fetchAll();
-    }
-
-    /**
-     * This function find all comments in an article
-     * @param $articleId
-     * @return array
-     * @throws Exception
-     */
-    public static function findArticleComments($articleId)
-    {
-        $req = static::getPDO()->prepare('
-            SELECT * 
-            FROM ' . static::getTableName() . ' 
-            WHERE ' . static::getTablePk() . ' = ?
-            ORDER BY ' . static::getOrderBy() . ' DESC 
-        ');
-        $req->execute(array($articleId));
 
         return $req->fetchAll();
     }
@@ -57,12 +38,12 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
      * @throws Exception
      */
 
-    public static function findById($articleId)
+    public static function findOne($articleId)
     {
         $req = static::getPDO()->prepare('
             SELECT *
-            FROM ' . static::getTableName() . '
-            WHERE ' . static::getTablePk() . ' = ?
+            FROM ' . static::getTableData()['name'] . '
+            WHERE ' . static::getTableData()['pk'] . ' = ?
             ');
 
         $req->execute(array($articleId));
@@ -71,19 +52,38 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
     }
 
     /**
+     * This function find all comments in an article
+     * @param $articleId
+     * @return array
+     * @throws Exception
+     */
+    public static function findByArticleId($articleId)
+    {
+        $req = static::getPDO()->prepare('
+            SELECT * 
+            FROM ' . static::getTableData()['name'] . ' 
+            WHERE ' . static::getTableData()['pk'] . ' = ?
+            ORDER BY ' . static::getTableData()['order'] . ' DESC 
+        ');
+        $req->execute(array($articleId));
+
+        return $req->fetchAll();
+    }
+
+    /**
      * Delete the entry with the id find by the getParams method
-     * @param $articleId [id of the element]
+     * @param $id
      * @return bool
      * @throws Exception
      */
-    public static function deleteById($articleId)
+    public static function deleteById($id)
     {
         $req = static::getPDO()->prepare('
             DELETE
-            FROM ' . static::getTableName() . '
-            WHERE ' . static::getTablePk() . ' = ?
+            FROM ' . static::getTableData()['name'] . '
+            WHERE ' . static::getTableData()['pk'] . ' = ?
             ');
 
-        return $req->execute(array($articleId));
+        return $req->execute(array($id));
     }
 }

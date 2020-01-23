@@ -7,8 +7,7 @@ class ConnexionController extends DefaultAbstractController
     public function indexAction()
     {
         $this->renderView(
-            'connexion.html.twig',
-            ['test' => 'Hello World !!!']
+            'connexion.html.twig'
         );
     }
 }

@@ -8,7 +8,7 @@ require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
     private $request;
-    private static $twig = null;
+    private static $twig;
 
     public function getRequest()
     {

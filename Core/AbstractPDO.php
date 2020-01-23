@@ -21,7 +21,7 @@ abstract class AbstractPDO
         if (null === $cnxData) {
             // SI la clef de connexion à la bdd existe pas on leve une exeption
             throw new Exception(
-                "la clef de connexion à la base de données n'existe pas."
+                "Les informations de connexion à la base de données ne sont pas valide."
             );
         }
 

@@ -1,14 +1,10 @@
 {% extends "template/base.html.twig" %}
-
 {% block title %}
     {{ post['title'] }}
 {% endblock %}
-
 {% block content %}
-
     <h1>Mon Blog !</h1>
     <p><a href="/blog">Retour à la liste des billets</a></p>
-
     <div class="news">
         <h3>
             {% block postTitle %}
@@ -19,40 +15,37 @@
                 <em>le {{ article['creation_date'] }}</em>
             {% endblock %}
         </h3>
-
         <p>
             {% block postContent %}
                 {{ article['content'] }}
             {% endblock %}
         </p>
     </div>
-<div>
-    {% block commentContent %}
-        
-        {% for comment in comments %}
-            <p><strong>{{ comment['author'] }}</strong> le {{ comment['comment_date'] }}</p>
-            <p>{{ comment['comment'] }}</p>
-        {% endfor %}
-
-        <h3>Laisser un commentaire :</h3>
-
-        {% block formComments %}
-            <form action="{{ comment['post_id'] }}" method="post">
-                <div>
-                    <label for="author">Auteur</label><br/>
-                    <input type="text" id="author" name="author"/>
-                </div>
-                <div>
-                    <label for="comment">Commentaire</label><br/>
-                    <textarea id="comment" name="comment"></textarea>
-                </div>
-                <div>
-                    <input type="submit"/>
-                </div>
-            </form>
+    <div>
+        {% block commentContent %}
+            {% for comment in comments %}
+                <p>
+                    <strong>{{ comment['author'] }}</strong>
+                    le {{ comment['comment_date'] }}
+                </p>
+                <p>{{ comment['comment'] }}</p>
+            {% endfor %}
+            <h3>Laisser un commentaire :</h3>
+            {% block formComments %}
+                <form action="{{ comment['post_id'] }}" method="post">
+                    <div>
+                        <label for="author">Auteur</label><br/>
+                        <input type="text" id="author" name="author"/>
+                    </div>
+                    <div>
+                        <label for="comment">Commentaire</label><br/>
+                        <textarea id="comment" name="comment"></textarea>
+                    </div>
+                    <div>
+                        <input type="submit"/>
+                    </div>
+                </form>
+            {% endblock %}
         {% endblock %}
-
-    {% endblock %}
-</div>
-
+    </div>
 {% endblock %}

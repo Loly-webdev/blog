@@ -31,20 +31,19 @@ class Dispatcher
     public function initController()
     {
         $controllerName = $this->getRouter()->getControllerName();
-        $filename = PROJECT_CONTROLLER . $controllerName . '.php';
+        $controller = PROJECT_CONTROLLER . $controllerName . '.php';
 
-        if (false === file_exists($filename)) {
-            throw new Exception("Le fichier $filename n'existe pas.");
+        if (false === file_exists($controller)) {
+            throw new Exception("Le controller $controller n'existe pas.");
         }
 
-        require_once($filename);
+        require_once($controller);
 
         //on récupere l'instance du controller
-        $controller = new $controllerName;
-        $this->controller = $controller;
+        $this->controller = new $controllerName();
 
         //on vérifie que le controller et compatible
-        $controllerIsCompatible = is_subclass_of($controller, 'DefaultControllerInterface');
+        $controllerIsCompatible = is_subclass_of($this->controller, 'DefaultControllerInterface');
 
         if (false === $controllerIsCompatible) {
             throw new Exception(
@@ -63,7 +62,7 @@ class Dispatcher
         //On regarde si $controller posséde une methode $actionName
         if (false === method_exists($this->controller, $actionName)) {
             throw new Exception(
-                "L'argument $actionName n'existe pas dans le controleur $controllerName."
+                "La méthode $actionName n'existe pas dans le controleur $controllerName."
             );
         }
 
