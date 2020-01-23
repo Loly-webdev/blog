@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% block head %}
+        {{ include('template/partial/_head.html.twig') }}
+        <title>{% block title %}Error{% endblock %}</title>
+    {% endblock %}
+</head>
+
+<body>
+<main>
+    {% block content %}
+        <section>
+            <h3>Franchement, déchirer une page web, c'est pas sérieux !</h3>
+
+            <img alt="Page d'erreur" src="../../Public/images/error_code.jpg">
+
+            <h3>Détail de l'erreur : </h3>
+            <p>
+                <strong>Message : </strong>
+                {% block message %}
+                     {{ message }}
+                {% endblock %}
+                <br>
+
+                <strong>Fichier : </strong>
+                {% block file %}
+                    {{ file }}
+                {% endblock %}
+                <br>
+
+                <strong>Ligne : </strong>
+                {% block line %}
+                    {{ line }}
+                {% endblock %}
+            <hr>
+            <a href="/home">Retour à l'Accueil</a>
+            </p>
+        </section>
+    {% endblock %}
+</main>
+
+<footer>
+    {% block footer %}
+        <p>
+            <strong> © Eloïse RUIZ-RODRIGUEZ | 2020</strong><br>
+            Dans le cadre de ma formation avec OpenClassrooms.
+        </p>
+    {% endblock %}
+</footer>
+</body>
+</html>
