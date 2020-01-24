@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    {% block head %}
-        {{ include('template/partial/_head.html.twig') }}
-        <title>{% block title %}{% endblock %}</title>
-    {% endblock %}
+    {{ include('template/partial/_head.html.twig') }}
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 <header>
-    {% block nav %}
-        {{ include('template/partial/_nav.html.twig') }}
-    {% endblock %}
+    {{ include('template/partial/_nav.html.twig') }}
 </header>
 <main>
     {% block content %}{% endblock %}
 </main>
 <footer>
-    {% block footer %}
-        {{ include('template/partial/_footer.html.twig') }}
-    {% endblock %}
+    {{ include('template/partial/_footer.html.twig') }}
+    <hr>
+    <p>
+        <a href="/connexion">Connexion</a>
+    </p>
 </footer>
 </body>
 </html>
