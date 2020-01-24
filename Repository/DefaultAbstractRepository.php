@@ -37,7 +37,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
      * @return mixed
      * @throws Exception
      */
-
     public static function findOne($articleId)
     {
         $req = static::getPDO()->prepare('

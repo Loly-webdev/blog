@@ -8,6 +8,7 @@ abstract class AbstractPDO
 
     public abstract static function getHostKey(): string;
 
+    // singleton of PDOConnect object to load once this method
     public static function PDOConnect()
     {
         $driverOptions = [
@@ -18,13 +19,14 @@ abstract class AbstractPDO
 
         $cnxData = HOSTS[static::getHostKey()] ?? null;
 
+        // Check if the data of connexion to database exist, or return an exception
         if (null === $cnxData) {
-            // SI la clef de connexion à la bdd existe pas on leve une exeption
             throw new Exception(
                 "Les informations de connexion à la base de données ne sont pas valide."
             );
         }
 
+        // Get data of connexion
         if (is_null(self::$cnx)) {
             self::$cnx = new PDO(
                 "mysql:host=" . $cnxData['host'] . ";dbname=" . $cnxData['name'],
@@ -33,7 +35,6 @@ abstract class AbstractPDO
                 $driverOptions
             );
         }
-
         return self::$cnx;
     }
 }

@@ -3,7 +3,9 @@
 require_once PROJECT_CORE . 'Router.php';
 
 /**
+ * Class Dispatcher
  *
+ * Get informations of URL and params to dispatch controller action
  */
 class Dispatcher
 {
@@ -33,16 +35,15 @@ class Dispatcher
         $controllerName = $this->getRouter()->getControllerName();
         $controller = PROJECT_CONTROLLER . $controllerName . '.php';
 
+        // Check if the controller exist to return this, or return an exception
         if (false === file_exists($controller)) {
             throw new Exception("Le controller $controller n'existe pas.");
         }
-
         require_once($controller);
 
-        //on récupere l'instance du controller
         $this->controller = new $controllerName();
 
-        //on vérifie que le controller et compatible
+        // Check if the controller find is compatible with DefaultControllerInterface
         $controllerIsCompatible = is_subclass_of($this->controller, 'DefaultControllerInterface');
 
         if (false === $controllerIsCompatible) {
@@ -50,7 +51,6 @@ class Dispatcher
                 'Le controller ' . $controllerName .  ' n\'est pas compatible avec DefaultControllerInterface'
             );
         }
-
         return $this;
     }
 
@@ -59,14 +59,13 @@ class Dispatcher
         $controllerName = get_class($this->controller);
         $actionName = $this->getRouter()->getActionName();
 
-        //On regarde si $controller posséde une methode $actionName
+        // Check if in the controller the method action exist or return an exception
         if (false === method_exists($this->controller, $actionName)) {
             throw new Exception(
                 "La méthode $actionName n'existe pas dans le controleur $controllerName."
             );
         }
-
-        //Dispatch de l'action du controleur
+        // Dispatch the controller action
         call_user_func(array($this->controller, $actionName));
 
         return $this;

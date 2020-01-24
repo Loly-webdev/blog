@@ -2,12 +2,12 @@
 
 interface DefaultControllerInterface
 {
-    // methode d'action par defaut
+    // Action method
     public function indexAction();
-    // affichage de la vue et de ses parametres
-    public function renderView(string $view, array $params, string $viewFolder = null ) : void;
-    // chemin du fichier des vues demandees
+    // View Method
+    public function renderView(string $viewName, array $params, string $viewFolder = null ) : void;
+    // Path of view files
     public function getFolderView() : string;
-    // pour instancie l'objet request sans le repeter a chaque fois
+    // To instance Request object
     public function getRequest();
 }

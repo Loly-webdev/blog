@@ -17,7 +17,7 @@ class ArticleRepository extends DefaultAbstractRepository
     }
 
     /**
-     * Add the entry with the id find by the getParams method
+     * Add an article to the database
      * @param $article
      * @return bool
      * @throws Exception
