@@ -19,7 +19,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         // Load article associate to the articleId or return null
-        $article = ArticleRepository::findOne($articleId);
+        $article = (new ArticleRepository())->findOne($articleId);
 
         if (null === $article) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
@@ -29,7 +29,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         // Load comments associate to the articleId
-        $comments = CommentRepository::findByArticleId($articleId);
+        $comments = (new CommentRepository())->findByArticleId($articleId);
 
         $this->renderView(
             'article.html.twig',

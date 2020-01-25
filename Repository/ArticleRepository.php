@@ -9,11 +9,11 @@ class ArticleRepository extends DefaultAbstractRepository
 {
     public static function getTableData()
     {
-        return array(
+        return [
                 'name' => 'posts',
                 'pk' => 'id',
                 'order' => 'creation_date'
-        );
+        ];
     }
 
     /**
@@ -22,9 +22,9 @@ class ArticleRepository extends DefaultAbstractRepository
      * @return bool
      * @throws Exception
      */
-    public static function addArticle($article)
+    public function addArticle($article)
     {
-        $req = static::getPDO()->prepare('
+        $req = $this->getPDO()->prepare('
             INSERT INTO ' . static::getTableData()['name'] . '
             (id,
             title, 

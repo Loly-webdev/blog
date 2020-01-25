@@ -5,25 +5,32 @@ require_once PROJECT_REPOSITORY . 'DefaultRepositoryInterface.php';
 
 abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRepositoryInterface
 {
+    private $pdo;
+
+    public function __construct()
+    {
+        $this->pdo = DefaultPDO::PDOConnect();
+    }
+
     /**
      * This method make the connection to the database and load the Request class
      * @throws Exception
      */
-    public static function getPDO()
+    public function getPDO()
     {
-        return DefaultPDO::PDOConnect();
+        return $this->pdo;
     }
 
     /**
      * This function find all the informations contained in the table
      * @throws Exception
      */
-    public static function find()
+    public function find()
     {
-        $req = static::getPDO()->query('
+        $req = $this->getPDO()->query('
             SELECT *
             FROM ' . static::getTableData()['name'] . '
-            ORDER BY ' . static::getTableData()['order'] . ' DESC
+            ORDER BY ' . static::getTableData()['pk'] . ' DESC
         ');
 
         $req->execute();
@@ -37,9 +44,9 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
      * @return mixed
      * @throws Exception
      */
-    public static function findOne($articleId)
+    public function findOne($articleId)
     {
-        $req = static::getPDO()->prepare('
+        $req = $this->getPDO()->prepare('
             SELECT *
             FROM ' . static::getTableData()['name'] . '
             WHERE ' . static::getTableData()['pk'] . ' = ?
@@ -48,25 +55,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
         $req->execute(array($articleId));
 
         return $req->fetch();
-    }
-
-    /**
-     * This function find all comments in an article
-     * @param $articleId
-     * @return array
-     * @throws Exception
-     */
-    public static function findByArticleId($articleId)
-    {
-        $req = static::getPDO()->prepare('
-            SELECT * 
-            FROM ' . static::getTableData()['name'] . ' 
-            WHERE ' . static::getTableData()['pk'] . ' = ?
-            ORDER BY ' . static::getTableData()['order'] . ' DESC 
-        ');
-        $req->execute(array($articleId));
-
-        return $req->fetchAll();
     }
 
     /**
