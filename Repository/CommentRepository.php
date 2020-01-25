@@ -7,14 +7,9 @@ require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
  */
 class CommentRepository extends DefaultAbstractRepository
 {
-    public static function getTableData()
-    {
-        return [
-            'name' => 'comments',
-            'pk' => 'post_id',
-            'order' => 'comment_date'
-        ];
-    }
+    static $tableName = 'comments';
+    static $tablePk = 'post_id';
+    static $tableOrder = 'comment_date';
 
     /**
      * This function find all comments in an article
@@ -26,9 +21,9 @@ class CommentRepository extends DefaultAbstractRepository
     {
         $req = $this->getPDO()->prepare('
             SELECT * 
-            FROM ' . static::getTableData()['name'] . ' 
-            WHERE ' . static::getTableData()['pk'] . ' = ?
-            ORDER BY ' . static::getTableData()['order'] . ' DESC 
+            FROM ' . static::$tableName . ' 
+            WHERE ' . static::$tablePk . ' = ?
+            ORDER BY ' . static::$tableOrder . ' DESC 
         ');
         $req->execute(array($articleId));
 
@@ -45,7 +40,7 @@ class CommentRepository extends DefaultAbstractRepository
     public function addComment($comment)
     {
         $req = $this->getPDO()->prepare('
-            INSERT INTO ' . static::getTableData()['name'] . '
+            INSERT INTO ' . static::$tableName . '
             (id, 
             post_id,
             author, 

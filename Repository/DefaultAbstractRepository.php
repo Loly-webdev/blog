@@ -1,15 +1,26 @@
 <?php
 
 require_once PROJECT_CORE . 'DefaultPDO.php';
-require_once PROJECT_REPOSITORY . 'DefaultRepositoryInterface.php';
 
-abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRepositoryInterface
+abstract class DefaultAbstractRepository extends DefaultPDO
 {
     private $pdo;
 
-    public function __construct()
+
+    final public function __construct()
     {
         $this->pdo = DefaultPDO::PDOConnect();
+        if  (!isset(static::$tableName)) {
+            throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
+        }
+
+        if  (!isset(static::$tablePk)) {
+            throw new Exception('vous devez déclarez la clé primaire de la table pour la classe ' . __CLASS__);
+        }
+
+        if  (!isset(static::$tableOrder)) {
+            throw new Exception('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
+        }
     }
 
     /**
@@ -29,8 +40,8 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
     {
         $req = $this->getPDO()->query('
             SELECT *
-            FROM ' . static::getTableData()['name'] . '
-            ORDER BY ' . static::getTableData()['pk'] . ' DESC
+            FROM ' . static::$tableName . '
+            ORDER BY ' . static::$tableOrder . ' DESC 
         ');
 
         $req->execute();
@@ -48,8 +59,8 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
     {
         $req = $this->getPDO()->prepare('
             SELECT *
-            FROM ' . static::getTableData()['name'] . '
-            WHERE ' . static::getTableData()['pk'] . ' = ?
+            FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
             ');
 
         $req->execute(array($articleId));
@@ -67,8 +78,8 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
     {
         $req = static::getPDO()->prepare('
             DELETE
-            FROM ' . static::getTableData()['name'] . '
-            WHERE ' . static::getTableData()['pk'] . ' = ?
+            FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
             ');
 
         return $req->execute(array($id));
