@@ -19,7 +19,7 @@ require_once PROJECT_CORE . 'DefaultAbstractController.php';
  * }
  * </code>
  */
-class Request
+final class Request
 {
     private static $instance = null;
 

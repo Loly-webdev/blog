@@ -4,7 +4,7 @@ require_once PROJECT_CONFIG . 'config.env';
 
 abstract class AbstractPDO
 {
-    private static $cnx;
+    protected static $cnx;
 
     public abstract static function getHostKey(): string;
 
@@ -27,14 +27,14 @@ abstract class AbstractPDO
         }
 
         // Get data of connexion
-        if (is_null(self::$cnx)) {
-            self::$cnx = new PDO(
+        if (is_null(static::$cnx)) {
+            static::$cnx = new PDO(
                 "mysql:host=" . $cnxData['host'] . ";dbname=" . $cnxData['name'],
                 $cnxData['user'],
                 $cnxData['pass'],
                 $driverOptions
             );
         }
-        return self::$cnx;
+        return static::$cnx;
     }
 }

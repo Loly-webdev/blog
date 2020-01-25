@@ -7,8 +7,8 @@ require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
-    private $request;
-    private static $twig;
+    protected $request;
+    protected static $twig;
 
     public function __construct()
     {
@@ -30,17 +30,17 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     public static function getTwig()
     {
         // instance of Twig
-        if (null === self::$twig) {
+        if (null === static::$twig) {
             require_once PROJECT_VENDOR . 'autoload.php';
             $loader = new FilesystemLoader('View/');
-            self::$twig = new Environment($loader,
+            static::$twig = new Environment($loader,
                 // To the prod define the path of directory Cache, else to dev keep false
                 [
                     'cache' => false
                 ]
             );
         }
-        return self::$twig;
+        return static::$twig;
     }
 
     public function renderView($viewName, array $params = [], string $viewFolder = null): void
