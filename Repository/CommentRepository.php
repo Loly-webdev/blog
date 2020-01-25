@@ -9,12 +9,32 @@ class CommentRepository extends DefaultAbstractRepository
 {
     public static function getTableData()
     {
-        return array(
+        return [
             'name' => 'comments',
             'pk' => 'post_id',
             'order' => 'comment_date'
-        );
+        ];
     }
+
+    /**
+     * This function find all comments in an article
+     * @param $articleId
+     * @return array
+     * @throws Exception
+     */
+    public function findByArticleId($articleId)
+    {
+        $req = $this->getPDO()->prepare('
+            SELECT * 
+            FROM ' . static::getTableData()['name'] . ' 
+            WHERE ' . static::getTableData()['pk'] . ' = ?
+            ORDER BY ' . static::getTableData()['order'] . ' DESC 
+        ');
+        $req->execute(array($articleId));
+
+        return $req->fetchAll();
+    }
+
 
     /**
      * Add a comment to the database
@@ -22,9 +42,9 @@ class CommentRepository extends DefaultAbstractRepository
      * @return bool
      * @throws Exception
      */
-    public static function addComment($comment)
+    public function addComment($comment)
     {
-        $req = static::getPDO()->prepare('
+        $req = $this->getPDO()->prepare('
             INSERT INTO ' . static::getTableData()['name'] . '
             (id, 
             post_id,
