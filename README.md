@@ -1,2 +1,3 @@
 # blog
-My professional blog
+
+Framework from scratch
