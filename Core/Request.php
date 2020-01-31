@@ -23,7 +23,8 @@ final class Request
 {
     private static $instance = null;
 
-    private function __construct(){
+    private function __construct()
+    {
     }
 
     public static function getInstance() {

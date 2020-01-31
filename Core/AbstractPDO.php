@@ -6,8 +6,6 @@ abstract class AbstractPDO
 {
     protected static $cnx;
 
-    public abstract static function getHostKey(): string;
-
     // singleton of PDOConnect object to load once this method
     public static function PDOConnect()
     {
@@ -37,4 +35,6 @@ abstract class AbstractPDO
         }
         return static::$cnx;
     }
+
+    public abstract static function getHostKey(): string;
 }

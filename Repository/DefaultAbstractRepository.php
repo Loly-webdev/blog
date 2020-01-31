@@ -6,30 +6,37 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 {
     private $pdo;
 
-
     final public function __construct()
     {
         $this->pdo = DefaultPDO::PDOConnect();
-        if  (!isset(static::$tableName)) {
+        if (!isset(static::$tableName)) {
             throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
         }
 
-        if  (!isset(static::$tablePk)) {
+        if (!isset(static::$tablePk)) {
             throw new Exception('vous devez déclarez la clé primaire de la table pour la classe ' . __CLASS__);
         }
 
-        if  (!isset(static::$tableOrder)) {
+        if (!isset(static::$tableOrder)) {
             throw new Exception('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
         }
     }
 
     /**
-     * This method make the connection to the database and load the Request class
+     * Delete the entry with the id find by the getParams method
+     * @param $id
+     * @return bool
      * @throws Exception
      */
-    public function getPDO()
+    public static function deleteById($id)
     {
-        return $this->pdo;
+        $req = static::getPDO()->prepare('
+            DELETE
+            FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
+            ');
+
+        return $req->execute(array($id));
     }
 
     /**
@@ -50,6 +57,15 @@ abstract class DefaultAbstractRepository extends DefaultPDO
     }
 
     /**
+     * This method make the connection to the database and load the Request class
+     * @throws Exception
+     */
+    public function getPDO()
+    {
+        return $this->pdo;
+    }
+
+    /**
      * Find all the informations of the table where id is equal to the id find by the getParams method
      * @param $articleId
      * @return mixed
@@ -66,22 +82,5 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         $req->execute(array($articleId));
 
         return $req->fetch();
-    }
-
-    /**
-     * Delete the entry with the id find by the getParams method
-     * @param $id
-     * @return bool
-     * @throws Exception
-     */
-    public static function deleteById($id)
-    {
-        $req = static::getPDO()->prepare('
-            DELETE
-            FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ?
-            ');
-
-        return $req->execute(array($id));
     }
 }

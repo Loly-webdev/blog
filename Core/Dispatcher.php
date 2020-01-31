@@ -15,19 +15,7 @@ class Dispatcher
     public function __construct()
     {
         $this->initRouter()
-             ->initController();
-    }
-
-    public function getRouter()
-    {
-        return $this->router;
-    }
-
-    public function initRouter()
-    {
-        $this->router = new Router();
-
-        return $this;
+            ->initController();
     }
 
     public function initController()
@@ -48,9 +36,21 @@ class Dispatcher
 
         if (false === $controllerIsCompatible) {
             throw new Exception(
-                'Le controller ' . $controllerName .  ' n\'est pas compatible avec DefaultControllerInterface'
+                'Le controller ' . $controllerName . ' n\'est pas compatible avec DefaultControllerInterface'
             );
         }
+        return $this;
+    }
+
+    public function getRouter()
+    {
+        return $this->router;
+    }
+
+    public function initRouter()
+    {
+        $this->router = new Router();
+
         return $this;
     }
 
