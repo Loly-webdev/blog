@@ -30,7 +30,6 @@ class CommentRepository extends DefaultAbstractRepository
         return $req->fetchAll();
     }
 
-
     /**
      * Add a comment to the database
      * @param $comment [an array of the params of the new comment]
