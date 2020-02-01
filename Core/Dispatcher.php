@@ -23,7 +23,7 @@ class Dispatcher
         $controllerName = $this->getRouter()->getControllerName();
         $controller = PROJECT_CONTROLLER . $controllerName . '.php';
 
-        // Check if the controller exist to return this, or return an exception
+        // Check that the controller exists to return it, or return an exception
         if (false === file_exists($controller)) {
             throw new Exception("Le controller $controller n'existe pas.");
         }
@@ -59,7 +59,7 @@ class Dispatcher
         $controllerName = get_class($this->controller);
         $actionName = $this->getRouter()->getActionName();
 
-        // Check if in the controller the method action exist or return an exception
+        // Check that the controller action method exists
         if (false === method_exists($this->controller, $actionName)) {
             throw new Exception(
                 "La méthode $actionName n'existe pas dans le controleur $controllerName."
