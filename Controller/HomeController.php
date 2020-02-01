@@ -7,8 +7,7 @@ class HomeController extends DefaultAbstractController
     public function indexAction()
     {
         $this->renderView(
-            'home.html.twig',
-            ['']
+            'home.html.twig'
         );
     }
 }

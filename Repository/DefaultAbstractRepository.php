@@ -1,29 +1,54 @@
 <?php
 
 require_once PROJECT_CORE . 'DefaultPDO.php';
-require_once PROJECT_REPOSITORY . 'DefaultRepositoryInterface.php';
 
-abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRepositoryInterface
+abstract class DefaultAbstractRepository extends DefaultPDO
 {
+    private $pdo;
+
+    final public function __construct()
+    {
+        $this->pdo = DefaultPDO::PDOConnect();
+        if (!isset(static::$tableName)) {
+            throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
+        }
+
+        if (!isset(static::$tablePk)) {
+            throw new Exception('vous devez déclarez la clé primaire de la table pour la classe ' . __CLASS__);
+        }
+
+        if (!isset(static::$tableOrder)) {
+            throw new Exception('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
+        }
+    }
+
     /**
-     * This method make the connection to the database and load the Request class
+     * Delete the entry with the id find by the getParams method
+     * @param $id
+     * @return bool
      * @throws Exception
      */
-    public static function getPDO()
+    public static function deleteById($id)
     {
-        return DefaultPDO::PDOConnect();
+        $req = static::getPDO()->prepare('
+            DELETE
+            FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
+            ');
+
+        return $req->execute(array($id));
     }
 
     /**
      * This function find all the informations contained in the table
      * @throws Exception
      */
-    public static function findAll()
+    public function find()
     {
-        $req = static::getPDO()->query('
+        $req = $this->getPDO()->query('
             SELECT *
-            FROM ' . static::getTableName() . '
-            ORDER BY ' . static::getOrderBy() . ' DESC
+            FROM ' . static::$tableName . '
+            ORDER BY ' . static::$tableOrder . ' DESC 
         ');
 
         $req->execute();
@@ -32,22 +57,12 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
     }
 
     /**
-     * This function find all comments in an article
-     * @param $articleId
-     * @return array
+     * This method make the connection to the database and load the Request class
      * @throws Exception
      */
-    public static function findArticleComments($articleId)
+    public function getPDO()
     {
-        $req = static::getPDO()->prepare('
-            SELECT * 
-            FROM ' . static::getTableName() . ' 
-            WHERE ' . static::getTablePk() . ' = ?
-            ORDER BY ' . static::getOrderBy() . ' DESC 
-        ');
-        $req->execute(array($articleId));
-
-        return $req->fetchAll();
+        return $this->pdo;
     }
 
     /**
@@ -56,34 +71,16 @@ abstract class DefaultAbstractRepository extends DefaultPDO implements DefaultRe
      * @return mixed
      * @throws Exception
      */
-
-    public static function findById($articleId)
+    public function findOne($articleId)
     {
-        $req = static::getPDO()->prepare('
+        $req = $this->getPDO()->prepare('
             SELECT *
-            FROM ' . static::getTableName() . '
-            WHERE ' . static::getTablePk() . ' = ?
+            FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
             ');
 
         $req->execute(array($articleId));
 
         return $req->fetch();
-    }
-
-    /**
-     * Delete the entry with the id find by the getParams method
-     * @param $articleId [id of the element]
-     * @return bool
-     * @throws Exception
-     */
-    public static function deleteById($articleId)
-    {
-        $req = static::getPDO()->prepare('
-            DELETE
-            FROM ' . static::getTableName() . '
-            WHERE ' . static::getTablePk() . ' = ?
-            ');
-
-        return $req->execute(array($articleId));
     }
 }

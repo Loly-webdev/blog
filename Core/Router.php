@@ -27,7 +27,11 @@ class Router
 
     public function __construct()
     {
+        // Load the instance of Request
         $request = Request::getInstance();
+
+        // Find the ControllerName and ActionName with the function getUrlComponents()
+        // or return a defaultValue
         $controllerName = $request->getUrLComponents()[0] ?? "Home";
         $actionName = $request->getUrLComponents()[1] ?? "index";
 
@@ -35,6 +39,7 @@ class Router
              ->setActionName($actionName);
     }
 
+    // Add Controller to the controllerName find
     public function setControllerName($controllerName)
     {
         $this->controllerName = ucfirst($controllerName) . 'Controller';
@@ -47,6 +52,7 @@ class Router
         return $this->controllerName;
     }
 
+    // Add Action to the ActionName find
     public function setActionName($actionName)
     {
         $this->actionName = $actionName . 'Action';

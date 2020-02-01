@@ -1,58 +1,40 @@
 {% extends "template/base.html.twig" %}
-
 {% block title %}
     {{ post['title'] }}
 {% endblock %}
-
 {% block content %}
-
-    <h1>Mon Blog !</h1>
-    <p><a href="/blog">Retour à la liste des billets</a></p>
-
-    <div class="news">
-        <h3>
-            {% block postTitle %}
-                {{ article['title'] }}
-            {% endblock %}
-
-            {% block dateTitle %}
-                <em>le {{ article['creation_date'] }}</em>
-            {% endblock %}
-        </h3>
-
+    <section class="article">
+        <h2>{{ article['title'] }}</h2>
+        <strong>{{ article['creation_date'] }}</strong>
         <p>
-            {% block postContent %}
-                {{ article['content'] }}
-            {% endblock %}
+            {{ article['content'] }}
         </p>
-    </div>
-<div>
-    {% block commentContent %}
-        
+    </section>
+    <section class="comment">
         {% for comment in comments %}
-            <p><strong>{{ comment['author'] }}</strong> le {{ comment['comment_date'] }}</p>
+            <strong>{{ comment['author'] }}</strong>
+            <br>
+            <em>{{ comment['comment_date'] }}</em>
             <p>{{ comment['comment'] }}</p>
         {% endfor %}
-
-        <h3>Laisser un commentaire :</h3>
-
-        {% block formComments %}
-            <form action="{{ comment['post_id'] }}" method="post">
-                <div>
-                    <label for="author">Auteur</label><br/>
-                    <input type="text" id="author" name="author"/>
-                </div>
-                <div>
-                    <label for="comment">Commentaire</label><br/>
-                    <textarea id="comment" name="comment"></textarea>
-                </div>
-                <div>
-                    <input type="submit"/>
-                </div>
-            </form>
-        {% endblock %}
-
-    {% endblock %}
-</div>
-
+    </section>
+    <section class="link">
+        <a href="/blog">Retour à la liste des billets</a>
+    </section>
+    <section class="form">
+        <h4>Laisser un commentaire :</h4>
+        <form action="{{ comment['post_id'] }}" method="post">
+            <div>
+                <label for="author">Auteur</label><br/>
+                <input type="text" id="author" name="author"/>
+            </div>
+            <div>
+                <label for="comment">Commentaire</label><br/>
+                <textarea id="comment" name="comment"></textarea>
+            </div>
+            <div>
+                <input type="submit"/>
+            </div>
+        </form>
+    </section>
 {% endblock %}
