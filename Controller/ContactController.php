@@ -7,10 +7,7 @@ class ContactController extends DefaultAbstractController
     public function indexAction()
     {
         $this->renderView(
-            'contact.html.twig',
-            ['test' => 'Hello World !!!']
+            'contact.html.twig'
         );
     }
-
-
 }

@@ -19,24 +19,26 @@ require_once PROJECT_CORE . 'DefaultAbstractController.php';
  * }
  * </code>
  */
-class Request
+final class Request
 {
     private static $instance = null;
 
-    private function __construct(){
+    private function __construct()
+    {
     }
 
     public static function getInstance() {
 
+        // singleton of request object to load once this method
         if(is_null(self::$instance)) {
             self::$instance = new Request();
         }
-
         return self::$instance;
     }
 
     public function getUrlComponents()
     {
+        // Get information of URL
         $server = parse_url($_SERVER["REQUEST_URI"]);
         $path = trim($server['path'], "/");
         return "" !== $path ? explode('/', $path) : [];
@@ -44,6 +46,7 @@ class Request
 
     public function getParam($key, $defaultValue = null)
     {
+        // Get params $_POST et $_GET
         return $this->getRequestParam($key) ??
                $this->getQueryParam($key) ??
                $defaultValue;
@@ -51,6 +54,7 @@ class Request
 
     public function getRequestParam($key, $defaultValue = null)
     {
+        // $_POST = params recover by $_POST method
         return isset($_POST[$key]) && '' !== $_POST[$key] ?
                     $_POST[$key] :
                     $defaultValue;

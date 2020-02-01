@@ -4,10 +4,9 @@ require_once PROJECT_CONFIG . 'config.env';
 
 abstract class AbstractPDO
 {
-    private static $cnx;
+    protected static $cnx;
 
-    public abstract static function getHostKey(): string;
-
+    // Singleton of PDOConnect object to load once this method
     public static function PDOConnect()
     {
         $driverOptions = [
@@ -18,22 +17,24 @@ abstract class AbstractPDO
 
         $cnxData = HOSTS[static::getHostKey()] ?? null;
 
+        // Check that login information exists, or return an exception
         if (null === $cnxData) {
-            // SI la clef de connexion à la bdd existe pas on leve une exeption
             throw new Exception(
-                "la clef de connexion à la base de données n'existe pas."
+                "Les informations de connexion à la base de données ne sont pas valide."
             );
         }
 
-        if (is_null(self::$cnx)) {
-            self::$cnx = new PDO(
+        // Get login information
+        if (is_null(static::$cnx)) {
+            static::$cnx = new PDO(
                 "mysql:host=" . $cnxData['host'] . ";dbname=" . $cnxData['name'],
                 $cnxData['user'],
                 $cnxData['pass'],
                 $driverOptions
             );
         }
-
-        return self::$cnx;
+        return static::$cnx;
     }
+
+    public abstract static function getHostKey(): string;
 }

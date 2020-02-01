@@ -7,32 +7,39 @@ require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
  */
 class CommentRepository extends DefaultAbstractRepository
 {
-    public static function getTableName()
-    {
-        return 'comments';
-    }
+    static $tableName = 'comments';
+    static $tablePk = 'post_id';
+    static $tableOrder = 'comment_date';
 
-    public static function getTablePk()
+    /**
+     * This function find all comments in an article
+     * @param $articleId
+     * @return array
+     * @throws Exception
+     */
+    public function findByArticleId($articleId)
     {
-        return 'post_id';
-    }
+        $req = $this->getPDO()->prepare('
+            SELECT * 
+            FROM ' . static::$tableName . ' 
+            WHERE ' . static::$tablePk . ' = ?
+            ORDER BY ' . static::$tableOrder . ' DESC 
+        ');
+        $req->execute(array($articleId));
 
-    public static function getOrderBy()
-    {
-        return 'comment_date';
+        return $req->fetchAll();
     }
 
     /**
      * Add a comment to the database
-     * @param $articleId
      * @param $comment [an array of the params of the new comment]
      * @return bool
      * @throws Exception
      */
-    public static function addComment($articleId, $comment)
+    public function addComment($comment)
     {
-        $req = static::getPDO()->prepare('
-            INSERT INTO ' . static::getTableName() . '
+        $req = $this->getPDO()->prepare('
+            INSERT INTO ' . static::$tableName . '
             (id, 
             post_id,
             author, 
@@ -42,7 +49,6 @@ class CommentRepository extends DefaultAbstractRepository
         );
 
         return $req->execute(array(
-            $articleId,
             $comment['id'],
             $comment['post_id'],
             $comment['author'],

@@ -7,43 +7,58 @@ require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
-    private $request;
-    private static $twig = null;
+    protected static $twig;
+    protected $request;
+
+    public function __construct()
+    {
+        $this->setRequest();
+    }
 
     public function getRequest()
     {
-        return $this->request = Request::getInstance();
+        return $this->request;
+    }
+
+    public function setRequest()
+    {
+        $this->request = Request::getInstance();
+
+        return $this;
+    }
+
+    public function renderView($viewName, array $params = [], string $viewFolder = null): void
+    {
+        $defaultPath = PROJECT_VIEW;
+        $viewFolder = $viewFolder ?? $this->getFolderView();
+        $view = $this->getTwig()->render($viewFolder . $viewName, $params);
+
+        //check if the view exist or return of exception
+        if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
+            throw new Exception("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
+        }
+        echo $view;
+    }
+
+    public function getFolderView(): string
+    {
+        // Define the view directory
+        return 'template/front/';
     }
 
     public static function getTwig()
     {
-        if (null === self::$twig) {
+        // instance of Twig
+        if (null === static::$twig) {
             require_once PROJECT_VENDOR . 'autoload.php';
             $loader = new FilesystemLoader('View/');
-            self::$twig = new Environment($loader,
-                // le cache est utile en prod mais pas en dev,
-                // le laisser  en false pour le dev
-                // et indiquer le nom du dossier ('Cache') pour la prod
+            static::$twig = new Environment($loader,
+                // To the prod define the path of directory Cache, else to dev keep false
                 [
                     'cache' => false
                 ]
             );
         }
-        return self::$twig;
-    }
-
-    public function renderView($view, array $params = [], string $viewFolder = null): void
-    {
-        $defaultPath = PROJECT_VIEW;
-        $viewFolder = $viewFolder ?? $this->getFolderView();
-
-        if (file_exists($defaultPath . $viewFolder . $view)) {
-            echo $this->getTwig()->render($viewFolder . $view, $params);
-        }
-    }
-
-    public function getFolderView(): string
-    {
-        return 'template/front/';
+        return static::$twig;
     }
 }

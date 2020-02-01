@@ -22,13 +22,11 @@ hr {
 }
 
 h1,
-h2, h3{
+h2,
+h3,
+h4 {
     font-family: 'Roboto Slab', sans-serif;
     letter-spacing: 2px;
-}
-
-h2,
-h3 {
     text-transform: uppercase;
 }
 
@@ -37,11 +35,15 @@ h1 {
 }
 
 h2 {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
 }
 
 h3 {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+}
+
+h4 {
+    font-size: 1.4rem;
 }
 
 p {
@@ -204,11 +206,34 @@ footer a {
 }
 
 /*blog*/
-.news p {
-    background-color:#CCCCCC;
-    margin-top:0px;
+.article {
+    width: 70%;
+    margin: auto;
 }
-.news {
-    width:70%;
-    margin:auto;
+
+.article p {
+    background-color: rgb(201, 197, 211);
+    padding: 1rem;
+}
+
+.comment {
+    width: 60%;
+    margin: auto;
+}
+
+.comment p {
+    background-color: rgba(201, 197, 211, 0.6);
+    padding: 1rem;
+}
+
+.link {
+    width: 40%;
+    margin:  1.5rem auto;
+    padding: 1rem;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+
+.form {
+
 }
