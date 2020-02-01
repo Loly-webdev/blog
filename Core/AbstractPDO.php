@@ -6,7 +6,7 @@ abstract class AbstractPDO
 {
     protected static $cnx;
 
-    // singleton of PDOConnect object to load once this method
+    // Singleton of PDOConnect object to load once this method
     public static function PDOConnect()
     {
         $driverOptions = [
@@ -17,14 +17,14 @@ abstract class AbstractPDO
 
         $cnxData = HOSTS[static::getHostKey()] ?? null;
 
-        // Check if the data of connexion to database exist, or return an exception
+        // Check that login information exists, or return an exception
         if (null === $cnxData) {
             throw new Exception(
                 "Les informations de connexion à la base de données ne sont pas valide."
             );
         }
 
-        // Get data of connexion
+        // Get login information
         if (is_null(static::$cnx)) {
             static::$cnx = new PDO(
                 "mysql:host=" . $cnxData['host'] . ";dbname=" . $cnxData['name'],

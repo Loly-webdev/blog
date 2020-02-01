@@ -11,6 +11,6 @@ interface DefaultControllerInterface
     // Path of view files
     public function getFolderView(): string;
 
-    // To instance Request object
+    // To instantiate the request object
     public function getRequest();
 }
