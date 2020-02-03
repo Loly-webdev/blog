@@ -19,7 +19,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         // Load article associate to the articleId or return null
-        $article = (new ArticleRepository())->findOne($articleId);
+        $article = (new ArticleRepository())->find($articleId);
 
         if (null === $article) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.

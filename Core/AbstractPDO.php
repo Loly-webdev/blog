@@ -27,7 +27,7 @@ abstract class AbstractPDO
         // Get login information
         if (is_null(static::$cnx)) {
             static::$cnx = new PDO(
-                "mysql:host=" . $cnxData['host'] . ";dbname=" . $cnxData['name'],
+                "mysql:host=" . $cnxData['host'] . ";dbname=" . $cnxData['database'],
                 $cnxData['user'],
                 $cnxData['pass'],
                 $driverOptions
