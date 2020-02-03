@@ -40,7 +40,7 @@ class Router
     }
 
     // Add Controller to the controllerName find
-    public function setControllerName($controllerName)
+    public function setControllerName(string $controllerName)
     {
         $this->controllerName = ucfirst($controllerName) . 'Controller';
 
@@ -53,7 +53,7 @@ class Router
     }
 
     // Add Action to the ActionName find
-    public function setActionName($actionName)
+    public function setActionName(string $actionName)
     {
         $this->actionName = $actionName . 'Action';
 
