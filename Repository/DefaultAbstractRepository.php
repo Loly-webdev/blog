@@ -40,23 +40,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO
     }
 
     /**
-     * This function find all the informations contained in the table
-     * @throws Exception
-     */
-    public function find()
-    {
-        $req = $this->getPDO()->query('
-            SELECT *
-            FROM ' . static::$tableName . '
-            ORDER BY ' . static::$tableOrder . ' DESC 
-        ');
-
-        $req->execute();
-
-        return $req->fetchAll();
-    }
-
-    /**
      * This method make the connection to the database and load the Request class
      * @throws Exception
      */
@@ -65,13 +48,24 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         return $this->pdo;
     }
 
+    public function find($filters = null)
+    {
+        if (is_numeric($filters)) {
+            return $this->findOne($filters);
+        } elseif (!empty($filters)) {
+            return $this->search($filters);
+        }
+
+        return $this->findAll();
+    }
+
     /**
      * Find all the informations of the table where id is equal to the id find by the getParams method
      * @param $articleId
      * @return mixed
      * @throws Exception
      */
-    public function findOne($articleId)
+    public function findOne(int $articleId)
     {
         $req = $this->getPDO()->prepare('
             SELECT *
@@ -82,5 +76,38 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         $req->execute(array($articleId));
 
         return $req->fetch();
+    }
+
+    public function search(array $filters)
+    {
+        $sql = $this->getPDO()->prepare('
+        SELECT *
+        FROM ' . static::$tableName . '
+        WHERE 1 = 1
+        ');
+
+        foreach ($filters as $key => $value) {
+            $sql .= ' AND ' . $key . ' = ? ';
+        }
+
+        return $sql->execute(array_values($filters));
+    }
+
+    /**
+     * This function find all the informations contained in the table
+     * @return
+     * @throws Exception
+     */
+    public function findAll()
+    {
+        $req = $this->getPDO()->query('
+            SELECT *
+            FROM ' . static::$tableName . '
+            ORDER BY ' . static::$tableOrder . ' DESC 
+        ');
+
+        $req->execute();
+
+        return $req->fetchAll();
     }
 }
