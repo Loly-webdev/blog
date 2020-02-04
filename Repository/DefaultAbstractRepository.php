@@ -8,7 +8,8 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
     final public function __construct()
     {
-        $this->pdo = DefaultPDO::PDOConnect();
+        $this->setPDO();
+
         if (!isset(static::$tableName)) {
             throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
         }
@@ -20,32 +21,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         if (!isset(static::$tableOrder)) {
             throw new Exception('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
         }
-    }
-
-    /**
-     * Delete the entry with the id find by the getParams method
-     * @param $id
-     * @return bool
-     * @throws Exception
-     */
-    public static function deleteById($id)
-    {
-        $req = static::getPDO()->prepare('
-            DELETE
-            FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ?
-            ');
-
-        return $req->execute(array($id));
-    }
-
-    /**
-     * This method make the connection to the database and load the Request class
-     * @throws Exception
-     */
-    public function getPDO()
-    {
-        return $this->pdo;
     }
 
     /**
@@ -73,15 +48,29 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      */
     public function findOne(int $articleId)
     {
-        $req = $this->getPDO()->prepare('
-            SELECT *
+        $sql = $this->getPDO()->prepare('SELECT *
             FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ?
-            ');
+            WHERE ' . static::$tablePk . ' = ? ');
 
-        $req->execute(array($articleId));
+        $sql->execute([$articleId]);
 
-        return $req->fetch();
+        return $sql->fetch();
+    }
+
+    /**
+     * This method make the connection to the database and load the DefaultPDO class
+     * @throws Exception
+     */
+    public function getPDO()
+    {
+        return $this->pdo;
+    }
+
+    public function setPDO()
+    {
+        $this->pdo = DefaultPDO::PDOConnect();
+
+        return $this;
     }
 
     /**
@@ -92,17 +81,19 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      */
     public function search(array $filters)
     {
-        $sql = $this->getPDO()->prepare('
-        SELECT *
+        $sql = 'SELECT *
         FROM ' . static::$tableName . '
-        WHERE 1 = 1
-        ');
+        WHERE 1 = 1';
 
+        // chain
         foreach ($filters as $key => $value) {
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
-        return $sql->execute(array_values($filters));
+        // PDO execute
+        return $this->getPDO()
+            ->prepare($sql)
+            ->execute(array_values($filters));
     }
 
     /**
@@ -111,14 +102,31 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      */
     public function findAll()
     {
-        $req = $this->getPDO()->query('
+        $sql = $this->getPDO()->query('
             SELECT *
             FROM ' . static::$tableName . '
             ORDER BY ' . static::$tableOrder . ' DESC 
         ');
 
-        $req->execute();
+        $sql->execute();
 
-        return $req->fetchAll();
+        return $sql->fetchAll();
+    }
+
+    /**
+     * Delete the entry with the id find by the getParams method
+     * @param $id
+     * @return bool
+     * @throws Exception
+     */
+    public function deleteById($id)
+    {
+        $sql = $this->getPDO()->prepare('
+            DELETE
+            FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
+            ');
+
+        return $sql->execute(array($id));
     }
 }
