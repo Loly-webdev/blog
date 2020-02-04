@@ -48,6 +48,12 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         return $this->pdo;
     }
 
+    /**
+     * Polymorphism method
+     * @param null $filters
+     * @return mixed
+     * @throws Exception
+     */
     public function find($filters = null)
     {
         if (is_numeric($filters)) {
@@ -78,6 +84,12 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         return $req->fetch();
     }
 
+    /**
+     * This function find all the informations contained in the table
+     * @param array $filters
+     * @return array
+     * @throws Exception
+     */
     public function search(array $filters)
     {
         $sql = $this->getPDO()->prepare('
@@ -95,7 +107,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
     /**
      * This function find all the informations contained in the table
-     * @return
      * @throws Exception
      */
     public function findAll()
