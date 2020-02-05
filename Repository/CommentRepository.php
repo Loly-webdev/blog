@@ -29,4 +29,24 @@ class CommentRepository extends DefaultAbstractRepository
 
         return $req->fetchAll();
     }
+
+    public function AddComment()
+    {
+        if (isset($_POST['author'], $_POST['content'])) {
+
+            $sql = $this->getPDO()->prepare('
+            INSERT INTO ' . static::$tableName . '
+            (post_id, author, comment, comment_date)
+            VALUES (:post_id, :author, :content, :creation_date)');
+
+            $sql->execute([
+                'post_id' => $_GET['id'],
+                'author' => $_POST['author'],
+                'content' => $_POST['content'],
+                'date' => time()
+            ]);
+        }
+        $sql = $this->getPDO()->query('SELECT* FROM ' . static::$tableName);
+        $sql->fetchAll();
+    }
 }
