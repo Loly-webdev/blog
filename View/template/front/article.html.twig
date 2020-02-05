@@ -21,20 +21,7 @@
     <section class="link">
         <a href="/blog">Retour à la liste des billets</a>
     </section>
-    <section class="form">
-        <h4>Laisser un commentaire :</h4>
-        <form action="{{ comment['post_id'] }}" method="post">
-            <div>
-                <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="author"/>
-            </div>
-            <div>
-                <label for="comment">Commentaire</label><br/>
-                <textarea id="comment" name="comment"></textarea>
-            </div>
-            <div>
-                <input type="submit"/>
-            </div>
-        </form>
+    <section class="link">
+        <a href="CommentForm">Ajouter un nouveau commentaire</a>
     </section>
 {% endblock %}

@@ -1,6 +1,18 @@
 {
-    "require": {
-        "twig/twig": "^3.0",
-      "ext-pdo": "*"
+  "name": "LolyWebDev/size",
+  "authors": [
+    {
+      "name": "LolyWebDev",
+      "email": "lolywebdev@gmail.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "blog/"
+    }
+  },
+  "require": {
+    "twig/twig": "^3.0",
+    "ext-pdo": "*"
+  }
 }
