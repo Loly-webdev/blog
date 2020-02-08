@@ -1,5 +1,5 @@
 {
-  "name": "LolyWebDev/size",
+  "name": "LolyWebDev",
   "authors": [
     {
       "name": "LolyWebDev",
@@ -8,7 +8,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "App\\": "blog/"
+      "App\\" : "blog/"
     }
   },
   "require": {
