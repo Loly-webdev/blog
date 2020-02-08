@@ -9,6 +9,18 @@ class ArticleController extends DefaultAbstractController
 {
     public function indexAction()
     {
+        $articles = (new ArticleRepository())->find();
+
+        $this->renderView(
+            'articles.html.twig',
+            [
+                'posts' => $articles
+            ]
+        );
+    }
+
+    public function seeAction()
+    {
         // Get id to the URL
         $articleId = $this->getRequest()->getParam('articleId');
 
