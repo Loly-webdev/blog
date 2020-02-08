@@ -51,4 +51,28 @@ class ArticleController extends DefaultAbstractController
             ]
         );
     }
+
+    public function articleFormAction()
+    {
+        $articles = (new ArticleRepository())->AddArticle();
+
+        $this->renderView(
+            'articleForm.html.twig',
+            [
+                'posts' => $articles
+            ]
+        );
+    }
+
+    public function commentFormAction()
+    {
+        $comments = (new CommentRepository())->AddComment();
+
+        $this->renderView(
+            'commentForm.html.twig',
+            [
+                'comments' => $comments
+            ]
+        );
+    }
 }
