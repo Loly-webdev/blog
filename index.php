@@ -8,6 +8,8 @@ try {
     define('PROJECT_ROOT', dirname(__FILE__) . DS);
     require_once 'Config/rootConfig.php';
     require_once PROJECT_CORE . 'Dispatcher.php';
+
+    // Autoload of composer
     require_once 'vendor/autoload.php';
 
     (new Dispatcher())->dispatch();

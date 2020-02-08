@@ -8,7 +8,7 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
     final public function __construct()
     {
-        $this->setPDO();
+        $this->pdo = DefaultPDO::PDOConnect();
 
         if (!isset(static::$tableName)) {
             throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
@@ -33,7 +33,7 @@ abstract class DefaultAbstractRepository extends DefaultPDO
     {
         if (is_numeric($filters)) {
             return $this->findOne($filters);
-        } elseif (!empty($filters)) {
+        } elseif (is_array($filters) && !empty($filters)) {
             return $this->search($filters);
         }
 
@@ -66,13 +66,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         return $this->pdo;
     }
 
-    public function setPDO()
-    {
-        $this->pdo = DefaultPDO::PDOConnect();
-
-        return $this;
-    }
-
     /**
      * This function find all the informations contained in the table
      * @param array $filters
@@ -91,9 +84,11 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         }
 
         // PDO execute
-        return $this->getPDO()
-            ->prepare($sql)
-            ->execute(array_values($filters));
+        $pdo = $this->getPDO()
+            ->prepare($sql);
+        $pdo->execute(array_values($filters));
+
+        return $pdo->fetch();
     }
 
     /**
