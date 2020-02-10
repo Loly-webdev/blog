@@ -32,18 +32,20 @@ class CommentRepository extends DefaultAbstractRepository
 
     public function AddComment()
     {
-        if (isset($_POST['author'], $_POST['content'])) {
+        if (isset($_POST['comment'])) {
 
             $sql = $this->getPDO()->prepare('
             INSERT INTO ' . static::$tableName . '
-            (post_id, author, comment, comment_date)
-            VALUES (:post_id, :author, :content, :creation_date)');
+            (post_id, author, comment)
+            VALUES (:post_id, :author, :content');
+
+            // Récuperer les données via $data = $request->get('monFormulaire');
+            $data = Request::getInstance()->getParam('comment');
 
             $sql->execute([
                 'post_id' => $_GET['id'],
-                'author' => $_POST['author'],
-                'content' => $_POST['content'],
-                'date' => time()
+                'author' => $data[0],
+                'content' => $data[1]
             ]);
         }
         $sql = $this->getPDO()->query('SELECT* FROM ' . static::$tableName);
