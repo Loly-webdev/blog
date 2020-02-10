@@ -13,18 +13,21 @@ class ArticleRepository extends DefaultAbstractRepository
 
     public function AddArticle()
     {
-        if (isset($_POST['title'], $_POST['content'])) {
+        if (isset($_POST['article'])) {
 
             $sql = $this->getPDO()->prepare('
             INSERT INTO ' . static::$tableName . '
-            (title, author, content, creation_date)
-            VALUES (:title, :author, :content, :creation_date)');
+            (title, author, content)
+            VALUES (:title, :author, :content)
+            ');
+
+            // Récuperer les données via $data = $request->get('monFormulaire');
+            $data = Request::getInstance()->getParam('article');
 
             $sql->execute([
-                'title' => $_POST['title'],
-                'author' => $_POST['author'],
-                'content' => $_POST['content'],
-                'date' => time()
+                'title' => $data[0],
+                'author' => $data[1],
+                'content' => $data[2]
             ]);
         }
         $sql = $this->getPDO()->query('SELECT* FROM ' . static::$tableName);

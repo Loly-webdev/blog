@@ -7,6 +7,8 @@ require_once PROJECT_REPOSITORY . 'ArticleRepository.php';
 
 class ArticleController extends DefaultAbstractController
 {
+    protected $key;
+
     public function indexAction()
     {
         $articles = (new ArticleRepository())->find();
