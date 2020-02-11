@@ -2,7 +2,7 @@
 {% block content %}
     <section class="form">
         <h4>Laisser un commentaire :</h4>
-        <form action="" method="GET">
+        <form action="" method="POST">
             <div>
                 <label for="author">Auteur</label><br/>
                 <input type="text" id="author" name="comment[author]"/>
@@ -18,4 +18,8 @@
     </section>
     <br>
     {{ message }}
+    <br>
+    <section class="link">
+        <a href="/article">Retour à la liste des billets</a>
+    </section>
 {% endblock %}
