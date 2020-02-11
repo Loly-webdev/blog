@@ -2,22 +2,25 @@
 {% block content %}
     <section class="form">
         <h4>Ecrire un nouvel article :</h4>
-        <form action="" method="post">
+        <form action="" method="GET">
             <div>
                 <label for="title">Titre</label><br/>
-                <input type="text" id="title" name="article[]"/>
+                <input type="text" id="title" name="article[title]"/>
             </div>
             <div>
                 <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="article[]"/>
+                <input type="text" id="author" name="article[author]"/>
             </div>
             <div>
                 <label for="content">Article</label><br/>
-                <textarea id="content" name="article[]"></textarea>
+                <textarea id="content" name="article[content]"></textarea>
             </div>
             <div>
                 <input type="submit"/>
             </div>
         </form>
     </section>
+    <br>
+    {{ message }}
 {% endblock %}
+

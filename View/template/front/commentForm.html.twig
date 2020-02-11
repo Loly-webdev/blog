@@ -2,18 +2,20 @@
 {% block content %}
     <section class="form">
         <h4>Laisser un commentaire :</h4>
-        <form action="" method="post">
+        <form action="" method="GET">
             <div>
                 <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="comment[]"/>
+                <input type="text" id="author" name="comment[author]"/>
             </div>
             <div>
                 <label for="comment">Commentaire</label><br/>
-                <textarea id="comment" name="comment[]"></textarea>
+                <textarea id="comment" name="comment[comment]"></textarea>
             </div>
             <div>
                 <input type="submit"/>
             </div>
         </form>
     </section>
+    <br>
+    {{ message }}
 {% endblock %}

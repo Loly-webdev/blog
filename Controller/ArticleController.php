@@ -56,25 +56,46 @@ class ArticleController extends DefaultAbstractController
 
     public function articleFormAction()
     {
-        $articles = (new ArticleRepository())->AddArticle();
+        // Retrieve all data in a table
+        $data = $this->getRequest()->getParam('article');
 
-        $this->renderView(
-            'articleForm.html.twig',
-            [
-                'posts' => $articles
-            ]
-        );
+        if (null === $data) {
+            $this->renderView(
+                'articleForm.html.twig'
+            );
+        }
+
+        if (isset($data)) {
+            (new ArticleRepository())->AddArticle($data);
+
+            $this->renderView(
+                'articleForm.html.twig',
+                [
+                    'message' => "Votre article à bien était enregistré !"
+                ]
+            );
+        }
     }
 
     public function commentFormAction()
     {
-        $comments = (new CommentRepository())->AddComment();
+        // Retrieve all data in a table
+        $data = $this->getRequest()->getParam('comment');
 
-        $this->renderView(
-            'commentForm.html.twig',
-            [
-                'comments' => $comments
-            ]
-        );
+        if (null === $data) {
+            $this->renderView(
+                'commentForm.html.twig'
+            );
+        }
+
+        if (isset($data)) {
+            (new CommentRepository())->AddComment($data);
+            $this->renderView(
+                'commentForm.html.twig',
+                [
+                    'message' => "Votre commentaire à bien était ajouté !"
+                ]
+            );
+        }
     }
 }
