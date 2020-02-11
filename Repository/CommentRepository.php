@@ -37,11 +37,11 @@ class CommentRepository extends DefaultAbstractRepository
             (post_id, author, comment)
             VALUES (:post_id, :author, :comment)');
 
-        $articleId =$_GET['id'];
-
+        var_dump($data);
         $sql->execute(
-            ['post_id' => $articleId,
-            $data]
+            ['post_id' => (int)$_GET['articleId'],
+            'author' => $data['author'],
+            'comment' => $data['comment']]
         );
 
         $sql = $this->getPDO()->query('SELECT* FROM ' . static::$tableName);
