@@ -19,8 +19,17 @@ class ArticleRepository extends DefaultAbstractRepository
             VALUES (:title, :author, :content)');
 
         $sql->execute($data);
+        var_dump($data);
+        var_dump(array_column($data, 'title'));
+        $this->selectColumns($data);
 
         $sql = $this->getPDO()->query('SELECT* FROM ' . static::$tableName);
         $sql->fetchAll();
+    }
+
+    public function selectColumns(array $data = [])
+    {
+        $title = array_column($data, 'title');
+        print_r($title);
     }
 }
