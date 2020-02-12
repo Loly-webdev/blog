@@ -111,7 +111,7 @@ abstract class DefaultAbstractRepository extends DefaultPDO
     /**
      * Delete the entry with the id find by the getParams method
      * @param $id
-     * @return bool
+     * @return void
      * @throws Exception
      */
     public function deleteById($id)
@@ -119,9 +119,40 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         $sql = $this->getPDO()->prepare('
             DELETE
             FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ?
+            WHERE id = ?
             ');
 
-        return $sql->execute(array($id));
+        $sql->execute(array($id));
+
+        // The number of deleted entries is displayed.
+        $count = $sql->rowCount();
+        print('Effacement de ' .$count. ' entrées.');
+    }
+
+    public function updateById($id){
+
+        $sql = $this->getPDO()->prepare('
+            UPDATE ' . static::$tableName . '
+            SET title = :title, content = :content
+            WHERE id = ?
+            ');
+
+        $sql->execute(array($id));
+
+        // The number of updated entries is displayed.
+        $count = $sql->rowCount();
+        print('Mise à jour de ' .$count. ' entrée(s)');
+    }
+
+    public function selectColumns(array $columns = [])
+    {
+        $sql = $this->getPDO()->prepare('
+            SELECT DISTINCT ' . implode(', ', $columns) . ' 
+            FROM '. static::$tableName
+        );
+
+        $sql-> execute();
+
+        return $sql->fetchAll();
     }
 }

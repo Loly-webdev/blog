@@ -12,6 +12,9 @@ class ArticleController extends DefaultAbstractController
     public function indexAction()
     {
         $articles = (new ArticleRepository())->find();
+        $article = (new ArticleRepository())->selectColumns(['title', 'content']);
+        //var_dump($article);
+
 
         $this->renderView(
             'articles.html.twig',
