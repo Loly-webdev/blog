@@ -1,9 +1,10 @@
 <?php
 
+namespace App\Entity;
 
 class Article
 {
-    protected $name;
+    protected $title;
     protected $author;
     protected $content;
 
@@ -16,8 +17,8 @@ class Article
 
     public function hydrateObject($params)
     {
-        if (isset($params['name'])) {
-            $this->setName($params['name']);
+        if (isset($params['title'])) {
+            $this->setName($params['title']);
         }
 
         if (isset($params['author'])) {

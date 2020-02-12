@@ -32,6 +32,13 @@ class CommentRepository extends DefaultAbstractRepository
 
     public function AddComment($data)
     {
+        //je prepare la commande sql qui permet d'inserer dans la table les valeurs d'un article
+        //je fais correspondre les colonnes de la table avec les futur valeurs
+        //j'execute la commande en affectant dans un tableau des valeurs aux colonnes de la table
+        //pour post_id on recupere la valeur de l'article dont on veut faire un commentaire
+        //pour les autres valeurs on les recupere du formulaire
+        //on lance ensuite la requete complete pour ajouter le commentaire a la base de donnees
+
         $sql = $this->getPDO()->prepare('
             INSERT INTO ' . static::$tableName . '
             (post_id, author, comment)
