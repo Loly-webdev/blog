@@ -11,7 +11,7 @@ class ArticleRepository extends DefaultAbstractRepository
     static $tablePk = 'id';
     static $tableOrder = 'creation_date';
 
-    public function AddArticle($data)
+    public function AddArticle(array $data)
     {
         $sql = $this->getPDO()->prepare('
             INSERT INTO ' . static::$tableName . '
@@ -19,15 +19,5 @@ class ArticleRepository extends DefaultAbstractRepository
             VALUES (:title, :author, :content)');
 
         $sql->execute($data);
-
-        $sql = $this->getPDO()->query('SELECT* FROM ' . static::$tableName);
-        $sql->fetchAll();
-    }
-
-    public function selectColumns(array $data = [])
-    {
-        $column = array($data);
-        $title = array_column($column, 'title');
-        print_r($title);
     }
 }
