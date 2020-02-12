@@ -10,8 +10,8 @@
             {{ article['content'] }}
         </p>
         <div>
-            <a href="update?articleId={{post['id']}}">Éditer</a>
-            <a href="destroy?articleId={{post['id']}}">Supprimer</a>
+            <a href="update?articleId={{article['id']}}">Éditer</a>
+            <a href="destroy?articleId={{article['id']}}">Supprimer</a>
         </div>
     </section>
     <section class="comment">
@@ -31,6 +31,6 @@
         <a href="/article">Retour à la liste des billets</a>
     </section>
     <section class="link">
-        <a href="commentForm?articleId={{ post['id'] }}">Ajouter un nouveau commentaire</a>
+        <a href="commentForm?articleId={{ article['id'] }}">Ajouter un nouveau commentaire</a>
     </section>
 {% endblock %}

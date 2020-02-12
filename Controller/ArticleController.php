@@ -101,4 +101,19 @@ class ArticleController extends DefaultAbstractController
             );
         }
     }
+
+    public function destroyAction()
+    {
+        if (isset($_GET['commentId'])){
+            (new CommentRepository())->deleteById($_GET['commentId']);
+        }
+
+        if (isset($_GET['articleId'])){
+            (new ArticleRepository())->deleteById($_GET['articleId']);;
+        }
+    }
+
+    public function updateAction()
+    {
+    }
 }
