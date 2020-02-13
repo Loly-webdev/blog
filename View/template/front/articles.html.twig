@@ -2,16 +2,16 @@
 {% block title %}Blog{% endblock %}
 {% block content %}
     <h2>Derniers billets du blog :</h2>
-    {% for post in posts %}
+    {% for article in articles %}
         <section class="article">
-            <h3>{{ post['title'] }}</h3>
-            <strong>{{ post['creation_date'] }}</strong>
+            <h3>{{ article['title'] }}</h3>
+            <strong>{{ article['creation_date'] }}</strong>
             <p>
-                {{ post['content'] }}
+                {{ article['content'] }}
             </p>
         </section>
         <section class="link">
-            <a href="/article/see?articleId={{ post['id'] }}">Voir les commentaires associés</a>
+            <a href="/article/see?articleId={{ article['id'] }}">Voir les commentaires associés</a>
         </section>
     {% endfor %}
     <section class="link">

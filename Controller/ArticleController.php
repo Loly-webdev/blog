@@ -12,14 +12,15 @@ class ArticleController extends DefaultAbstractController
     public function indexAction()
     {
         $articles = (new ArticleRepository())->find();
-        $article = (new ArticleRepository())->selectColumns(['title', 'content']);
+        //pour des listes déroulante
+        //$article = (new ArticleRepository())->selectColumns(['title', 'content']);
         //var_dump($article);
 
 
         $this->renderView(
             'articles.html.twig',
             [
-                'posts' => $articles
+                'articles' => $articles
             ]
         );
     }
@@ -69,7 +70,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         if (isset($data)) {
-            (new ArticleRepository())->AddArticle($data);
+            (new ArticleRepository())->addArticle($data);
 
             $this->renderView(
                 'articleForm.html.twig',
@@ -92,7 +93,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         if (isset($data)) {
-            (new CommentRepository())->AddComment($data);
+            (new CommentRepository())->addComment($data);
             $this->renderView(
                 'commentForm.html.twig',
                 [
@@ -109,11 +110,20 @@ class ArticleController extends DefaultAbstractController
         }
 
         if (isset($_GET['articleId'])){
-            (new ArticleRepository())->deleteById($_GET['articleId']);;
+            (new ArticleRepository())->deleteById($_GET['articleId']);
         }
     }
 
     public function updateAction()
     {
+        if (isset($_GET['commentId'])){
+            //(new CommentRepository())->updateById($_GET['commentId']);
+            //voir les methodes pour editer
+        }
+
+        if (isset($_GET['articleId'])){
+            //(new ArticleRepository())->updateById($_GET['articleId']);
+            //voir les methodes pour editer
+        }
     }
 }
