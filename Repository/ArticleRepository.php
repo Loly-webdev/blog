@@ -8,10 +8,9 @@ require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
 class ArticleRepository extends DefaultAbstractRepository
 {
     static $tableName = 'posts';
-    static $tablePk = 'id';
     static $tableOrder = 'creation_date';
 
-    public function AddArticle(array $data)
+    public function addArticle(array $data)
     {
         $sql = $this->getPDO()->prepare('
             INSERT INTO ' . static::$tableName . '

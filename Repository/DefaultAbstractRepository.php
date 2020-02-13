@@ -5,6 +5,7 @@ require_once PROJECT_CORE . 'DefaultPDO.php';
 abstract class DefaultAbstractRepository extends DefaultPDO
 {
     private $pdo;
+    static $tablePk = 'id';
 
     final public function __construct()
     {
@@ -12,10 +13,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
         if (!isset(static::$tableName)) {
             throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
-        }
-
-        if (!isset(static::$tablePk)) {
-            throw new Exception('vous devez déclarez la clé primaire de la table pour la classe ' . __CLASS__);
         }
 
         if (!isset(static::$tableOrder)) {
@@ -117,9 +114,8 @@ abstract class DefaultAbstractRepository extends DefaultPDO
     public function deleteById($id)
     {
         $sql = $this->getPDO()->prepare('
-            DELETE
-            FROM ' . static::$tableName . '
-            WHERE id = ?
+            DELETE FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
             ');
 
         $sql->execute(array($id));
@@ -134,7 +130,7 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         $sql = $this->getPDO()->prepare('
             UPDATE ' . static::$tableName . '
             SET title = :title, content = :content
-            WHERE id = ?
+            WHERE ' . static::$tablePk . ' = ?
             ');
 
         $sql->execute(array($id));
@@ -147,7 +143,7 @@ abstract class DefaultAbstractRepository extends DefaultPDO
     public function selectColumns(array $columns = [])
     {
         $sql = $this->getPDO()->prepare('
-            SELECT DISTINCT ' . implode(', ', $columns) . ' 
+            SELECT ' . implode(', ', $columns) . ' 
             FROM '. static::$tableName
         );
 
