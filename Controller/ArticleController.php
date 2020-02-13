@@ -116,14 +116,5 @@ class ArticleController extends DefaultAbstractController
 
     public function updateAction()
     {
-        if (isset($_GET['commentId'])){
-            //(new CommentRepository())->updateById($_GET['commentId']);
-            //voir les methodes pour editer
-        }
-
-        if (isset($_GET['articleId'])){
-            //(new ArticleRepository())->updateById($_GET['articleId']);
-            //voir les methodes pour editer
-        }
     }
 }
