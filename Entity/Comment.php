@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entity;
-
-class Article
+class Comment
 {
+    protected $id;
     protected $title;
     protected $author;
     protected $content;
+    private $params;
 
     public function __construct(array $params = [])
     {
@@ -27,6 +27,22 @@ class Article
 
         if (isset($params['content'])) {
             $this->setName($params['content']);
+        }
+    }
+
+    private function setName($params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+    
+    public function hasId($data)
+    {
+        if (null === $data) {
+            (new CommentController())->renderView(
+                'commentForm.html.twig'
+            );
         }
     }
 }
