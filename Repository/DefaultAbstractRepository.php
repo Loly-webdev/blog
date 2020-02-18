@@ -5,7 +5,8 @@ require_once PROJECT_CORE . 'DefaultPDO.php';
 abstract class DefaultAbstractRepository extends DefaultPDO
 {
     private $pdo;
-    static $tablePk = 'id';
+
+    public abstract function getEntity();
 
     final public function __construct()
     {
@@ -64,28 +65,43 @@ abstract class DefaultAbstractRepository extends DefaultPDO
     }
 
     /**
-     * This function find all the informations contained in the table
-     * @param array $filters
-     * @return array
+     * Allows you to perform an sql query with filters or to retrieve all of them if no filter is found.
+     *
+     * @param array $filters Contains in key the columns of the table and in value the "equal to".
+     *
+     * @return array An empty table where the results can be found in bdd
      * @throws Exception
      */
     public function search(array $filters)
     {
-        $sql = 'SELECT *
-        FROM ' . static::$tableName . '
-        WHERE 1 = 1';
+        $result = [];
 
-        // chain
+        // SQL REQUEST
+        $sql = 'SELECT *
+            FROM ' . static::$tableName . '
+            WHERE 1 = 1 '; // On précise un where 1 = 1 pour éviter de gérer le WHERE || AND
+
+        // Array of values
         foreach ($filters as $key => $value) {
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
         // PDO execute
-        $pdo = $this->getPDO()
-            ->prepare($sql);
-        $pdo->execute(array_values($filters));
+        $pdo = $this->getPDO()->prepare($sql);
 
-        return $pdo->fetch();
+        var_dump($pdo);
+        var_dump($filters);
+
+        // On passe les valeurs à remplacer par les ? de la requete sql
+        // Pas besoin de récupérer juste les valeurs la fonction prend pas en compte les clefs
+        $pdo->execute($filters);
+        var_dump($pdo->execute($filters));
+
+        // On récupere les résultats
+        $result = $pdo->fetchAll();
+        var_dump($result);
+
+        return $result;
     }
 
     /**
@@ -111,7 +127,7 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      * @return void
      * @throws Exception
      */
-    public function deleteById($id)
+    public function delete($id)
     {
         $sql = $this->getPDO()->prepare('
             DELETE FROM ' . static::$tableName . '

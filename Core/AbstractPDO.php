@@ -1,6 +1,6 @@
 <?php
 
-require_once PROJECT_CONFIG . 'config.env';
+require_once PROJECT_CONFIG . 'config.env.php';
 
 abstract class AbstractPDO
 {

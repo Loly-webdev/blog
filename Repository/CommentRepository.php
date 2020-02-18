@@ -1,5 +1,6 @@
 <?php
 
+require_once PROJECT_ENTITY . 'Comment.php';
 require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
 
 /**
@@ -8,21 +9,15 @@ require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
 class CommentRepository extends DefaultAbstractRepository
 {
     static $tableName = 'comments';
+    static $tablePk = 'post_id';
     static $tableOrder = 'comment_date';
 
-    /**
-     * This function find all comments in an article
-     * @param int $articleId
-     * @param string $postId
-     * @return array
-     * @throws Exception
-     */
-    public function findByArticleId(int $articleId, $postId = 'post_id')
+    public function findByArticleId(int $articleId)
     {
         $sql = $this->getPDO()->prepare('
             SELECT * 
             FROM ' . static::$tableName . ' 
-            WHERE ' . $postId . ' = ?
+            WHERE ' . static::$tablePk . ' = ?
             ORDER BY ' . static::$tableOrder . ' DESC 
         ');
         $sql->execute(array($articleId));
@@ -30,7 +25,7 @@ class CommentRepository extends DefaultAbstractRepository
         return $sql->fetchAll();
     }
 
-    public function addComment(array $data)
+    public function add(array $data)
     {
         $sql = $this->getPDO()->prepare('
             INSERT INTO ' . static::$tableName . '
@@ -39,8 +34,13 @@ class CommentRepository extends DefaultAbstractRepository
 
         $sql->execute(
             ['post_id' => (int)$_GET['articleId'],
-            'author' => $data['author'],
-            'content' => $data['content']]
+                'author' => $data['author'],
+                'content' => $data['content']]
         );
+    }
+
+    public function getEntity()
+    {
+        return new Comment();
     }
 }

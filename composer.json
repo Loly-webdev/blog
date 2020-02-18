@@ -1,18 +1,19 @@
 {
-  "name": "LolyWebDev",
-  "authors": [
-    {
-      "name": "LolyWebDev",
-      "email": "lolywebdev@gmail.com"
+    "name": "loly/blog",
+    "description": "Framework from scratch",
+    "authors": [
+        {
+            "name": "Loly-webdev",
+            "email": "eloise.ruiz.rodriguez@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\" : "blog/"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.0",
+        "ext-pdo": "*"
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "App\\" : "blog/"
-    }
-  },
-  "require": {
-    "twig/twig": "^3.0",
-    "ext-pdo": "*"
-  }
 }
