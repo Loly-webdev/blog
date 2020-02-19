@@ -6,8 +6,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 {
     private $pdo;
 
-    public abstract function getEntity();
-
     final public function __construct()
     {
         $this->pdo = DefaultPDO::PDOConnect();
@@ -20,6 +18,8 @@ abstract class DefaultAbstractRepository extends DefaultPDO
             throw new Exception('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
         }
     }
+
+    public abstract function getEntity();
 
     /**
      * Polymorphism method
@@ -74,12 +74,11 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      */
     public function search(array $filters)
     {
-        $result = [];
-
         // SQL REQUEST
+        // We specify a where 1 = 1 to avoid managing the WHERE || AND
         $sql = 'SELECT *
-            FROM ' . static::$tableName . '
-            WHERE 1 = 1 '; // On précise un where 1 = 1 pour éviter de gérer le WHERE || AND
+             FROM ' . static::$tableName . '
+             WHERE 1 = 1 ';
 
         // Array of values
         foreach ($filters as $key => $value) {
@@ -89,19 +88,11 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         // PDO execute
         $pdo = $this->getPDO()->prepare($sql);
 
-        var_dump($pdo);
-        var_dump($filters);
+        // We pass the values to be replaced by the ? values of the sql query.
+        $pdo->execute(array_values($filters));
 
-        // On passe les valeurs à remplacer par les ? de la requete sql
-        // Pas besoin de récupérer juste les valeurs la fonction prend pas en compte les clefs
-        $pdo->execute($filters);
-        var_dump($pdo->execute($filters));
-
-        // On récupere les résultats
-        $result = $pdo->fetchAll();
-        var_dump($result);
-
-        return $result;
+        // We're getting the results back
+        return $pdo->fetchAll();
     }
 
     /**
@@ -138,10 +129,11 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
         // The number of deleted entries is displayed.
         $count = $sql->rowCount();
-        print('Effacement de ' .$count. ' entrées.');
+        print('Effacement de ' . $count . ' entrées.');
     }
 
-    public function updateById($id){
+    public function updateById($id)
+    {
 
         $sql = $this->getPDO()->prepare('
             UPDATE ' . static::$tableName . '
@@ -153,17 +145,17 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
         // The number of updated entries is displayed.
         $count = $sql->rowCount();
-        print('Mise à jour de ' .$count. ' entrée(s)');
+        print('Mise à jour de ' . $count . ' entrée(s)');
     }
 
     public function selectColumns(array $columns = [])
     {
         $sql = $this->getPDO()->prepare('
             SELECT ' . implode(', ', $columns) . ' 
-            FROM '. static::$tableName
+            FROM ' . static::$tableName
         );
 
-        $sql-> execute();
+        $sql->execute();
 
         return $sql->fetchAll();
     }

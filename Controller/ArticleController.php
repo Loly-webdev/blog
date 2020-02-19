@@ -44,12 +44,11 @@ class ArticleController extends DefaultAbstractController
                 sprintf('Désolé, nous n\'avons pas trouvé l\'article avec l\'id: %d', $articleId)
             );
         }
-        var_dump($articleId);
+
         // Load comments associate to the articleId
         $comments = (new CommentRepository())->find([
-            'post_id' => (int)$articleId
+            'post_id' => $articleId
         ]);
-        var_dump($comments);
 
         $this->renderView(
             'article.html.twig',
