@@ -9,7 +9,6 @@ require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
 class ArticleRepository extends DefaultAbstractRepository
 {
     static $tableName = 'posts';
-    static $tablePk = 'id';
     static $tableOrder = 'creation_date';
 
     public function add(array $data)
@@ -21,20 +20,18 @@ class ArticleRepository extends DefaultAbstractRepository
 
         $sql->execute($data);
 
-        $lastInsertId;
+        //$lastInsertId = $sql->lastInsertId();
 
-        $article = $this->getPDO()->prepare('
+        return $this->getPDO()->prepare('
         SELECT*
         FROM ' . static::$tableName . '
         WHERE ' . static::$tablePk . ' = ?
         ')
-            ->setParameter(['id' =>$lastInsertId])
+            //->setParameter(['id' =>$lastInsertId])
             ->setFetchMode(
                 PDO::FETCH_INTO,
                 $this->getEntity()
             );
-
-            return $article;
     }
 
     public function getEntity()

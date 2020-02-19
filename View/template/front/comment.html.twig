@@ -1,0 +1,21 @@
+{% extends "template/base.html.twig" %}
+{% block title %}
+    {{ comment.id }}
+{% endblock %}
+{% block content %}
+    <section class="comment">
+        <strong>{{ comment.author }}</strong>
+        <p>
+            {{ comment.content }}
+        </p>
+        <div>
+            <a href="update?commentId={{ comment.id }}">Éditer</a>
+            <a href="delete?commentId={{ comment.id }}">Supprimer</a>
+        </div>
+    </section>
+    {{ include('template/front/commentForm.html.twig') }}
+    <section class="link">
+        <a href="/article">Retour à la liste des billets</a>
+    </section>
+{% endblock %}
+
