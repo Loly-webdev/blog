@@ -50,6 +50,9 @@ class ArticleController extends DefaultAbstractController
             'post_id' => $articleId
         ]);
 
+        require_once 'CommentController.php';
+        (new CommentController())->indexAction();
+
         $this->renderView(
             'article.html.twig',
             [
@@ -61,7 +64,7 @@ class ArticleController extends DefaultAbstractController
 
     public function addAction()
     {
-        // Retrieve all data in a table
+        /*// Retrieve all data in a table
         $data = $this->getRequest()->getParam('article');
         $article = new Article($data);
 
@@ -74,9 +77,9 @@ class ArticleController extends DefaultAbstractController
                     ? "Votre article à bien était enregistré !"
                     : "Une erreur est survenue."
             ]
-        );
+        );*/
 
-        /*// Retrieve all data in a table
+        // Retrieve all data in a table
         $data = $this->getRequest()->getParam('article');
 
         if (null === $data) {
@@ -86,7 +89,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         if (isset($data)) {
-            (new ArticleRepository())->addArticle($data);
+            (new ArticleRepository())->add($data);
 
             $this->renderView(
                 'articleForm.html.twig',
@@ -94,34 +97,16 @@ class ArticleController extends DefaultAbstractController
                     'message' => "Votre article à bien était enregistré !"
                 ]
             );
-        }*/
+        }
     }
 
     public function deleteAction()
     {
-        (new articleRepository())->delete($this->getRequest()->getParam('articleId'));
+        (new ArticleRepository())->delete($this->getRequest()->getParam('articleId'));
     }
 
     public function updateAction()
     {
-        if (isset($_GET['commentId'])) {
-            (new CommentRepository())->updateById($_GET['commentId']);
-            $this->renderView(
-                'commentUpdate.html.twig',
-                [
-                    // inserer les parametre et valeurs de la vue
-                ]
-            );
-        }
-
-        if (isset($_GET['articleId'])) {
-            (new ArticleRepository())->updateById($_GET['articleId']);
-            $this->renderView(
-                'articleUpdate.html.twig',
-                [
-                    // inserer les parametre et valeurs de la vue
-                ]
-            );
-        }
+        // todo
     }
 }

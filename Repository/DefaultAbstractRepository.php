@@ -5,6 +5,7 @@ require_once PROJECT_CORE . 'DefaultPDO.php';
 abstract class DefaultAbstractRepository extends DefaultPDO
 {
     private $pdo;
+    static $tablePk = 'id';
 
     final public function __construct()
     {

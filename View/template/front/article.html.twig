@@ -22,15 +22,12 @@
             <em>{{ comment.comment_date }}</em>
             <p>{{ comment.content }}</p>
             <div>
-                <a href="update?commentId={{ comment.id }}">Éditer</a>
-                <a href="delete?commentId={{ comment.id }}">Supprimer</a>
+                <a href="/comment/see?commentId={{ comment.id }}">Voir le commentaire</a>
             </div>
         {% endfor %}
     </section>
+    {{ include('template/front/commentForm.html.twig') }}
     <section class="link">
         <a href="/article">Retour à la liste des billets</a>
-    </section>
-    <section class="link">
-        <a href="/comment/add?articleId={{ article.id }}">Ajouter un nouveau commentaire</a>
     </section>
 {% endblock %}

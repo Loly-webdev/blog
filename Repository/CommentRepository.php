@@ -9,21 +9,7 @@ require_once PROJECT_REPOSITORY . 'DefaultAbstractRepository.php';
 class CommentRepository extends DefaultAbstractRepository
 {
     static $tableName = 'comments';
-    static $tablePk = 'post_id';
     static $tableOrder = 'comment_date';
-
-    public function findByArticleId(int $articleId)
-    {
-        $sql = $this->getPDO()->prepare('
-            SELECT * 
-            FROM ' . static::$tableName . ' 
-            WHERE ' . static::$tablePk . ' = ?
-            ORDER BY ' . static::$tableOrder . ' DESC 
-        ');
-        $sql->execute(array($articleId));
-
-        return $sql->fetchAll();
-    }
 
     public function add(array $data)
     {
@@ -32,11 +18,26 @@ class CommentRepository extends DefaultAbstractRepository
             (post_id, author, content)
             VALUES (:post_id, :author, :content)');
 
+       // $sql->execute($data);
+
         $sql->execute(
             ['post_id' => (int)$_GET['articleId'],
                 'author' => $data['author'],
                 'content' => $data['content']]
         );
+
+        //$lastInsertId = $sql->lastInsertId();
+
+        return $this->getPDO()->prepare('
+        SELECT*
+        FROM ' . static::$tableName . '
+        WHERE ' . static::$tablePk . ' = ?
+        ')
+            //->setParameter(['id' => $lastInsertId])
+            ->setFetchMode(
+                PDO::FETCH_INTO,
+                $this->getEntity()
+            );
     }
 
     public function getEntity()
