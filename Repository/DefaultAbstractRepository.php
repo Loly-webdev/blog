@@ -5,16 +5,14 @@ require_once PROJECT_CORE . 'DefaultPDO.php';
 abstract class DefaultAbstractRepository extends DefaultPDO
 {
     private $pdo;
+    static $tablePk = 'id';
 
     final public function __construct()
     {
         $this->pdo = DefaultPDO::PDOConnect();
+
         if (!isset(static::$tableName)) {
             throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
-        }
-
-        if (!isset(static::$tablePk)) {
-            throw new Exception('vous devez déclarez la clé primaire de la table pour la classe ' . __CLASS__);
         }
 
         if (!isset(static::$tableOrder)) {
@@ -22,37 +20,19 @@ abstract class DefaultAbstractRepository extends DefaultPDO
         }
     }
 
-    /**
-     * Delete the entry with the id find by the getParams method
-     * @param $id
-     * @return bool
-     * @throws Exception
-     */
-    public static function deleteById($id)
-    {
-        $req = static::getPDO()->prepare('
-            DELETE
-            FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ?
-            ');
-
-        return $req->execute(array($id));
-    }
+    public abstract function getEntity();
 
     /**
-     * This method make the connection to the database and load the Request class
+     * Polymorphism method
+     * @param null $filters
+     * @return mixed
      * @throws Exception
      */
-    public function getPDO()
-    {
-        return $this->pdo;
-    }
-
     public function find($filters = null)
     {
         if (is_numeric($filters)) {
             return $this->findOne($filters);
-        } elseif (!empty($filters)) {
+        } elseif (is_array($filters) && !empty($filters)) {
             return $this->search($filters);
         }
 
@@ -67,47 +47,117 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      */
     public function findOne(int $articleId)
     {
-        $req = $this->getPDO()->prepare('
-            SELECT *
+        $sql = $this->getPDO()->prepare('SELECT *
             FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ?
-            ');
+            WHERE ' . static::$tablePk . ' = ? ');
 
-        $req->execute(array($articleId));
+        $sql->execute([$articleId]);
 
-        return $req->fetch();
+        return $sql->fetch();
     }
 
+    /**
+     * This method make the connection to the database and load the DefaultPDO class
+     * @throws Exception
+     */
+    public function getPDO()
+    {
+        return $this->pdo;
+    }
+
+    /**
+     * Allows you to perform an sql query with filters or to retrieve all of them if no filter is found.
+     *
+     * @param array $filters Contains in key the columns of the table and in value the "equal to".
+     *
+     * @return array An empty table where the results can be found in bdd
+     * @throws Exception
+     */
     public function search(array $filters)
     {
-        $sql = $this->getPDO()->prepare('
-        SELECT *
-        FROM ' . static::$tableName . '
-        WHERE 1 = 1
-        ');
+        // SQL REQUEST
+        // We specify a where 1 = 1 to avoid managing the WHERE || AND
+        $sql = 'SELECT *
+             FROM ' . static::$tableName . '
+             WHERE 1 = 1 ';
 
+        // Array of values
         foreach ($filters as $key => $value) {
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
-        return $sql->execute(array_values($filters));
+        // PDO execute
+        $pdo = $this->getPDO()->prepare($sql);
+
+        // We pass the values to be replaced by the ? values of the sql query.
+        $pdo->execute(array_values($filters));
+
+        // We're getting the results back
+        return $pdo->fetchAll();
     }
 
     /**
      * This function find all the informations contained in the table
-     * @return
      * @throws Exception
      */
     public function findAll()
     {
-        $req = $this->getPDO()->query('
+        $sql = $this->getPDO()->query('
             SELECT *
             FROM ' . static::$tableName . '
             ORDER BY ' . static::$tableOrder . ' DESC 
         ');
 
-        $req->execute();
+        $sql->execute();
 
-        return $req->fetchAll();
+        return $sql->fetchAll();
+    }
+
+    /**
+     * Delete the entry with the id find by the getParams method
+     * @param $id
+     * @return void
+     * @throws Exception
+     */
+    public function delete($id)
+    {
+        $sql = $this->getPDO()->prepare('
+            DELETE FROM ' . static::$tableName . '
+            WHERE ' . static::$tablePk . ' = ?
+            ');
+
+        $sql->execute(array($id));
+
+        // The number of deleted entries is displayed.
+        $count = $sql->rowCount();
+        print('Effacement de ' . $count . ' entrées.');
+    }
+
+    public function updateById($id)
+    {
+
+        $sql = $this->getPDO()->prepare('
+            UPDATE ' . static::$tableName . '
+            SET title = :title, content = :content
+            WHERE ' . static::$tablePk . ' = ?
+            ');
+
+        $sql->execute(array($id));
+
+        // The number of updated entries is displayed.
+        $count = $sql->rowCount();
+        print('Mise à jour de ' . $count . ' entrée(s)');
+    }
+
+    public function selectColumns(array $columns = [])
+    {
+        $sql = $this->getPDO()->prepare('
+            SELECT ' . implode(', ', $columns) . ' 
+            FROM ' . static::$tableName
+        );
+
+        $sql->execute();
+
+        return $sql->fetchAll();
     }
 }
