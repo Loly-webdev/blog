@@ -1,8 +1,8 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultPDO.php';
+namespace Core;
 
-abstract class DefaultAbstractRepository extends DefaultPDO
+abstract class DefaultAbstractRepository
 {
     private $pdo;
     static $tablePk = 'id';
@@ -47,9 +47,10 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      */
     public function findOne(int $articleId)
     {
-        $sql = $this->getPDO()->prepare('SELECT *
-            FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ? ');
+        $sql = $this->getPDO()->prepare(
+        	'SELECT * FROM ' . static::$tableName
+			. ' WHERE ' . static::$tablePk . ' = ? '
+		);
 
         $sql->execute([$articleId]);
 
@@ -58,7 +59,6 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
     /**
      * This method make the connection to the database and load the DefaultPDO class
-     * @throws Exception
      */
     public function getPDO()
     {
@@ -71,15 +71,12 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      * @param array $filters Contains in key the columns of the table and in value the "equal to".
      *
      * @return array An empty table where the results can be found in bdd
-     * @throws Exception
      */
     public function search(array $filters)
     {
         // SQL REQUEST
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
-        $sql = 'SELECT *
-             FROM ' . static::$tableName . '
-             WHERE 1 = 1 ';
+        $sql = 'SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
 
         // Array of values
         foreach ($filters as $key => $value) {
@@ -98,15 +95,13 @@ abstract class DefaultAbstractRepository extends DefaultPDO
 
     /**
      * This function find all the informations contained in the table
-     * @throws Exception
      */
     public function findAll()
     {
-        $sql = $this->getPDO()->query('
-            SELECT *
-            FROM ' . static::$tableName . '
-            ORDER BY ' . static::$tableOrder . ' DESC 
-        ');
+        $sql = $this->getPDO()->query(
+        	' SELECT *  FROM ' . static::$tableName
+	        . ' ORDER BY ' . static::$tableOrder . ' DESC '
+		);
 
         $sql->execute();
 
@@ -121,39 +116,37 @@ abstract class DefaultAbstractRepository extends DefaultPDO
      */
     public function delete($id)
     {
-        $sql = $this->getPDO()->prepare('
-            DELETE FROM ' . static::$tableName . '
-            WHERE ' . static::$tablePk . ' = ?
-            ');
+        $sql = $this->getPDO()->prepare(
+        	'DELETE FROM ' . static::$tableName
+			. ' WHERE ' . static::$tablePk . ' = ? '
+		);
 
-        $sql->execute(array($id));
+        $sql->execute([$id]);
 
         // The number of deleted entries is displayed.
-        $count = $sql->rowCount();
-        print('Effacement de ' . $count . ' entrées.');
+        return $sql->rowCount();
     }
 
-    public function updateById($id)
+    public function updateById($id): int
     {
 
-        $sql = $this->getPDO()->prepare('
-            UPDATE ' . static::$tableName . '
-            SET title = :title, content = :content
-            WHERE ' . static::$tablePk . ' = ?
-            ');
+        $sql = $this->getPDO()->prepare(
+        	'UPDATE ' . static::$tableName
+			. 'SET title = :title, content = :content '
+			. 'WHERE ' . static::$tablePk . ' = ?'
+		);
 
-        $sql->execute(array($id));
+        $sql->execute([$id]);
 
         // The number of updated entries is displayed.
-        $count = $sql->rowCount();
-        print('Mise à jour de ' . $count . ' entrée(s)');
+        return $sql->rowCount();
     }
 
     public function selectColumns(array $columns = [])
     {
-        $sql = $this->getPDO()->prepare('
-            SELECT ' . implode(', ', $columns) . ' 
-            FROM ' . static::$tableName
+        $sql = $this->getPDO()->prepare(
+        	'SELECT ' . implode(', ', $columns)
+			. ' FROM ' . static::$tableName
         );
 
         $sql->execute();

@@ -1,6 +1,6 @@
 <?php
 
-require_once PROJECT_CORE . 'Request.php';
+namespace Core;
 
 /**
  * Class Router
@@ -25,19 +25,19 @@ class Router
     private $controllerName;
     private $actionName;
 
-    public function __construct()
-    {
-        // Load the instance of Request
-        $request = Request::getInstance();
+	public function __construct()
+	{
+		// Load the instance of Request
+		$request = Request::getInstance();
 
-        // Find the ControllerName and ActionName with the function getUrlComponents()
-        // or return a defaultValue
-        $controllerName = $request->getUrLComponents()[0] ?? "Home";
-        $actionName = $request->getUrLComponents()[1] ?? "index";
+		// Find the ControllerName and ActionName with the function getUrlComponents()
+		// or return a defaultValue
+		$controllerName = $request->getUrLComponents()[0] ?? "Home";
+		$actionName = $request->getUrLComponents()[1] ?? "index";
 
-        $this->setControllerName($controllerName)
-            ->setActionName($actionName);
-    }
+		$this->controllerName = ucfirst($controllerName) . 'Controller';
+		$this->actionName = $actionName . 'Action';
+	}
 
     // Add Controller to the controllerName find
     public function getControllerName(): string
@@ -45,23 +45,9 @@ class Router
         return $this->controllerName;
     }
 
-    public function setControllerName(string $controllerName)
-    {
-        $this->controllerName = ucfirst($controllerName) . 'Controller';
-
-        return $this;
-    }
-
     // Add Action to the ActionName find
     public function getActionName(): string
     {
         return $this->actionName;
-    }
-
-    public function setActionName(string $actionName)
-    {
-        $this->actionName = $actionName . 'Action';
-
-        return $this;
     }
 }

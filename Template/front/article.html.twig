@@ -1,4 +1,4 @@
-{% extends "template/base.html.twig" %}
+{% extends "base.html.twig" %}
 {% block title %}
     {{ post.title }}
 {% endblock %}
@@ -10,12 +10,13 @@
             {{ article.content }}
         </p>
         <div>
-            <a href="update?articleId={{ article.id }}">Éditer</a>
-            <a href="delete?articleId={{ article.id }}">Supprimer</a>
+            <a href="/article/edit?articleId={{ article.id }}">Éditer</a>
+            <a href="/article/delete?articleId={{ article.id }}">Supprimer</a>
         </div>
     </section>
     <section class="comment">
         <h3>Commentaires :</h3>
+        {{  dump(comments) }}
         {% for comment in comments %}
             <strong>{{ comment.author }}</strong>
             <br>
@@ -26,8 +27,8 @@
             </div>
         {% endfor %}
     </section>
-    {{ include('template/front/commentForm.html.twig') }}
+    {{ include('front/commentForm.html.twig') }}
     <section class="link">
-        <a href="/article">Retour à la liste des billets</a>
+        <a href="/">Retour à la liste des billets</a>
     </section>
 {% endblock %}
