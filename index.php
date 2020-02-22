@@ -9,6 +9,9 @@ try {
     require_once 'Config/rootConfig.php';
     require_once PROJECT_CORE . 'Dispatcher.php';
 
+    // Autoload of composer
+    require_once 'vendor/autoload.php';
+
     (new Dispatcher())->dispatch();
 
 } catch (Throwable $t) {

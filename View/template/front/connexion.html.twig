@@ -1,15 +1,21 @@
 {% extends "template/base.html.twig" %}
 {% block title %}Connexion{% endblock %}
 {% block content %}
-    <section>
-        <h3>Connexion :</h3>
-        <form class="flex" action="#" method="post">
-            <label for="login">Identifiant :</label>
-            <input id="login" name="login" placeholder="Identifiant" type="text"/>
-            <label for="pass">Mot de passe (8 caractères minimum) :</label>
-            <input id="pass" name="pass" placeholder="Mot de passe" type="password" minlength="8"
-                   required/>
-            <input class="button" type="submit" value="Connexion"/>
+    <section class="form">
+        <h4>Connexion :</h4>
+        <form action="" method="POST">
+            <div>
+                <label for="login">Identifiant :</label><br/>
+                <input id="login" name="user[login]" type="text"/>
+            </div>
+            <div>
+                <label for="pass">Mot de passe (3 caractères minimum) :</label><br/>
+                <input id="pass" name="user[pass]" type="password" minlength="3"
+                       required/>
+            </div>
+            <div>
+                <input type="submit" value="Connexion"/>
+            </div>
         </form>
     </section>
 {% endblock %}
