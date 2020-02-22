@@ -1,4 +1,4 @@
-{% extends "template/base.html.twig" %}
+{% extends "base.html.twig" %}
 {% block title %}
     {{ comment.id }}
 {% endblock %}
@@ -9,13 +9,13 @@
             {{ comment.content }}
         </p>
         <div>
-            <a href="update?commentId={{ comment.id }}">Éditer</a>
-            <a href="delete?commentId={{ comment.id }}">Supprimer</a>
+            <a href="/">Éditer</a>
+            <a href="/">Supprimer</a>
         </div>
     </section>
     {{ include('template/front/commentForm.html.twig') }}
     <section class="link">
-        <a href="/article">Retour à la liste des billets</a>
+        <a href="/">Retour à la liste des billets</a>
     </section>
 {% endblock %}
 

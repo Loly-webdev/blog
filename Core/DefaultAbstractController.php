@@ -1,9 +1,9 @@
 <?php
 
+namespace Core;
+
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-
-require_once PROJECT_CORE . 'DefaultControllerInterface.php';
 
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
@@ -12,7 +12,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
 
     public function __construct()
     {
-        $this->setRequest();
+	    $this->request = Request::getInstance();
     }
 
     public function getRequest()
@@ -20,45 +20,44 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         return $this->request;
     }
 
-    public function setRequest()
-    {
-        $this->request = Request::getInstance();
-
-        return $this;
-    }
-
     public function renderView($viewName, array $params = [], string $viewFolder = null): void
     {
-        $defaultPath = PROJECT_VIEW;
+        $defaultPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'template'. DIRECTORY_SEPARATOR;
         $viewFolder = $viewFolder ?? $this->getFolderView();
         $view = $this->getTwig()->render($viewFolder . $viewName, $params);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
-            throw new Exception("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
+            throw new \Exception("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
         }
+
         echo $view;
     }
 
     public function getFolderView(): string
     {
         // Define the view directory
-        return 'template/front/';
+        return 'front/';
     }
 
     public static function getTwig()
     {
         // instance of Twig
         if (null === static::$twig) {
-            require_once PROJECT_VENDOR . 'autoload.php';
-            $loader = new FilesystemLoader('View/');
+            $loader = new FilesystemLoader('template/');
             static::$twig = new Environment($loader,
                 // To the prod define the path of directory Cache, else to dev keep false
                 [
-                    'cache' => false
+                    'cache' => false,
+	                'debug' => DEBUG_TWIG,
                 ]
             );
         }
+
+        if (DEBUG_TWIG) {
+	        static::$twig->addExtension(new \Twig\Extension\DebugExtension());
+        }
+
         return static::$twig;
     }
 }

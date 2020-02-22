@@ -1,8 +1,11 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultAbstractController.php';
-require_once PROJECT_REPOSITORY . 'CommentRepository.php';
-require_once PROJECT_REPOSITORY . 'ArticleRepository.php';
+namespace App\Controller;
+
+use Core\DefaultAbstractController;
+
+use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 
 class ArticleController extends DefaultAbstractController
 {
@@ -13,8 +16,6 @@ class ArticleController extends DefaultAbstractController
         $articles = (new ArticleRepository())->find();
         //pour des listes déroulante
         //$article = (new ArticleRepository())->selectColumns(['title', 'content']);
-        //var_dump($article);
-
 
         $this->renderView(
             'articles.html.twig',
@@ -50,9 +51,6 @@ class ArticleController extends DefaultAbstractController
             'post_id' => $articleId
         ]);
 
-        require_once 'CommentController.php';
-        (new CommentController())->indexAction();
-
         $this->renderView(
             'article.html.twig',
             [
@@ -64,21 +62,6 @@ class ArticleController extends DefaultAbstractController
 
     public function addAction()
     {
-        /*// Retrieve all data in a table
-        $data = $this->getRequest()->getParam('article');
-        $article = new Article($data);
-
-        $article = (new ArticleRepository())->add($article);
-
-        $this->renderView(
-            'articleForm.html.twig',
-            [
-                'message' => $article->hasId()
-                    ? "Votre article à bien était enregistré !"
-                    : "Une erreur est survenue."
-            ]
-        );*/
-
         // Retrieve all data in a table
         $data = $this->getRequest()->getParam('article');
 
