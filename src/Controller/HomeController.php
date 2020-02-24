@@ -19,4 +19,11 @@ class HomeController extends DefaultAbstractController
             'contact.html.twig'
         );
     }
+
+    public function connexionAction()
+    {
+        $this->renderView(
+            'connexion.html.twig'
+        );
+    }
 }

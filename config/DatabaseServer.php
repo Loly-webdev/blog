@@ -4,10 +4,10 @@ namespace Config;
 
 class DatabaseServer
 {
-	private $host = '127.0.0.1';
+	private $host = 'localhost';
 	private $database = 'blog';
 	private $user = 'root';
-	private $password = '';
+	private $password = 'root';
 
 	/**
 	 * @return string

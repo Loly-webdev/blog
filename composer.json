@@ -10,7 +10,7 @@
     "autoload": {
         "psr-4": {
             "Config\\" : "config/",
-            "Core\\" : "core/",
+            "Core\\" : "Core/",
             "App\\" : "src/"
         }
     },

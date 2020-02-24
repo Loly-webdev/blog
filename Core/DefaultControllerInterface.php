@@ -7,7 +7,7 @@ interface DefaultControllerInterface
     // Action method
     public function indexAction();
 
-    // Template Method
+    // template Method
     public function renderView(string $viewName, array $params, string $viewFolder = null): void;
 
     // Path of view files

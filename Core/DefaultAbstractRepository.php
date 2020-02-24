@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Exception;
+
 abstract class DefaultAbstractRepository
 {
     private $pdo;

@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Entity;
+
+use App\Controller\CommentController;
+
 class Comment
 {
     protected $id;
@@ -36,7 +40,7 @@ class Comment
 
         return $this;
     }
-    
+
     public function hasId($data)
     {
         if (null === $data) {
