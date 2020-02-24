@@ -1,21 +1,14 @@
 <?php
-// Show PHP errors (Delete before prod)
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', 1);
+
+require 'vendor/autoload.php';
+
+use Core\Dispatcher;
+
+define('DEBUG_TWIG', true);
 
 try {
-    define("DS", DIRECTORY_SEPARATOR);
-    define('PROJECT_ROOT', dirname(__FILE__) . DS);
-    require_once 'Config/rootConfig.php';
-    require_once PROJECT_CORE . 'Dispatcher.php';
-
-    // Autoload of composer
-    require_once 'vendor/autoload.php';
-
-    (new Dispatcher())->dispatch();
-
+	$dispatcher = new Dispatcher();
+	$dispatcher->dispatch();
 } catch (Throwable $t) {
-    require_once PROJECT_CONTROLLER . 'ErrorController.php';
-    $error = new ErrorController();
-    $error->error($t);
+	var_dump($t);
 }
