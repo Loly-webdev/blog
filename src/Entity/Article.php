@@ -1,5 +1,7 @@
 <?php
 
+use App\Controller\ArticleController;
+
 class Article
 {
     protected $id;
