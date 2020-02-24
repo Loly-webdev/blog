@@ -1,6 +1,6 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultAbstractController.php';
+namespace Core;
 
 /**
  * Class Request
@@ -23,9 +23,7 @@ final class Request
 {
     private static $instance = null;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function getInstance()
     {

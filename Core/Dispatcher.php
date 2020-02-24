@@ -1,6 +1,6 @@
 <?php
 
-require_once PROJECT_CORE . 'Router.php';
+namespace Core;
 
 /**
  * Class Dispatcher
@@ -14,54 +14,20 @@ class Dispatcher
 
     public function __construct()
     {
-        $this->initRouter()
-            ->initController();
-    }
-
-    public function initController()
-    {
-        $controllerName = $this->getRouter()->getControllerName();
-        $controller = PROJECT_CONTROLLER . $controllerName . '.php';
-
-        // Check that the controller exists to return it, or return an exception
-        if (false === file_exists($controller)) {
-            throw new Exception("Le controller $controller n'existe pas.");
-        }
-        require_once($controller);
-
-        $this->controller = new $controllerName();
-
-        // Check if the controller find is compatible with DefaultControllerInterface
-        $controllerIsCompatible = is_subclass_of($this->controller, 'DefaultControllerInterface');
-
-        if (false === $controllerIsCompatible) {
-            throw new Exception(
-                'Le controller ' . $controllerName . ' n\'est pas compatible avec DefaultControllerInterface'
-            );
-        }
-        return $this;
-    }
-
-    public function getRouter()
-    {
-        return $this->router;
-    }
-
-    public function initRouter()
-    {
         $this->router = new Router();
-
-        return $this;
+	    $controllerName = $this->router->getControllerName();
+	    $controller = '\\App\\Controller\\' . $controllerName;
+	    $this->controller = new $controller();
     }
 
     public function dispatch()
     {
         $controllerName = get_class($this->controller);
-        $actionName = $this->getRouter()->getActionName();
+        $actionName = $this->router->getActionName();
 
         // Check that the controller action method exists
         if (false === method_exists($this->controller, $actionName)) {
-            throw new Exception(
+            throw new \Exception(
                 "La méthode $actionName n'existe pas dans le controleur $controllerName."
             );
         }

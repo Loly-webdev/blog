@@ -1,6 +1,8 @@
 <?php
 
-require_once PROJECT_CORE . 'DefaultAbstractController.php';
+namespace App\Controller;
+
+use Core\DefaultAbstractController;
 
 class HomeController extends DefaultAbstractController
 {
@@ -15,13 +17,6 @@ class HomeController extends DefaultAbstractController
     {
         $this->renderView(
             'contact.html.twig'
-        );
-    }
-
-    public function connexionAction()
-    {
-        $this->renderView(
-            'connexion.html.twig'
         );
     }
 }
