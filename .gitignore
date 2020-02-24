@@ -1,5 +1,5 @@
 # ignorer les fichier
-config.env.php
+DatabaseServer.php
 # ignorer les dossier
 .idea
 vendor/

@@ -1,14 +1,18 @@
 <?php
+// Show PHP errors (Delete before prod)
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 1);
 
 require 'vendor/autoload.php';
 
+use App\Controller\ErrorController;
 use Core\Dispatcher;
-
-define('DEBUG_TWIG', true);
 
 try {
 	$dispatcher = new Dispatcher();
 	$dispatcher->dispatch();
+
 } catch (Throwable $t) {
-	var_dump($t);
+    $error = new ErrorController();
+    $error->error($t);
 }

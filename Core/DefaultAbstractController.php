@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Exception;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -28,7 +29,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
-            throw new \Exception("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
+            throw new Exception("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
         }
 
         echo $view;
@@ -49,13 +50,8 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
                 // To the prod define the path of directory Cache, else to dev keep false
                 [
                     'cache' => false,
-	                'debug' => DEBUG_TWIG,
                 ]
             );
-        }
-
-        if (DEBUG_TWIG) {
-	        static::$twig->addExtension(new \Twig\Extension\DebugExtension());
         }
 
         return static::$twig;
