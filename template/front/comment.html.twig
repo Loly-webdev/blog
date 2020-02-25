@@ -9,13 +9,13 @@
             {{ comment.content }}
         </p>
         <div>
-            <a href="/">Éditer</a>
-            <a href="/">Supprimer</a>
+            <a href="update?commentId={{ comment.id }}">Éditer</a>
+            <a href="delete?commentId={{ comment.id }}">Supprimer</a>
         </div>
     </section>
     {{ include('front/commentForm.html.twig') }}
     <section class="link">
-        <a href="/">Retour à la liste des billets</a>
+        <a href="/article">Retour à la liste des billets</a>
     </section>
 {% endblock %}
 
