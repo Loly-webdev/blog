@@ -16,8 +16,9 @@ class ArticleRepository extends DefaultAbstractRepository
     public function add(array $data)
     {
         $sql = $this->getPDO()->prepare(
-        	' INSERT INTO ' . static::$tableName . ' (title, author, content)
-            VALUES (:title, :author, :content)'
+        	' INSERT INTO ' . static::$tableName
+            . ' (title, author, content)
+            VALUES (:title, :author, :content) '
 		);
 
         $sql->execute($data);

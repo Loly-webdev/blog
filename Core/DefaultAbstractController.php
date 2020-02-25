@@ -49,7 +49,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
             static::$twig = new Environment($loader,
                 // To the prod define the path of directory Cache, else to dev keep false
                 [
-                    'cache' => false,
+                    'cache' => false
                 ]
             );
         }

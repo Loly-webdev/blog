@@ -19,7 +19,7 @@ class DefaultPDO
 
 		// Get login information
 		if (is_null(static::$cnx)) {
-			$dbServer = new  DatabaseServer();
+			$dbServer = new DatabaseServer();
 
 			static::$cnx = new PDO(
 				"mysql:host=" . $dbServer->getHost()
