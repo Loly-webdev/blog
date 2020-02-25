@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Core\DefaultAbstractController;
-
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 
@@ -62,6 +61,19 @@ class ArticleController extends DefaultAbstractController
 
     public function addAction()
     {
+        /*// Retrieve all data in a table
+        $data = $this->getRequest()->getParam('article');
+        $article = new Article($data);
+        $article = (new ArticleRepository())->add($article);
+        $this->renderView(
+            'articleForm.html.twig',
+            [
+                'message' => $article->hasId()
+                    ? "Votre article à bien était enregistré !"
+                    : "Une erreur est survenue."
+            ]
+        );*/
+
         // Retrieve all data in a table
         $data = $this->getRequest()->getParam('article');
 

@@ -35,17 +35,17 @@ class Router
 		$controllerName = $request->getUrLComponents()[0] ?? "Home";
 		$actionName = $request->getUrLComponents()[1] ?? "index";
 
+        // Add "Controller" to the controllerName find
 		$this->controllerName = ucfirst($controllerName) . 'Controller';
+        // Add "Action" to the actionName find
 		$this->actionName = $actionName . 'Action';
 	}
 
-    // Add Controller to the controllerName find
     public function getControllerName(): string
     {
         return $this->controllerName;
     }
 
-    // Add Action to the ActionName find
     public function getActionName(): string
     {
         return $this->actionName;

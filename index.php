@@ -3,6 +3,7 @@
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
 
+// Load autoload of composer
 require 'vendor/autoload.php';
 
 use App\Controller\ErrorController;

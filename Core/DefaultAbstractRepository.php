@@ -78,7 +78,7 @@ abstract class DefaultAbstractRepository
     {
         // SQL REQUEST
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
-        $sql = 'SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
+        $sql = ' SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
 
         // Array of values
         foreach ($filters as $key => $value) {
@@ -133,9 +133,9 @@ abstract class DefaultAbstractRepository
     {
 
         $sql = $this->getPDO()->prepare(
-        	'UPDATE ' . static::$tableName
-			. 'SET title = :title, content = :content '
-			. 'WHERE ' . static::$tablePk . ' = ?'
+        	' UPDATE ' . static::$tableName
+			. ' SET title = :title, content = :content '
+			. ' WHERE ' . static::$tablePk . ' = ? '
 		);
 
         $sql->execute([$id]);
@@ -147,7 +147,7 @@ abstract class DefaultAbstractRepository
     public function selectColumns(array $columns = [])
     {
         $sql = $this->getPDO()->prepare(
-        	'SELECT ' . implode(', ', $columns)
+        	' SELECT ' . implode(', ', $columns)
 			. ' FROM ' . static::$tableName
         );
 
