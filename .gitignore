@@ -1,6 +1,0 @@
-# ignorer les fichier
-DatabaseServer.php
-# ignorer les dossier
-.idea
-vendor/
-# ignorer le contenu des dossiers
