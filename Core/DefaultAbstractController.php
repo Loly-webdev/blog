@@ -4,6 +4,7 @@ namespace Core;
 
 use Exception;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 abstract class DefaultAbstractController implements DefaultControllerInterface
@@ -49,9 +50,13 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
             static::$twig = new Environment($loader,
                 // To the prod define the path of directory Cache, else to dev keep false
                 [
-                    'cache' => false
+                    'cache' => false,
+                    'debug' => DEBUG_TWIG
                 ]
             );
+        }
+        if (DEBUG_TWIG) {
+            static::$twig->addExtension(new DebugExtension());
         }
 
         return static::$twig;

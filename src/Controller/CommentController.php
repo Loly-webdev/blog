@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use Core\DefaultAbstractController;
 use App\Repository\CommentRepository;
 
@@ -51,18 +52,25 @@ class CommentController extends DefaultAbstractController
 
     public function addAction()
     {
-        $commentId = $this->getRequest()->getParam('commentId');
+        // Retrieve all data in a table
+        $data = $this->getRequest()->getParam('comment');
 
-        // Load last comment post
-        $comment = (new CommentRepository())->find($commentId);
+        if (null === $data) {
+            $this->renderView(
+                'commentForm.html.twig'
+            );
+        }
 
-        $this->renderView(
-            'comment.html.twig',
-            [
-                'comment' => $comment,
-                'message' => "Votre commentaire à bien était ajouté !"
-            ]
-        );
+        if (isset($data)) {
+            (new CommentRepository())->add($data);
+
+            $this->renderView(
+                'commentForm.html.twig',
+                [
+                    'message' => "Votre commentaire à bien était enregistré !"
+                ]
+            );
+        }
     }
 
     public function deleteAction()
