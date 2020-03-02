@@ -3,6 +3,7 @@
     {{ post.title }}
 {% endblock %}
 {% block content %}
+    {{ dump(article) }}
     <section class="article">
         <h2>{{ article.title }}</h2>
         <strong>{{ article.creation_date }}</strong>
@@ -10,8 +11,8 @@
             {{ article.content }}
         </p>
         <div>
-            <a href="/article/edit?articleId={{ article.id }}">Éditer</a>
-            <a href="/article/delete?articleId={{ article.id }}">Supprimer</a>
+            <a href="/article/edit?articleId={{ article.post_id }}">Éditer</a>
+            <a href="/article/delete?articleId={{ article.post_id }}">Supprimer</a>
         </div>
     </section>
     <section class="comment">
@@ -26,7 +27,9 @@
             </div>
         {% endfor %}
     </section>
-    {{ include('front/commentForm.html.twig') }}
+    <section class="link">
+        <a href="/comment/add?articleId={{ article.post_id }}">Ajouter un nouveau commetaire</a>
+    </section>
     <section class="link">
         <a href="/">Retour à la liste des billets</a>
     </section>

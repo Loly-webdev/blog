@@ -2,12 +2,13 @@
 
 namespace Core;
 
+use App\Entity\Article;
 use Exception;
+use PDO;
 
 abstract class DefaultAbstractRepository
 {
     private $pdo;
-    static $tablePk = 'id';
 
     final public function __construct()
     {
@@ -23,6 +24,14 @@ abstract class DefaultAbstractRepository
     }
 
     public abstract function getEntity();
+
+    /**
+     * This method make the connection to the database and load the DefaultPDO class
+     */
+    public function getPDO()
+    {
+        return $this->pdo;
+    }
 
     /**
      * Polymorphism method
@@ -49,22 +58,19 @@ abstract class DefaultAbstractRepository
      */
     public function findOne(int $articleId)
     {
-        $sql = $this->getPDO()->prepare(
-        	'SELECT * FROM ' . static::$tableName
-			. ' WHERE ' . static::$tablePk . ' = ? '
-		);
+        // SQL REQUEST
+        $sql = 'SELECT * FROM ' . static::$tableName
+			. ' WHERE ' . static::$tablePk . ' = ? ';
 
-        $sql->execute([$articleId]);
+        // PDO execute
+        $pdo = $this->getPDO()->prepare($sql);
+        // Object of value
+        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
+        // We pass the values to be replaced by the ? values of the sql query.
+        $pdo->execute([$articleId]);
 
-        return $sql->fetch();
-    }
-
-    /**
-     * This method make the connection to the database and load the DefaultPDO class
-     */
-    public function getPDO()
-    {
-        return $this->pdo;
+        // We're getting the results back
+        return $pdo->fetch();
     }
 
     /**
@@ -76,7 +82,6 @@ abstract class DefaultAbstractRepository
      */
     public function search(array $filters)
     {
-        // SQL REQUEST
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
         $sql = ' SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
 
@@ -85,13 +90,11 @@ abstract class DefaultAbstractRepository
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
-        // PDO execute
         $pdo = $this->getPDO()->prepare($sql);
-
+        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
         // We pass the values to be replaced by the ? values of the sql query.
         $pdo->execute(array_values($filters));
 
-        // We're getting the results back
         return $pdo->fetchAll();
     }
 
@@ -100,14 +103,14 @@ abstract class DefaultAbstractRepository
      */
     public function findAll()
     {
-        $sql = $this->getPDO()->query(
-        	' SELECT *  FROM ' . static::$tableName
-	        . ' ORDER BY ' . static::$tableOrder . ' DESC '
-		);
+        $sql = 'SELECT *  FROM ' . static::$tableName
+	        . ' ORDER BY ' . static::$tableOrder . ' DESC';
 
-        $sql->execute();
+        $pdo = $this->getPDO()->prepare($sql);
+        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
+        $pdo->execute();
 
-        return $sql->fetchAll();
+        return $pdo->fetchAll();
     }
 
     /**
@@ -118,41 +121,25 @@ abstract class DefaultAbstractRepository
      */
     public function delete($id)
     {
-        $sql = $this->getPDO()->prepare(
-        	'DELETE FROM ' . static::$tableName
-			. ' WHERE ' . static::$tablePk . ' = ? '
-		);
+        $sql = 'DELETE FROM ' . static::$tableName
+			. ' WHERE ' . static::$tablePk . ' = ?';
 
-        $sql->execute([$id]);
+        $pdo = $this->getPDO()->prepare($sql);
+        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
+        $pdo->execute([$id]);
 
         // The number of deleted entries is displayed.
-        return $sql->rowCount();
-    }
-
-    public function updateById($id): int
-    {
-
-        $sql = $this->getPDO()->prepare(
-        	' UPDATE ' . static::$tableName
-			. ' SET title = :title, content = :content '
-			. ' WHERE ' . static::$tablePk . ' = ? '
-		);
-
-        $sql->execute([$id]);
-
-        // The number of updated entries is displayed.
-        return $sql->rowCount();
+        return $pdo->rowCount();
     }
 
     public function selectColumns(array $columns = [])
     {
-        $sql = $this->getPDO()->prepare(
-        	' SELECT ' . implode(', ', $columns)
-			. ' FROM ' . static::$tableName
-        );
+        $sql = 'SELECT ' . implode(', ', $columns)
+			. ' FROM ' . static::$tableName;
 
-        $sql->execute();
+        $pdo = $this->getPDO()->prepare($sql);
+        $pdo->execute();
 
-        return $sql->fetchAll();
+        return $pdo->fetchAll();
     }
 }
