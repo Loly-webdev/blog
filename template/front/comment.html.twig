@@ -3,6 +3,7 @@
     {{ comment.id }}
 {% endblock %}
 {% block content %}
+    {{ dump(comment) }}
     <section class="comment">
         <strong>{{ comment.author }}</strong>
         <p>
@@ -13,7 +14,6 @@
             <a href="delete?commentId={{ comment.id }}">Supprimer</a>
         </div>
     </section>
-    {{ include('front/commentForm.html.twig') }}
     <section class="link">
         <a href="/article">Retour à la liste des billets</a>
     </section>
