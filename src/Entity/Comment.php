@@ -2,51 +2,56 @@
 
 namespace App\Entity;
 
-use App\Controller\CommentController;
+use Core\DefaultAbstractEntity;
 
-class Comment
+class Comment extends DefaultAbstractEntity
 {
-    protected $id;
     protected $title;
     protected $author;
     protected $content;
-    private $params;
+    private   $name;
 
-    public function __construct(array $params = [])
+    /**
+     * @return mixed
+     */
+    public function getTitle()
     {
-        if (!empty($params)) {
-            $this->hydrateObject($params);
-        }
+        return $this->title;
     }
 
-    public function hydrateObject($params)
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
     {
-        if (isset($params['title'])) {
-            $this->setName($params['title']);
-        }
-
-        if (isset($params['author'])) {
-            $this->setName($params['author']);
-        }
-
-        if (isset($params['content'])) {
-            $this->setName($params['content']);
-        }
+        return $this->author;
     }
 
-    private function setName($params)
+    /**
+     * @return mixed
+     */
+    public function getContent()
     {
-        $this->params = $params;
+        return $this->content;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return $this
+     */
+    private function setName($name)
+    {
+        $this->name = $name;
 
         return $this;
-    }
-
-    public function hasId($data)
-    {
-        if (null === $data) {
-            (new CommentController())->renderView(
-                'commentForm.html.twig'
-            );
-        }
     }
 }

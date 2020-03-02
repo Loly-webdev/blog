@@ -2,26 +2,44 @@
 
 namespace App\Repository;
 
-use Core\DefaultAbstractRepository;
 use App\Entity\Article;
+use Core\DefaultAbstractRepository;
+use PDO;
 
 /**
  * Make the database requests relative to the articles
  */
 class ArticleRepository extends DefaultAbstractRepository
 {
-    static $tableName = 'posts';
+    static $tableName  = 'posts';
+    static $tablePk = 'post_id';
     static $tableOrder = 'creation_date';
 
     public function add(array $data)
     {
-        $sql = $this->getPDO()->prepare(
-        	' INSERT INTO ' . static::$tableName
-            . ' (title, author, content)
-            VALUES (:title, :author, :content) '
-		);
+        $sql = 'INSERT INTO ' . static::$tableName . ' (title, author, content)
+            VALUES (:title, :author, :content)';
 
-        $sql->execute($data);
+        $pdo = $this->getPDO()->prepare($sql);
+        //$pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
+        $pdo->execute($data);
+
+        // The number of updated entries is displayed.
+        return $pdo->rowCount();
+    }
+
+    public function update($id): int
+    {
+        $sql = 'UPDATE ' . static::$tableName
+               . ' SET title = :title, content = :content '
+               . ' WHERE ' . static::$tablePk . ' = ?';
+
+        $pdo = $this->getPDO()->prepare($sql);
+        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
+        $pdo->execute([$id]);
+
+        // The number of updated entries is displayed.
+        return $pdo->rowCount();
     }
 
     public function getEntity()
