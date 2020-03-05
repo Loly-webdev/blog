@@ -12,6 +12,7 @@ use PDO;
 class CommentRepository extends DefaultAbstractRepository
 {
     static $tableName = 'comments';
+    static $tablePk = 'id';
     static $tableOrder = 'comment_date';
 
     public function add(array $data)
