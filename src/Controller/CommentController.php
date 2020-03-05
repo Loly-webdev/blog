@@ -76,6 +76,12 @@ class CommentController extends DefaultAbstractController
     public function deleteAction()
     {
         (new CommentRepository())->delete($this->getRequest()->getParam('commentId'));
+        $this->renderView(
+            'commentForm.html.twig',
+            [
+                'message' => "Votre commentaire à bien était supprimé !"
+            ]
+        );
     }
 
     public function updateAction()

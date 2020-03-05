@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Core\DefaultAbstractRepository;
 use App\Entity\Comment;
+use PDO;
 
 /**
  * Make the database requests relative to the comments
@@ -11,7 +12,6 @@ use App\Entity\Comment;
 class CommentRepository extends DefaultAbstractRepository
 {
     static $tableName = 'comments';
-    static $tablePk = 'id';
     static $tableOrder = 'comment_date';
 
     public function add(array $data)
