@@ -12,6 +12,7 @@ use PDO;
 class ArticleRepository extends DefaultAbstractRepository
 {
     static $tableName  = 'posts';
+    static $tablePk = 'post_id';
     static $tableOrder = 'creation_date';
 
     public function add(array $data)
