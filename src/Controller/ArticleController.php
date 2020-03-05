@@ -98,7 +98,13 @@ class ArticleController extends DefaultAbstractController
 
     public function deleteAction()
     {
-        (new ArticleRepository())->delete($this->getRequest()->getParam('articleId'));
+        (new ArticleRepository())->deleteCascade($this->getRequest()->getParam('articleId'));
+        $this->renderView(
+            'articleForm.html.twig',
+            [
+                'message' => "Votre article à bien était supprimé !"
+            ]
+        );
     }
 
     public function updateAction()
