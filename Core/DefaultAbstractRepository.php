@@ -9,6 +9,7 @@ use PDO;
 abstract class DefaultAbstractRepository
 {
     private $pdo;
+    static $tablePk = 'id';
 
     final public function __construct()
     {
@@ -123,6 +124,7 @@ abstract class DefaultAbstractRepository
     {
         $sql = 'DELETE FROM ' . static::$tableName
 			. ' WHERE ' . static::$tablePk . ' = ?';
+
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
