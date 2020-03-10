@@ -1,7 +1,6 @@
 # ignorer les fichier
 DatabaseServer.php
 composer.json
-composer.lock
 composer.phar
 # ignorer les dossier
 .gitignore

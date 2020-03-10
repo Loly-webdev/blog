@@ -9,7 +9,6 @@ class Article extends DefaultAbstractEntity
     protected $title;
     protected $author;
     protected $content;
-    protected $name;
 
     /**
      * @return mixed
@@ -17,6 +16,17 @@ class Article extends DefaultAbstractEntity
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     *
+     * @return Article
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
     }
 
     /**
@@ -28,6 +38,17 @@ class Article extends DefaultAbstractEntity
     }
 
     /**
+     * @param mixed $author
+     *
+     * @return Article
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getContent()
@@ -36,22 +57,13 @@ class Article extends DefaultAbstractEntity
     }
 
     /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param $name
+     * @param mixed $content
      *
-     * @return $this
+     * @return Article
      */
-    private function setName($name)
+    public function setContent($content)
     {
-        $this->name = $name;
-
+        $this->content = $content;
         return $this;
     }
 }
