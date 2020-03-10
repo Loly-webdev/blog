@@ -11,8 +11,7 @@ use PDO;
  */
 class CommentRepository extends DefaultAbstractRepository
 {
-    static $tableName = 'comments';
-    static $tablePk = 'id';
+    static $tableName  = 'comments';
     static $tableOrder = 'comment_date';
 
     public function add(array $data)
@@ -25,7 +24,7 @@ class CommentRepository extends DefaultAbstractRepository
         $pdo->execute(
             [
                 'post_id' => (int)$_GET['articleId'],
-                'author' => $data['author'],
+                'author'  => $data['author'],
                 'content' => $data['content']
             ]
         );

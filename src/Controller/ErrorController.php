@@ -16,8 +16,8 @@ class ErrorController extends DefaultAbstractController
             '../error.html.twig',
             [
                 'message' => $t->getMessage(),
-                'file' => $t->getFile(),
-                'line' => $t->getLine()
+                'file'    => $t->getFile(),
+                'line'    => $t->getLine()
             ]
         );
     }

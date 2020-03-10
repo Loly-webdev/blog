@@ -4,9 +4,7 @@ namespace Core;
 
 /**
  * Class Request
- *
  * Get informations of URL
- *
  * For exemple :
  * <code>
  * $requestURL = "monsite.fr/home/test?param1=value1&param2=value2"
@@ -23,7 +21,9 @@ final class Request
 {
     private static $instance = null;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     public static function getInstance()
     {
@@ -39,7 +39,7 @@ final class Request
     {
         // Get information of URL
         $server = parse_url($_SERVER["REQUEST_URI"]);
-        $path = trim($server['path'], "/");
+        $path   = trim($server['path'], "/");
 
         return "" !== $path ? explode('/', $path) : [];
     }
@@ -48,8 +48,8 @@ final class Request
     {
         // Get params $_POST et $_GET
         return $this->getQueryParam($key) ??
-            $this->getRequestParam($key) ??
-            $defaultValue;
+               $this->getRequestParam($key) ??
+               $defaultValue;
     }
 
     public function getQueryParam($key, $defaultValue = null)
