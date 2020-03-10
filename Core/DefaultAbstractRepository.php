@@ -7,7 +7,7 @@ use PDO;
 
 abstract class DefaultAbstractRepository
 {
-    static  $tableFk = 'post_id';
+    static  $tablePk = 'id';
     private $pdo;
 
     final public function __construct()
@@ -129,7 +129,7 @@ abstract class DefaultAbstractRepository
     public function delete($id)
     {
         $sql = 'DELETE FROM ' . static::$tableName
-               . ' WHERE ' . static::$tableFk . ' = ?';
+               . ' WHERE ' . static::$tablePk . ' = ?';
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());

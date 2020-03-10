@@ -6,7 +6,6 @@ use Exception;
 
 /**
  * Class Dispatcher
- *
  * Get informations of URL and params to dispatch controller action
  */
 class Dispatcher
@@ -16,16 +15,16 @@ class Dispatcher
 
     public function __construct()
     {
-        $this->router = new Router();
-	    $controllerName = $this->router->getControllerName();
-	    $controller = '\\App\\Controller\\' . $controllerName;
-	    $this->controller = new $controller();
+        $this->router     = new Router();
+        $controllerName   = $this->router->getControllerName();
+        $controller       = '\\App\\Controller\\' . $controllerName;
+        $this->controller = new $controller();
     }
 
     public function dispatch()
     {
         $controllerName = get_class($this->controller);
-        $actionName = $this->router->getActionName();
+        $actionName     = $this->router->getActionName();
 
         // Check that the controller action method exists
         if (false === method_exists($this->controller, $actionName)) {
@@ -34,7 +33,7 @@ class Dispatcher
             );
         }
         // Dispatch the controller action
-        call_user_func(array($this->controller, $actionName));
+        call_user_func([$this->controller, $actionName]);
 
         return $this;
     }
