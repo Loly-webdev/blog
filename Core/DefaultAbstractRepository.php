@@ -2,15 +2,13 @@
 
 namespace Core;
 
-use App\Entity\Article;
 use Exception;
 use PDO;
 
 abstract class DefaultAbstractRepository
 {
+    static  $tableFk = 'post_id';
     private $pdo;
-    static $tableFk = 'post_id';
-
 
     final public function __construct()
     {
@@ -25,19 +23,11 @@ abstract class DefaultAbstractRepository
         }
     }
 
-    public abstract function getEntity();
-
-    /**
-     * This method make the connection to the database and load the DefaultPDO class
-     */
-    public function getPDO()
-    {
-        return $this->pdo;
-    }
-
     /**
      * Polymorphism method
+     *
      * @param null $filters
+     *
      * @return mixed
      * @throws Exception
      */
@@ -45,7 +35,8 @@ abstract class DefaultAbstractRepository
     {
         if (is_numeric($filters)) {
             return $this->findOne($filters);
-        } elseif (is_array($filters) && !empty($filters)) {
+        }
+        elseif (is_array($filters) && !empty($filters)) {
             return $this->search($filters);
         }
 
@@ -54,7 +45,9 @@ abstract class DefaultAbstractRepository
 
     /**
      * Find all the informations of the table where id is equal to the id find by the getParams method
+     *
      * @param $articleId
+     *
      * @return mixed
      * @throws Exception
      */
@@ -62,7 +55,7 @@ abstract class DefaultAbstractRepository
     {
         // SQL REQUEST
         $sql = 'SELECT * FROM ' . static::$tableName
-			. ' WHERE ' . static::$tablePk . ' = ? ';
+               . ' WHERE ' . static::$tablePk . ' = ? ';
 
         // PDO execute
         $pdo = $this->getPDO()->prepare($sql);
@@ -74,6 +67,16 @@ abstract class DefaultAbstractRepository
         // We're getting the results back
         return $pdo->fetch();
     }
+
+    /**
+     * This method make the connection to the database and load the DefaultPDO class
+     */
+    public function getPDO()
+    {
+        return $this->pdo;
+    }
+
+    public abstract function getEntity();
 
     /**
      * Allows you to perform an sql query with filters or to retrieve all of them if no filter is found.
@@ -106,7 +109,7 @@ abstract class DefaultAbstractRepository
     public function findAll()
     {
         $sql = 'SELECT *  FROM ' . static::$tableName
-	        . ' ORDER BY ' . static::$tableOrder . ' DESC';
+               . ' ORDER BY ' . static::$tableOrder . ' DESC';
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
@@ -117,14 +120,16 @@ abstract class DefaultAbstractRepository
 
     /**
      * Delete the entry with the id find by the getParams method
+     *
      * @param $id
+     *
      * @return void
      * @throws Exception
      */
     public function delete($id)
     {
         $sql = 'DELETE FROM ' . static::$tableName
-			. ' WHERE ' . static::$tableFk . ' = ?';
+               . ' WHERE ' . static::$tableFk . ' = ?';
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
@@ -137,7 +142,7 @@ abstract class DefaultAbstractRepository
     public function selectColumns(array $columns = [])
     {
         $sql = 'SELECT ' . implode(', ', $columns)
-			. ' FROM ' . static::$tableName;
+               . ' FROM ' . static::$tableName;
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->execute();
