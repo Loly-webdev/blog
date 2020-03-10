@@ -48,13 +48,13 @@ class ArticleController extends DefaultAbstractController
 
         // Load comments associate to the articleId
         $comments = (new CommentRepository())->find([
-            'post_id' => $articleId
-        ]);
+                                                        'id' => $articleId
+                                                    ]);
 
         $this->renderView(
             'article.html.twig',
             [
-                'article' => $article,
+                'article'  => $article,
                 'comments' => $comments
             ]
         );
@@ -62,38 +62,43 @@ class ArticleController extends DefaultAbstractController
 
     public function addAction()
     {
-        /*// Retrieve all data in a table
-              $data = $this->getRequest()->getParam('article');
-              $article = new Article($data);
-              $article = (new ArticleRepository())->add($article);
-              $this->renderView(
-                  'articleForm.html.twig',
-                  [
-                      'message' => $article->hasId()
-                          ? "Votre article à bien était enregistré !"
-                          : "Une erreur est survenue."
-                  ]
-              );*/
-
         // Retrieve all data in a table
         $data = $this->getRequest()->getParam('article');
 
-        if (null === $data) {
-            $this->renderView(
-                'articleForm.html.twig'
-            );
+        if (isset($data['id'])) {
+            $article = new Article($data);
+            $article->hasId();
+            (new ArticleRepository())->add((array)$article);
         }
+        $message = ''
+            ? "Votre article à bien était enregistré !"
+            : "Une erreur est survenue.";
 
-        if (isset($data)) {
-            (new ArticleRepository())->add($data);
+        $this->renderView(
+            'articleForm.html.twig',
+            [
+                'message' => $message
+            ]
+        );
+        /* // Retrieve all data in a table
+         $data = $this->getRequest()->getParam('article');
 
-            $this->renderView(
-                'articleForm.html.twig',
-                [
-                    'message' => "Votre article à bien était enregistré !"
-                ]
-            );
-        }
+         if (null === $data) {
+             $this->renderView(
+                 'articleForm.html.twig'
+             );
+         }
+
+         if (isset($data)) {
+             (new ArticleRepository())->add($data);
+
+             $this->renderView(
+                 'articleForm.html.twig',
+                 [
+                     'message' => "Votre article à bien était enregistré !"
+                 ]
+             );
+         }*/
     }
 
     public function deleteAction()
