@@ -6,18 +6,8 @@ use Core\DefaultAbstractEntity;
 
 class Comment extends DefaultAbstractEntity
 {
-    protected $title;
     protected $author;
     protected $content;
-    private   $name;
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
 
     /**
      * @return mixed
@@ -25,6 +15,17 @@ class Comment extends DefaultAbstractEntity
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     *
+     * @return Comment
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+        return $this;
     }
 
     /**
@@ -36,22 +37,13 @@ class Comment extends DefaultAbstractEntity
     }
 
     /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param $name
+     * @param mixed $content
      *
-     * @return $this
+     * @return Comment
      */
-    private function setName($name)
+    public function setContent($content)
     {
-        $this->name = $name;
-
+        $this->content = $content;
         return $this;
     }
 }

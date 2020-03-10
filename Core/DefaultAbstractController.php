@@ -10,11 +10,11 @@ use Twig\Loader\FilesystemLoader;
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
     protected static $twig;
-    protected $request;
+    protected        $request;
 
     public function __construct()
     {
-	    $this->request = Request::getInstance();
+        $this->request = Request::getInstance();
     }
 
     public function getRequest()
@@ -24,9 +24,9 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
 
     public function renderView($viewName, array $params = [], string $viewFolder = null): void
     {
-        $defaultPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'template'. DIRECTORY_SEPARATOR;
-        $viewFolder = $viewFolder ?? $this->getFolderView();
-        $view = $this->getTwig()->render($viewFolder . $viewName, $params);
+        $defaultPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR;
+        $viewFolder  = $viewFolder ?? $this->getFolderView();
+        $view        = $this->getTwig()->render($viewFolder . $viewName, $params);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
@@ -46,13 +46,13 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     {
         // instance of Twig
         if (null === static::$twig) {
-            $loader = new FilesystemLoader('template/');
+            $loader       = new FilesystemLoader('template/');
             static::$twig = new Environment($loader,
                 // To the prod define the path of directory Cache, else to dev keep false
-                [
-                    'cache' => false,
-                    'debug' => DEBUG_TWIG
-                ]
+                                            [
+                                                'cache' => false,
+                                                'debug' => DEBUG_TWIG
+                                            ]
             );
         }
         if (DEBUG_TWIG) {
