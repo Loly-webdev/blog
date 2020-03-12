@@ -29,6 +29,7 @@ class ArticleController extends DefaultAbstractController
     {
         // Get id to the URL
         $articleId = $this->getRequest()->getParam('articleId');
+var_dump($articleId);
 
         if (null === $articleId) {
             throw new \InvalidArgumentException(
@@ -48,7 +49,7 @@ class ArticleController extends DefaultAbstractController
 
         // Load comments associate to the articleId
         $comments = (new CommentRepository())->find([
-                                                        'id' => $articleId
+                                                        'post_id' => $articleId
                                                     ]);
 
         $this->renderView(
