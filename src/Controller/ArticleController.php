@@ -67,14 +67,14 @@ class ArticleController extends DefaultAbstractController
         $message = '';
 
         if (isset($data)) {
-            $article = new Article($data);
-            $article->hasId();
+            $articleObject = new Article($data);
+            $articleObject->hasId();
 
-            if ($article->hasId() === false) {
+            if ($articleObject->hasId() === false) {
                 $articleArray = (new ArticleRepository());
-                $tab = $article->convertToArray();
-                unset($tab['id']);
-                $articleArray->add($tab);
+                $articleData  = $articleObject->convertToArray();
+                unset($articleData['id']);
+                $articleArray->add($articleData);
                 $message = "Votre article à bien était enregistré !"
                            ?? "Une erreur est survenue.";
             }
@@ -101,6 +101,27 @@ class ArticleController extends DefaultAbstractController
 
     public function updateAction()
     {
-        // todo
+        // Retrieve all data in a table
+        $data    = $this->getRequest()->getParam('article');
+        $message = '';
+
+        if (isset($data)) {
+            $articleObject = new Article($data);
+            $articleObject->hasId();
+
+            if ($articleObject->hasId() === true) {
+                $articleArray = (new ArticleRepository());
+                $articleArray->update($articleObject->convertToArray());
+                $message = "Votre article à bien était mis à jour !"
+                           ?? "Une erreur est survenue.";
+            }
+        }
+
+        $this->renderView(
+            'articleForm.html.twig',
+            [
+                'message' => $message
+            ]
+        );
     }
 }
