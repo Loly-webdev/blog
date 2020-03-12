@@ -29,7 +29,6 @@ class ArticleController extends DefaultAbstractController
     {
         // Get id to the URL
         $articleId = $this->getRequest()->getParam('articleId');
-var_dump($articleId);
 
         if (null === $articleId) {
             throw new \InvalidArgumentException(
@@ -64,16 +63,22 @@ var_dump($articleId);
     public function addAction()
     {
         // Retrieve all data in a table
-        $data = $this->getRequest()->getParam('article');
+        $data    = $this->getRequest()->getParam('article');
+        $message = '';
 
-        if (isset($data['id'])) {
+        if (isset($data)) {
             $article = new Article($data);
             $article->hasId();
-            (new ArticleRepository())->add((array)$article);
+
+            if ($article->hasId() === false) {
+                $articleArray = (new ArticleRepository());
+                $tab = $article->convertToArray();
+                unset($tab['id']);
+                $articleArray->add($tab);
+                $message = "Votre article à bien était enregistré !"
+                           ?? "Une erreur est survenue.";
+            }
         }
-        $message = ''
-            ? "Votre article à bien était enregistré !"
-            : "Une erreur est survenue.";
 
         $this->renderView(
             'articleForm.html.twig',
@@ -81,25 +86,6 @@ var_dump($articleId);
                 'message' => $message
             ]
         );
-        /* // Retrieve all data in a table
-         $data = $this->getRequest()->getParam('article');
-
-         if (null === $data) {
-             $this->renderView(
-                 'articleForm.html.twig'
-             );
-         }
-
-         if (isset($data)) {
-             (new ArticleRepository())->add($data);
-
-             $this->renderView(
-                 'articleForm.html.twig',
-                 [
-                     'message' => "Votre article à bien était enregistré !"
-                 ]
-             );
-         }*/
     }
 
     public function deleteAction()
