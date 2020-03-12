@@ -51,7 +51,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
                 // To the prod define the path of directory Cache, else to dev keep false
                                             [
                                                 'cache' => false,
-                                                'debug' => DEBUG_TWIG
+                                                'debug' => DEBUG_TWIG //ou true
                                             ]
             );
         }

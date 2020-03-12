@@ -6,7 +6,7 @@ abstract class DefaultAbstractEntity
 {
     protected $id;
 
-    public function __construct(array $params = [])
+    public function __construct(?array $params = [])
     {
         if (!empty($params)) {
             $this->hydrateObject($params);

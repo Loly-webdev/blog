@@ -55,7 +55,7 @@ abstract class DefaultAbstractRepository
     {
         // SQL REQUEST
         $sql = 'SELECT * FROM ' . static::$tableName
-               . ' WHERE ' . static::$tablePk . ' = ? ';
+               . ' WHERE ' . static::$tablePk . ' = ?';
 
         // PDO execute
         $pdo = $this->getPDO()->prepare($sql);
