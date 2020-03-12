@@ -28,7 +28,7 @@ abstract class DefaultAbstractEntity
     /**
      * @return bool
      */
-    public function hasId()
+    public function hasId(): bool
     {
         return null !== $this->id;
     }

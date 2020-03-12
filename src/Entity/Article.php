@@ -66,4 +66,8 @@ class Article extends DefaultAbstractEntity
         $this->content = $content;
         return $this;
     }
+
+    public function convertToArray() {
+        return get_object_vars($this);
+    }
 }
