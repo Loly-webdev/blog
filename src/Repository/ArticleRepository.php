@@ -15,12 +15,8 @@ class ArticleRepository extends DefaultAbstractRepository
     static $tableName  = 'posts';
     static $tableOrder = 'creation_date';
 
-    public function add2(DefaultAbstractEntity $entity)
+    public function add($data)
     {
-        var_dump($entity);
-        $data = get_object_vars($entity);
-        var_dump($data);
-
         //faire le $sql en dynamique
         //array_keys();
         //implode(', ');
@@ -33,27 +29,12 @@ class ArticleRepository extends DefaultAbstractRepository
 
         $key = array_keys($data);
         $val = array_values($data);
-        var_dump($key, $val);
-        die('fin');
 
         $table = static::$tableName;
         $sql = "INSERT INTO $table (" . implode(', ', $key) . ") "
                . "VALUES ('" . implode("', '", $val) . "')";
 
         $pdo = $this->getPDO()->prepare($sql);
-        $pdo->execute($data);
-
-        // The number of updated entries is displayed.
-        return $pdo->rowCount();
-    }
-
-    public function add(array $data)
-    {
-        $sql = 'INSERT INTO ' . static::$tableName . ' (title, author, content)
-            VALUES (:title, :author, :content)';
-
-        $pdo = $this->getPDO()->prepare($sql);
-        //$pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
         $pdo->execute($data);
 
         // The number of updated entries is displayed.

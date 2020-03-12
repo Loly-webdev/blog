@@ -12,4 +12,18 @@ class HomeController extends DefaultAbstractController
             'home.html.twig'
         );
     }
+
+    public function contactAction()
+    {
+        $this->renderView(
+            'contact.html.twig'
+        );
+    }
+
+    public function connexionAction()
+    {
+        $this->renderView(
+            'connexion.html.twig'
+        );
+    }
 }
