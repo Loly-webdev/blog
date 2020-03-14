@@ -38,7 +38,7 @@ class ArticleRepository extends DefaultAbstractRepository
         $table = static::$tableName;
 
         $sql   = "UPDATE $table (" . implode(', ', $key) . ") "
-                 . "VALUES ('" . implode("', '", $val) . "')";
+                 . "SET ('" . implode("', '", $val) . "')";
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->execute($data);
