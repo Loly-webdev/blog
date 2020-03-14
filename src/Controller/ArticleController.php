@@ -64,6 +64,7 @@ class ArticleController extends DefaultAbstractController
     {
         // Retrieve all data in a table
         $data    = $this->getRequest()->getParam('article');
+        dump($data);
         $message = '';
 
         if (isset($data)) {
@@ -120,6 +121,7 @@ class ArticleController extends DefaultAbstractController
         $this->renderView(
             'articleForm.html.twig',
             [
+                'article' => $articleArray,
                 'message' => $message
             ]
         );
