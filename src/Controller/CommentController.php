@@ -37,6 +37,7 @@ class CommentController extends DefaultAbstractController
 
         if (null === $comment) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
+            $articleId = $_GET['articleId'];
             throw new \LogicException(
                 sprintf('Désolé, nous n\'avons pas trouvé l\'article avec l\'id: %d', $articleId)
             );
