@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <section class="form">
+        <h4>Ecrire un nouvel article :</h4>
+        <form action="" method="POST">
+            <div>
+                <label for="title">Titre</label><br/>
+                <input type="text" id="title" name="article[title]"/>
+            </div>
+            <div>
+                <label for="author">Auteur</label><br/>
+                <input type="text" id="author" name="article[author]"/>
+            </div>
+            <div>
+                <label for="content">Article</label><br/>
+                <textarea id="content" name="article[content]"></textarea>
+            </div>
+            <div>
+                <input type="submit"/>
+            </div>
+        </form>
+    </section>
+    <br>
+    {{ message }}
+    <br>
+    <section class="link">
+        <a href="/article">Retour à la liste des billets</a>
+    </section>
+{% endblock %}
