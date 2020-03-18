@@ -47,9 +47,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         // Load comments associate to the articleId
-        $comments = (new CommentRepository())->find([
-                                                        'post' => $articleId
-                                                    ]);
+        $comments = (new CommentRepository())->find(['post' => $articleId]);
 
         $this->renderView(
             'article.html.twig',
@@ -67,16 +65,15 @@ class ArticleController extends DefaultAbstractController
         $message = '';
 
         if (isset($data)) {
-            $articleObject = new Article($data);
-            $articleObject->hasId();
+            $article = (new Article())->hydrate($data);
+            $article->hasId();
 
-            if ($articleObject->hasId() === false) {
-                $articleArray = (new ArticleRepository());
-                $articleData  = $articleObject->convertToArray();
-                unset($articleData['id'],$articleData['createdAt'],$articleData['updatedAt'] );
-                $articleArray->insert($articleData);
-                $message = "Votre article à bien était enregistré !"
-                           ?? "Une erreur est survenue.";
+            if ($article->hasId() === false) {
+                $articleRepository = (new ArticleRepository());
+                $inserted = $articleRepository->insert($article);
+                $message = $inserted
+                    ? "Votre article à bien était enregistré !"
+                    :  "Une erreur est survenue.";
             }
         }
 
