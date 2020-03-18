@@ -48,7 +48,7 @@ class ArticleController extends DefaultAbstractController
 
         // Load comments associate to the articleId
         $comments = (new CommentRepository())->find([
-                                                        'post_id' => $articleId
+                                                        'post' => $articleId
                                                     ]);
 
         $this->renderView(
@@ -60,11 +60,10 @@ class ArticleController extends DefaultAbstractController
         );
     }
 
-    public function addAction()
+    public function insertAction()
     {
         // Retrieve all data in a table
         $data    = $this->getRequest()->getParam('article');
-        dump($data);
         $message = '';
 
         if (isset($data)) {
@@ -74,8 +73,8 @@ class ArticleController extends DefaultAbstractController
             if ($articleObject->hasId() === false) {
                 $articleArray = (new ArticleRepository());
                 $articleData  = $articleObject->convertToArray();
-                unset($articleData['id']);
-                $articleArray->add($articleData);
+                unset($articleData['id'],$articleData['createdAt'],$articleData['updatedAt'] );
+                $articleArray->insert($articleData);
                 $message = "Votre article à bien était enregistré !"
                            ?? "Une erreur est survenue.";
             }

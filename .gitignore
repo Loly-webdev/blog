@@ -1,6 +1,4 @@
 # ignorer les fichier
-DatabaseServer.php
-composer.json
 composer.phar
 # ignorer les dossier
 .gitignore
