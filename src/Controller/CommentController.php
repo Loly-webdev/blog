@@ -57,17 +57,16 @@ class CommentController extends DefaultAbstractController
         $message = '';
 
         if (isset($data)) {
-            $commentObject = new Comment($data);
-            $commentObject->hasId();
-            $commentObject->setPost($_GET['articleId']);
+            $comment = (new comment())->hydrate($data);
+            $comment->hasId();
+            $comment->setPost($_GET['articleId']);
 
-            if ($commentObject->hasId() === false) {
-                $commentArray = (new CommentRepository());
-                $commentData  = $commentObject->convertToArray();
-                unset($commentData['id'],$commentData['createdAt'],$commentData['updatedAt'] );
-                $commentArray->insert($commentData);
-                $message = "Votre comment à bien était enregistré !"
-                           ?? "Une erreur est survenue.";
+            if ($comment->hasId() === false) {
+                $commentRepository = (new CommentRepository());
+                $inserted = $commentRepository->insert($comment);
+                $message = $inserted
+                    ? "Votre article à bien était enregistré !"
+                    :  "Une erreur est survenue.";
             }
         }
 

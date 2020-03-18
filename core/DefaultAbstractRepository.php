@@ -120,20 +120,20 @@ abstract class DefaultAbstractRepository
     }
 
 
-    public function insert($data)
+    public function insert(DefaultAbstractEntity $entity): bool
     {
-        $key = array_keys($data);
-        $val = array_values($data);
-        $table = static::$tableName;
+        $data = $entity->convertToArray();
+        $values = array_values($data);
+        $columns = array_keys($data);
+        $columns = implode(', ', $columns);
+        $columnsValues= array_fill(1, count($data), '?');
+        $columnsValuesJoined = implode(', ', $columnsValues);
 
-        $sql   = "INSERT INTO $table (" . implode(', ', $key) . ") "
-                 . "VALUES ('" . implode("', '", $val) . "')";
 
+        $sql = 'INSERT INTO ' . static::$tableName . '(' . $columns . ') VALUES (' .  $columnsValuesJoined . ')';
         $pdo = $this->getPDO()->prepare($sql);
-        $pdo->execute($data);
 
-        // The number of updated entries is displayed.
-        return $pdo->rowCount();
+        return $pdo->execute($values);
     }
 
     public function update($data)

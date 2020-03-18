@@ -11,14 +11,7 @@ abstract class DefaultAbstractEntity
     protected $createdAt;
     protected $updatedAt;
 
-    public function __construct(?array $params = [])
-    {
-        if (!empty($params)) {
-            $this->hydrateObject($params);
-        }
-    }
-
-    public function hydrateObject($params)
+    public function hydrate(array $params)
     {
         foreach ($params as $key => $data) {
             // We retrieve the name of the setter corresponding to the class attribute.
@@ -28,6 +21,7 @@ abstract class DefaultAbstractEntity
                 $this->$method($data);
             }
         }
+        return $this;
     }
 
     /**
@@ -64,6 +58,10 @@ abstract class DefaultAbstractEntity
 
     public function convertToArray(): array
     {
-        return get_object_vars($this);
+        $data = get_object_vars($this);
+
+        unset($data['id'], $data['createdAt'], $data['updatedAt'] );
+
+        return $data;
     }
 }
