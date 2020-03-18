@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\ArticleRepository;
+use App\Entity\Comment;
 use Core\DefaultAbstractController;
 use App\Repository\CommentRepository;
 
@@ -14,7 +14,7 @@ class CommentController extends DefaultAbstractController
         $data = $this->getRequest()->getParam('comment');
 
         if (isset($data)) {
-            (new CommentRepository())->add($data);
+            (new CommentRepository())->insert($data);
             $lastId = (new CommentRepository())->getPDO()->lastInsertId();
 
             header("Location: /comment/add?commentId=$lastId");
@@ -50,27 +50,33 @@ class CommentController extends DefaultAbstractController
         );
     }
 
-    public function addAction()
+    public function insertAction()
     {
         // Retrieve all data in a table
         $data = $this->getRequest()->getParam('comment');
-
-        if (null === $data) {
-            $this->renderView(
-                'commentForm.html.twig'
-            );
-        }
+        $message = '';
 
         if (isset($data)) {
-            (new CommentRepository())->add($data);
+            $commentObject = new Comment($data);
+            $commentObject->hasId();
+            $commentObject->setPost($_GET['articleId']);
 
-            $this->renderView(
-                'commentForm.html.twig',
-                [
-                    'message' => "Votre commentaire à bien était enregistré !"
-                ]
-            );
+            if ($commentObject->hasId() === false) {
+                $commentArray = (new CommentRepository());
+                $commentData  = $commentObject->convertToArray();
+                unset($commentData['id'],$commentData['createdAt'],$commentData['updatedAt'] );
+                $commentArray->insert($commentData);
+                $message = "Votre comment à bien était enregistré !"
+                           ?? "Une erreur est survenue.";
+            }
         }
+
+        $this->renderView(
+            'commentForm.html.twig',
+            [
+                'message' => $message
+            ]
+        );
     }
 
     public function deleteAction()

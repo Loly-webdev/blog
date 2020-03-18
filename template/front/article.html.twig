@@ -7,7 +7,7 @@
     <section class="article">
         <h2>{{ article.title }}</h2>
         <h4>{{ article.author }}</h4>
-        <strong>{{ article.creation_date }}</strong>
+        <strong>{{ article.createdAt }}</strong>
         <p>
             {{ article.content }}
         </p>
@@ -21,7 +21,7 @@
         {% for comment in comments %}
             <strong>{{ comment.author }}</strong>
             <br>
-            <em>{{ comment.comment_date }}</em>
+            <em>{{ comment.createdAt }}</em>
             <p>{{ comment.content }}</p>
             <div>
                 <a href="/comment/see?commentId={{ comment.id }}">Voir le commentaire</a>
@@ -29,7 +29,7 @@
         {% endfor %}
     </section>
     <section class="link">
-        <a href="/comment/add?articleId={{ article.id }}">Ajouter un nouveau commetaire</a>
+        <a href="/comment/insert?articleId={{ article.id }}">Ajouter un nouveau commetaire</a>
     </section>
     <section class="link">
         <a href="/article">Retour à la liste des billets</a>

@@ -5,7 +5,7 @@
     {% for article in articles %}
         <section class="article">
             <h3>{{ article.title }}</h3>
-            <strong>{{ article.creation_date }}</strong>
+            <strong>{{ article.createdAt }}</strong>
             <p>
                 {{ article.content }}
             </p>
@@ -15,6 +15,6 @@
         </section>
     {% endfor %}
     <section class="link">
-        <a href="/article/add">Ajouter un nouvel article</a>
+        <a href="/article/insert">Ajouter un nouvel article</a>
     </section>
 {% endblock %}

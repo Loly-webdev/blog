@@ -1,0 +1,22 @@
+{
+  "name": "loly/blog",
+  "description": "Framework from scratch",
+  "authors": [
+    {
+      "name": "Loly-webdev",
+      "email": "eloise.ruiz.rodriguez@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/",
+      "Config\\": "config/",
+      "Core\\":"core/"
+    }
+  },
+  "require": {
+    "twig/twig": "^3.0",
+    "ext-pdo": "*",
+    "symfony/var-dumper": "^5.0"
+  }
+}

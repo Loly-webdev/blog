@@ -2,9 +2,14 @@
 
 namespace Core;
 
+use DateTime;
+use Exception;
+
 abstract class DefaultAbstractEntity
 {
     protected $id;
+    protected $createdAt;
+    protected $updatedAt;
 
     public function __construct(?array $params = [])
     {
@@ -39,5 +44,26 @@ abstract class DefaultAbstractEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function convertToArray(): array
+    {
+        return get_object_vars($this);
     }
 }
