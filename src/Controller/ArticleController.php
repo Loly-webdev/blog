@@ -92,7 +92,7 @@ class ArticleController extends DefaultAbstractController
     public function getDeleteParam(): array
     {
         return [
-            (new ArticleRepository()),
+            new ArticleRepository(),
             $this->getRequest()->getParam('articleId'),
             'articleForm.html.twig',
             'Votre article à bien était supprimé !'
