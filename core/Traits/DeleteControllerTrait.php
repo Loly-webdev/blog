@@ -8,7 +8,7 @@ trait DeleteControllerTrait
 {
     protected function deleteEntity(
         DefaultAbstractRepository $repository,
-        int $entityParamId,
+        string $entityParamId,
         string $viewTemplate,
         string $message
     ): void {
@@ -24,7 +24,7 @@ trait DeleteControllerTrait
         );
     }
 
-    public function deleteAction(): array
+    public function deleteAction(): void
     {
         $params = $this->getDeleteParam();
 
