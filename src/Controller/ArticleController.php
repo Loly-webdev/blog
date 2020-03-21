@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Core\DefaultAbstractController;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
+use http\Exception;
 
 class ArticleController extends DefaultAbstractController
 {
@@ -70,10 +71,10 @@ class ArticleController extends DefaultAbstractController
 
             if ($article->hasId() === false) {
                 $articleRepository = (new ArticleRepository());
-                $inserted = $articleRepository->insert($article);
-                $message = $inserted
+                $inserted          = $articleRepository->insert($article);
+                $message           = $inserted
                     ? "Votre article à bien était enregistré !"
-                    :  "Une erreur est survenue.";
+                    : "Une erreur est survenue.";
             }
         }
 
@@ -100,20 +101,18 @@ class ArticleController extends DefaultAbstractController
     {
         // Retrieve all data in a table
         $articleId = $this->getRequest()->getParam('articleId');
-        $article = (new ArticleRepository())->find($articleId);
+        $article   = (new ArticleRepository())->find($articleId);
+        //throw exception
+        $data = $this->getRequest()->getParam('article');
         dump($article);
         $message = '';
 
-        if (isset($article)) {
-            $article->hasId();
-
-            if ($article->hasId() === true) {
-                $articleRepository = (new ArticleRepository());
-                $inserted = $articleRepository->update($article);
-                $message = $inserted
-                    ? "Votre article à bien était modifié !"
-                    :  "Une erreur est survenue.";
-            }
+        if (isset($data)) {
+            $article = $article->hydrate($data);
+            $updated = (new ArticleRepository())->update($article);
+            $message = $updated
+                ? "Votre article à bien était modifié !"
+                : "Une erreur est survenue.";
         }
 
         $this->renderView(
