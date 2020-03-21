@@ -6,7 +6,7 @@ use App\Entity\Article;
 use Core\DefaultAbstractController;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
-use http\Exception;
+use Exception;
 
 class ArticleController extends DefaultAbstractController
 {
@@ -102,9 +102,11 @@ class ArticleController extends DefaultAbstractController
         // Retrieve all data in a table
         $articleId = $this->getRequest()->getParam('articleId');
         $article   = (new ArticleRepository())->find($articleId);
-        //throw exception
+        if (!isset($article)) {
+            throw new Exception('Désolé nous rencontrons un problème avec votre demande.');
+        }
+
         $data = $this->getRequest()->getParam('article');
-        dump($article);
         $message = '';
 
         if (isset($data)) {

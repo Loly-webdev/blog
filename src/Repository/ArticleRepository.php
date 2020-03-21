@@ -10,9 +10,9 @@ use Core\DefaultAbstractRepository;
  */
 class ArticleRepository extends DefaultAbstractRepository
 {
-    static $tableName  = 'posts';
+    static $tableName = 'posts';
 
-    public function getEntity()
+    public function getEntity(): string
     {
         return Article::class;
     }

@@ -10,9 +10,9 @@ use App\Entity\Comment;
  */
 class CommentRepository extends DefaultAbstractRepository
 {
-    static $tableName  = 'comments';
+    static $tableName = 'comments';
 
-    public function getEntity()
+    public function getEntity(): string
     {
         return Comment::class;
     }
