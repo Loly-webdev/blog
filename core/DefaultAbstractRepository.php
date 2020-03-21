@@ -2,7 +2,9 @@
 
 namespace Core;
 
+use DateTime;
 use Exception;
+use MongoDB\BSON\Timestamp;
 use PDO;
 
 abstract class DefaultAbstractRepository
@@ -130,26 +132,31 @@ abstract class DefaultAbstractRepository
         $columnsValuesJoined = implode(', ', $columnsValues);
 
 
-        $sql = 'INSERT INTO ' . static::$tableName . '(' . $columns . ') VALUES (' .  $columnsValuesJoined . ')';
+        $sql = 'INSERT INTO ' . static::$tableName . '(' . $columns
+               . ') VALUES (' .  $columnsValuesJoined . ')';
         $pdo = $this->getPDO()->prepare($sql);
 
         return $pdo->execute($values);
     }
 
-    public function update($data)
+    public function update(DefaultAbstractEntity $entity): bool
     {
-        $key = array_keys($data);
-        $val = array_values($data);
-        $table = static::$tableName;
+        $data = $entity->convertToArray();
+        dump($data);
+        $values = array_values($data);
+        $columns = array_keys($data);
+        $columns = implode(', ', $columns);
+        $columnsValues= array_fill(0, count($data), '?');
+        $columnsValuesJoined = implode(', ', $columnsValues);
 
-        $sql   = "UPDATE $table (" . implode(', ', $key) . ") "
-                 . "SET ('" . implode("', '", $val) . "')";
+        $sql = 'UPDATE ' . static::$tableName
+               . ' SET (' .  $columns . ' = ' . $columnsValuesJoined
+               . ') WHERE ' . static::$tablePk . ' = ' . $data['id'];
 
         $pdo = $this->getPDO()->prepare($sql);
-        $pdo->execute($data);
+        dump($pdo);
 
-        // The number of updated entries is displayed.
-        return $pdo->rowCount();
+        return $pdo->execute($values);
     }
 
     /**
