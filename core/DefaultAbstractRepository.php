@@ -2,14 +2,12 @@
 
 namespace Core;
 
-use DateTime;
 use Exception;
-use MongoDB\BSON\Timestamp;
 use PDO;
 
 abstract class DefaultAbstractRepository
 {
-    static  $tablePk = 'id';
+    static $tablePk = 'id';
     static $tableOrder = 'createdAt';
     private $pdo;
 
@@ -74,7 +72,7 @@ abstract class DefaultAbstractRepository
     /**
      * This method make the connection to the database and load the DefaultPDO class
      */
-    public function getPDO()
+    public function getPDO(): PDO
     {
         return $this->pdo;
     }
@@ -144,17 +142,22 @@ abstract class DefaultAbstractRepository
         $data = $entity->convertToArray();
         dump($data);
         $values = array_values($data);
-        $columns = array_keys($data);
-        $columns = implode(', ', $columns);
-        $columnsValues= array_fill(0, count($data), '?');
-        $columnsValuesJoined = implode(', ', $columnsValues);
+        $keys = array_keys($data);
+        $columns = array_fill_keys($keys, ' = ?');
+        $columnsValues = [];
+
+        foreach ($columns as $key => $value) {
+            $columnsValues[] = $key . $value;
+        }
+
+        $columns = implode(', ', $columnsValues);
+        $values[] = $entity->getId();
 
         $sql = 'UPDATE ' . static::$tableName
-               . ' SET (' .  $columns . ' = ' . $columnsValuesJoined
-               . ') WHERE ' . static::$tablePk . ' = ' . $data['id'];
+               . ' SET ' .  $columns
+               . ' WHERE ' . static::$tablePk . ' = ?';
 
         $pdo = $this->getPDO()->prepare($sql);
-        dump($pdo);
 
         return $pdo->execute($values);
     }
