@@ -55,16 +55,16 @@ final class Request
     public function getQueryParam($key, $defaultValue = null)
     {
         // $_GET = parse_url($_SERVER["REQUEST_URI"])['query'];
-        return isset($_GET[$key]) && '' !== $_GET[$key] ?
-            $_GET[$key] :
-            $defaultValue;
+        return isset($_GET[$key]) && '' !== $_GET[$key]
+            ? $_GET[$key]
+            : $defaultValue;
     }
 
     public function getRequestParam($key, $defaultValue = null)
     {
         // $_POST = params recover by $_POST method
-        return isset($_POST[$key]) && '' !== $_POST[$key] ?
-            $_POST[$key] :
-            $defaultValue;
+        return isset($_POST[$key]) && '' !== $_POST[$key]
+            ? $_POST[$key]
+            : $defaultValue;
     }
 }

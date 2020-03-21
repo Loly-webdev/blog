@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use Core\DefaultAbstractController;
 
-class HomeController extends DefaultAbstractController
+class ConnexionController extends DefaultAbstractController
 {
     public function indexAction()
     {
         $this->renderView(
-            'home.html.twig'
+            'connexion.html.twig'
         );
     }
 }

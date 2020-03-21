@@ -2,8 +2,6 @@
 
 namespace Core;
 
-use Exception;
-
 abstract class DefaultAbstractEntity
 {
     protected $id;
@@ -66,6 +64,10 @@ abstract class DefaultAbstractEntity
 
         if (array_key_exists('updatedAt', $data)) {
             $data['updatedAt'] = date("Y-m-d H:i:s");
+        }
+
+        if (array_key_exists('post', $data)) {
+            unset($data['post']);
         }
 
         return $data;
