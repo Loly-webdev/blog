@@ -54,7 +54,7 @@ class CommentController extends DefaultAbstractController
     public function insertAction()
     {
         // Retrieve all data in a table
-        $data = $this->getRequest()->getParam('comment');
+        $data    = $this->getRequest()->getParam('comment');
         $message = '';
 
         if (isset($data)) {
@@ -64,10 +64,10 @@ class CommentController extends DefaultAbstractController
 
             if ($comment->hasId() === false) {
                 $commentRepository = (new CommentRepository());
-                $inserted = $commentRepository->insert($comment);
-                $message = $inserted
-                    ? "Votre article à bien était enregistré !"
-                    :  "Une erreur est survenue.";
+                $inserted          = $commentRepository->insert($comment);
+                $message           = $inserted
+                    ? "Votre commentaire à bien était enregistré !"
+                    : "Une erreur est survenue.";
             }
         }
 
@@ -92,6 +92,28 @@ class CommentController extends DefaultAbstractController
 
     public function updateAction()
     {
-        // todo
+        // Retrieve all data in a table
+        $commentId = $this->getRequest()->getParam('commentId');
+        $comment   = (new CommentRepository())->find($commentId);
+        //throw exception
+        $data = $this->getRequest()->getParam('comment');
+        $message = '';
+
+        if (isset($data)) {
+            echo 'hello';
+            $comment = $comment->hydrate($data);
+            $updated = (new CommentRepository())->update($comment);
+            $message = $updated
+                ? "Votre commentaire à bien était modifié !"
+                : "Une erreur est survenue.";
+        }
+
+        $this->renderView(
+            'commentEdit.html.twig',
+            [
+                'comment' => $comment,
+                'message' => $message
+            ]
+        );
     }
 }

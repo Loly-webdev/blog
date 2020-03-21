@@ -1,19 +1,15 @@
 {% extends "base.html.twig" %}
 {% block content %}
     <section class="form">
-        <h4>Modification de l'article : {{ article.title }}</h4>
+        <h4>Modification du commentaire n°{{ comment.id }}</h4>
         <form action="" method="POST">
             <div>
-                <label for="title">Titre</label><br/>
-                <input type="text" id="title" name="article[title]" value="{{ article.title }}"/>
-            </div>
-            <div>
                 <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="article[author]" value="{{ article.author }}"/>
+                <input type="text" id="author" name="comment[author]" value="{{ comment.author }}"/>
             </div>
             <div>
                 <label for="content">Article</label><br/>
-                <textarea id="content" name="article[content]">{{ article.content }}</textarea>
+                <textarea id="content" name="comment[content]">{{ comment.content }}</textarea>
             </div>
             <div>
                 <input type="submit"/>
