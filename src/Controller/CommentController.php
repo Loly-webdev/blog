@@ -102,6 +102,9 @@ class CommentController extends DefaultAbstractController
         if (isset($data)) {
             echo 'hello';
             $comment = $comment->hydrate($data);
+            if (array_key_exists('post', $data)) {
+                unset($data['post']);
+            }
             $updated = (new CommentRepository())->update($comment);
             $message = $updated
                 ? "Votre commentaire à bien était modifié !"
