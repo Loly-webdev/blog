@@ -66,10 +66,6 @@ abstract class DefaultAbstractEntity
             $data['updatedAt'] = date("Y-m-d H:i:s");
         }
 
-        if (array_key_exists('post', $data)) {
-            unset($data['post']);
-        }
-
         return $data;
     }
 }

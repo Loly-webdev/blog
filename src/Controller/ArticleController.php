@@ -6,11 +6,14 @@ use App\Entity\Article;
 use Core\DefaultAbstractController;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
+use Core\Traits\DeleteControllerTrait;
 use Exception;
 
 class ArticleController extends DefaultAbstractController
 {
     protected $key;
+
+    use DeleteControllerTrait;
 
     public function indexAction()
     {
@@ -86,15 +89,14 @@ class ArticleController extends DefaultAbstractController
         );
     }
 
-    public function deleteAction()
+    public function getDeleteParam(): array
     {
-        (new ArticleRepository())->delete($this->getRequest()->getParam('articleId'));
-        $this->renderView(
+        return [
+            (new ArticleRepository()),
+            $this->getRequest()->getParam('articleId'),
             'articleForm.html.twig',
-            [
-                'message' => "Votre article à bien était supprimé !"
-            ]
-        );
+            'Votre article à bien était supprimé !'
+        ];
     }
 
     public function updateAction()
