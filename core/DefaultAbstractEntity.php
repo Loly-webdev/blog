@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use DateTime;
 use Exception;
 
 abstract class DefaultAbstractEntity
@@ -60,10 +59,13 @@ abstract class DefaultAbstractEntity
     {
         $data = get_object_vars($this);
 
-        unset($data['createdAt']);
+        unset(
+            $data['id'],
+            $data['createdAt']
+        );
 
-        if ($data['id'] === null) {
-            unset($data['id'], $data['updatedAt']);
+        if (array_key_exists('updatedAt', $data)) {
+            $data['updatedAt'] = date("Y-m-d H:i:s");
         }
 
         return $data;
