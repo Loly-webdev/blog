@@ -93,7 +93,7 @@ class ArticleController extends DefaultAbstractController
     {
         return [
             new ArticleRepository(),
-            $this->getRequest()->getParam('articleId'),
+            'articleId',
             'articleForm.html.twig',
             'Votre article à bien était supprimé !'
         ];
