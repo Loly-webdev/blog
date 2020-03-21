@@ -60,7 +60,11 @@ abstract class DefaultAbstractEntity
     {
         $data = get_object_vars($this);
 
-        unset($data['id'], $data['createdAt'], $data['updatedAt'] );
+        unset($data['createdAt']);
+
+        if ($data['id'] === null) {
+            unset($data['id'], $data['updatedAt']);
+        }
 
         return $data;
     }

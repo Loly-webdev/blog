@@ -99,25 +99,27 @@ class ArticleController extends DefaultAbstractController
     public function updateAction()
     {
         // Retrieve all data in a table
-        $data    = $this->getRequest()->getParam('article');
+        $articleId = $this->getRequest()->getParam('articleId');
+        $article = (new ArticleRepository())->find($articleId);
+        dump($article);
         $message = '';
 
-        if (isset($data)) {
-            $articleObject = new Article($data);
-            $articleObject->hasId();
+        if (isset($article)) {
+            $article->hasId();
 
-            if ($articleObject->hasId() === true) {
-                $articleArray = (new ArticleRepository());
-                $articleArray->update($articleObject->convertToArray());
-                $message = "Votre article à bien était mis à jour !"
-                           ?? "Une erreur est survenue.";
+            if ($article->hasId() === true) {
+                $articleRepository = (new ArticleRepository());
+                $inserted = $articleRepository->update($article);
+                $message = $inserted
+                    ? "Votre article à bien était modifié !"
+                    :  "Une erreur est survenue.";
             }
         }
 
         $this->renderView(
-            'articleForm.html.twig',
+            'articleEdit.html.twig',
             [
-                'article' => $articleArray,
+                'article' => $article,
                 'message' => $message
             ]
         );
