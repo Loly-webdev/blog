@@ -24,7 +24,7 @@ trait DeleteControllerTrait
         );
     }
 
-    public function deleteAction(): DeleteControllerTrait
+    public function deleteAction(): array
     {
         $params = $this->getDeleteParam();
 
