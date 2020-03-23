@@ -5,20 +5,19 @@ namespace App\Controller;
 use App\Entity\Comment;
 use Core\DefaultAbstractController;
 use App\Repository\CommentRepository;
+use Core\Traits\DeleteControllerTrait;
+use Core\Traits\InsertControllerTrait;
+use Core\Traits\UpdateControllerTrait;
 
 class CommentController extends DefaultAbstractController
 {
+    use InsertControllerTrait;
+    use UpdateControllerTrait;
+    use DeleteControllerTrait;
+
     public function indexAction()
     {
-        // Retrieve all data in a table
-        $data = $this->getRequest()->getParam('comment');
-
-        if (isset($data)) {
-            (new CommentRepository())->insert($data);
-            $lastId = (new CommentRepository())->getPDO()->lastInsertId();
-
-            header("Location: /comment/add?commentId=$lastId");
-        }
+        return $this->seeAction();
     }
 
     public function seeAction()
@@ -33,7 +32,7 @@ class CommentController extends DefaultAbstractController
         }
 
         // Load article associate to the articleId or return null
-        $comment = (new CommentRepository())->find($commentId);
+        $comment = (new CommentRepository())->findOne($commentId);
 
         if (null === $comment) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
@@ -51,72 +50,33 @@ class CommentController extends DefaultAbstractController
         );
     }
 
-    public function insertAction()
+    public function getInsertParam(): array
     {
-        // Retrieve all data in a table
-        $data    = $this->getRequest()->getParam('comment');
-        $message = '';
-
-        if (isset($data)) {
-            $comment = (new comment())->hydrate($data);
-            $comment->hasId();
-            $comment->setPost($_GET['articleId']);
-
-            if ($comment->hasId() === false) {
-                $commentRepository = (new CommentRepository());
-                $inserted          = $commentRepository->insert($comment);
-                $message           = $inserted
-                    ? "Votre commentaire à bien était enregistré !"
-                    : "Une erreur est survenue.";
-            }
-        }
-
-        $this->renderView(
-            'commentForm.html.twig',
-            [
-                'message' => $message
-            ]
-        );
+        return [
+            'comment',
+            new Comment(),
+            new CommentRepository(),
+            'commentForm.html.twig'
+        ];
     }
 
-    public function deleteAction()
+    public function getUpdateParam(): array
     {
-        (new CommentRepository())->delete($this->getRequest()->getParam('commentId'));
-        $this->renderView(
-            'commentForm.html.twig',
-            [
-                'message' => "Votre commentaire à bien était supprimé !"
-            ]
-        );
+        return [
+            'commentId',
+            new CommentRepository(),
+            'comment',
+            'commentEdit.html.twig'
+        ];
     }
 
-    public function updateAction()
+    public function getDeleteParam(): array
     {
-        // Retrieve all data in a table
-        $commentId = $this->getRequest()->getParam('commentId');
-        $comment   = (new CommentRepository())->find($commentId);
-        //throw exception
-        $data = $this->getRequest()->getParam('comment');
-        $message = '';
-
-        if (isset($data)) {
-            echo 'hello';
-            $comment = $comment->hydrate($data);
-            if (array_key_exists('post', $data)) {
-                unset($data['post']);
-            }
-            $updated = (new CommentRepository())->update($comment);
-            $message = $updated
-                ? "Votre commentaire à bien était modifié !"
-                : "Une erreur est survenue.";
-        }
-
-        $this->renderView(
-            'commentEdit.html.twig',
-            [
-                'comment' => $comment,
-                'message' => $message
-            ]
-        );
+        return [
+            new CommentRepository(),
+            'commentId',
+            'commentForm.html.twig',
+            'Votre commentaire à bien était supprimé !'
+        ];
     }
 }

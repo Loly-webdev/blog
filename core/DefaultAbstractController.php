@@ -6,7 +6,7 @@ use Exception;
 
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
-    protected        $request;
+    protected $request;
 
     public function __construct()
     {

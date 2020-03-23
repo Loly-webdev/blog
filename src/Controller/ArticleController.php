@@ -7,12 +7,15 @@ use Core\DefaultAbstractController;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use Core\Traits\DeleteControllerTrait;
-use Exception;
+use Core\Traits\InsertControllerTrait;
+use Core\Traits\UpdateControllerTrait;
 
 class ArticleController extends DefaultAbstractController
 {
     protected $key;
 
+    use InsertControllerTrait;
+    use UpdateControllerTrait;
     use DeleteControllerTrait;
 
     public function indexAction()
@@ -41,7 +44,7 @@ class ArticleController extends DefaultAbstractController
         }
 
         // Load article associate to the articleId or return null
-        $article = (new ArticleRepository())->find($articleId);
+        $article = (new ArticleRepository())->findOne($articleId);
 
         if (null === $article) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
@@ -62,31 +65,24 @@ class ArticleController extends DefaultAbstractController
         );
     }
 
-    public function insertAction()
+    public function getInsertParam(): array
     {
-        // Retrieve all data in a table
-        $data    = $this->getRequest()->getParam('article');
-        $message = '';
+        return [
+            'article',
+            new Article(),
+            new ArticleRepository(),
+            'articleForm.html.twig'
+        ];
+    }
 
-        if (isset($data)) {
-            $article = (new Article())->hydrate($data);
-            $article->hasId();
-
-            if ($article->hasId() === false) {
-                $articleRepository = (new ArticleRepository());
-                $inserted          = $articleRepository->insert($article);
-                $message           = $inserted
-                    ? "Votre article à bien était enregistré !"
-                    : "Une erreur est survenue.";
-            }
-        }
-
-        $this->renderView(
-            'articleForm.html.twig',
-            [
-                'message' => $message
-            ]
-        );
+    public function getUpdateParam(): array
+    {
+        return [
+            'articleId',
+            new ArticleRepository(),
+            'article',
+            'articleEdit.html.twig'
+        ];
     }
 
     public function getDeleteParam(): array
@@ -97,34 +93,5 @@ class ArticleController extends DefaultAbstractController
             'articleForm.html.twig',
             'Votre article à bien était supprimé !'
         ];
-    }
-
-    public function updateAction()
-    {
-        // Retrieve all data in a table
-        $articleId = $this->getRequest()->getParam('articleId');
-        $article   = (new ArticleRepository())->find($articleId);
-        if (!isset($article)) {
-            throw new Exception('Désolé nous rencontrons un problème avec votre demande.');
-        }
-
-        $data = $this->getRequest()->getParam('article');
-        $message = '';
-
-        if (isset($data)) {
-            $article = $article->hydrate($data);
-            $updated = (new ArticleRepository())->update($article);
-            $message = $updated
-                ? "Votre article à bien était modifié !"
-                : "Une erreur est survenue.";
-        }
-
-        $this->renderView(
-            'articleEdit.html.twig',
-            [
-                'article' => $article,
-                'message' => $message
-            ]
-        );
     }
 }

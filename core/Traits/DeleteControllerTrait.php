@@ -31,5 +31,5 @@ trait DeleteControllerTrait
         $this->deleteEntity(...$params);
     }
 
-    abstract public function getDeleteParam();
+    abstract public function getDeleteParam(): array;
 }
