@@ -7,10 +7,12 @@ use Core\DefaultAbstractController;
 use App\Repository\CommentRepository;
 use Core\Traits\DeleteControllerTrait;
 use Core\Traits\InsertControllerTrait;
+use Core\Traits\SeeControllerTrait;
 use Core\Traits\UpdateControllerTrait;
 
 class CommentController extends DefaultAbstractController
 {
+    use SeeControllerTrait;
     use InsertControllerTrait;
     use UpdateControllerTrait;
     use DeleteControllerTrait;
@@ -20,34 +22,16 @@ class CommentController extends DefaultAbstractController
         return $this->seeAction();
     }
 
-    public function seeAction()
+    public function getSeeParam(): array
     {
-        // Get id to the URL
-        $commentId = $this->getRequest()->getParam('commentId');
-
-        if (null === $commentId) {
-            throw new \InvalidArgumentException(
-                'Désolé, mais la valeur de l\'article n\'est pas renseignée.'
-            );
-        }
-
-        // Load article associate to the articleId or return null
-        $comment = (new CommentRepository())->findOne($commentId);
-
-        if (null === $comment) {
-            // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
-            $articleId = $_GET['articleId'];
-            throw new \LogicException(
-                sprintf('Désolé, nous n\'avons pas trouvé l\'article avec l\'id: %d', $articleId)
-            );
-        }
-
-        $this->renderView(
+        return [
+            'commentId',
+            'comment',
+            new CommentRepository(),
+            null,
             'comment.html.twig',
-            [
-                'comment' => $comment
-            ]
-        );
+            null
+        ];
     }
 
     public function getInsertParam(): array
