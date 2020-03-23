@@ -2,7 +2,7 @@
 
 namespace Core\Traits;
 
-use Exception;
+use Core\DefaultAbstractEntity;
 use PDO;
 
 trait ReadRepositoryTrait
@@ -10,17 +10,13 @@ trait ReadRepositoryTrait
     /**
      * Polymorphism method
      *
-     * @param null $filters
+     * @param array|null $filters
      *
      * @return mixed
-     * @throws Exception
      */
-    public function find($filters = null)
+    public function find(?array $filters = null): array
     {
-        if (is_numeric($filters)) {
-            return $this->findOne($filters);
-        }
-        elseif (is_array($filters) && !empty($filters)) {
+        if (is_array($filters) && !empty($filters)) {
             return $this->search($filters);
         }
 
@@ -28,38 +24,13 @@ trait ReadRepositoryTrait
     }
 
     /**
-     * Find all the informations of the table where id is equal to the id find by the getParams method
-     *
-     * @param $articleId
-     *
-     * @return mixed
-     * @throws Exception
-     */
-    public function findOne(int $articleId)
-    {
-        // SQL REQUEST
-        $sql = 'SELECT * FROM ' . static::$tableName
-               . ' WHERE ' . static::$tablePk . ' = ?';
-
-        // PDO execute
-        $pdo = $this->getPDO()->prepare($sql);
-        // Object of value
-        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
-        // We pass the values to be replaced by the ? values of the sql query.
-        $pdo->execute([$articleId]);
-
-        // We're getting the results back
-        return $pdo->fetch();
-    }
-
-    /**
      * Allows you to perform an sql query with filters or to retrieve all of them if no filter is found.
      *
-     * @param array $filters Contains in key the columns of the table and in value the "equal to".
+     * @param array|null $filters Contains in key the columns of the table and in value the "equal to".
      *
      * @return array An empty table where the results can be found in bdd
      */
-    public function search(array $filters)
+    public function search(?array $filters): array
     {
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
         $sql = ' SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
@@ -80,7 +51,7 @@ trait ReadRepositoryTrait
     /**
      * This function find all the informations contained in the table
      */
-    public function findAll()
+    public function findAll(): array
     {
         $sql = 'SELECT *  FROM ' . static::$tableName
                . ' ORDER BY ' . static::$tableOrder . ' DESC';
@@ -90,5 +61,29 @@ trait ReadRepositoryTrait
         $pdo->execute();
 
         return $pdo->fetchAll();
+    }
+
+    /**
+     * Find all the informations of the table where id is equal to the id find by the getParams method
+     *
+     * @param int $articleId
+     *
+     * @return DefaultAbstractEntity
+     */
+    public function findOne(int $articleId): DefaultAbstractEntity
+    {
+        // SQL REQUEST
+        $sql = 'SELECT * FROM ' . static::$tableName
+               . ' WHERE ' . static::$tablePk . ' = ?';
+
+        // PDO execute
+        $pdo = $this->getPDO()->prepare($sql);
+        // Object of value
+        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
+        // We pass the values to be replaced by the ? values of the sql query.
+        $pdo->execute([$articleId]);
+
+        // We're getting the results back
+        return $pdo->fetch();
     }
 }
