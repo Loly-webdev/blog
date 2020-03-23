@@ -25,7 +25,7 @@ trait CUDRepositoryTrait
 
     public function update(DefaultAbstractEntity $entity): bool
     {
-        $data = $entity->convertToArray();
+        $data          = $entity->convertToArray();
         $values        = array_values($data);
         $keys          = array_keys($data);
         $columns       = array_fill_keys($keys, ' = ?');

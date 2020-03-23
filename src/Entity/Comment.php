@@ -6,9 +6,29 @@ use Core\DefaultAbstractEntity;
 
 class Comment extends DefaultAbstractEntity
 {
+    protected $post;
     protected $author;
     protected $content;
-    protected $post;
+
+    /**
+     * @return mixed
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param mixed $post
+     *
+     * @return Comment
+     */
+    public function setPost($post)
+    {
+        $this->post = $post;
+
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -45,26 +65,6 @@ class Comment extends DefaultAbstractEntity
     public function setContent($content)
     {
         $this->content = $content;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPost()
-    {
-        return $this->post;
-    }
-
-    /**
-     * @param mixed $post
-     *
-     * @return Comment
-     */
-    public function setPost($post)
-    {
-        $this->post = $post;
-
         return $this;
     }
 }
