@@ -4,3 +4,21 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.*)$ index.php [L,QSA]
+
+ErrorDocument 204 /errors/errorsPage.php?erreur=204
+ErrorDocument 205 /errors/errorsPage.php?erreur=205
+ErrorDocument 206 /errors/errorsPage.php?erreur=206
+ErrorDocument 301 /errors/errorsPage.php?erreur=301
+ErrorDocument 302 /errors/errorsPage.php?erreur=302
+ErrorDocument 400 /errors/errorsPage.php?erreur=400
+ErrorDocument 401 /errors/errorsPage.php?erreur=401
+ErrorDocument 402 /errors/errorsPage.php?erreur=402
+ErrorDocument 403 /errors/errorsPage.php?erreur=403
+ErrorDocument 404 /errors/errorsPage.php?erreur=404
+ErrorDocument 405 /errors/errorsPage.php?erreur=405
+ErrorDocument 500 /errors/errorsPage.php?erreur=500
+ErrorDocument 501 /errors/errorsPage.php?erreur=501
+ErrorDocument 502 /errors/errorsPage.php?erreur=502
+ErrorDocument 503 /errors/errorsPage.php?erreur=503
+ErrorDocument 504 /errors/errorsPage.php?erreur=504
+ErrorDocument 505 /errors/errorsPage.php?erreur=505
