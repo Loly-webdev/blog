@@ -60,4 +60,4 @@ switch($errorCode) {
         $errorMessage = 'Erreur !';
 }
 
-require_once('template/errors/errorsPageView.php');
+require_once('../template/errors/errorsPageView.php');
