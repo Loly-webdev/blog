@@ -8,8 +8,6 @@
     <link href="/public/css/style.css" rel="stylesheet"/>
     <!--Viewport -->
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <!-- Google font -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900" rel="stylesheet">
     <title>Error</title>
 </head>
 <body>
