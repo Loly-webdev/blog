@@ -19,17 +19,22 @@ namespace Core;
  */
 final class Request
 {
-    private static $instance = null;
+    protected static $instance; // Contiendra l'instance de notre classe.
 
-    private function __construct()
+    protected function __construct()
     {
-    }
+    } // Empêche la création d'une instance
+
+    protected function __clone()
+    {
+    } // Interdit l'accès à la méthode __clone()
 
     public static function getInstance()
     {
         // singleton of request object to load once this method
-        if (is_null(self::$instance)) {
-            self::$instance = new Request();
+        if (!isset(self::$instance)) // Si on n'a pas encore instancié notre classe.
+        {
+            self::$instance = new self; // On s'instancie nous-mêmes. :)
         }
 
         return self::$instance;
