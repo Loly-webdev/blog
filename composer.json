@@ -12,7 +12,7 @@
       "App\\": "src/",
       "Config\\": "config/",
       "Core\\":"core/",
-      "Errors\\":"errors"
+      "Errors\\":"errors/"
     }
   },
   "require": {
