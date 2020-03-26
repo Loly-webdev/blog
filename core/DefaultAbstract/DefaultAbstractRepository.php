@@ -1,10 +1,11 @@
 <?php
 
-namespace Core;
+namespace Core\DefaultAbstract;
 
+use Core\Provider\DefaultPDO;
 use Exception;
 use PDO;
-use Core\Traits\{
+use Core\Traits\Repository\{
     CUDRepositoryTrait,
     ReadRepositoryTrait
 };
@@ -57,8 +58,7 @@ abstract class DefaultAbstractRepository
         $sql = 'SELECT ' . implode(', ', $columns)
                . ' FROM ' . static::$tableName;
 
-        $pdo = $this->getPDO()
-                    ->prepare($sql);
+        $pdo = $this->getPDO()->prepare($sql);
         $pdo->execute();
 
         return $pdo->fetchAll();

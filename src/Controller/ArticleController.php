@@ -3,16 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use Core\DefaultAbstractController;
+use Core\DefaultAbstract\DefaultAbstractController;
 use App\Repository\{
     ArticleRepository,
     CommentRepository
 };
-use Core\Traits\{
-    DeleteControllerTrait,
-    InsertControllerTrait,
+use Core\Traits\Controller\{
     SeeControllerTrait,
-    UpdateControllerTrait
+    AddControllerTrait,
+    EditControllerTrait,
+    DeleteControllerTrait
 };
 use Exception;
 
@@ -25,8 +25,8 @@ class ArticleController extends DefaultAbstractController
     protected $key;
 
     use SeeControllerTrait,
-        InsertControllerTrait,
-        UpdateControllerTrait,
+        AddControllerTrait,
+        EditControllerTrait,
         DeleteControllerTrait;
 
     /**
@@ -67,11 +67,11 @@ class ArticleController extends DefaultAbstractController
     }
 
     /**
-     * Give params to insertAction
+     * Give params to addAction
      * @return array
      * @throws Exception
      */
-    public function getInsertParam(): array
+    public function getAddParam(): array
     {
         return [
             'article',
@@ -82,11 +82,11 @@ class ArticleController extends DefaultAbstractController
     }
 
     /**
-     * Give params to update Action
+     * Give params to editAction
      * @return array
      * @throws Exception
      */
-    public function getUpdateParam(): array
+    public function getEditParam(): array
     {
         return [
             'articleId',
@@ -99,7 +99,7 @@ class ArticleController extends DefaultAbstractController
     /**
      * Give params to deleteAction
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function getDeleteParam(): array
     {

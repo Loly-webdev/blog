@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Core\DefaultAbstractEntity;
+use Core\DefaultAbstract\DefaultAbstractEntity;
 
 class Comment extends DefaultAbstractEntity
 {

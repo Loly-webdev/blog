@@ -19,6 +19,13 @@
     "twig/twig": "^3.0",
     "ext-pdo": "*",
     "symfony/var-dumper": "^5.0",
-    "ext-mongodb": "*"
+    "ext-mongodb": "*",
+    "jenssegers/mongodb": "^3.6",
+    "symfony/yaml": "^5.0"
+  },
+  "config": {
+    "platform": {
+      "ext-mongo": "1.6.16"
+    }
   }
 }

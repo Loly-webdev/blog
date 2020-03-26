@@ -1,9 +1,8 @@
 <?php
 
-namespace Core\Traits;
+namespace Core\Traits\Repository;
 
-use Core\DefaultAbstractEntity;
-use PDO;
+use Core\DefaultAbstract\DefaultAbstractEntity;
 
 /**
  * Trait CUDRepositoryTrait
@@ -78,7 +77,6 @@ trait CUDRepositoryTrait
                . ' WHERE ' . static::$tablePk . ' = ?';
 
         $pdo = $this->getPDO()->prepare($sql);
-        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
 
         return $pdo->execute([$id]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Provider;
 
 use Config\DatabaseServer;
 use PDO;

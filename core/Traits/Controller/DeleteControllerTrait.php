@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Traits;
+namespace Core\Traits\Controller;
 
-use Core\DefaultAbstractRepository;
+use Core\DefaultAbstract\DefaultAbstractRepository;
 
 /**
  * Trait DeleteControllerTrait
