@@ -5,8 +5,19 @@ namespace Core\Traits;
 use Core\DefaultAbstractEntity;
 use PDO;
 
+/**
+ * Trait CUDRepositoryTrait
+ * @package Core\Traits
+ */
 trait CUDRepositoryTrait
 {
+    /**
+     * Create an entity
+     *
+     * @param DefaultAbstractEntity $entity
+     *
+     * @return bool
+     */
     public function insert(DefaultAbstractEntity $entity): bool
     {
         $data                = $entity->convertToArray();
@@ -23,6 +34,13 @@ trait CUDRepositoryTrait
         return $pdo->execute($values);
     }
 
+    /**
+     * Update entity
+     *
+     * @param DefaultAbstractEntity $entity
+     *
+     * @return bool
+     */
     public function update(DefaultAbstractEntity $entity): bool
     {
         $data          = $entity->convertToArray();

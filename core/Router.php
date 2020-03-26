@@ -4,6 +4,7 @@ namespace Core;
 
 /**
  * Class Router
+ * @package Core
  * Get from request the controller and action names
  * For exemple :
  * <code>
@@ -22,6 +23,9 @@ class Router
     private $controllerName;
     private $actionName;
 
+    /**
+     * Router constructor.
+     */
     public function __construct()
     {
         // Load the instance of Request
@@ -38,11 +42,19 @@ class Router
         $this->actionName = $actionName . 'Action';
     }
 
+    /**
+     * Get Controller name
+     * @return string
+     */
     public function getControllerName(): string
     {
         return $this->controllerName;
     }
 
+    /**
+     * Get action name
+     * @return string
+     */
     public function getActionName(): string
     {
         return $this->actionName;

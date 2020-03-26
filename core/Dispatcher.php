@@ -6,13 +6,17 @@ use Exception;
 
 /**
  * Class Dispatcher
- * Get informations of URL and params to dispatch controller action
+ * Retrieve URL and parameter information for dispatching to controllers
+ * @package Core
  */
 class Dispatcher
 {
     private $router;
     private $controller;
 
+    /**
+     * Dispatcher constructor.
+     */
     public function __construct()
     {
         $this->router     = new Router();
@@ -21,6 +25,11 @@ class Dispatcher
         $this->controller = new $controller();
     }
 
+    /**
+     * Retrieve URL and parameter information for dispatching to controllers
+     * @return $this
+     * @throws Exception
+     */
     public function dispatch()
     {
         $controllerName = get_class($this->controller);

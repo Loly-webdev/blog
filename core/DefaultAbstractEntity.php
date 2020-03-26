@@ -2,12 +2,24 @@
 
 namespace Core;
 
+/**
+ * Class DefaultAbstractEntity
+ * @package Core
+ */
 abstract class DefaultAbstractEntity
 {
+
     protected $id;
     protected $createdAt;
     protected $updatedAt;
 
+    /**
+     * Method to hydrate an object
+     *
+     * @param array $params
+     *
+     * @return $this
+     */
     public function hydrate(array $params)
     {
         foreach ($params as $key => $data) {
@@ -22,6 +34,7 @@ abstract class DefaultAbstractEntity
     }
 
     /**
+     * Check if there's an id
      * @return bool
      */
     public function hasId(): bool
@@ -30,6 +43,7 @@ abstract class DefaultAbstractEntity
     }
 
     /**
+     * Get an id
      * @return mixed
      */
     public function getId()
@@ -38,6 +52,7 @@ abstract class DefaultAbstractEntity
     }
 
     /**
+     * Get the creation date
      * @return mixed
      */
     public function getCreatedAt()
@@ -46,6 +61,7 @@ abstract class DefaultAbstractEntity
     }
 
     /**
+     * Get the updated date
      * @return mixed
      */
     public function getUpdatedAt()
@@ -53,6 +69,10 @@ abstract class DefaultAbstractEntity
         return $this->updatedAt;
     }
 
+    /**
+     * Convert to array the entity for the BDD
+     * @return array
+     */
     public function convertToArray(): array
     {
         $data = get_object_vars($this);
