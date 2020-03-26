@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Core\DefaultAbstractController;
+use Core\DefaultAbstract\DefaultAbstractController;
 use Exception;
 
 /**

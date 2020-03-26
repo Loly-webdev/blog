@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use Core\DefaultAbstractRepository;
 use App\Entity\Comment;
+use Core\DefaultAbstract\DefaultAbstractRepository;
 
 /**
  * Class CommentRepository

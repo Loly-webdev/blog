@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Traits;
+namespace Core\Traits\Repository;
 
-use Core\DefaultAbstractEntity;
+use Core\DefaultAbstract\DefaultAbstractEntity;
 use PDO;
 
 /**
@@ -24,15 +24,13 @@ trait ReadRepositoryTrait
         $sql = 'SELECT * FROM ' . static::$tableName
                . ' WHERE ' . static::$tablePk . ' = ?';
 
-        // PDO execute
-        $pdo = $this->getPDO()
-                    ->prepare($sql);
-        // Object of value
+        // Prepare sql
+        $pdo = $this->getPDO()->prepare($sql);
+        // Map result as Entity
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
-        // We pass the values to be replaced by the ? values of the sql query.
+        // Bind params and execute query
         $pdo->execute([$articleId]);
 
-        // We're getting the results back
         return $pdo->fetch();
     }
 
@@ -57,7 +55,7 @@ trait ReadRepositoryTrait
      *
      * @param array|null $filters Contains in key the columns of the table and in value the "equal to".
      *
-     * @return array An empty table where the results can be found in bdd
+     * @return DefaultAbstractEntity[] If no match returns an empty array otherwise an array of DefaultAbstractEntity
      */
     public function search(?array $filters): array
     {
@@ -69,10 +67,8 @@ trait ReadRepositoryTrait
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
-        $pdo = $this->getPDO()
-                    ->prepare($sql);
+        $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
-        // We pass the values to be replaced by the ? values of the sql query.
         $pdo->execute(array_values($filters));
 
         return $pdo->fetchAll();
@@ -86,8 +82,7 @@ trait ReadRepositoryTrait
         $sql = 'SELECT *  FROM ' . static::$tableName
                . ' ORDER BY ' . static::$tableOrder . ' DESC';
 
-        $pdo = $this->getPDO()
-                    ->prepare($sql);
+        $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
         $pdo->execute();
 
