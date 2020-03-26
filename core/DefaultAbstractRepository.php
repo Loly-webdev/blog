@@ -4,18 +4,28 @@ namespace Core;
 
 use Exception;
 use PDO;
-use Core\Traits\CUDRepositoryTrait;
-use Core\Traits\ReadRepositoryTrait;
+use Core\Traits\{
+    CUDRepositoryTrait,
+    ReadRepositoryTrait
+};
 
+/**
+ * Class DefaultAbstractRepository
+ * @package Core
+ */
 abstract class DefaultAbstractRepository
 {
-    use CUDRepositoryTrait;
-    use ReadRepositoryTrait;
+    use CUDRepositoryTrait,
+        ReadRepositoryTrait;
 
     static  $tablePk    = 'id';
     static  $tableOrder = 'createdAt';
     private $pdo;
 
+    /**
+     * DefaultAbstractRepository constructor.
+     * @throws Exception
+     */
     final public function __construct()
     {
         $this->pdo = DefaultPDO::PDOConnect();
@@ -29,14 +39,26 @@ abstract class DefaultAbstractRepository
         }
     }
 
+    /**
+     * Get entity
+     * @return string
+     */
     public abstract function getEntity(): string;
 
+    /**
+     * Select columns of BDD for drop-down lists
+     *
+     * @param array $columns
+     *
+     * @return array
+     */
     public function selectColumns(array $columns = [])
     {
         $sql = 'SELECT ' . implode(', ', $columns)
                . ' FROM ' . static::$tableName;
 
-        $pdo = $this->getPDO()->prepare($sql);
+        $pdo = $this->getPDO()
+                    ->prepare($sql);
         $pdo->execute();
 
         return $pdo->fetchAll();

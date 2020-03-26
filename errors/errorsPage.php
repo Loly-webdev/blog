@@ -1,7 +1,8 @@
 <?php
+// Defines a message according to the error code and associates the parameters
 $errorCode = $_GET['erreur'];
 
-switch($errorCode) {
+switch ($errorCode) {
     case '204':
         $errorMessage = 'Cette page ne contient rien! (204)';
     break;
@@ -11,14 +12,14 @@ switch($errorCode) {
     case '206':
         $errorMessage = 'Contenu partiel de la page! (206)';
     break;
-    // 3** il y a une redirection
+    // 3** redirection
     case '301':
         $errorMessage = 'La page a été déplacéé définitivement!(301)';
     break;
     case '302':
         $errorMessage = 'La page a été déplacéé momentanément!(302)';
     break;
-    // 4** erreur du coté du client
+    // 4** error customer
     case '400':
         $errorMessage = 'Erreur dans la requête HTTP! (400)';
     break;
@@ -37,7 +38,7 @@ switch($errorCode) {
     case '405':
         $errorMessage = 'Méthode non autorisée.';
     break;
-    // 5** erreur du coté du serveur
+    // 5** error server
     case '500':
         $errorMessage = 'Erreur interne au serveur ou serveur saturé.';
     break;

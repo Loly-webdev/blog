@@ -4,25 +4,46 @@ namespace Core;
 
 use Exception;
 
+/**
+ * Class DefaultAbstractController
+ * @package Core
+ */
 abstract class DefaultAbstractController implements DefaultControllerInterface
 {
+
     protected $request;
 
+    /**
+     * DefaultAbstractController constructor.
+     */
     public function __construct()
     {
         $this->request = Request::getInstance();
     }
 
+    /**
+     * @return Request
+     */
     public function getRequest()
     {
         return $this->request;
     }
 
+    /**
+     * Method to see the views of the site
+     *
+     * @param string      $viewName
+     * @param array       $params
+     * @param string|null $viewFolder
+     *
+     * @throws Exception
+     */
     public function renderView($viewName, array $params = [], string $viewFolder = null): void
     {
         $defaultPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR;
         $viewFolder  = $viewFolder ?? $this->getFolderView();
-        $view        = (new TwigProvider())->getTwig()->render($viewFolder . $viewName, $params);
+        $view        = (new TwigProvider())->getTwig()
+                                           ->render($viewFolder . $viewName, $params);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
@@ -32,6 +53,10 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         echo $view;
     }
 
+    /**
+     * Path to repository of views
+     * @return string
+     */
     public function getFolderView(): string
     {
         // Define the view directory

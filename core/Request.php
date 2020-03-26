@@ -4,6 +4,7 @@ namespace Core;
 
 /**
  * Class Request
+ * @package Core
  * Get informations of URL
  * For exemple :
  * <code>
@@ -19,57 +20,92 @@ namespace Core;
  */
 final class Request
 {
-    protected static $instance; // Contiendra l'instance de notre classe.
+    private static $instance; // Will contain the instance of our class.
 
-    protected function __construct()
+    /**
+     * Request constructor.
+     * Prevents the creation of an instance
+     */
+    private function __construct()
     {
-    } // Empêche la création d'une instance
+    }
 
-    protected function __clone()
-    {
-    } // Interdit l'accès à la méthode __clone()
-
+    /**
+     * Singleton of request object to load once this method
+     * @return Request
+     */
     public static function getInstance()
     {
-        // singleton of request object to load once this method
-        if (!isset(self::$instance)) // Si on n'a pas encore instancié notre classe.
-        {
-            self::$instance = new self; // On s'instancie nous-mêmes. :)
+        if (!isset(self::$instance)) {
+            self::$instance = new self;
         }
 
         return self::$instance;
     }
 
+    /**
+     * Get information of URL
+     * @return array
+     */
     public function getUrlComponents()
     {
-        // Get information of URL
         $server = parse_url($_SERVER["REQUEST_URI"]);
         $path   = trim($server['path'], "/");
 
-        return "" !== $path ? explode('/', $path) : [];
+        return "" !== $path
+            ? explode('/', $path)
+            : [];
     }
 
+    /**
+     * Get params $_POST et $_GET
+     *
+     * @param      $key
+     * @param null $defaultValue
+     *
+     * @return mixed|null
+     */
     public function getParam($key, $defaultValue = null)
     {
-        // Get params $_POST et $_GET
         return $this->getQueryParam($key) ??
                $this->getRequestParam($key) ??
                $defaultValue;
     }
 
+    /**
+     * $_GET = params recover by $_GET method
+     *
+     * @param      $key
+     * @param null $defaultValue
+     *
+     * @return mixed|null
+     */
     public function getQueryParam($key, $defaultValue = null)
     {
-        // $_GET = parse_url($_SERVER["REQUEST_URI"])['query'];
         return isset($_GET[$key]) && '' !== $_GET[$key]
             ? $_GET[$key]
             : $defaultValue;
     }
 
+    /**
+     * $_POST = params recover by $_POST method
+     *
+     * @param      $key
+     * @param null $defaultValue
+     *
+     * @return mixed|null
+     */
     public function getRequestParam($key, $defaultValue = null)
     {
-        // $_POST = params recover by $_POST method
         return isset($_POST[$key]) && '' !== $_POST[$key]
             ? $_POST[$key]
             : $defaultValue;
+    }
+
+    /**
+     * Denies access to the __clone() method
+     */
+    private function __clone()
+    {
     }
 }
