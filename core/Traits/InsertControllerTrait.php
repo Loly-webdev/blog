@@ -5,8 +5,15 @@ namespace Core\Traits;
 use Core\DefaultAbstractEntity;
 use Core\DefaultAbstractRepository;
 
+/**
+ * Trait InsertControllerTrait
+ * @package Core\Traits
+ */
 trait InsertControllerTrait
 {
+    /**
+     * Insert action of controller
+     */
     public function insertAction(): void
     {
         $params = $this->getInsertParam();
@@ -14,8 +21,21 @@ trait InsertControllerTrait
         $this->insertEntity(...$params);
     }
 
+    /**
+     * Get Params of insert action
+     *
+     * @return array
+     */
     abstract public function getInsertParam(): array;
 
+    /**
+     * Method to insert entity
+     *
+     * @param string                    $post
+     * @param DefaultAbstractEntity     $entity
+     * @param DefaultAbstractRepository $repository
+     * @param string                    $viewTemplate
+     */
     protected function insertEntity(
         string $post,
         DefaultAbstractEntity $entity,
@@ -23,7 +43,8 @@ trait InsertControllerTrait
         string $viewTemplate
     ): void
     {
-        $data    = $this->getRequest()->getParam($post);
+        $data    = $this->getRequest()
+                        ->getParam($post);
         $message = '';
 
         if (isset($data)) {
