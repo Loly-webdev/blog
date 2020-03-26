@@ -6,10 +6,10 @@ use Config\DatabaseServer;
 use PDO;
 
 /**
- * Class DefaultPDO
+ * Class PDOProvider
  * @package Core
  */
-class DefaultPDO
+class PDOProvider
 {
     private static $cnx = null;
 
