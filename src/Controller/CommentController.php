@@ -3,13 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use Core\DefaultAbstractController;
+use Core\DefaultAbstract\DefaultAbstractController;
 use App\Repository\CommentRepository;
-use Core\Traits\{
-    DeleteControllerTrait,
-    InsertControllerTrait,
+use Core\Traits\Controller\{
     SeeControllerTrait,
-    UpdateControllerTrait
+    AddControllerTrait,
+    EditControllerTrait,
+    DeleteControllerTrait
 };
 use Exception;
 
@@ -20,8 +20,8 @@ use Exception;
 class CommentController extends DefaultAbstractController
 {
     use SeeControllerTrait,
-        InsertControllerTrait,
-        UpdateControllerTrait,
+        AddControllerTrait,
+        EditControllerTrait,
         DeleteControllerTrait;
 
     /**
@@ -52,11 +52,11 @@ class CommentController extends DefaultAbstractController
     }
 
     /**
-     * Give params to insertAction
+     * Give params to addAction
      * @return array
      * @throws Exception
      */
-    public function getInsertParam(): array
+    public function getAddParam(): array
     {
         return [
             'comment',
@@ -67,11 +67,11 @@ class CommentController extends DefaultAbstractController
     }
 
     /**
-     * Give params to update Action
+     * Give params to edit Action
      * @return array
      * @throws Exception
      */
-    public function getUpdateParam(): array
+    public function getEditParam(): array
     {
         return [
             'commentId',

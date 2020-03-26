@@ -1,35 +1,35 @@
 <?php
 
-namespace Core\Traits;
+namespace Core\Traits\Controller;
 
-use Core\DefaultAbstractRepository;
+use Core\DefaultAbstract\DefaultAbstractRepository;
 use Exception;
 
 /**
- * Trait UpdateControllerTrait
+ * Trait EditControllerTrait
  * @package Core\Traits
  */
-trait UpdateControllerTrait
+trait EditControllerTrait
 {
     /**
      * Update action of controller
      * @throws Exception
      */
-    public function updateAction(): void
+    public function editAction(): void
     {
-        $params = $this->getUpdateParam();
+        $params = $this->getEditParam();
 
-        $this->updateEntity(...$params);
+        $this->editEntity(...$params);
     }
 
     /**
-     * Get Params of update action
+     * Get Params of edit action
      * @return array
      */
-    abstract public function getUpdateParam(): array;
+    abstract public function getEditParam(): array;
 
     /**
-     * Method to update entity
+     * Method to edit entity
      *
      * @param string                    $entityParamId
      * @param DefaultAbstractRepository $repository
@@ -38,7 +38,7 @@ trait UpdateControllerTrait
      *
      * @throws Exception
      */
-    protected function updateEntity(
+    protected function editEntity(
         string $entityParamId,
         DefaultAbstractRepository $repository,
         string $post,

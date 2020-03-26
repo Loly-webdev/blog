@@ -1,7 +1,10 @@
 <?php
 
-namespace Core;
+namespace Core\DefaultAbstract;
 
+use Core\DefaultControllerInterface;
+use Core\Provider\TwigProvider;
+use Core\Request;
 use Exception;
 
 /**
@@ -40,7 +43,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      */
     public function renderView($viewName, array $params = [], string $viewFolder = null): void
     {
-        $defaultPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR;
+        $defaultPath = '/var/www/blog/template/';
         $viewFolder  = $viewFolder ?? $this->getFolderView();
         $view        = (new TwigProvider())->getTwig()
                                            ->render($viewFolder . $viewName, $params);
