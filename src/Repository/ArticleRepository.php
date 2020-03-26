@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use Core\DefaultAbstractRepository;
+use Core\DefaultAbstract\DefaultAbstractRepository;
 
 /**
  * Class ArticleRepository

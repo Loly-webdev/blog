@@ -2,13 +2,23 @@
 
 namespace Config;
 
-/**
- * Class DatabaseServer
- * @package Config
- */
 class DatabaseServer
 {
-    private $host     = 'localhost';
+    /*private $host;
+    private $database;
+    private $user;
+    private $password;
+
+    public function __construct()
+    {
+        $config         = Environment::getDatabaseconfig();
+        $this->host     = $config['host'];
+        $this->database = $config['name'];
+        $this->user     = $config['user'];
+        $this->password = $config['password'];
+    }*/
+
+private $host     = 'localhost';
     private $database = 'blog';
     private $user     = 'loly';
     private $password = 'root';

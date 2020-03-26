@@ -1,42 +1,41 @@
 <?php
 
-namespace Core\Traits;
+namespace Core\Traits\Controller;
 
-use Core\DefaultAbstractEntity;
-use Core\DefaultAbstractRepository;
+use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\DefaultAbstract\DefaultAbstractRepository;
 
 /**
  * Trait InsertControllerTrait
  * @package Core\Traits
  */
-trait InsertControllerTrait
+trait AddControllerTrait
 {
     /**
      * Insert action of controller
      */
-    public function insertAction(): void
+    public function addAction(): void
     {
-        $params = $this->getInsertParam();
+        $params = $this->getAddParam();
 
-        $this->insertEntity(...$params);
+        $this->addEntity(...$params);
     }
 
     /**
-     * Get Params of insert action
-     *
+     * Get Params of addAction
      * @return array
      */
-    abstract public function getInsertParam(): array;
+    abstract public function getAddParam(): array;
 
     /**
-     * Method to insert entity
+     * Method to add entity
      *
      * @param string                    $post
      * @param DefaultAbstractEntity     $entity
      * @param DefaultAbstractRepository $repository
      * @param string                    $viewTemplate
      */
-    protected function insertEntity(
+    protected function addEntity(
         string $post,
         DefaultAbstractEntity $entity,
         DefaultAbstractRepository $repository,
