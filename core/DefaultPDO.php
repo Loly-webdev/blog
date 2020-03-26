@@ -5,10 +5,18 @@ namespace Core;
 use Config\DatabaseServer;
 use PDO;
 
+/**
+ * Class DefaultPDO
+ * @package Core
+ */
 class DefaultPDO
 {
     private static $cnx = null;
 
+    /**
+     * Connexion with the BDD
+     * @return PDO
+     */
     public static function PDOConnect(): PDO
     {
         $driverOptions = [

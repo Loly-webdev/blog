@@ -4,8 +4,39 @@ namespace Core\Traits;
 
 use Core\DefaultAbstractRepository;
 
+/**
+ * Trait SeeControllerTrait
+ * @package Core\Traits
+ */
 trait SeeControllerTrait
 {
+    /**
+     * See action of controller
+     */
+    public function seeAction(): void
+    {
+        $params = $this->getSeeParam();
+
+        $this->seeEntity(...$params);
+    }
+
+    /**
+     * Get Params of see action
+     *
+     * @return array
+     */
+    abstract public function getSeeParam(): array;
+
+    /**
+     * Method to see entity
+     *
+     * @param string                         $entityParamId
+     * @param string                         $post
+     * @param DefaultAbstractRepository      $repository
+     * @param DefaultAbstractRepository|null $repositoryAssociate
+     * @param string                         $viewTemplate
+     * @param string|null                    $postAssociate
+     */
     protected function seeEntity(
         string $entityParamId,
         string $post,
@@ -13,9 +44,11 @@ trait SeeControllerTrait
         ?DefaultAbstractRepository $repositoryAssociate,
         string $viewTemplate,
         ?string $postAssociate
-    ): void {
+    ): void
+    {
         // Get id to the URL
-        $objectId = $this->getRequest()->getParam($entityParamId);
+        $objectId = $this->getRequest()
+                         ->getParam($entityParamId);
 
         if (null === $objectId) {
             throw new \InvalidArgumentException(
@@ -32,7 +65,7 @@ trait SeeControllerTrait
             }
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
             throw new \LogicException(
-               "Désolé, nous n'avons pas trouvé $post avec l'id: $objectId");
+                "Désolé, nous n'avons pas trouvé $post avec l'id: $objectId");
         }
 
         if ($post === 'article') {
@@ -43,18 +76,9 @@ trait SeeControllerTrait
         $this->renderView(
             $viewTemplate,
             [
-                $post  => $object,
+                $post          => $object,
                 $postAssociate => $objectAssociate ?? null
             ]
         );
     }
-
-    public function seeAction(): void
-    {
-        $params = $this->getSeeParam();
-
-        $this->seeEntity(...$params);
-    }
-
-    abstract public function getSeeParam(): array;
 }

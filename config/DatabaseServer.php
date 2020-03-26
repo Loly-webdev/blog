@@ -2,6 +2,10 @@
 
 namespace Config;
 
+/**
+ * Class DatabaseServer
+ * @package Config
+ */
 class DatabaseServer
 {
     private $host     = 'localhost';

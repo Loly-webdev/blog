@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Defines a message according to the type of error and associates the parameters
+ *
+ * @param $type
+ * @param $message
+ * @param $file
+ * @param $line
+ */
 function errorsManagement($type, $message, $file, $line)
 {
     switch ($type) {
