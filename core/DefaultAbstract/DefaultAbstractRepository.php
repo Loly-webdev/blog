@@ -2,7 +2,7 @@
 
 namespace Core\DefaultAbstract;
 
-use Core\Provider\DefaultPDO;
+use Core\Provider\PDOProvider;
 use Exception;
 use PDO;
 use Core\Traits\Repository\{
@@ -29,7 +29,7 @@ abstract class DefaultAbstractRepository
      */
     final public function __construct()
     {
-        $this->pdo = DefaultPDO::PDOConnect();
+        $this->pdo = PDOProvider::PDOConnect();
 
         if (!isset(static::$tableName)) {
             throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
@@ -65,7 +65,7 @@ abstract class DefaultAbstractRepository
     }
 
     /**
-     * This method make the connection to the database and load the DefaultPDO class
+     * This method make the connection to the database and load the PDOProvider class
      */
     public function getPDO(): PDO
     {
