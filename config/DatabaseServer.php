@@ -4,7 +4,15 @@ namespace Config;
 
 class DatabaseServer
 {
-    /*private $host;
+    /*
+    voila ton algo
+Tu fais un singleton Environment qui contient toutes ta configuration
+tu peux l'appeler Configuration, peut importe
+    $value = yaml_parse_file ( string $filename [, int $pos = 0 [, int &$ndocs [, array $callbacks = NULL ]]] ) : mixed
+$value = Yaml::parseFile('/path/to/file.yaml'); <== tu recuperes la valeur du yml dans une class grace a cette methode
+tu lui passes le fichier elle te genere un objet ou un tableau tu regardes ton resultat
+
+    private $host;
     private $database;
     private $user;
     private $password;
@@ -18,7 +26,7 @@ class DatabaseServer
         $this->password = $config['password'];
     }*/
 
-private $host     = 'localhost';
+    private $host     = 'localhost';
     private $database = 'blog';
     private $user     = 'loly';
     private $password = 'root';
