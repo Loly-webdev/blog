@@ -1,0 +1,5 @@
+- MySql
+  host: 'localhost'
+  database: 'blog'
+  user: 'loly'
+  password: 'root'
