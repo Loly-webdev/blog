@@ -2,43 +2,43 @@
 
 namespace Config;
 
+use Exception;
+
 class DatabaseServer
 {
-    /*
-    voila ton algo
-Tu fais un singleton Environment qui contient toutes ta configuration
-tu peux l'appeler Configuration, peut importe
-    $value = yaml_parse_file ( string $filename [, int $pos = 0 [, int &$ndocs [, array $callbacks = NULL ]]] ) : mixed
-$value = Yaml::parseFile('/path/to/file.yaml'); <== tu recuperes la valeur du yml dans une class grace a cette methode
-tu lui passes le fichier elle te genere un objet ou un tableau tu regardes ton resultat
-
+    private $driver;
     private $host;
     private $database;
     private $user;
     private $password;
 
-    public function __construct()
+    public function __construct($databaseKey = 'default')
     {
-        $config         = Environment::getDatabaseconfig();
-        $this->host     = $config['host'];
-        $this->database = $config['name'];
-        $this->user     = $config['user'];
-        $this->password = $config['password'];
+        $config = Configuration::getInstance();
+        $databases = $config->getDatabaseConfig();
+        if ($databases === null){
+            throw new Exception('Désolé, nous ne trouvons pas les informations de configuration pour la base de donnée.');
+        }
 
-$dbConfig = $config['database'];
+        $default        = $databases[$databaseKey] ?? null;
+        if ($databases === null){
+            throw new Exception("Désolé, La clée pour la base de donnée $databaseKey n'existe pas.");
+        }
 
-$connectString = $dbConfig['driver']
-    . ":host={$dbConfig['host']}"
-    . ":database={$dbConfig['database']}"
-    . ":user={$dbConfig['user']}"
-    . ":password={$dbConfig['password']}";
-$dbConnection = new \PDO($connectString, $dbConfig['user'], $dbConfig['password']);
-    }*/
+        $this->driver   = $default['driver'] ?? null;
+        $this->host     = $default['host'] ?? null;
+        $this->database = $default['name'] ?? null;
+        $this->user     = $default['user'] ?? null;
+        $this->password = $default['password'] ?? null;
+    }
 
-    private $host     = 'localhost';
-    private $database = 'blog';
-    private $user     = 'loly';
-    private $password = 'root';
+    /**
+     * @return string
+     */
+    public function getDriver(): string
+    {
+        return $this->driver;
+    }
 
     /**
      * @return string
