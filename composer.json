@@ -16,7 +16,7 @@
     }
   },
   "require": {
-    "twig/twig": "^3.0",
+    "twig/twig": "^2.0",
     "ext-pdo": "*",
     "symfony/var-dumper": "^5.0",
     "ext-yaml": "*"

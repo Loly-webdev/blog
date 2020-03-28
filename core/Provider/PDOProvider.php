@@ -3,6 +3,7 @@
 namespace Core\Provider;
 
 use Config\DatabaseServer;
+use Exception;
 use PDO;
 
 /**
@@ -16,6 +17,7 @@ class PDOProvider
     /**
      * Connexion with the BDD
      * @return PDO
+     * @throws Exception
      */
     public static function PDOConnect(): PDO
     {
@@ -28,14 +30,16 @@ class PDOProvider
         // Get login information
         if (is_null(static::$cnx)) {
             $dbServer = new DatabaseServer();
-
-            static::$cnx = new PDO(
-                "mysql:host=" . $dbServer->getHost()
-                . ";dbname=" . $dbServer->getDatabase(),
+                static::$cnx = new PDO(
+                $dbServer->getDriver() . ':host=' . $dbServer->getHost()
+                . ';dbname=' . $dbServer->getDatabase(),
                 $dbServer->getUser(),
                 $dbServer->getPassword(),
                 $driverOptions
             );
+            if (static::$cnx === null) {
+                throw new Exception('Désolé, mais les identifiants de connection à la base de données sont invalide.');
+            }
         }
 
         return static::$cnx;

@@ -1,7 +1,7 @@
-# ignorer les fichier
+# ignore files
 composer.phar
-# ignorer les dossier
 .gitignore
 .idea
+env.yml
 vendor/
-# ignorer le contenu des dossiers
+
