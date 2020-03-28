@@ -1,0 +1,10 @@
+databases:
+  default:
+    driver: mysql
+    host: localhost
+    name: table_name
+    user: user_name
+    password: use_pass
+
+twig:
+  debug: true

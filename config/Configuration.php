@@ -2,16 +2,24 @@
 
 namespace Config;
 
-class Environment
+use Exception;
+
+class Configuration
 {
     private static $instance; // Will contain the instance of our class.
+    private static $config = [];
 
     /**
-     * Environment constructor.
+     * Configuration constructor.
      * Prevents the creation of an instance
      */
     private function __construct()
     {
+        $path = "config/env.yml";
+        if (file_exists($path) === false) {
+            throw new Exception("Le fichier $path n'existe pas.");
+           }
+        static::$config = yaml_parse_file($path);
     }
 
     /**
@@ -23,7 +31,8 @@ class Environment
 
     /**
      * Singleton of request object to load once this method
-     * @return Environment
+     * @return Configuration
+     * @throws Exception
      */
     public static function getInstance()
     {
@@ -36,8 +45,11 @@ class Environment
 
     static function getDatabaseConfig(): array
     {
-        $path = "Config.yml";
-        $toArray = yaml_parse_file($path);
-        yaml_emit_file($path, $toArray);
+        return static::$config['databases'] ?? [];
+    }
+
+    static function getTwigConfig(): array
+    {
+        return static::$config['twig'] ?? [];
     }
 }
