@@ -1,5 +1,6 @@
-- MySql
-  host: 'localhost'
-  database: 'blog'
-  user: 'loly'
-  password: 'root'
+MySql:
+  driver: mysql
+  host: localhost
+  database: blog
+  user: loly
+  password: root
