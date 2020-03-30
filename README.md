@@ -1,8 +1,8 @@
 # blog
 
-##Framework from scratch
+## Framework from scratch
 
-###My configuration:
+### My configuration:
 ubuntu 18.04 and nginx.
 
 The configuration of a Vhost under Nginx : https://github.com/Loly-webdev/Ressources/blob/master/vhost_nginx.md
