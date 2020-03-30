@@ -4,6 +4,10 @@ namespace Config;
 
 use Exception;
 
+/**
+ * Class DatabaseServer
+ * @package Config
+ */
 class DatabaseServer
 {
     private $driver;
@@ -12,17 +16,24 @@ class DatabaseServer
     private $user;
     private $password;
 
+    /**
+     * DatabaseServer constructor.
+     *
+     * @param string $databaseKey
+     *
+     * @throws Exception
+     */
     public function __construct($databaseKey = 'default')
     {
         $config = Configuration::getInstance();
         $databases = $config->getDatabaseConfig();
         if ($databases === null){
-            throw new Exception('Désolé, nous ne trouvons pas les informations de configuration pour la base de donnée.');
+            throw new Exception('Désolé, nous ne trouvons pas les informations de configuration pour la base de données.');
         }
 
         $default        = $databases[$databaseKey] ?? null;
         if ($databases === null){
-            throw new Exception("Désolé, La clée pour la base de donnée $databaseKey n'existe pas.");
+            throw new Exception("Désolé, La clée pour la base de données $databaseKey n'existe pas.");
         }
 
         $this->driver   = $default['driver'] ?? null;

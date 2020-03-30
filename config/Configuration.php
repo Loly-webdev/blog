@@ -4,6 +4,10 @@ namespace Config;
 
 use Exception;
 
+/**
+ * Class Configuration
+ * @package Config
+ */
 class Configuration
 {
     private static $instance; // Will contain the instance of our class.
@@ -12,21 +16,15 @@ class Configuration
     /**
      * Configuration constructor.
      * Prevents the creation of an instance
+     * @throws Exception
      */
     private function __construct()
     {
         $path = "config/env.yml";
         if (file_exists($path) === false) {
             throw new Exception("Le fichier $path n'existe pas.");
-           }
+        }
         static::$config = yaml_parse_file($path);
-    }
-
-    /**
-     * Denies access to the __clone() method
-     */
-    private function __clone()
-    {
     }
 
     /**
@@ -43,13 +41,26 @@ class Configuration
         return self::$instance;
     }
 
+    /**
+     * @return array
+     */
     static function getDatabaseConfig(): array
     {
         return static::$config['databases'] ?? [];
     }
 
+    /**
+     * @return array
+     */
     static function getTwigConfig(): array
     {
         return static::$config['twig'] ?? [];
+    }
+
+    /**
+     * Denies access to the __clone() method
+     */
+    private function __clone()
+    {
     }
 }
