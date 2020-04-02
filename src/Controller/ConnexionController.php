@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\HTTPRequest;
+use Core\Request;
+use Core\User;
 use Exception;
 
 /**
@@ -19,8 +22,19 @@ class ConnexionController extends DefaultAbstractController
      */
     public function indexAction()
     {
+        $request = Request::getInstance();
         $this->renderView(
             'connexion.html.twig'
         );
+
+        $login    = $request->getParam('login');
+        $password = $request->getParam('password');
+
+        if (isset($login) && isset($password)) {
+            (new User())->setAuthenticated(true);
+        }
+        else {
+            throw new Exception('Le pseudo ou le mot de passe est incorrect.');
+        }
     }
 }
