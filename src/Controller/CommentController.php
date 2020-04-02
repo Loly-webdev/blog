@@ -91,8 +91,8 @@ class CommentController extends DefaultAbstractController
         return [
             new CommentRepository(),
             'commentId',
-            'commentForm.html.twig',
-            'Votre commentaire à bien était supprimé !'
+            'commentaire',
+            'commentForm.html.twig'
         ];
     }
 }

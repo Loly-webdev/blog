@@ -117,8 +117,8 @@ class ArticleController extends DefaultAbstractController
         return [
             new ArticleRepository(),
             'articleId',
-            'articleForm.html.twig',
-            'Votre article à bien était supprimé !'
+            'article',
+            'articleForm.html.twig'
         ];
     }
 }
