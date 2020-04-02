@@ -6,7 +6,6 @@ use App\Entity\User;
 use Core\DefaultAbstract\DefaultAbstractController;
 use App\Repository\UserRepository;
 use Core\Traits\Controller\{
-    SeeControllerTrait,
     AddControllerTrait,
     EditControllerTrait,
     DeleteControllerTrait
@@ -19,8 +18,7 @@ use Exception;
  */
 class ConnexionController extends DefaultAbstractController
 {
-    use SeeControllerTrait,
-        AddControllerTrait,
+    use AddControllerTrait,
         EditControllerTrait,
         DeleteControllerTrait;
 
@@ -38,23 +36,6 @@ class ConnexionController extends DefaultAbstractController
     }
 
     /**
-     * Give params to seeAction
-     * @return array
-     * @throws Exception
-     */
-    public function getSeeParam(): array
-    {
-        return [
-            'id',
-            'user',
-            new UserRepository(),
-            null,
-            'connexion.html.twig',
-            null
-        ];
-    }
-
-    /**
      * Give params to addAction
      * @return array
      * @throws Exception
@@ -65,7 +46,7 @@ class ConnexionController extends DefaultAbstractController
             'user',
             new User(),
             new UserRepository(),
-            'connexion.html.twig'
+            'connexionForm.html.twig'
         ];
     }
 
@@ -80,7 +61,7 @@ class ConnexionController extends DefaultAbstractController
             'id',
             new UserRepository(),
             'user',
-            'connexion.html.twig'
+            'connexionEdit.html.twig'
         ];
     }
 
@@ -95,7 +76,7 @@ class ConnexionController extends DefaultAbstractController
             new UserRepository(),
             'id',
             'login',
-            'connexion.html.twig',
+            'connexionForm.html.twig',
         ];
     }
 

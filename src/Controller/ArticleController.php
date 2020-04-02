@@ -20,12 +20,8 @@ use Exception;
 // On démarre la session AVANT d'écrire du code HTML
 session_start();
 
-$request = Request::getInstance();
-$login    = $request->getParam('login');
-$password = $request->getParam('password');
-
-$_SESSION['login'] = $login;
-$_SESSION['password'] = $password;
+//$_SESSION['login'] = $login;
+//$_SESSION['password'] = $password;
 
 /**
  * Class ArticleController
