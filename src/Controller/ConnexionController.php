@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\HTTPRequest;
-use Core\Request;
-use Core\User;
+use App\Repository\UserRepository;
+use Core\Traits\Controller\{
+    SeeControllerTrait,
+    AddControllerTrait,
+    EditControllerTrait,
+    DeleteControllerTrait
+};
 use Exception;
 
 /**
@@ -14,6 +19,11 @@ use Exception;
  */
 class ConnexionController extends DefaultAbstractController
 {
+    use SeeControllerTrait,
+        AddControllerTrait,
+        EditControllerTrait,
+        DeleteControllerTrait;
+
     /**
      * Action by default
      * Show form to connexion
@@ -22,19 +32,75 @@ class ConnexionController extends DefaultAbstractController
      */
     public function indexAction()
     {
-        $request = Request::getInstance();
         $this->renderView(
             'connexion.html.twig'
         );
+    }
 
-        $login    = $request->getParam('login');
-        $password = $request->getParam('password');
+    /**
+     * Give params to seeAction
+     * @return array
+     * @throws Exception
+     */
+    public function getSeeParam(): array
+    {
+        return [
+            'id',
+            'user',
+            new UserRepository(),
+            null,
+            'connexion.html.twig',
+            null
+        ];
+    }
 
-        if (isset($login) && isset($password)) {
-            (new User())->setAuthenticated(true);
-        }
-        else {
-            throw new Exception('Le pseudo ou le mot de passe est incorrect.');
-        }
+    /**
+     * Give params to addAction
+     * @return array
+     * @throws Exception
+     */
+    public function getAddParam(): array
+    {
+        return [
+            'user',
+            new User(),
+            new UserRepository(),
+            'connexion.html.twig'
+        ];
+    }
+
+    /**
+     * Give params to edit Action
+     * @return array
+     * @throws Exception
+     */
+    public function getEditParam(): array
+    {
+        return [
+            'id',
+            new UserRepository(),
+            'user',
+            'connexion.html.twig'
+        ];
+    }
+
+    /**
+     * Give params to deleteAction
+     * @return array
+     * @throws Exception
+     */
+    public function getDeleteParam(): array
+    {
+        return [
+            new UserRepository(),
+            'id',
+            'login',
+            'connexion.html.twig',
+        ];
+    }
+
+    public function getConnexion()
+    {
+
     }
 }
