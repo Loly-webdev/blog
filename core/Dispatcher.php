@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Exception;
+use Core\Exception\CoreException;
 
 /**
  * Class Dispatcher
@@ -28,7 +28,7 @@ class Dispatcher
     /**
      * Retrieve URL and parameter information for dispatching to controllers
      * @return $this
-     * @throws Exception
+     * @throws CoreException
      */
     public function dispatch()
     {
@@ -37,7 +37,7 @@ class Dispatcher
 
         // Check that the controller action method exists
         if (false === method_exists($this->controller, $actionName)) {
-            throw new Exception(
+            throw new CoreException(
                 "La méthode $actionName n'existe pas dans le controleur $controllerName."
             );
         }

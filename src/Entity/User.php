@@ -8,6 +8,26 @@ class User extends DefaultAbstractEntity
 {
     protected $login;
     protected $password;
+    protected $role;
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     *
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
 
     /**
      * @return mixed

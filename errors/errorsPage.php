@@ -1,64 +1,53 @@
 <?php
 // Defines a message according to the error code and associates the parameters
-$errorCode = $_GET['erreur'];
+$codeHTTP = http_response_code();
 
-switch ($errorCode) {
-    case '204':
-        $errorMessage = 'Cette page ne contient rien! (204)';
-    break;
-    case '205':
-        $errorMessage = 'Cette page n\'est pas accessible';
-    break;
-    case '206':
-        $errorMessage = 'Contenu partiel de la page! (206)';
-    break;
+$codes = [
+    204 => ['Erreur 204',
+            'Cette page ne contient rien!'],
+    205 => ['Erreur 205',
+            'Cette page n\'est pas accessible'],
+    206 => ['Erreur 206',
+            'Contenu partiel de la page!'],
     // 3** redirection
-    case '301':
-        $errorMessage = 'La page a été déplacéé définitivement!(301)';
-    break;
-    case '302':
-        $errorMessage = 'La page a été déplacéé momentanément!(302)';
-    break;
+    301 => ['Erreur 301',
+            'La page a été déplacéé définitivement!(301)'],
+    302 => ['Erreur 302',
+            'La page a été déplacéé momentanément!(302)'],
     // 4** error customer
-    case '400':
-        $errorMessage = 'Erreur dans la requête HTTP! (400)';
-    break;
-    case '401':
-        $errorMessage = 'Authentification requise! (401)';
-    break;
-    case '402':
-        $errorMessage = 'L\'accès à la page est payant! (402)';
-    break;
-    case '403':
-        $errorMessage = 'Accès à la page refusé! (403)';
-    break;
-    case '404':
-        $errorMessage = 'Page inexistante! (404)';
-    break;
-    case '405':
-        $errorMessage = 'Méthode non autorisée.';
-    break;
+    400 => ['Erreur 400',
+            'Erreur dans la requête HTTP!'],
+    401 => ['Erreur 401',
+            'Authentification requise!'],
+    402 => ['Erreur 402',
+            'L\'accès à la page est payant!'],
+    403 => ['Erreur 403',
+            'Accès à la page refusé!'],
+    404 => ['Erreur 404',
+            'Page inexistante!'],
+    405 => ['Erreur 405',
+            'Méthode non autorisée.'],
+    408 => ['Erreur 408',
+            'Your browser failed to send a request in the time allowed by the server.'],
     // 5** error server
-    case '500':
-        $errorMessage = 'Erreur interne au serveur ou serveur saturé.';
-    break;
-    case '501':
-        $errorMessage = 'Le serveur ne supporte pas le service demandé.';
-    break;
-    case '502':
-        $errorMessage = 'Mauvaise passerelle.';
-    break;
-    case '503':
-        $errorMessage = ' Service indisponible.';
-    break;
-    case '504':
-        $errorMessage = 'Trop de temps à la réponse.';
-    break;
-    case '505':
-        $errorMessage = 'Version HTTP non supportée.';
-    break;
-    default:
-        $errorMessage = 'Erreur !';
+    500 => ['Erreur 500',
+            'Le serveur ne supporte pas le service demandé.'],
+    501 => ['Erreur 501',
+            'Le serveur ne supporte pas le service demandé.'],
+    502 => ['Erreur 502',
+            'The server received an invalid response while trying to carry out the request.'],
+    504 => ['Erreur 504',
+            'Le serveur met trop de temps à répondre.'],
+    505 => ['Erreur 505',
+            'Version HTTP non supportée.']
+];
+
+if ($codeHTTP === 200 || $codeHTTP == false || strlen($codeHTTP) != 3) {
+    $code = '';
+    $message = 'Désolé nous rencontrons une erreur';
+} else {
+    $code = $codes[$codeHTTP][0] ?? $codeHTTP;
+    $message = $codes[$codeHTTP][1] ?? 'Désolé nous rencontrons une erreur';
 }
 
-require_once('../template/errors/errorsPageView.php');
+require_once('template/errorsPageView.php');
