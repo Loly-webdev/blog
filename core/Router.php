@@ -22,6 +22,7 @@ class Router
 {
     private $controllerName;
     private $actionName;
+    private $admin = false;
 
     /**
      * Router constructor.
@@ -31,10 +32,15 @@ class Router
         // Load the instance of Request
         $request = Request::getInstance();
 
+        $index = 0;
+        if('admin' === $request->getUrlComponents()[$index] ) {
+            ++$index;
+            $this->admin = true;
+        }
         // Find the ControllerName and ActionName with the function getUrlComponents()
         // or return a defaultValue
-        $controllerName = $request->getUrLComponents()[0] ?? "Home";
-        $actionName     = $request->getUrLComponents()[1] ?? "index";
+        $controllerName = $request->getUrLComponents()[$index] ?? "Home";
+        $actionName     = $request->getUrLComponents()[++$index] ?? "index";
 
         // Add "Controller" to the controllerName find
         $this->controllerName = ucfirst($controllerName) . 'Controller';
@@ -58,5 +64,10 @@ class Router
     public function getActionName(): string
     {
         return $this->actionName;
+    }
+
+    public function isAdmin()
+    {
+        return $this->admin;
     }
 }
