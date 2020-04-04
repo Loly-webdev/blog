@@ -60,9 +60,19 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             'article',
             new ArticleRepository(),
-            new CommentRepository(),
-            'article.html.twig',
-            'comments',
+            'article.html.twig'
+        ];
+    }
+
+    public function preRenderView(array $data): array
+    {
+
+        // Load comments associate to the articleId
+        $objectAssociate     = (new CommentRepository())->find(['post' => 'articleId']);
+        $postAssociate       = 'comments';
+
+        $data          = [
+            $postAssociate => $objectAssociate ?? null
         ];
     }
 

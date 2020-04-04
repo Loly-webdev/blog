@@ -30,55 +30,51 @@ trait SeeControllerTrait
     /**
      * Method to see entity
      *
-     * @param string                         $entityParamId
-     * @param string                         $post
-     * @param DefaultAbstractRepository      $repository
-     * @param DefaultAbstractRepository|null $repositoryAssociate
-     * @param string                         $viewTemplate
-     * @param string|null                    $postAssociate
+     * @param string                    $entityParamId
+     * @param string                    $entityName
+     * @param DefaultAbstractRepository $repository
+     * @param string                    $viewTemplate
      */
     protected function seeEntity(
         string $entityParamId,
-        string $post,
+        string $entityName,
         DefaultAbstractRepository $repository,
-        ?DefaultAbstractRepository $repositoryAssociate,
-        string $viewTemplate,
-        ?string $postAssociate
+        string $viewTemplate
     ): void
     {
         // Get id to the URL
-        $objectId = $this->getRequest()
+        $entityId = $this->getRequest()
                          ->getParam($entityParamId);
 
-        if (null === $objectId) {
+        if (null === $entityId) {
             throw new \InvalidArgumentException(
-                "Désolé, mais la valeur de $post n'est pas renseignée."
+                "Désolé, mais la valeur de $entityName n'est pas renseignée."
             );
         }
 
         // Load post associate to the Id or return null
-        $object = $repository->findOne($objectId);
+        $entity = $repository->findOne($entityId);
 
-        if (null === $object) {
-            if ($post === 'comment') {
-                $objectId = $_GET['articleId'];
+        if (null === $entity) {
+            if ($entityName === 'comment') {
+                $entityId = $_GET['articleId'];
             }
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
             throw new \LogicException(
-                "Désolé, nous n'avons pas trouvé $post avec l'id: $objectId");
+                "Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
         }
 
-        if ($post === 'article') {
-            // Load comments associate to the articleId
-            $objectAssociate = $repositoryAssociate->find(['post' => $objectId]);
+        $data = [
+            $entityName => $entity
+        ];
+
+        if (method_exists($this, 'preRenderView')) {
+            $data = $this->preRenderview($entity);
         }
 
         $this->renderView(
             $viewTemplate,
-            [
-                $post          => $object,
-                $postAssociate => $objectAssociate ?? null
-            ]
+            $data
         );
     }
 }
