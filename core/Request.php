@@ -34,7 +34,7 @@ final class Request
      * Singleton of request object to load once this method
      * @return Request
      */
-    public static function getInstance()
+    public static function getInstance(): Request
     {
         if (!isset(self::$instance)) {
             self::$instance = new self;
@@ -47,7 +47,7 @@ final class Request
      * Get information of URL
      * @return array
      */
-    public function getUrlComponents()
+    public function getUrlComponents(): array
     {
         $server = parse_url($_SERVER["REQUEST_URI"]);
         $path   = trim($server['path'], "/");
@@ -65,7 +65,7 @@ final class Request
      *
      * @return mixed|null
      */
-    public function getParam($key, $defaultValue = null)
+    public function getParam($key, $defaultValue = null): ?string
     {
         return $this->getQueryParam($key) ??
                $this->getRequestParam($key) ??
@@ -80,7 +80,7 @@ final class Request
      *
      * @return mixed|null
      */
-    public function getQueryParam($key, $defaultValue = null)
+    public function getQueryParam($key, $defaultValue = null): ?string
     {
         return isset($_GET[$key]) && '' !== $_GET[$key]
             ? $_GET[$key]
@@ -95,7 +95,7 @@ final class Request
      *
      * @return mixed|null
      */
-    public function getRequestParam($key, $defaultValue = null)
+    public function getRequestParam($key, $defaultValue = null): ?string
     {
         return isset($_POST[$key]) && '' !== $_POST[$key]
             ? $_POST[$key]

@@ -20,7 +20,6 @@
     "ext-pdo": "*",
     "symfony/var-dumper": "^5.0",
     "ext-yaml": "*",
-    "ext-dom": "*",
-    "ext-curl": "*"
+    "ext-dom": "*"
   }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace Config;
+namespace Core\Provider;
 
-use Exception;
+use Core\Exception\CoreException;
 
 /**
  * Class DatabaseServer
  * @package Config
  */
-class DatabaseServer
+class DatabaseProvider
 {
     private $driver;
     private $host;
@@ -21,19 +21,19 @@ class DatabaseServer
      *
      * @param string $databaseKey
      *
-     * @throws Exception
+     * @throws CoreException
      */
     public function __construct($databaseKey = 'default')
     {
-        $config = Configuration::getInstance();
+        $config = ConfigurationProvider::getInstance();
         $databases = $config->getDatabaseConfig();
         if ($databases === null){
-            throw new Exception('Désolé, nous ne trouvons pas les informations de configuration pour la base de données.');
+            throw new CoreException('Désolé, nous ne trouvons pas les informations de configuration pour la base de données.');
         }
 
         $default        = $databases[$databaseKey] ?? null;
         if ($databases === null){
-            throw new Exception("Désolé, La clée pour la base de données $databaseKey n'existe pas.");
+            throw new CoreException("Désolé, La clée pour la base de données $databaseKey n'existe pas.");
         }
 
         $this->driver   = $default['driver'] ?? null;

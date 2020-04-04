@@ -1,23 +1,19 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
-use App\Entity\Comment;
+use App\Controller\ConnexionController;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
-use App\Repository\CommentRepository;
-use Core\Traits\Controller\{
-    SeeControllerTrait,
-    AddControllerTrait,
-    EditControllerTrait,
-    DeleteControllerTrait
-};
+use Core\Exception\CoreException;
+use Core\Traits\Controller\AddControllerTrait;
+use Core\Traits\Controller\DeleteControllerTrait;
+use Core\Traits\Controller\EditControllerTrait;
+use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
-/**
- * Class CommentController
- * @package App\Controller
- */
-class CommentController extends DefaultAbstractController
+class UserAdminController extends DefaultAbstractController
 {
     use SeeControllerTrait,
         AddControllerTrait,
@@ -26,12 +22,13 @@ class CommentController extends DefaultAbstractController
 
     /**
      * Action by default
-     * Show an comment
+     * Show form to connexion
      * @return mixed|void
+     * @throws Exception
      */
     public function indexAction()
     {
-        $this->seeAction();
+        (new ConnexionController())->logIn();
     }
 
     /**
@@ -42,11 +39,11 @@ class CommentController extends DefaultAbstractController
     public function getSeeParam(): array
     {
         return [
-            'commentId',
-            'comment',
-            new CommentRepository(),
+            'id',
+            'user',
+            new UserRepository(),
             null,
-            'comment.html.twig',
+            'connexion.html.twig',
             null
         ];
     }
@@ -59,10 +56,10 @@ class CommentController extends DefaultAbstractController
     public function getAddParam(): array
     {
         return [
-            'comment',
-            new Comment(),
-            new CommentRepository(),
-            'commentForm.html.twig'
+            'user',
+            new User(),
+            new UserRepository(),
+            'connexionForm.html.twig'
         ];
     }
 
@@ -74,10 +71,10 @@ class CommentController extends DefaultAbstractController
     public function getEditParam(): array
     {
         return [
-            'commentId',
-            new CommentRepository(),
-            'comment',
-            'commentEdit.html.twig'
+            'id',
+            new UserRepository(),
+            'user',
+            'connexionEdit.html.twig'
         ];
     }
 
@@ -89,10 +86,14 @@ class CommentController extends DefaultAbstractController
     public function getDeleteParam(): array
     {
         return [
-            new CommentRepository(),
-            'commentId',
-            'commentaire',
-            'commentForm.html.twig'
+            new UserRepository(),
+            'id',
+            'login',
+            'connexionForm.html.twig',
         ];
+    }
+    public function profile()
+    {
+
     }
 }
