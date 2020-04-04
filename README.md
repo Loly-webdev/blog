@@ -1,16 +1,36 @@
-# blog
+# Project
 
-## Framework from scratch
+# Framework Installation
 
-### My configuration:
-ubuntu 18.04 and nginx.
+you can check requirements on :
+ - http://project/requirements.php
 
-The configuration of a Vhost under Nginx : https://github.com/Loly-webdev/Ressources/blob/master/vhost_nginx.md
+## Clone git project
 
-To install Yaml without Symfony : https://pecl.php.net/package/yaml
+## Install composer
 
-or : https://zoomadmin.com/HowToInstall/UbuntuPackage/php-yaml
+## Add vhost
 
-Don't forget to update twig.
+- On apache:  
+.htaccess file is versionned on project
 
-Create an env.yml file based on the example of the env.yml.sample file
+- On nginx:  
+[vhost example](https://github.com/Loly-webdev/Ressources/blob/master/vhost_nginx.md)
+
+## Install yaml
+
+- On Windows (WAMP) :
+  - [Download yaml dll](https://pecl.php.net/package/yaml)
+  - Put "php_yaml.dll" file on "C:\wamp\bin\php\<phpVersionFolder>\ext" folder
+  - Edit  "C:\wamp\bin\php\<phpVersionFolder>\php.ini" file 
+  - Add a new line "extension=yaml" under "Dynamic Extensions" section
+  - Edit  "C:\wamp\bin\apache\<apacheVersionFolder>\bin\php.ini" file 
+  - Add a new line "extension=yaml" at the end of file
+  - Restart WAMP
+
+- On linux (LAMP):
+    - https://zoomadmin.com/HowToInstall/UbuntuPackage/php-yaml
+
+## Configure .env file
+ 
+## Load database file

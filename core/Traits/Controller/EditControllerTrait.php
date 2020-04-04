@@ -3,7 +3,7 @@
 namespace Core\Traits\Controller;
 
 use Core\DefaultAbstract\DefaultAbstractRepository;
-use Exception;
+use Core\Exception\CoreException;
 
 /**
  * Trait EditControllerTrait
@@ -13,7 +13,7 @@ trait EditControllerTrait
 {
     /**
      * Update action of controller
-     * @throws Exception
+     * @throws CoreException
      */
     public function editAction(): void
     {
@@ -36,7 +36,7 @@ trait EditControllerTrait
      * @param string                    $post
      * @param string                    $viewTemplate
      *
-     * @throws Exception
+     * @throws CoreException
      */
     protected function editEntity(
         string $entityParamId,
@@ -46,15 +46,17 @@ trait EditControllerTrait
     ): void
     {
         // Retrieve all data in a table
-        $objectId = $this->getRequest()
-                         ->getParam($entityParamId);
-        $object   = $repository->findOne($objectId);
-        if (!isset($object)) {
-            throw new Exception('Désolé nous rencontrons un problème avec votre demande.');
+        $objectId = $this->getRequest()->getParam($entityParamId);
+        if (!isset($objectId)) {
+            throw new CoreException('The "'. $entityParamId .'" paramater was not founded.');
         }
 
-        $data    = $this->getRequest()
-                        ->getParam($post);
+        $object   = $repository->findOne($objectId);
+        if (!isset($object)) {
+            throw new CoreException('Désolé nous rencontrons un problème avec votre demande.');
+        }
+
+        $data    = $this->getRequest()->getParam($post);
         $message = '';
 
         if (isset($data)) {
