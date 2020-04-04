@@ -17,17 +17,7 @@
         <img alt="Page d'erreur" src="/public/images/error_code.jpg">
         <h3>Détail de l'erreur : </h3>
         <p>
-            <strong>Type ou code de l'erreur : </strong>
-            <?= $type ?>
-            <br>
-            <strong>Message : </strong>
             <?= $message ?>
-            <br>
-            <strong>Fichier : </strong>
-            <?= $file ?>
-            <br>
-            <strong>Ligne : </strong>
-            <?= $line ?>
         <hr>
         <a href="/">Retour à l'Accueil</a>
         </p>
