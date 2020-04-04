@@ -12,3 +12,5 @@ To install Yaml without Symfony : https://pecl.php.net/package/yaml
 or : https://zoomadmin.com/HowToInstall/UbuntuPackage/php-yaml
 
 Don't forget to update twig.
+
+Create an env.yml file based on the example of the env.yml.sample file
