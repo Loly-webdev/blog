@@ -8,7 +8,6 @@ use App\Repository\{
     ArticleRepository,
     CommentRepository
 };
-use Core\Request;
 use Core\Traits\Controller\{
     SeeControllerTrait,
     AddControllerTrait,
@@ -16,12 +15,6 @@ use Core\Traits\Controller\{
     DeleteControllerTrait
 };
 use Exception;
-
-// On démarre la session AVANT d'écrire du code HTML
-session_start();
-
-//$_SESSION['login'] = $login;
-//$_SESSION['password'] = $password;
 
 /**
  * Class ArticleController

@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
-class User
+use Core\DefaultAbstract\DefaultAbstractEntity;
+
+class User extends DefaultAbstractEntity
 {
     protected $login;
     protected $password;
