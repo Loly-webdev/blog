@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -11,7 +11,7 @@ use Core\Traits\Controller\EditControllerTrait;
 use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
-class UserAdminController extends DefaultAbstractController
+class UserController extends DefaultAbstractController
 {
     use SeeControllerTrait,
         AddControllerTrait,
@@ -26,7 +26,14 @@ class UserAdminController extends DefaultAbstractController
      */
     public function indexAction()
     {
+        $profile = (new UserRepository())->find();
 
+        $this->renderView(
+            'profile.html.twig',
+            [
+                'profile' =>$profile
+            ]
+        );
     }
 
     /**
@@ -94,4 +101,8 @@ class UserAdminController extends DefaultAbstractController
     {
 
     }
+}
+
+{
+
 }
