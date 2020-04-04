@@ -5,11 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Core\DefaultAbstract\DefaultAbstractController;
 use App\Repository\UserRepository;
-use Core\Traits\Controller\{
-    AddControllerTrait,
-    EditControllerTrait,
-    DeleteControllerTrait
-};
+use Core\Traits\Controller\{AddControllerTrait, EditControllerTrait, DeleteControllerTrait, SeeControllerTrait};
 use Exception;
 
 /**
@@ -18,7 +14,8 @@ use Exception;
  */
 class ConnexionController extends DefaultAbstractController
 {
-    use AddControllerTrait,
+    use SeeControllerTrait,
+        AddControllerTrait,
         EditControllerTrait,
         DeleteControllerTrait;
 
@@ -33,6 +30,23 @@ class ConnexionController extends DefaultAbstractController
         $this->renderView(
             'connexion.html.twig'
         );
+    }
+
+    /**
+     * Give params to seeAction
+     * @return array
+     * @throws Exception
+     */
+    public function getSeeParam(): array
+    {
+        return [
+            'id',
+            'user',
+            new UserRepository(),
+            null,
+            'connexion.html.twig',
+            null
+        ];
     }
 
     /**
