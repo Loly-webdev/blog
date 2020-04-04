@@ -58,6 +58,14 @@ class Configuration
     }
 
     /**
+     * @return string
+     */
+    static function getEnvironment(): string
+    {
+        return static::$config['env'] ?? 'prod';
+    }
+
+    /**
      * Denies access to the __clone() method
      */
     private function __clone()
