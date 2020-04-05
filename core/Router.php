@@ -31,16 +31,17 @@ class Router
     {
         // Load the instance of Request
         $request = Request::getInstance();
+        $params = $request->getUrlComponents();
 
         $index = 0;
-        if('admin' === $request->getUrlComponents()[$index] ) {
+        if(isset($params[$index]) && 'admin' === $params[$index]) {
             ++$index;
             $this->admin = true;
         }
         // Find the ControllerName and ActionName with the function getUrlComponents()
         // or return a defaultValue
-        $controllerName = $request->getUrLComponents()[$index] ?? "Home";
-        $actionName     = $request->getUrLComponents()[++$index] ?? "index";
+        $controllerName = $params[$index] ?? "Home";
+        $actionName     = $params[++$index] ?? "index";
 
         // Add "Controller" to the controllerName find
         $this->controllerName = ucfirst($controllerName) . 'Controller';
