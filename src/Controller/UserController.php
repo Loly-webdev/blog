@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Traits\Controller\AddControllerTrait;
-use Core\Traits\Controller\DeleteControllerTrait;
-use Core\Traits\Controller\EditControllerTrait;
-use Core\Traits\Controller\SeeControllerTrait;
+use Core\Traits\Controller\{
+    SeeControllerTrait,
+    AddControllerTrait,
+    EditControllerTrait,
+    DeleteControllerTrait
+};
 use Exception;
 
 class UserController extends DefaultAbstractController
