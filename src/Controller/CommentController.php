@@ -69,9 +69,9 @@ class CommentController extends DefaultAbstractController
         ];
     }
 
-    public function keyExist($data)
+    public function dependencyId($entityClass)
     {
-        unset($data['post']);
+        return $entityClass->setPost($_GET['articleId']);
     }
 
     /**
@@ -87,6 +87,11 @@ class CommentController extends DefaultAbstractController
             'comment',
             'commentEdit.html.twig'
         ];
+    }
+
+    public function keyExist($data)
+    {
+        unset($data['post']);
     }
 
     /**
