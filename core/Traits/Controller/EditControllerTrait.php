@@ -61,9 +61,6 @@ trait EditControllerTrait
 
         if (isset($data)) {
             $entity = $entity->hydrate($data);
-            if (method_exists($this, 'keyExist')) {
-                $this->keyExist($data);
-            }
 
             $updated = $repository->update($entity);
             $message = $updated
