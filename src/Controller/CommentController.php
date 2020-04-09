@@ -69,6 +69,11 @@ class CommentController extends DefaultAbstractController
         ];
     }
 
+    public function keyExist($data)
+    {
+        unset($data['post']);
+    }
+
     /**
      * Give params to edit Action
      * @return array
