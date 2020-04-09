@@ -22,7 +22,6 @@ trait SeeControllerTrait
 
     /**
      * Get Params of see action
-     *
      * @return array
      */
     abstract public function getSeeParam(): array;
@@ -43,8 +42,7 @@ trait SeeControllerTrait
     ): void
     {
         // Get id to the URL
-        $entityId = $this->getRequest()
-                         ->getParam($entityParamId);
+        $entityId = $this->getRequest()->getParam($entityParamId);
 
         if (null === $entityId) {
             throw new \InvalidArgumentException(
@@ -54,10 +52,9 @@ trait SeeControllerTrait
 
         // Load post associate to the Id or return null
         $entity = $repository->findOne($entityId);
-
         if (null === $entity) {
-            if ($entityName === 'comment') {
-                $entityId = $_GET['articleId'];
+            if (method_exists($this, 'entityIdAssociate')) {
+                $entityId = $this->entityIdAssociate();
             }
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
             throw new \LogicException(
@@ -69,7 +66,7 @@ trait SeeControllerTrait
         ];
 
         if (method_exists($this, 'preRenderView')) {
-            $data = $this->preRenderview($entity);
+            $data = $this->preRenderview($data);
         }
 
         $this->renderView(

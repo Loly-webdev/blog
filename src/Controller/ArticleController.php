@@ -66,14 +66,13 @@ class ArticleController extends DefaultAbstractController
 
     public function preRenderView(array $data): array
     {
-
         // Load comments associate to the articleId
-        $objectAssociate     = (new CommentRepository())->find(['post' => 'articleId']);
-        $postAssociate       = 'comments';
+        $entityAssociate            = (new CommentRepository())
+            ->find(['post' => $this->getRequest()->getParam('articleId')]);
+        $entityNameAssociate        = 'comments';
+        $data[$entityNameAssociate] = $entityAssociate ?? null;
 
-        $data          = [
-            $postAssociate => $objectAssociate ?? null
-        ];
+        return $data;
     }
 
     /**
