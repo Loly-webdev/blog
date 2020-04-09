@@ -32,13 +32,13 @@ trait DeleteControllerTrait
      *
      * @param DefaultAbstractRepository $repository
      * @param string                    $entityParamId
-     * @param string                    $post
+     * @param string                    $entityName
      * @param string                    $viewTemplate
      */
     protected function deleteEntity(
         DefaultAbstractRepository $repository,
         string $entityParamId,
-        string $post,
+        string $entityName,
         string $viewTemplate
     ): void
     {
@@ -50,7 +50,7 @@ trait DeleteControllerTrait
         );
 
         $message = $deleted
-            ? "Votre $post à bien était supprimé !"
+            ? "Votre $entityName à bien était supprimé !"
             : "Une erreur est survenue.";
 
         $this->renderView(
