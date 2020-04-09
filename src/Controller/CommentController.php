@@ -49,11 +49,6 @@ class CommentController extends DefaultAbstractController
         ];
     }
 
-    public function entityIdAssociate(): int
-    {
-        return $_GET['articleId'];
-    }
-
     /**
      * Give params to addAction
      * @return array
@@ -67,11 +62,6 @@ class CommentController extends DefaultAbstractController
             new CommentRepository(),
             'commentForm.html.twig'
         ];
-    }
-
-    public function dependencyId($entityClass)
-    {
-        return $entityClass->setPost($_GET['articleId']);
     }
 
     /**
@@ -89,11 +79,6 @@ class CommentController extends DefaultAbstractController
         ];
     }
 
-    public function keyExist($data)
-    {
-        unset($data['post']);
-    }
-
     /**
      * Give params to deleteAction
      * @return array
@@ -107,5 +92,10 @@ class CommentController extends DefaultAbstractController
             'commentaire',
             'commentForm.html.twig'
         ];
+    }
+
+    public function dependencyId($entityClass)
+    {
+        return $entityClass->setPost($_GET['articleId']);
     }
 }
