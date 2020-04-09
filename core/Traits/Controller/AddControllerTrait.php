@@ -30,35 +30,34 @@ trait AddControllerTrait
     /**
      * Method to add entity
      *
-     * @param string                    $post
-     * @param DefaultAbstractEntity     $entity
+     * @param string                    $entityName
+     * @param DefaultAbstractEntity     $entityClass
      * @param DefaultAbstractRepository $repository
      * @param string                    $viewTemplate
      */
     protected function addEntity(
-        string $post,
-        DefaultAbstractEntity $entity,
+        string $entityName,
+        DefaultAbstractEntity $entityClass,
         DefaultAbstractRepository $repository,
         string $viewTemplate
     ): void
     {
-        $data    = $this->getRequest()
-                        ->getParam($post);
+        $data    = $this->getRequest()->getParam($entityName);
         $message = '';
 
         if (isset($data)) {
-            $object = $entity->hydrate($data);
-            $object->hasId();
+            $entity = $entityClass->hydrate($data);
+            $entity->hasId();
 
-            if ($post === 'comment') {
-                $entity->setPost($_GET['articleId']);
+            if (method_exists($this, 'dependencyId')) {
+                $this->dependencyId($entityClass);
             }
 
-            if ($object->hasId() === false) {
+            if ($entity->hasId() === false) {
                 $articleRepository = $repository;
-                $inserted          = $articleRepository->insert($object);
+                $inserted          = $articleRepository->insert($entity);
                 $message           = $inserted
-                    ? "Votre $post à bien était enregistré !"
+                    ? "Votre $entityName à bien était enregistré !"
                     : "Une erreur est survenue.";
             }
         }
