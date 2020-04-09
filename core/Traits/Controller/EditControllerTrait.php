@@ -33,7 +33,7 @@ trait EditControllerTrait
      *
      * @param string                    $entityParamId
      * @param DefaultAbstractRepository $repository
-     * @param string                    $post
+     * @param string                    $entityName
      * @param string                    $viewTemplate
      *
      * @throws CoreException
@@ -41,40 +41,41 @@ trait EditControllerTrait
     protected function editEntity(
         string $entityParamId,
         DefaultAbstractRepository $repository,
-        string $post,
+        string $entityName,
         string $viewTemplate
     ): void
     {
         // Retrieve all data in a table
-        $objectId = $this->getRequest()->getParam($entityParamId);
-        if (!isset($objectId)) {
-            throw new CoreException('The "'. $entityParamId .'" paramater was not founded.');
+        $entityId = $this->getRequest()->getParam($entityParamId);
+        if (!isset($entityId)) {
+            throw new CoreException("Désolé nous ne trouvons pas les paramétres de l'entité $entityParamId.");
         }
 
-        $object   = $repository->findOne($objectId);
-        if (!isset($object)) {
+        $entity = $repository->findOne($entityId);
+        if (!isset($entity)) {
             throw new CoreException('Désolé nous rencontrons un problème avec votre demande.');
         }
 
-        $data    = $this->getRequest()->getParam($post);
+        $data    = $this->getRequest()->getParam($entityName);
         $message = '';
 
         if (isset($data)) {
-            $object = $object->hydrate($data);
-            if (array_key_exists('post', $data)) {
-                unset($data['post']);
+            $entity = $entity->hydrate($data);
+            if (method_exists($this, 'keyExist')) {
+                $this->keyExist($data);
             }
-            $updated = $repository->update($object);
+
+            $updated = $repository->update($entity);
             $message = $updated
-                ? "Votre $post à bien était modifié !"
+                ? "Votre $entityName à bien était modifié !"
                 : "Une erreur est survenue.";
         }
 
         $this->renderView(
             $viewTemplate,
             [
-                $post     => $object,
-                'message' => $message
+                $entityName => $entity,
+                'message'   => $message
             ]
         );
     }
