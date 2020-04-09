@@ -65,7 +65,7 @@ final class Request
      *
      * @return mixed|null
      */
-    public function getParam($key, $defaultValue = null): ?string
+    public function getParam($key, $defaultValue = null)
     {
         return $this->getQueryParam($key) ??
                $this->getRequestParam($key) ??
@@ -80,7 +80,7 @@ final class Request
      *
      * @return mixed|null
      */
-    public function getQueryParam($key, $defaultValue = null): ?string
+    public function getQueryParam($key, $defaultValue = null)
     {
         return isset($_GET[$key]) && '' !== $_GET[$key]
             ? $_GET[$key]
@@ -95,7 +95,7 @@ final class Request
      *
      * @return mixed|null
      */
-    public function getRequestParam($key, $defaultValue = null): ?string
+    public function getRequestParam($key, $defaultValue = null)
     {
         return isset($_POST[$key]) && '' !== $_POST[$key]
             ? $_POST[$key]
