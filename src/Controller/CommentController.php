@@ -4,13 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Traits\Controller\CUDControllerTrait;
 use App\Repository\CommentRepository;
-use Core\Traits\Controller\{
-    SeeControllerTrait,
-    AddControllerTrait,
-    EditControllerTrait,
-    DeleteControllerTrait
-};
 use Exception;
 
 /**
@@ -19,10 +14,7 @@ use Exception;
  */
 class CommentController extends DefaultAbstractController
 {
-    use SeeControllerTrait,
-        AddControllerTrait,
-        EditControllerTrait,
-        DeleteControllerTrait;
+    use CUDControllerTrait;
 
     /**
      * Action by default

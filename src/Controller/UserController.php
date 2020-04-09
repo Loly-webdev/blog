@@ -5,20 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Traits\Controller\{
-    SeeControllerTrait,
-    AddControllerTrait,
-    EditControllerTrait,
-    DeleteControllerTrait
-};
+use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
 
 class UserController extends DefaultAbstractController
 {
-    use SeeControllerTrait,
-        AddControllerTrait,
-        EditControllerTrait,
-        DeleteControllerTrait;
+    use CUDControllerTrait;
 
     /**
      * Action by default

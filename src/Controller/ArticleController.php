@@ -4,15 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Traits\Controller\CUDControllerTrait;
 use App\Repository\{
     ArticleRepository,
     CommentRepository
-};
-use Core\Traits\Controller\{
-    SeeControllerTrait,
-    AddControllerTrait,
-    EditControllerTrait,
-    DeleteControllerTrait
 };
 use Exception;
 
@@ -24,10 +19,7 @@ class ArticleController extends DefaultAbstractController
 {
     protected $key;
 
-    use SeeControllerTrait,
-        AddControllerTrait,
-        EditControllerTrait,
-        DeleteControllerTrait;
+    use CUDControllerTrait;
 
     /**
      * Action by default
