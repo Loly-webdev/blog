@@ -45,10 +45,13 @@ class CommentController extends DefaultAbstractController
             'commentId',
             'comment',
             new CommentRepository(),
-            null,
-            'comment.html.twig',
-            null
+            'comment.html.twig'
         ];
+    }
+
+    public function entityIdAssociate(): int
+    {
+        return $_GET['articleId'];
     }
 
     /**
