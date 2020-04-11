@@ -5,25 +5,18 @@ namespace App\Controller;
 use Core\DefaultAbstract\DefaultAbstractController;
 
 /**
- * Class ConnexionController
+ * Class RegisterController
  * @package App\Controller
  */
-class ConnexionController extends DefaultAbstractController
+class RegisterController extends DefaultAbstractController
 {
+    /**
+     * Action by default
+     */
     public function indexAction()
-    {
-        $this->logIn();
-    }
-
-    public function logIn()
     {
         $this->renderView(
             'connexion.html.twig'
         );
-    }
-
-    public function logOut()
-    {
-
     }
 }
