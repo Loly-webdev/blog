@@ -23,12 +23,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `comments`
+-- Structure de la table `comment`
 --
 
-CREATE TABLE `comments` (
+CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
-  `post` int(11) NOT NULL,
+  `articleId` int(11) NOT NULL,
   `author` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,7 +39,7 @@ CREATE TABLE `comments` (
 -- Contenu de la table `comments`
 --
 
-INSERT INTO `comments` (`id`, `post`, `author`, `content`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `comment` (`id`, `articleId`, `author`, `content`, `createdAt`, `updatedAt`) VALUES
 (1, 1, 'M@teo21', 'Un peu court ce billet !', '2010-03-25 16:49:53', '2020-03-18 11:05:41'),
 (2, 1, 'Maxime', 'Oui, ça commence pas très fort ce blog...', '2010-03-25 16:57:16', '2020-03-18 11:05:41'),
 (3, 1, 'MultiKiller', '+1 !', '2010-03-25 17:12:52', '2020-03-18 11:05:41'),
@@ -52,7 +52,7 @@ INSERT INTO `comments` (`id`, `post`, `author`, `content`, `createdAt`, `updated
 -- Structure de la table `posts`
 --
 
-CREATE TABLE `posts` (
+CREATE TABLE `article` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `author` varchar(30) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `posts` (
 -- Contenu de la table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `author`, `content`, `createdAt`, `updatedAt`) VALUES
+INSERT INTO `article` (`id`, `title`, `author`, `content`, `createdAt`, `updatedAt`) VALUES
 (1, 'Bienvenue sur mon blog !', '', 'Je vous souhaite à toutes et à tous la bienvenue sur mon blog qui parlera de... PHP bien sûr !', '2010-03-25 16:28:41', '2020-03-18 11:06:28'),
 (2, 'Le PHP à la conquête du monde !', '', 'C\'est officiel, l\'éléPHPant a annoncé à la radio hier soir \"J\'ai l\'intention de conquérir le monde !\".\r\nIl a en outre précisé que le monde serait à sa botte en moins de temps qu\'il n\'en fallait pour dire \"éléPHPant\". Pas dur, ceci dit entre nous...', '2010-03-27 18:31:11', '2020-03-18 11:06:28'),
 (3, 'Pas mal', 'Loly', 'test', '2020-03-13 10:42:16', '2020-03-18 11:06:28');
@@ -75,16 +75,16 @@ INSERT INTO `posts` (`id`, `title`, `author`, `content`, `createdAt`, `updatedAt
 --
 
 --
--- Index pour la table `comments`
+-- Index pour la table `comment`
 --
-ALTER TABLE `comments`
+ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `post_id` (`post`);
+  ADD KEY `articleId` (`articleId`);
 
 --
--- Index pour la table `posts`
+-- Index pour la table `article`
 --
-ALTER TABLE `posts`
+ALTER TABLE `article`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -92,14 +92,14 @@ ALTER TABLE `posts`
 --
 
 --
--- AUTO_INCREMENT pour la table `comments`
+-- AUTO_INCREMENT pour la table `comment`
 --
-ALTER TABLE `comments`
+ALTER TABLE `comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT pour la table `posts`
 --
-ALTER TABLE `posts`
+ALTER TABLE `article`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- Contraintes pour les tables exportées
@@ -108,9 +108,9 @@ ALTER TABLE `posts`
 --
 -- Contraintes pour la table `comments`
 --
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
+ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
