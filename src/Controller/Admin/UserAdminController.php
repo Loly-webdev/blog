@@ -82,8 +82,4 @@ class UserAdminController extends DefaultAbstractController
             'connexionForm.html.twig',
         ];
     }
-    public function profile()
-    {
-
-    }
 }
