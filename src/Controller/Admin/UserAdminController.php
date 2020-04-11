@@ -5,18 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Traits\Controller\AddControllerTrait;
-use Core\Traits\Controller\DeleteControllerTrait;
-use Core\Traits\Controller\EditControllerTrait;
-use Core\Traits\Controller\SeeControllerTrait;
+use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
 
 class UserAdminController extends DefaultAbstractController
 {
-    use SeeControllerTrait,
-        AddControllerTrait,
-        EditControllerTrait,
-        DeleteControllerTrait;
+    use CUDControllerTrait;
 
     /**
      * Action by default
@@ -40,9 +34,7 @@ class UserAdminController extends DefaultAbstractController
             'id',
             'user',
             new UserRepository(),
-            null,
-            'connexion.html.twig',
-            null
+            'connexion.html.twig'
         ];
     }
 

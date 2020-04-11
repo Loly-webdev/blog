@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Repository\CommentRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Traits\Controller\CUDControllerTrait;
-use App\Repository\CommentRepository;
 use Exception;
 
 /**
@@ -84,10 +84,5 @@ class CommentController extends DefaultAbstractController
             'commentaire',
             'commentForm.html.twig'
         ];
-    }
-
-    public function dependencyId($entityClass)
-    {
-        return $entityClass->setPost($_GET['articleId']);
     }
 }
