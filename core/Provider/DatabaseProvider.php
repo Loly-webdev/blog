@@ -31,7 +31,7 @@ class DatabaseProvider
             throw new CoreException('Désolé, nous ne trouvons pas les informations de configuration pour la base de données.');
         }
 
-        $default        = $databases[$databaseKey] ?? null;
+        $default = $databases[$databaseKey] ?? null;
         if ($databases === null){
             throw new CoreException("Désolé, La clée pour la base de données $databaseKey n'existe pas.");
         }
