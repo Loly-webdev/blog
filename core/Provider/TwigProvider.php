@@ -2,9 +2,12 @@
 
 namespace Core\Provider;
 
-use Twig\Environment;
-use Twig\Extension\DebugExtension;
-use Twig\Loader\FilesystemLoader;
+use Core\Exception\CoreException;
+use Twig\{
+    Environment,
+    Extension\DebugExtension,
+    Loader\FilesystemLoader
+};
 
 /**
  * Class TwigProvider
@@ -18,6 +21,7 @@ class TwigProvider
     /**
      * Instance of Twig
      * @return mixed
+     * @throws CoreException
      */
     public static function getTwig()
     {

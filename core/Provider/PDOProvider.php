@@ -2,7 +2,6 @@
 
 namespace Core\Provider;
 
-use Core\Provider\DatabaseProvider;
 use Core\Exception\CoreException;
 use PDO;
 use PDOException;

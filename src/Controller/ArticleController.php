@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Traits\Controller\CUDControllerTrait;
 use App\Repository\{
     ArticleRepository,
     CommentRepository
 };
+use Core\DefaultAbstract\{
+    DefaultAbstractController,
+    DefaultAbstractEntity
+};
+use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
 
 /**
@@ -56,13 +59,11 @@ class ArticleController extends DefaultAbstractController
         ];
     }
 
-    public function preRenderView(array $data): array
+    public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $entityAssociate            = (new CommentRepository())
-            ->find(['post' => $this->getRequest()->getParam('articleId')]);
-        $entityNameAssociate        = 'comments';
-        $data[$entityNameAssociate] = $entityAssociate ?? null;
+        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $data['comments'] = $comments;
 
         return $data;
     }

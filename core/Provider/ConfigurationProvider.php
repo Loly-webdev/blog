@@ -31,6 +31,7 @@ class ConfigurationProvider
     /**
      * Singleton of request object to load once this method
      * @return ConfigurationProvider
+     * @throws CoreException
      */
     public static function getInstance()
     {

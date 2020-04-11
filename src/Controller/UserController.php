@@ -31,72 +31,10 @@ class UserController extends DefaultAbstractController
     }
 
     /**
-     * Give params to seeAction
-     * @return array
-     * @throws Exception
+     * Displays the user profile
      */
-    public function getSeeParam(): array
-    {
-        return [
-            'id',
-            'user',
-            new UserRepository(),
-            null,
-            'connexion.html.twig',
-            null
-        ];
-    }
-
-    /**
-     * Give params to addAction
-     * @return array
-     * @throws Exception
-     */
-    public function getAddParam(): array
-    {
-        return [
-            'user',
-            new User(),
-            new UserRepository(),
-            'connexionForm.html.twig'
-        ];
-    }
-
-    /**
-     * Give params to edit Action
-     * @return array
-     * @throws Exception
-     */
-    public function getEditParam(): array
-    {
-        return [
-            'id',
-            new UserRepository(),
-            'user',
-            'connexionEdit.html.twig'
-        ];
-    }
-
-    /**
-     * Give params to deleteAction
-     * @return array
-     * @throws Exception
-     */
-    public function getDeleteParam(): array
-    {
-        return [
-            new UserRepository(),
-            'id',
-            'login',
-            'connexionForm.html.twig',
-        ];
-    }
     public function profile()
     {
 
     }
-}
-
-{
-
 }

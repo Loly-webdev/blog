@@ -2,8 +2,10 @@
 
 namespace Core\Traits\Controller;
 
-use Core\DefaultAbstract\DefaultAbstractEntity;
-use Core\DefaultAbstract\DefaultAbstractRepository;
+use Core\DefaultAbstract\{
+    DefaultAbstractEntity,
+    DefaultAbstractRepository
+};
 use Core\Exception\CoreException;
 
 trait CUDControllerTrait
@@ -51,9 +53,6 @@ trait CUDControllerTrait
         // Load post associate to the Id or return null
         $entity = $repository->findOne($entityId);
         if (null === $entity) {
-            if (method_exists($this, 'entityIdAssociate')) {
-                $entityId = $this->entityIdAssociate();
-            }
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
             throw new \LogicException(
                 "Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
@@ -64,7 +63,7 @@ trait CUDControllerTrait
         ];
 
         if (method_exists($this, 'preRenderView')) {
-            $data = $this->preRenderview($data);
+            $data = $this->preRenderview($data, $entity);
         }
 
         $this->renderView(
@@ -110,10 +109,6 @@ trait CUDControllerTrait
         if (isset($data)) {
             $entity = $entityClass->hydrate($data);
             $entity->hasId();
-
-            if (method_exists($this, 'dependencyId')) {
-                $this->dependencyId($entityClass);
-            }
 
             if ($entity->hasId() === false) {
                 $articleRepository = $repository;
