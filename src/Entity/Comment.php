@@ -6,26 +6,27 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
 
 class Comment extends DefaultAbstractEntity
 {
-    protected $post;
+    protected $articleId;
     protected $author;
     protected $content;
 
     /**
      * @return mixed
      */
-    public function getPost()
+    public function getArticleId()
     {
-        return $this->post;
+        return $this->articleId;
     }
 
     /**
-     * @param mixed $post
+     * @param $articleId
      *
      * @return Comment
      */
-    public function setPost($post)
+    public function setArticleId($articleId)
     {
-        $this->post = $post;
+
+        $this->articleId = $articleId;
 
         return $this;
     }

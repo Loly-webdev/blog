@@ -56,6 +56,11 @@ class CommentController extends DefaultAbstractController
         ];
     }
 
+    public function dependencyId($entityClass)
+    {
+        return $entityClass->setArticleId($_GET['articleId']);
+    }
+
     /**
      * Give params to edit Action
      * @return array
