@@ -5,13 +5,10 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
 
-class UserController extends DefaultAbstractController
+class ProfileController extends DefaultAbstractController
 {
-    use CUDControllerTrait;
-
     /**
      * Action by default
      * Show form to connexion
