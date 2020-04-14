@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Load autoload of composer
 require 'vendor/autoload.php';
 
