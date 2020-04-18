@@ -1,48 +1,71 @@
 <?php
 
-class Comment
+namespace App\Entity;
+
+use Core\DefaultAbstract\DefaultAbstractEntity;
+
+class Comment extends DefaultAbstractEntity
 {
-    protected $id;
-    protected $title;
+    protected $articleId;
     protected $author;
     protected $content;
-    private $params;
 
-    public function __construct(array $params = [])
+    /**
+     * @return mixed
+     */
+    public function getArticleId()
     {
-        if (!empty($params)) {
-            $this->hydrateObject($params);
-        }
+        return $this->articleId;
     }
 
-    public function hydrateObject($params)
+    /**
+     * @param $articleId
+     *
+     * @return Comment
+     */
+    public function setArticleId($articleId)
     {
-        if (isset($params['title'])) {
-            $this->setName($params['title']);
-        }
 
-        if (isset($params['author'])) {
-            $this->setName($params['author']);
-        }
-
-        if (isset($params['content'])) {
-            $this->setName($params['content']);
-        }
-    }
-
-    private function setName($params)
-    {
-        $this->params = $params;
+        $this->articleId = $articleId;
 
         return $this;
     }
-    
-    public function hasId($data)
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
     {
-        if (null === $data) {
-            (new CommentController())->renderView(
-                'commentForm.html.twig'
-            );
-        }
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     *
+     * @return Comment
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param mixed $content
+     *
+     * @return Comment
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+        return $this;
     }
 }

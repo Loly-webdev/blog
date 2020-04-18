@@ -6,21 +6,21 @@ use Core\DefaultAbstract\DefaultAbstractController;
 use Exception;
 
 /**
- * Class HomeController
+ * Class ContactController
  * @package App\Controller
  */
-class HomeController extends DefaultAbstractController
+class ContactController extends DefaultAbstractController
 {
     /**
      * Action by default
-     * Show Home page
+     * Show form to contact
      * @return mixed|void
      * @throws Exception
      */
     public function indexAction()
     {
         $this->renderView(
-            'home.html.twig'
+            'contact.html.twig'
         );
     }
 }

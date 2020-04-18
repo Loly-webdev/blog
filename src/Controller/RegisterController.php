@@ -3,24 +3,20 @@
 namespace App\Controller;
 
 use Core\DefaultAbstract\DefaultAbstractController;
-use Exception;
 
 /**
- * Class HomeController
+ * Class RegisterController
  * @package App\Controller
  */
-class HomeController extends DefaultAbstractController
+class RegisterController extends DefaultAbstractController
 {
     /**
      * Action by default
-     * Show Home page
-     * @return mixed|void
-     * @throws Exception
      */
     public function indexAction()
     {
         $this->renderView(
-            'home.html.twig'
+            'connexion.html.twig'
         );
     }
 }

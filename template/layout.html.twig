@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {{ include('partial/_head.html.twig') }}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<header>
+    {{ include('partial/_nav.html.twig') }}
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    {{ include('partial/_footer.html.twig') }}
+</footer>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+{% block title %}
+    {{ Profile }}
+{% endblock %}
+{% block content %}
+    <section class="user">
+        <h2>Mon profil :</h2>
+        <h4>Mon identifiant :</h4>
+        <strong>{{ user.login }}</strong>
+        <h4>Mon mot de passe :</h4>
+        <strong>{{ user.password }}</strong>
+        <h4>Date de création du compte :</h4>
+        <strong>{{ user.createdAt }}</strong>
+        <div>
+            <a href="/user/edit?articleId={{ article.id }}">Éditer</a>
+            <a href="/user/delete?articleId={{ article.id }}">Supprimer</a>
+        </div>
+    </section>
+    <section class="link">
+        <a href="/home">Retour à l'accueil</a>
+    </section>
+{% endblock %}

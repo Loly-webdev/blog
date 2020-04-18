@@ -1,48 +1,69 @@
 <?php
 
-class Article
+namespace App\Entity;
+
+use Core\DefaultAbstract\DefaultAbstractEntity;
+
+class Article extends DefaultAbstractEntity
 {
-    protected $id;
     protected $title;
     protected $author;
     protected $content;
-    private $params;
 
-    public function __construct(array $params = [])
+    /**
+     * @return mixed
+     */
+    public function getTitle()
     {
-        if (!empty($params)) {
-            $this->hydrateObject($params);
-        }
+        return $this->title;
     }
 
-    public function hydrateObject($params)
+    /**
+     * @param mixed $title
+     *
+     * @return Article
+     */
+    public function setTitle($title)
     {
-        if (isset($params['title'])) {
-            $this->setName($params['title']);
-        }
-
-        if (isset($params['author'])) {
-            $this->setName($params['author']);
-        }
-
-        if (isset($params['content'])) {
-            $this->setName($params['content']);
-        }
-    }
-
-    private function setName($params)
-    {
-        $this->params = $params;
-
+        $this->title = $title;
         return $this;
     }
 
-    public function hasId($data)
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
     {
-        if (null === $data) {
-            (new ArticleController())->renderView(
-                'articleForm.html.twig'
-            );
-        }
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     *
+     * @return Article
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param mixed $content
+     *
+     * @return Article
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+        return $this;
     }
 }

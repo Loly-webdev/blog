@@ -1,0 +1,25 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+    <section class="form">
+        <h4>Inscription :</h4>
+        <form action="" method="POST">
+            <div>
+                <label for="login">Titre</label><br/>
+                <input type="text" id="login" name="user[login]"/>
+            </div>
+            <div>
+                <label for="password">Auteur</label><br/>
+                <input type="text" id="password" name="user[password]"/>
+            </div>
+            <div>
+                <input type="submit"/>
+            </div>
+        </form>
+    </section>
+    <br>
+    {{ message }}
+    <br>
+    <section class="link">
+        <a href="/home">Retour à l'Accueil</a>
+    </section>
+{% endblock %}

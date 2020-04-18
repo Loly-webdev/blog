@@ -2,28 +2,22 @@
 
 namespace App\Repository;
 
-use Core\DefaultAbstractRepository;
 use App\Entity\Article;
+use Core\DefaultAbstract\DefaultAbstractRepository;
 
 /**
+ * Class ArticleRepository
+ * @package App\Repository
  * Make the database requests relative to the articles
  */
 class ArticleRepository extends DefaultAbstractRepository
 {
-    static $tableName = 'posts';
-    static $tableOrder = 'creation_date';
+    static $tableName = 'article';
 
-    public function add(array $data)
-    {
-        $sql = $this->getPDO()->prepare(
-        	' INSERT INTO ' . static::$tableName . ' (title, author, content)
-            VALUES (:title, :author, :content)'
-		);
-
-        $sql->execute($data);
-    }
-
-    public function getEntity()
+    /**
+     * @return string
+     */
+    public function getEntity(): string
     {
         return Article::class;
     }
