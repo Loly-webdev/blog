@@ -2,20 +2,39 @@
 
 namespace App\Controller;
 
-use Core\DefaultAbstractController;
+use App\Entity\Article;
+use App\Repository\{
+    ArticleRepository,
+    CommentRepository
+};
+use Core\DefaultAbstract\{
+    DefaultAbstractController,
+    DefaultAbstractEntity
+};
+use Core\Traits\Controller\CUDControllerTrait;
+use Exception;
 
-use App\Repository\ArticleRepository;
-use App\Repository\CommentRepository;
-
+/**
+ * Class ArticleController
+ * @package App\Controller
+ */
 class ArticleController extends DefaultAbstractController
 {
     protected $key;
 
+    use CUDControllerTrait;
+
+    /**
+     * Action by default
+     * Show all articles
+     * @return mixed|void
+     * @throws Exception
+     */
     public function indexAction()
     {
         $articles = (new ArticleRepository())->find();
-        //pour des listes déroulante
-        //$article = (new ArticleRepository())->selectColumns(['title', 'content']);
+        // For drop-down lists
+        // $article = (new ArticleRepository())->selectColumns(['title', 'content']);
 
         $this->renderView(
             'articles.html.twig',
@@ -25,71 +44,72 @@ class ArticleController extends DefaultAbstractController
         );
     }
 
-    public function seeAction()
+    /**
+     * Give params to seeAction
+     * @return array
+     * @throws Exception
+     */
+    public function getSeeParam(): array
     {
-        // Get id to the URL
-        $articleId = $this->getRequest()->getParam('articleId');
+        return [
+            'articleId',
+            'article',
+            new ArticleRepository(),
+            'article.html.twig'
+        ];
+    }
 
-        if (null === $articleId) {
-            throw new \InvalidArgumentException(
-                'Désolé, mais la valeur de l\'article n\'est pas renseignée.'
-            );
-        }
-
-        // Load article associate to the articleId or return null
-        $article = (new ArticleRepository())->find($articleId);
-
-        if (null === $article) {
-            // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
-            throw new \LogicException(
-                sprintf('Désolé, nous n\'avons pas trouvé l\'article avec l\'id: %d', $articleId)
-            );
-        }
-
+    public function preRenderView(array $data, DefaultAbstractEntity $entity): array
+    {
         // Load comments associate to the articleId
-        $comments = (new CommentRepository())->find([
-            'post_id' => $articleId
-        ]);
+        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $data['comments'] = $comments;
 
-        $this->renderView(
-            'article.html.twig',
-            [
-                'article' => $article,
-                'comments' => $comments
-            ]
-        );
+        return $data;
     }
 
-    public function addAction()
+    /**
+     * Give params to addAction
+     * @return array
+     * @throws Exception
+     */
+    public function getAddParam(): array
     {
-        // Retrieve all data in a table
-        $data = $this->getRequest()->getParam('article');
-
-        if (null === $data) {
-            $this->renderView(
-                'articleForm.html.twig'
-            );
-        }
-
-        if (isset($data)) {
-            (new ArticleRepository())->add($data);
-
-            $this->renderView(
-                'articleForm.html.twig',
-                [
-                    'message' => "Votre article à bien était enregistré !"
-                ]
-            );
-        }
+        return [
+            'article',
+            new Article(),
+            new ArticleRepository(),
+            'articleForm.html.twig'
+        ];
     }
 
-    public function deleteAction()
+    /**
+     * Give params to editAction
+     * @return array
+     * @throws Exception
+     */
+    public function getEditParam(): array
     {
-        (new ArticleRepository())->delete($this->getRequest()->getParam('articleId'));
+        return [
+            'articleId',
+            new ArticleRepository(),
+            'article',
+            'articleEdit.html.twig'
+        ];
     }
 
-    public function updateAction()
+    /**
+     * Give params to deleteAction
+     * @return array
+     * @throws Exception
+     */
+    public function getDeleteParam(): array
     {
-        // todo
+        return [
+            new ArticleRepository(),
+            'articleId',
+            'article',
+            'articleForm.html.twig'
+        ];
     }
 }

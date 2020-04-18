@@ -2,18 +2,22 @@
 
 namespace App\Repository;
 
-use Core\DefaultAbstractRepository;
 use App\Entity\Comment;
+use Core\DefaultAbstract\DefaultAbstractRepository;
 
 /**
+ * Class CommentRepository
+ * @package App\Repository
  * Make the database requests relative to the comments
  */
 class CommentRepository extends DefaultAbstractRepository
 {
-    static $tableName = 'comments';
-    static $tableOrder = 'comment_date';
+    static $tableName = 'comment';
 
-    public function getEntity()
+    /**
+     * @return string
+     */
+    public function getEntity(): string
     {
         return Comment::class;
     }

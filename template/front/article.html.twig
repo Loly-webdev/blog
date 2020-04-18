@@ -1,0 +1,36 @@
+{% extends "layout.html.twig" %}
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+{% block content %}
+    <section class="article">
+        <h2>{{ article.title }}</h2>
+        <h4>{{ article.author }}</h4>
+        <strong>{{ article.createdAt }}</strong>
+        <p>
+            {{ article.content }}
+        </p>
+        <div>
+            <a href="/article/edit?articleId={{ article.id }}">Éditer</a>
+            <a href="/article/delete?articleId={{ article.id }}">Supprimer</a>
+        </div>
+    </section>
+    <section class="comment">
+        <h3>Commentaires :</h3>
+        {% for comment in comments %}
+            <strong>{{ comment.author }}</strong>
+            <br>
+            <em>{{ comment.createdAt }}</em>
+            <p>{{ comment.content }}</p>
+            <div>
+                <a href="/comment/see?commentId={{ comment.id }}">Voir le commentaire</a>
+            </div>
+        {% endfor %}
+    </section>
+    <section class="link">
+        <a href="/comment/add?articleId={{ article.id }}">Ajouter un nouveau commetaire</a>
+    </section>
+    <section class="link">
+        <a href="/article">Retour à la liste des billets</a>
+    </section>
+{% endblock %}

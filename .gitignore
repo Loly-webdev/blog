@@ -1,6 +1,7 @@
-# ignorer les fichier
-config.env.php
-# ignorer les dossier
+# ignore files
+composer.phar
+.gitignore
 .idea
+config/env.yml
 vendor/
-# ignorer le contenu des dossiers
+
