@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use mysql_xdevapi\Exception;
+
 /**
  * Class Request
  * @package Core
@@ -71,6 +73,19 @@ final class Request
                $this->getRequestParam($key) ??
                $defaultValue;
     }
+
+	public function getParamAsInt(string $param): int
+	{
+		$param = $this->getParam($param)
+			? (int) $this->getParam($param)
+			: null;
+
+		if (false === is_int($param)) {
+			throw new \LogicException("L'argument fournis n'est pas valide.");
+		}
+
+		return $param;
+	}
 
     /**
      * $_GET = params recover by $_GET method
