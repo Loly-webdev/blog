@@ -19,9 +19,10 @@ abstract class DefaultAbstractRepository
     use CUDRepositoryTrait,
         ReadRepositoryTrait;
 
+    private $pdo;
     static  $tablePk    = 'id';
     static  $tableOrder = 'createdAt';
-    private $pdo;
+    private static $tableName;
 
     /**
      * DefaultAbstractRepository constructor.
