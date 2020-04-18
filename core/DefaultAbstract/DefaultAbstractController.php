@@ -6,6 +6,7 @@ use Core\DefaultControllerInterface;
 use Core\Provider\TwigProvider;
 use Core\Request;
 use Core\Exception\CoreException;
+use _HumbugBox09702017065e\Symfony\Component\Console\Exception\LogicException;
 
 /**
  * Class DefaultAbstractController
@@ -31,6 +32,26 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     {
         return $this->request;
     }
+
+
+	public function hasFormSubmited(string $formName): bool
+	{
+		$data = $this->getRequest()->getParam($formName);
+
+		return isset($data);
+	}
+
+
+	public function getFormSubmitedValues($formName): array
+	{
+		$data = $this->getRequest()->getParam($formName);
+
+		if (false === is_array($data)) {
+			throw new LogicException('Un formulaire doit être passer en tableau.');
+		}
+
+		return $data;
+	}
 
     /**
      * Method to see the views of the site
