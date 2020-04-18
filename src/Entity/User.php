@@ -6,6 +6,7 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
 
 class User extends DefaultAbstractEntity
 {
+    protected $mail;
     protected $login;
     protected $password;
     protected $role;
@@ -13,19 +14,19 @@ class User extends DefaultAbstractEntity
     /**
      * @return mixed
      */
-    public function getRole()
+    public function getMail()
     {
-        return $this->role;
+        return $this->mail;
     }
 
     /**
-     * @param mixed $role
+     * @param mixed $mail
      *
      * @return User
      */
-    public function setRole($role)
+    public function setMail($mail)
     {
-        $this->role = $role;
+        $this->mail = $mail;
         return $this;
     }
 
@@ -66,6 +67,25 @@ class User extends DefaultAbstractEntity
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     *
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
         return $this;
     }
 }
