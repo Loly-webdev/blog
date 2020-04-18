@@ -78,7 +78,6 @@ trait CUDControllerTrait
     public function addAction(): void
     {
         $params = $this->getAddParam();
-        dump($params);
 
         $this->addEntity(...$params);
     }
@@ -110,10 +109,11 @@ trait CUDControllerTrait
         if (isset($data)) {
             $entity = $entityClass->hydrate($data);
             $entity->hasId();
+            var_dump($data);
 
-            if (method_exists($this, 'dependencyId')) {
+            /*if (method_exists($this, 'dependencyId')) {
                 $this->dependencyId($entityClass);
-            }
+            }*/
 
             if ($entity->hasId() === false) {
                 $articleRepository = $repository;
