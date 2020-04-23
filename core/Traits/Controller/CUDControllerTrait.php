@@ -97,8 +97,8 @@ trait CUDControllerTrait
     ): void
     {
         if ($this->hasFormSubmited($entityName)) {
-        	$dataSubmited = $this->getFormSubmitedValues($entityName);
-            $entity = $entityClass->hydrate($dataSubmited);
+        	$dataSubmitted = $this->getFormSubmitedValues($entityName);
+            $entity = $entityClass->hydrate($dataSubmitted);
 
             if (method_exists($this, 'postHydrate')) {
                 $this->postHydrate($entity);
@@ -110,7 +110,7 @@ trait CUDControllerTrait
 
             $message  = $repository->insert($entity)
                 ? "Votre $entityName à bien était enregistré !"
-                : "Une erreur est survenue.";
+                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
         }
 
         $this->renderView(
