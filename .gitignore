@@ -1,6 +1,5 @@
 # ignore files
 composer.phar
-.gitignore
 .idea
 config/env.yml
 vendor/
