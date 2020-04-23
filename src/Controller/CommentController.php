@@ -56,9 +56,9 @@ class CommentController extends DefaultAbstractController
         ];
     }
 
-    public function dependencyId($entityClass)
+    public function postHydrate($entity): void // id #19EU
     {
-        return $entityClass->setArticleId($_GET['articleId']);
+        $entity->setArticleId($_GET['articleId']);
     }
 
     /**

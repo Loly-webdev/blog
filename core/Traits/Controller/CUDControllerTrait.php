@@ -42,20 +42,13 @@ trait CUDControllerTrait
     ): void
     {
         // Get id to the URL
-        $entityId = $this->getRequest()->getParam($entityParamId);
-
-        if (null === $entityId) {
-            throw new \InvalidArgumentException(
-                "Désolé, mais la valeur de $entityName n'est pas renseignée."
-            );
-        }
+        $entityId = $this->getRequest()->getParamAsInt($entityParamId);
 
         // Load post associate to the Id or return null
         $entity = $repository->findOne($entityId);
         if (null === $entity) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
-            throw new \LogicException(
-                "Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
+            throw new \LogicException("Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
         }
 
         $data = [
@@ -103,31 +96,27 @@ trait CUDControllerTrait
         string $viewTemplate
     ): void
     {
-        $data    = $this->getRequest()->getParam($entityName);
-        $message = '';
+        if ($this->hasFormSubmited($entityName)) {
+            $dataSubmitted = $this->getFormSubmitedValues($entityName);
+            $entity = $entityClass->hydrate($dataSubmitted);
 
-        if (isset($data)) {
-            $entity = $entityClass->hydrate($data);
-            $entity->hasId();
-            var_dump($data);
-
-            /*if (method_exists($this, 'dependencyId')) {
-                $this->dependencyId($entityClass);
-            }*/
-
-            if ($entity->hasId() === false) {
-                $articleRepository = $repository;
-                $inserted          = $articleRepository->insert($entity);
-                $message           = $inserted
-                    ? "Votre $entityName à bien était enregistré !"
-                    : "Une erreur est survenue.";
+            if (method_exists($this, 'postHydrate')) {
+                $this->postHydrate($entity);
             }
+
+            if ($entity->hasId()) {
+                throw new \LogicException("L'id ne devrait pas exister.");
+            }
+
+            $message  = $repository->insert($entity)
+                ? "Votre $entityName à bien était enregistré !"
+                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
         }
 
         $this->renderView(
             $viewTemplate,
             [
-                'message' => $message
+                'message' => $message ?? ''
             ]
         );
     }
@@ -167,7 +156,7 @@ trait CUDControllerTrait
     ): void
     {
         // Retrieve all data in a table
-        $entityId = $this->getRequest()->getParam($entityParamId);
+        $entityId = $this->getRequest()->getParamAsInt($entityParamId);
         if (!isset($entityId)) {
             throw new CoreException("Désolé nous ne trouvons pas les paramétres de l'entité $entityParamId.");
         }
