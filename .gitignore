@@ -1,6 +1,6 @@
 # ignore files
 composer.phar
 .idea
-env.yml
+config/env.yml
 vendor/
 
