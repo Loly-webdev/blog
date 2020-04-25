@@ -74,18 +74,18 @@ final class Request
                $defaultValue;
     }
 
-	public function getParamAsInt(string $param): int
-	{
-		$param = $this->getParam($param)
-			? (int) $this->getParam($param)
-			: null;
+    public function getParamAsInt(string $param): int
+    {
+        $param = $this->getParam($param)
+            ? (int) $this->getParam($param)
+            : null;
 
-		if (false === is_int($param)) {
-			throw new \LogicException("L'argument fournis n'est pas valide.");
-		}
+        if (false === is_int($param)) {
+            throw new \LogicException("L'argument fournis n'est pas valide.");
+        }
 
-		return $param;
-	}
+        return $param;
+    }
 
     /**
      * $_GET = params recover by $_GET method
