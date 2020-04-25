@@ -58,7 +58,7 @@ class CommentController extends DefaultAbstractController
 
     public function postHydrate($entity): void // id #19EU
     {
-	    $entity->setArticleId($_GET['articleId']);
+        $entity->setArticleId($_GET['articleId']);
     }
 
     /**
