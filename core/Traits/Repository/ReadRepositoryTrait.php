@@ -63,19 +63,15 @@ trait ReadRepositoryTrait
      */
     public function search(?array $filters = []): array
     {
-        $order = ' ORDER BY ' . static::$tableOrder . ' DESC';
-
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
         $sql = ' SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
 
-        if (empty($filters)) {
-            $sql .= $order;
-        }
-
         // Array of values
         foreach ($filters as $key => $value) {
-            $sql .= ' AND ' . $key . ' = ? ' . $order;
+            $sql .= ' AND ' . $key . ' = ? ';
         }
+
+        $sql .= ' ORDER BY ' . static::$tableOrder . ' DESC';
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
