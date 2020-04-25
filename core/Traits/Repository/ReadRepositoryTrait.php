@@ -18,20 +18,16 @@ trait ReadRepositoryTrait
      *
      * @return DefaultAbstractEntity
      */
-    public function findOne(int $articleId): DefaultAbstractEntity
+    public function findOne(int $articleId): ?DefaultAbstractEntity
     {
-        // SQL REQUEST
-        $sql = 'SELECT * FROM ' . static::$tableName
-               . ' WHERE ' . static::$tablePk . ' = ?';
+        $data = $this->find([
+            static::$tablePk =>  $articleId
+        ]);
 
-        // Prepare sql
-        $pdo = $this->getPDO()->prepare($sql);
-        // Map result as Entity
-        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
-        // Bind params and execute query
-        $pdo->execute([$articleId]);
-
-        return $pdo->fetch();
+        return reset($data)
+            ? reset($data)
+            : null
+            ;
     }
 
     /**
@@ -51,40 +47,39 @@ trait ReadRepositoryTrait
     }
 
     /**
+     * This function find all the informations contained in the table
+     */
+    public function findAll(): array
+    {
+        return $this->search();
+    }
+
+    /**
      * Allows you to perform an sql query with filters or to retrieve all of them if no filter is found.
      *
      * @param array|null $filters Contains in key the columns of the table and in value the "equal to".
      *
      * @return DefaultAbstractEntity[] If no match returns an empty array otherwise an array of DefaultAbstractEntity
      */
-    public function search(?array $filters): array
+    public function search(?array $filters = []): array
     {
+        $order = ' ORDER BY ' . static::$tableOrder . ' DESC';
+
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
         $sql = ' SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
 
+        if (empty($filters)) {
+            $sql .= $order;
+        }
+
         // Array of values
         foreach ($filters as $key => $value) {
-            $sql .= ' AND ' . $key . ' = ? ';
+            $sql .= ' AND ' . $key . ' = ? ' . $order;
         }
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
         $pdo->execute(array_values($filters));
-
-        return $pdo->fetchAll();
-    }
-
-    /**
-     * This function find all the informations contained in the table
-     */
-    public function findAll(): array
-    {
-        $sql = 'SELECT *  FROM ' . static::$tableName
-               . ' ORDER BY ' . static::$tableOrder . ' DESC';
-
-        $pdo = $this->getPDO()->prepare($sql);
-        $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
-        $pdo->execute();
 
         return $pdo->fetchAll();
     }
