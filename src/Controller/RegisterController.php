@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Exception\CoreException;
 
 /**
  * Class RegisterController
@@ -12,6 +13,7 @@ class RegisterController extends DefaultAbstractController
 {
     /**
      * Action by default
+     * @throws CoreException
      */
     public function indexAction()
     {

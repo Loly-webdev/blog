@@ -34,7 +34,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     }
 
 
-    public function hasFormSubmited(string $formName): bool
+    public function hasFormSubmitted(string $formName): bool
     {
         $data = $this->getRequest()->getParam($formName);
 
@@ -42,7 +42,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     }
 
 
-    public function getFormSubmitedValues($formName): array
+    public function getFormSubmittedValues($formName): array
     {
         $data = $this->getRequest()->getParam($formName);
 
