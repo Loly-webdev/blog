@@ -89,7 +89,8 @@ class CommentController extends DefaultAbstractController
             new CommentRepository(),
             'commentId',
             'commentaire',
-            'commentForm.html.twig'
+            'commentForm.html.twig',
+            'article'
         ];
     }
 }
