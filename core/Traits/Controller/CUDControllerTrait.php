@@ -208,15 +208,17 @@ trait CUDControllerTrait
      * Method to delete entity
      *
      * @param DefaultAbstractRepository $repository
-     * @param string                    $entityParamId
-     * @param string                    $entityName
-     * @param string                    $viewTemplate
+     * @param string $entityParamId
+     * @param string $entityName
+     * @param string $viewTemplate
+     * @param string $page
      */
     protected function deleteEntity(
         DefaultAbstractRepository $repository,
         string $entityParamId,
         string $entityName,
-        string $viewTemplate
+        string $viewTemplate,
+        string $page
     ): void
     {
         $message = '';
@@ -230,14 +232,14 @@ trait CUDControllerTrait
             ? "Votre $entityName à bien était supprimé !"
             : "Une erreur est survenue.";
 
-        $redirect = "Veuillez patientez , vous allez être redirigé vers la page des articles.";
+        $redirect = "Veuillez patientez , vous allez être redirigé vers la page : $page.";
 
         $this->renderView(
             $viewTemplate,
             [
                 'message' => $message,
                 'redirect' => $redirect,
-                header("Refresh: 5; URL= /article")
+                $this->redirect($page)
             ]
         );
     }

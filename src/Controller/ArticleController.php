@@ -109,7 +109,8 @@ class ArticleController extends DefaultAbstractController
             new ArticleRepository(),
             'articleId',
             'article',
-            'articleForm.html.twig'
+            'articleForm.html.twig',
+            'article'
         ];
     }
 }
