@@ -96,8 +96,8 @@ trait CUDControllerTrait
         string $viewTemplate
     ): void
     {
-        if ($this->hasFormSubmited($entityName)) {
-        	$dataSubmitted = $this->getFormSubmitedValues($entityName);
+        if ($this->hasFormSubmitted($entityName)) {
+        	$dataSubmitted = $this->getFormSubmittedValues($entityName);
             $entity = $entityClass->hydrate($dataSubmitted);
 
             if (method_exists($this, 'postHydrate')) {
@@ -230,10 +230,14 @@ trait CUDControllerTrait
             ? "Votre $entityName à bien était supprimé !"
             : "Une erreur est survenue.";
 
+        $redirect = "Veuillez patientez , vous allez être redirigé vers la page des articles.";
+
         $this->renderView(
             $viewTemplate,
             [
-                'message' => $message
+                'message' => $message,
+                'redirect' => $redirect,
+                header("Refresh: 5; URL= /article")
             ]
         );
     }
