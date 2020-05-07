@@ -180,11 +180,11 @@ textarea {
 }
 
 .button {
-    padding: 0.3rem;
+    padding: 0.2rem;
     border-radius: 25px;
-    width: 14%;
-    margin: 10px auto;
-    font-size: 0.9rem;
+    width: 10%;
+    margin: 1rem;
+    font-size: 1rem;
 }
 
 /* CREDIT */
