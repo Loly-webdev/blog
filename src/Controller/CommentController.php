@@ -56,7 +56,7 @@ class CommentController extends DefaultAbstractController
         ];
     }
 
-    public function postHydrate($entity): void // id #19EU
+    public function postHydrate($entity): void
     {
         $entity->setArticleId(
 	        $this->getRequest()->getParamAsInt('articleId')

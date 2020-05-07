@@ -17,8 +17,12 @@ class RegisterController extends DefaultAbstractController
      */
     public function indexAction()
     {
+        if($this->hasFormSubmitted('authentication')) {
+            echo 'Votre formulaire à déjà été soumis';
+        }
+
         $this->renderView(
-            'connexion.html.twig'
+            'register.html.twig'
         );
     }
 }
