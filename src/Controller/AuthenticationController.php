@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Exception\CoreException;
 
 /**
  * Class AuthenticationController
@@ -12,33 +15,56 @@ class AuthenticationController extends DefaultAbstractController
 {
     /**
      * Action by default
+     * @throws CoreException
      */
     public function indexAction()
     {
-
+        $this->renderView(
+            'connexion.html.twig'
+        );
     }
 
     /**
      * User login
+     * @throws CoreException
      */
-    public function login()
+    public function loginAction(): void
     {
+        if ($this->hasFormSubmitted('authentication')) {
+            $dataSubmitted = $this->getFormSubmittedValues('User');
+            $entity        = (new User)->hydrate($dataSubmitted);
 
+            $message = (new UserRepository())->insert($entity)
+                ? "Votre requête à bien était enregistré !"
+                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
+
+            $_SESSION['login'] = $entity['login'];
+        }
+
+        $this->renderView(
+            'connexion.html.twig',
+            [
+                'message' => $message ?? ''
+            ]
+        );
     }
 
     /**
      * User logout
      */
-    public function logout()
+    public function logoutAction()
     {
-        // On détruit les variables de notre session
         session_unset();
-
-        // On détruit notre session
         session_destroy();
 
-        // On redirige le visiteur vers la page d'accueil
-        header('location: index.php');
+       /* //Si lutilisateur est connecte, on le deconecte
+        if(isset($_SESSION['login']))
+        {
+            //On le deconecte en supprimant la session
+            unset($_SESSION['login']);
+        }*/
 
+        header('location: index.php');
+        exit();
     }
 }
