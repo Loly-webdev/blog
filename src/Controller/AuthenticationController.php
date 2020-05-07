@@ -48,14 +48,12 @@ class AuthenticationController extends DefaultAbstractController
                 $_SESSION['login']    = $_POST['login'];
                 $_SESSION['password'] = $_POST['password'];
 
-                // on redirige notre visiteur vers une page de notre section membre
-                header('location: page_membre.php');
+                // on redirige notre visiteur
+                header('location: index.php');
             }
             else {
                 // Le visiteur n'a pas été reconnu comme étant membre de notre site. On utilise alors un petit javascript lui signalant ce fait
                 echo '<body onLoad="alert(\'Membre non reconnu...\')">';
-                // puis on le redirige vers la page d'accueil
-                echo '<meta http-equiv="refresh" content="0;URL=index.htm">';
             }
         }
         else {
