@@ -14,20 +14,38 @@ trait ReadRepositoryTrait
     /**
      * Find all the informations of the table where id is equal to the id find by the getParams method
      *
-     * @param int $articleId
+     * @param int $id
      *
      * @return DefaultAbstractEntity
      */
-    public function findOne(int $articleId): ?DefaultAbstractEntity
+    public function findOneById(int $id): ?DefaultAbstractEntity
     {
-        $data = $this->find([
-            static::$tablePk =>  $articleId
-        ]);
+        $data = $this->find(
+            [
+                static::$tablePk => $id
+            ]
+        );
 
         return reset($data)
             ? reset($data)
-            : null
-            ;
+            : null;
+    }
+
+    /**
+     * Polymorphism method
+     *
+     * @param array|null $filters
+     *
+     * @return mixed
+     */
+    public function findOne(?array $filters = null): ?array
+    {
+        $filters['limit'] = 1;
+        $data = $this->search($filters);
+
+        return !empty($data)
+            ? reset($data)
+            : null;
     }
 
     /**
@@ -39,19 +57,7 @@ trait ReadRepositoryTrait
      */
     public function find(?array $filters = null): array
     {
-        if (is_array($filters) && !empty($filters)) {
-            return $this->search($filters);
-        }
-
-        return $this->findAll();
-    }
-
-    /**
-     * This function find all the informations contained in the table
-     */
-    public function findAll(): array
-    {
-        return $this->search();
+        return $this->search($filters);
     }
 
     /**
@@ -63,6 +69,10 @@ trait ReadRepositoryTrait
      */
     public function search(?array $filters = []): array
     {
+        $limit = $filters['limit'] ?? null;
+        $orderBy = $filters['orderBy'] ??  static::$tablePk . ' DESC';
+        unset($filters['limit'], $filters['orderBy']);
+
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
         $sql = ' SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
 
@@ -71,12 +81,16 @@ trait ReadRepositoryTrait
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
-        $sql .= ' ORDER BY ' . static::$tableOrder . ' DESC';
+        $sql .= 'ORDER BY ? ';
+        $filters[] = $orderBy;
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());
         $pdo->execute(array_values($filters));
+        $data = $pdo->fetchAll();
 
-        return $pdo->fetchAll();
+        return $limit
+            ? array_slice($data, 0, $limit)
+            : $data;
     }
 }

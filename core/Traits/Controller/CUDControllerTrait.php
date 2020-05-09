@@ -45,7 +45,7 @@ trait CUDControllerTrait
         $entityId = $this->getRequest()->getParamAsInt($entityParamId);
 
         // Load post associate to the Id or return null
-        $entity = $repository->findOne($entityId);
+        $entity = $repository->findOneById($entityId);
         if (null === $entity) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
             throw new \LogicException("Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
@@ -161,7 +161,7 @@ trait CUDControllerTrait
             throw new CoreException("Désolé nous ne trouvons pas les paramétres de l'entité $entityParamId.");
         }
 
-        $entity = $repository->findOne($entityId);
+        $entity = $repository->findOneById($entityId);
         if (!isset($entity)) {
             throw new CoreException('Désolé nous rencontrons un problème avec votre demande.');
         }
