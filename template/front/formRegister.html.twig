@@ -3,23 +3,19 @@
 {% block content %}
     <h1>{{ titlePage }}</h1>
     <h2>Inscrivez-vous</h2>
-    <form action="/register" method="post">
+    <form action="" method="post">
         <div>
             <label for="login">Identifiant :</label><br/>
-            <input id="login" name="user[login]" type="text"/>
+            <input id="login" name="formRegister[login]" type="text"/>
         </div>
         <div>
             <label for="email">Email</label><br>
-            <input type="text" id="email" name="user[mail]">
+            <input type="text" id="email" name="formRegister[mail]">
         </div>
         <div>
             <label for="pass">Mot de passe (3 caractères minimum) :</label><br/>
-            <input id="pass" name="user[pass]" type="password" minlength="3"
+            <input id="pass" name="formRegister[password]" type="password" minlength="3"
                    required/>
-        </div>
-        <div>
-            <label for="pass-check">Resaisssir le mot de passe</label><br>
-            <input id="password-check" name="user[pass-check]" type="password">
         </div>
         <div>
             <input class="button" type="submit" value="Envoyer"/>

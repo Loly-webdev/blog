@@ -232,13 +232,13 @@ trait CUDControllerTrait
             ? "Votre $entityName à bien était supprimé !"
             : "Une erreur est survenue.";
 
-        $redirect = "Veuillez patientez , vous allez être redirigé vers la page : $page.";
+        $redirectMessage = "Veuillez patientez , vous allez être redirigé vers la page : $page.";
 
         $this->renderView(
             $viewTemplate,
             [
                 'message' => $message,
-                'redirect' => $redirect,
+                'redirect' => $redirectMessage,
                 $this->redirect($page)
             ]
         );

@@ -34,7 +34,7 @@ class UserAdminController extends DefaultAbstractController
             'id',
             'user',
             new UserRepository(),
-            'connexion.html.twig'
+            'formAuthentication.html.twig'
         ];
     }
 
@@ -49,7 +49,7 @@ class UserAdminController extends DefaultAbstractController
             'user',
             new User(),
             new UserRepository(),
-            'registerForm.html.twig'
+            'formRegister.html.twig'
         ];
     }
 
@@ -64,7 +64,7 @@ class UserAdminController extends DefaultAbstractController
             'id',
             new UserRepository(),
             'user',
-            'registerEdit.html.twig'
+            'editProfile.html.twig'
         ];
     }
 
@@ -79,7 +79,7 @@ class UserAdminController extends DefaultAbstractController
             new UserRepository(),
             'id',
             'login',
-            'registerForm.html.twig',
+            'formRegister.html.twig',
         ];
     }
 }

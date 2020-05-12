@@ -52,7 +52,7 @@ class CommentController extends DefaultAbstractController
             'comment',
             new Comment(),
             new CommentRepository(),
-            'commentForm.html.twig'
+            'formComment.html.twig'
         ];
     }
 
@@ -74,7 +74,7 @@ class CommentController extends DefaultAbstractController
             'commentId',
             new CommentRepository(),
             'comment',
-            'commentEdit.html.twig'
+            'editComment.html.twig'
         ];
     }
 
@@ -89,7 +89,7 @@ class CommentController extends DefaultAbstractController
             new CommentRepository(),
             'commentId',
             'commentaire',
-            'commentForm.html.twig',
+            'formComment.html.twig',
             'article'
         ];
     }

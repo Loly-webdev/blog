@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
+use Core\Provider\ConfigurationProvider;
 
 /**
  * Class AuthenticationController
@@ -20,7 +21,7 @@ class AuthenticationController extends DefaultAbstractController
     public function indexAction()
     {
         $this->renderView(
-            'connexion.html.twig'
+            'formAuthentication.html.twig'
         );
     }
 
@@ -30,38 +31,33 @@ class AuthenticationController extends DefaultAbstractController
      */
     public function loginAction(): void
     {
-        // on teste si nos variables sont définies
-        if (isset($_POST['login']) && isset($_POST['password'])) {
+        $message = '';
 
-            // on vérifie les informations du formulaire, à savoir si le pseudo saisi est bien un pseudo autorisé, de même pour le mot de passe
-            $dataSubmitted = $this->getFormSubmittedValues('User');
-            $entity        = $entity = (new User)->hydrate($dataSubmitted);;
-            $login_valid    = $entity['login'];
-            $password_valid = $entity['password'];
+        if ($this->hasFormSubmitted('formAuthentication')) {
+            $formData = $this->getFormSubmittedValues('formAuthentication');
+            $login = $formData['login'] ?? '';
+            $password = $formData['password'] ?? '';
+            $passwordEncoded = User::encodePassword($password);
 
-            if ($login_valid == $_POST['login'] && $password_valid == $_POST['pwd']) {
-                // dans ce cas, tout est ok, on peut démarrer notre session
+            $user = (new UserRepository())->findOne(
+                [
+                    'login' => $login,
+                    'password' => $passwordEncoded
+                ]
+            );
+            dump($user);
 
-                // on la démarre :)
-                session_start();
-                // on enregistre les paramètres de notre visiteur comme variables de session ($login et $pwd) (notez bien que l'on utilise pas le $ pour enregistrer ces variables)
-                $_SESSION['login']    = $_POST['login'];
-                $_SESSION['password'] = $_POST['password'];
-
-                // on redirige notre visiteur
-                header('location: index.php');
+            if (null === $user) {
+                $message = "Echec de l'authentification";
             }
-            else {
-                // Le visiteur n'a pas été reconnu comme étant membre de notre site. On utilise alors un petit javascript lui signalant ce fait
-                echo '<body onLoad="alert(\'Membre non reconnu...\')">';
+
+            if ($user->hasId()) {
+                $_SESSION['logged'] = true;
+                $_SESSION['user'] = $user;
             }
         }
-        else {
-            echo 'Les variables du formulaire ne sont pas déclarées.';
-        }
-
         $this->renderView(
-            'connexion.html.twig',
+            'formAuthentication.html.twig',
             [
                 'message' => $message ?? ''
             ]
@@ -77,10 +73,10 @@ class AuthenticationController extends DefaultAbstractController
         session_destroy();
 
         /* //Si lutilisateur est connecte, on le deconecte
-         if(isset($_SESSION['login']))
+         if(isset($_SESSION['logged']))
          {
              //On le deconecte en supprimant la session
-             unset($_SESSION['login']);
+             unset($_SESSION['logged']);
          }*/
 
         header('location: index.php');

@@ -20,7 +20,7 @@ class ProfileController extends DefaultAbstractController
         $profile = (new UserRepository())->find();
 
         $this->renderView(
-            'profile.html.twig',
+            'editProfile.html.twig',
             [
                 'profile' =>$profile
             ]

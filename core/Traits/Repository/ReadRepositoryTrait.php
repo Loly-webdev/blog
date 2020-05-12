@@ -70,7 +70,7 @@ trait ReadRepositoryTrait
     public function search(?array $filters = []): array
     {
         $limit = $filters['limit'] ?? null;
-        $orderBy = $filters['orderBy'] ??  static::$tablePk . ' DESC';
+        $orderBy = $filters['orderBy'] ??  static::$tableOrder . ' DESC';
         unset($filters['limit'], $filters['orderBy']);
 
         // We specify a where 1 = 1 to avoid managing the WHERE || AND

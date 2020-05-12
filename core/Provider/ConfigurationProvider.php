@@ -58,6 +58,11 @@ class ConfigurationProvider
         return static::$config['twig'] ?? [];
     }
 
+    public function getSalt(): string
+    {
+        return 'salt';
+    }
+
     /**
      * Denies access to the __clone() method
      */

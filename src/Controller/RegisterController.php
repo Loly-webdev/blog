@@ -24,14 +24,14 @@ class RegisterController extends DefaultAbstractController
         }
 
         $this->renderView(
-            'register.html.twig'
+            'formRegister.html.twig'
         );
     }
 
     public function registerAction()
     {
-        if ($this->hasFormSubmitted('authentication')) {
-            $dataSubmitted = $this->getFormSubmittedValues('User');
+        if ($this->hasFormSubmitted('formRegister')) {
+            $dataSubmitted = $this->getFormSubmittedValues('formRegister');
             $entity        = (new User)->hydrate($dataSubmitted);
 
             $message = (new UserRepository())->insert($entity)
@@ -40,7 +40,7 @@ class RegisterController extends DefaultAbstractController
         }
 
         $this->renderView(
-            'connexion.html.twig',
+            'formAuthentication.html.twig',
             [
                 'message' => $message ?? ''
             ]

@@ -55,7 +55,7 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             'article',
             new ArticleRepository(),
-            'article.html.twig'
+            'articleById.html.twig'
         ];
     }
 
@@ -79,7 +79,7 @@ class ArticleController extends DefaultAbstractController
             'article',
             new Article(),
             new ArticleRepository(),
-            'articleForm.html.twig'
+            'formArticle.html.twig'
         ];
     }
 
@@ -94,7 +94,7 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             new ArticleRepository(),
             'article',
-            'articleEdit.html.twig'
+            'editArticle.html.twig'
         ];
     }
 
@@ -109,7 +109,7 @@ class ArticleController extends DefaultAbstractController
             new ArticleRepository(),
             'articleId',
             'article',
-            'articleForm.html.twig',
+            'formArticle.html.twig',
             'article'
         ];
     }

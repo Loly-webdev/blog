@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\Provider\ConfigurationProvider;
 
 class User extends DefaultAbstractEntity
 {
@@ -59,15 +60,13 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @param mixed $password
+     * @param string $plainText
      *
-     * @return User
+     * @return void
      */
-    public function setPassword($password)
+    public function setPassword(string $plainText)
     {
-        $this->password = $password;
-
-        return $this;
+        $this->password = static::encodePassword($plainText);
     }
 
     /**
@@ -87,5 +86,29 @@ class User extends DefaultAbstractEntity
     {
         $this->role = $role;
         return $this;
+    }
+
+    static function encodePassword(string $plainText)
+    {
+        $config = ConfigurationProvider::getInstance();
+        $salt = $config->getSalt();
+        $pwd_peppered = hash_hmac("sha256", $plainText, $salt);
+
+        return password_hash($pwd_peppered, PASSWORD_ARGON2ID);
+    }
+
+    public function __serialize()
+    {
+        return $this->getSessionValues();
+    }
+
+    public function getSessionValues()
+    {
+        return [
+            'mail' => $this->getMail(),
+            'username' => $this->getLogin(),
+            'password' => $this->getPassword(),
+            'role' => $this->getRole()
+        ];
     }
 }
