@@ -14,6 +14,15 @@ use Core\Provider\ConfigurationProvider;
  */
 class AuthenticationController extends DefaultAbstractController
 {
+    static function encodePassword(string $plainText)
+    {
+        $config       = ConfigurationProvider::getInstance();
+        $salt         = $config->getSalt();
+        $pwd_peppered = hash_hmac("sha256", $plainText, $salt);
+
+        return password_hash($pwd_peppered, PASSWORD_ARGON2ID);
+    }
+
     /**
      * Action by default
      * @throws CoreException
@@ -32,33 +41,44 @@ class AuthenticationController extends DefaultAbstractController
     public function loginAction(): void
     {
         $message = '';
+        $page = 'Home';
 
         if ($this->hasFormSubmitted('formAuthentication')) {
             $formData = $this->getFormSubmittedValues('formAuthentication');
-            $login = $formData['login'] ?? '';
+            $login    = $formData['login'] ?? '';
             $password = $formData['password'] ?? '';
-            $passwordEncoded = User::encodePassword($password);
+            // $passwordEncoded = static::encodePassword($password);
 
-            $user = (new UserRepository())->findOne(
+            $user = (new UserRepository())->find(
                 [
-                    'login' => $login,
-                    'password' => $passwordEncoded
+                    'login'    => $login,
+                    'password' => $password
                 ]
             );
-            dump($user);
 
             if (null === $user) {
                 $message = "Echec de l'authentification";
             }
 
-            if ($user->hasId()) {
+            dump($user);
+            if ($user['role'] === 'admin') {
+                $page = 'Admin/Home';
+            }
+
+            if (null !== $user) {
                 $_SESSION['logged'] = true;
-                $_SESSION['user'] = $user;
+                $_SESSION['user']   = $user;
+
+                //header("Refresh: 5; URL= /" . $page);
+                //echo 'Veuillez patientez vous allez être redirigé.';
+                exit;
             }
         }
+
         $this->renderView(
             'formAuthentication.html.twig',
             [
+                'title'   => 'Connexion :',
                 'message' => $message ?? ''
             ]
         );
@@ -71,13 +91,6 @@ class AuthenticationController extends DefaultAbstractController
     {
         session_unset();
         session_destroy();
-
-        /* //Si lutilisateur est connecte, on le deconecte
-         if(isset($_SESSION['logged']))
-         {
-             //On le deconecte en supprimant la session
-             unset($_SESSION['logged']);
-         }*/
 
         header('location: index.php');
         exit();

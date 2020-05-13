@@ -60,7 +60,7 @@ class ConfigurationProvider
 
     public function getSalt(): string
     {
-        return 'salt';
+        return 'soy';
     }
 
     /**

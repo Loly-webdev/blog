@@ -51,7 +51,12 @@ trait CUDControllerTrait
             throw new \LogicException("Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
         }
 
+        if (method_exists($entity, 'getTitle')) {
+            $title = $entity->getTitle();
+        }
+
         $data = [
+            'title' => $title ?? '',
             $entityName => $entity
         ];
 
@@ -208,17 +213,15 @@ trait CUDControllerTrait
      * Method to delete entity
      *
      * @param DefaultAbstractRepository $repository
-     * @param string $entityParamId
-     * @param string $entityName
-     * @param string $viewTemplate
-     * @param string $page
+     * @param string                    $entityParamId
+     * @param string                    $entityName
+     * @param string                    $viewTemplate
      */
     protected function deleteEntity(
         DefaultAbstractRepository $repository,
         string $entityParamId,
         string $entityName,
-        string $viewTemplate,
-        string $page
+        string $viewTemplate
     ): void
     {
         $message = '';
@@ -232,14 +235,10 @@ trait CUDControllerTrait
             ? "Votre $entityName à bien était supprimé !"
             : "Une erreur est survenue.";
 
-        $redirectMessage = "Veuillez patientez , vous allez être redirigé vers la page : $page.";
-
         $this->renderView(
             $viewTemplate,
             [
-                'message' => $message,
-                'redirect' => $redirectMessage,
-                $this->redirect($page)
+                'message' => $message
             ]
         );
     }

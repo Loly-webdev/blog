@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Controller\AuthenticationController;
 use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\Provider\ConfigurationProvider;
 
@@ -66,7 +67,7 @@ class User extends DefaultAbstractEntity
      */
     public function setPassword(string $plainText)
     {
-        $this->password = static::encodePassword($plainText);
+        $this->password = AuthenticationController::encodePassword($plainText);
     }
 
     /**
@@ -86,15 +87,6 @@ class User extends DefaultAbstractEntity
     {
         $this->role = $role;
         return $this;
-    }
-
-    static function encodePassword(string $plainText)
-    {
-        $config = ConfigurationProvider::getInstance();
-        $salt = $config->getSalt();
-        $pwd_peppered = hash_hmac("sha256", $plainText, $salt);
-
-        return password_hash($pwd_peppered, PASSWORD_ARGON2ID);
     }
 
     public function __serialize()

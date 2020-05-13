@@ -39,6 +39,7 @@ class ArticleController extends DefaultAbstractController
         $this->renderView(
             'articles.html.twig',
             [
+                'title'    => 'Derniers billets du blog :',
                 'articles' => $articles
             ]
         );
@@ -55,14 +56,14 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             'article',
             new ArticleRepository(),
-            'articleById.html.twig'
+            'articleById.html.twig',
         ];
     }
 
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
         $data['comments'] = $comments;
 
         return $data;
@@ -109,8 +110,7 @@ class ArticleController extends DefaultAbstractController
             new ArticleRepository(),
             'articleId',
             'article',
-            'formArticle.html.twig',
-            'article'
+            'formArticle.html.twig'
         ];
     }
 }

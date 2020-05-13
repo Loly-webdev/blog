@@ -86,9 +86,4 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         // Define the view directory
         return 'front/';
     }
-
-    public function redirect($page)
-    {
-        return header("Refresh: 5; URL= /" . $page);
-    }
 }
