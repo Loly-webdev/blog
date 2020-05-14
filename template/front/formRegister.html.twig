@@ -1,21 +1,19 @@
 {% extends "layout.html.twig" %}
-{% block title %}Inscription{% endblock %}
 {% block content %}
-    <h1>{{ titlePage }}</h1>
     <h2>Inscrivez-vous</h2>
     <form action="" method="post">
         <div>
             <label for="login">Identifiant :</label><br/>
-            <input id="login" name="formRegister[login]" type="text"/>
+            <input id="login" name="user[login]" type="text" required>
         </div>
         <div>
             <label for="email">Email</label><br>
-            <input type="text" id="email" name="formRegister[mail]">
+            <input type="text" id="email" name="user[mail]" required>
         </div>
         <div>
             <label for="pass">Mot de passe (3 caractères minimum) :</label><br/>
-            <input id="pass" name="formRegister[password]" type="password" minlength="3"
-                   required/>
+            <input id="pass" name="user[password]" type="password" minlength="3"
+                   required>
         </div>
         <div>
             <input class="button" type="submit" value="Envoyer"/>

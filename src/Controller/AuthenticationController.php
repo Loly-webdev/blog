@@ -41,15 +41,15 @@ class AuthenticationController extends DefaultAbstractController
     public function loginAction(): void
     {
         $message = '';
-        $page = 'Home';
+        $page = 'Blog';
 
         if ($this->hasFormSubmitted('formAuthentication')) {
             $formData = $this->getFormSubmittedValues('formAuthentication');
             $login    = $formData['login'] ?? '';
             $password = $formData['password'] ?? '';
-            // $passwordEncoded = static::encodePassword($password);
+            $passwordEncoded = static::encodePassword($password);
 
-            $user = (new UserRepository())->find(
+            $user = (new UserRepository())->findOne(
                 [
                     'login'    => $login,
                     'password' => $password
@@ -60,18 +60,17 @@ class AuthenticationController extends DefaultAbstractController
                 $message = "Echec de l'authentification";
             }
 
-            dump($user);
-            if ($user['role'] === 'admin') {
+            /*if ($user->getRole() === 'admin') {
                 $page = 'Admin/Home';
-            }
+            }*/
 
             if (null !== $user) {
                 $_SESSION['logged'] = true;
                 $_SESSION['user']   = $user;
 
-                //header("Refresh: 5; URL= /" . $page);
-                //echo 'Veuillez patientez vous allez être redirigé.';
-                exit;
+                header("Refresh: 3; URL= /" . $page);
+                echo 'Veuillez patientez vous allez être redirigé.';
+                exit();
             }
         }
 
@@ -92,7 +91,9 @@ class AuthenticationController extends DefaultAbstractController
         session_unset();
         session_destroy();
 
-        header('location: index.php');
+        header("Refresh: 3; URL= /Home");
+        //header('location: /Home');
+        echo 'Veuillez patientez vous allez être redirigé.';
         exit();
     }
 }

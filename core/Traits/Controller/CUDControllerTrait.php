@@ -43,7 +43,6 @@ trait CUDControllerTrait
     {
         // Get id to the URL
         $entityId = $this->getRequest()->getParamAsInt($entityParamId);
-
         // Load post associate to the Id or return null
         $entity = $repository->findOneById($entityId);
         if (null === $entity) {
@@ -56,7 +55,7 @@ trait CUDControllerTrait
         }
 
         $data = [
-            'title' => $title ?? '',
+            'title'     => $title ?? '',
             $entityName => $entity
         ];
 
@@ -102,18 +101,19 @@ trait CUDControllerTrait
     ): void
     {
         if ($this->hasFormSubmitted($entityName)) {
-        	$dataSubmitted = $this->getFormSubmittedValues($entityName);
-            $entity = $entityClass->hydrate($dataSubmitted);
+            $dataSubmitted = $this->getFormSubmittedValues($entityName);
+            dump($dataSubmitted);
+            $entity        = $entityClass->hydrate($dataSubmitted);
 
             if (method_exists($this, 'postHydrate')) {
                 $this->postHydrate($entity);
             }
 
             if ($entity->hasId()) {
-	            throw new \LogicException("L'id ne devrait pas exister.");
+                throw new \LogicException("L'id ne devrait pas exister.");
             }
 
-            $message  = $repository->insert($entity)
+            $message = $repository->insert($entity)
                 ? "Votre $entityName à bien était enregistré !"
                 : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
         }
@@ -204,7 +204,6 @@ trait CUDControllerTrait
 
     /**
      *  Get Params of delete action
-     *
      * @return array
      */
     abstract public function getDeleteParam(): array;

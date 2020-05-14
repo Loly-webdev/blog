@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Controller\Admin\UserAdminController;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
 
@@ -28,22 +27,9 @@ class RegisterController extends DefaultAbstractController
         );
     }
 
-    public function registerAction()
+    public function addAction()
     {
-        if ($this->hasFormSubmitted('formRegister')) {
-            $dataSubmitted = $this->getFormSubmittedValues('formRegister');
-            $entity        = (new User)->hydrate($dataSubmitted);
-
-            $message = (new UserRepository())->insert($entity)
-                ? "Votre requête à bien était enregistré !"
-                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
-        }
-
-        $this->renderView(
-            'formAuthentication.html.twig',
-            [
-                'message' => $message ?? ''
-            ]
-        );
+        $user = (new UserAdminController());
+        $user->addAction();
     }
 }

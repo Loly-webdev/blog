@@ -38,7 +38,7 @@ trait ReadRepositoryTrait
      *
      * @return mixed
      */
-    public function findOne(?array $filters = null): ?array
+    public function findOne(?array $filters = [])
     {
         $filters['limit'] = 1;
         $data = $this->search($filters);

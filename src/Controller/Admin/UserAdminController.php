@@ -20,7 +20,9 @@ class UserAdminController extends DefaultAbstractController
      */
     public function indexAction()
     {
-
+        $this->renderView(
+            'home.html.twig'
+        );
     }
 
     /**
@@ -31,7 +33,7 @@ class UserAdminController extends DefaultAbstractController
     public function getSeeParam(): array
     {
         return [
-            'id',
+            'userId',
             'user',
             new UserRepository(),
             'formAuthentication.html.twig'
@@ -61,7 +63,7 @@ class UserAdminController extends DefaultAbstractController
     public function getEditParam(): array
     {
         return [
-            'id',
+            'userId',
             new UserRepository(),
             'user',
             'editProfile.html.twig'
@@ -77,8 +79,8 @@ class UserAdminController extends DefaultAbstractController
     {
         return [
             new UserRepository(),
-            'id',
-            'login',
+            'userId',
+            'utilisateur',
             'formRegister.html.twig',
         ];
     }
