@@ -7,6 +7,7 @@ use App\Repository\{
     ArticleRepository,
     CommentRepository
 };
+use Core\Traits\Controller\AddControllerTrait;
 use Core\DefaultAbstract\{
     DefaultAbstractController,
     DefaultAbstractEntity
@@ -22,7 +23,8 @@ class ArticleController extends DefaultAbstractController
 {
     protected $key;
 
-    use CUDControllerTrait;
+    use CUDControllerTrait,
+        AddControllerTrait;
 
     /**
      * Action by default

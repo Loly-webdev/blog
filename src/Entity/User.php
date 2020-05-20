@@ -67,7 +67,7 @@ class User extends DefaultAbstractEntity
      */
     public function setPassword(string $plainText)
     {
-        $this->password = AuthenticationController::encodePassword($plainText);
+        $this->password = static::encodePassword($plainText);
     }
 
     /**
@@ -102,5 +102,14 @@ class User extends DefaultAbstractEntity
             'password' => $this->getPassword(),
             'role' => $this->getRole()
         ];
+    }
+
+    static function encodePassword(string $password)
+    {
+        $config       = ConfigurationProvider::getInstance();
+        $salt         = $config->getSalt();
+        $pwd_peppered = hash_hmac("sha256", $password, $salt);
+
+        return password_hash($pwd_peppered, PASSWORD_ARGON2ID);
     }
 }

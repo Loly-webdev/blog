@@ -14,15 +14,6 @@ use Core\Provider\ConfigurationProvider;
  */
 class AuthenticationController extends DefaultAbstractController
 {
-    static function encodePassword(string $plainText)
-    {
-        $config       = ConfigurationProvider::getInstance();
-        $salt         = $config->getSalt();
-        $pwd_peppered = hash_hmac("sha256", $plainText, $salt);
-
-        return password_hash($pwd_peppered, PASSWORD_ARGON2ID);
-    }
-
     /**
      * Action by default
      * @throws CoreException
@@ -41,36 +32,41 @@ class AuthenticationController extends DefaultAbstractController
     public function loginAction(): void
     {
         $message = '';
-        $page = 'Blog';
+        $page = 'Article';
 
         if ($this->hasFormSubmitted('formAuthentication')) {
             $formData = $this->getFormSubmittedValues('formAuthentication');
             $login    = $formData['login'] ?? '';
             $password = $formData['password'] ?? '';
-            $passwordEncoded = static::encodePassword($password);
+            $passwordEncoded = User::encodePassword($password);
 
             $user = (new UserRepository())->findOne(
                 [
                     'login'    => $login,
-                    'password' => $password
+                    'password' => $passwordEncoded
                 ]
             );
 
-            if (null === $user) {
-                $message = "Echec de l'authentification";
-            }
+            $userDB = (new UserRepository())->findOne(
+                [
+                    'login'    => $login
+                ]
+            );
 
-            /*if ($user->getRole() === 'admin') {
-                $page = 'Admin/Home';
-            }*/
+            $passwordUser = $userDB->getPassword();
 
-            if (null !== $user) {
+            dump($passwordEncoded, $passwordUser);
+
+            if (password_verify($passwordEncoded, $passwordUser)) {
                 $_SESSION['logged'] = true;
                 $_SESSION['user']   = $user;
 
                 header("Refresh: 3; URL= /" . $page);
                 echo 'Veuillez patientez vous allez être redirigé.';
                 exit();
+            }
+            else {
+                $message = "Echec de l'authentification";
             }
         }
 

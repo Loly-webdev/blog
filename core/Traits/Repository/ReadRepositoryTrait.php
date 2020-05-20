@@ -36,9 +36,9 @@ trait ReadRepositoryTrait
      *
      * @param array|null $filters
      *
-     * @return mixed
+     * @return DefaultAbstractEntity|null ?DefaultAbstractEntity
      */
-    public function findOne(?array $filters = [])
+    public function findOne(array $filters = []): ?DefaultAbstractEntity
     {
         $filters['limit'] = 1;
         $data = $this->search($filters);
@@ -53,9 +53,9 @@ trait ReadRepositoryTrait
      *
      * @param array|null $filters
      *
-     * @return mixed
+     * @return DefaultAbstractEntity[] If no match returns an empty array otherwise an array of DefaultAbstractEntity
      */
-    public function find(?array $filters = null): array
+    public function find(array $filters = []): array
     {
         return $this->search($filters);
     }
@@ -67,7 +67,7 @@ trait ReadRepositoryTrait
      *
      * @return DefaultAbstractEntity[] If no match returns an empty array otherwise an array of DefaultAbstractEntity
      */
-    public function search(?array $filters = []): array
+    public function search(array $filters = []): array
     {
         $limit = $filters['limit'] ?? null;
         $orderBy = $filters['orderBy'] ??  static::$tableOrder . ' DESC';
@@ -81,8 +81,7 @@ trait ReadRepositoryTrait
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
-        $sql .= 'ORDER BY ? ';
-        $filters[] = $orderBy;
+        $sql .= 'ORDER BY ' . $orderBy;
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());

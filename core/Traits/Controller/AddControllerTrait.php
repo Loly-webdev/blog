@@ -1,0 +1,68 @@
+<?php
+
+namespace Core\Traits\Controller;
+
+use Core\DefaultAbstract\{
+    DefaultAbstractEntity,
+    DefaultAbstractRepository
+};
+
+trait AddControllerTrait
+{
+    /**
+     * Insert action of controller
+     */
+    public function addAction(): void
+    {
+        $params = $this->getAddParam();
+
+        $this->addEntity(...$params);
+    }
+
+    /**
+     * Get Params of addAction
+     * @return array
+     */
+    abstract public function getAddParam(): array;
+
+    /**
+     * Method to add entity
+     *
+     * @param string                    $entityName
+     * @param DefaultAbstractEntity     $entityClass
+     * @param DefaultAbstractRepository $repository
+     * @param string                    $viewTemplate
+     */
+    protected function addEntity(
+        string $entityName,
+        DefaultAbstractEntity $entityClass,
+        DefaultAbstractRepository $repository,
+        string $viewTemplate
+    ): void
+    {
+        if ($this->hasFormSubmitted($entityName)) {
+            $dataSubmitted = $this->getFormSubmittedValues($entityName);
+            dump($dataSubmitted);
+            $entity        = $entityClass->hydrate($dataSubmitted);
+
+            if (method_exists($this, 'postHydrate')) {
+                $this->postHydrate($entity);
+            }
+
+            if ($entity->hasId()) {
+                throw new \LogicException("L'id ne devrait pas exister.");
+            }
+
+            $message = $repository->insert($entity)
+                ? "Votre $entityName à bien était enregistré !"
+                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
+        }
+
+        $this->renderView(
+            $viewTemplate,
+            [
+                'message' => $message ?? ''
+            ]
+        );
+    }
+}

@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
-use App\Controller\Admin\UserAdminController;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Exception\CoreException;
+use Core\Traits\Controller\AddControllerTrait;
+use Exception;
 
 /**
  * Class RegisterController
@@ -12,24 +14,35 @@ use Core\Exception\CoreException;
  */
 class RegisterController extends DefaultAbstractController
 {
+    use AddControllerTrait;
+
     /**
      * Action by default
-     * @throws CoreException
      */
     public function indexAction()
     {
-        if($this->hasFormSubmitted('authentication')) {
-            echo 'Votre formulaire à déjà été soumis';
-        }
-
-        $this->renderView(
-            'formRegister.html.twig'
-        );
+        $this->addAction();
     }
 
-    public function addAction()
+    /**
+     * Give params to addAction
+     * @return array
+     * @throws Exception
+     */
+    public function getAddParam(): array
     {
-        $user = (new UserAdminController());
-        $user->addAction();
+        return [
+            'user',
+            new User(),
+            new UserRepository(),
+            'formRegister.html.twig'
+        ];
+    }
+
+    public function postHydrate($entity): void
+    {
+        $entity->setRole(
+            'user'
+        );
     }
 }
