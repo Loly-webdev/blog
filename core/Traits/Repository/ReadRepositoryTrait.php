@@ -69,9 +69,10 @@ trait ReadRepositoryTrait
      */
     public function search(array $filters = []): array
     {
-        $limit = $filters['limit'] ?? null;
-        $orderBy = $filters['orderBy'] ??  static::$tableOrder . ' DESC';
-        unset($filters['limit'], $filters['orderBy']);
+        $limit = isset($filters['limit']) && is_int($filters['limit']) ? $filters['limit'] : null;
+        $orderBy = isset($filters['orderBy']) && is_int($filters['orderBy']) ? $filters['orderBy'] : 1;
+        $sorted = isset($filters['sorted']) && true === $filters['sorted'] ? 'ASC' : 'DESC';
+        unset($filters['limit'], $filters['orderBy'], $filters['sorted']);
 
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
         $sql = ' SELECT * FROM ' . static::$tableName . ' WHERE 1 = 1 ';
@@ -81,7 +82,7 @@ trait ReadRepositoryTrait
             $sql .= ' AND ' . $key . ' = ? ';
         }
 
-        $sql .= 'ORDER BY ' . $orderBy;
+        $sql .= "ORDER BY $orderBy $sorted";
 
         $pdo = $this->getPDO()->prepare($sql);
         $pdo->setFetchMode(PDO::FETCH_CLASS, $this->getEntity());

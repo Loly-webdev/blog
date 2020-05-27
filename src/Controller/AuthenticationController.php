@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
@@ -32,32 +31,24 @@ class AuthenticationController extends DefaultAbstractController
     public function loginAction(): void
     {
         $message = '';
-        $page = 'Article';
+        $page    = 'Article';
 
         if ($this->hasFormSubmitted('formAuthentication')) {
             $formData = $this->getFormSubmittedValues('formAuthentication');
             $login    = $formData['login'] ?? '';
             $password = $formData['password'] ?? '';
-            $passwordEncoded = User::encodePassword($password);
+            $salt     = ConfigurationProvider::getInstance()->getSalt();
 
             $user = (new UserRepository())->findOne(
                 [
-                    'login'    => $login,
-                    'password' => $passwordEncoded
+                    'login' => $login
                 ]
             );
 
-            $userDB = (new UserRepository())->findOne(
-                [
-                    'login'    => $login
-                ]
-            );
+            $passwordUser = $user->getPassword();
+            session_destroy();
 
-            $passwordUser = $userDB->getPassword();
-
-            dump($passwordEncoded, $passwordUser);
-
-            if (password_verify($passwordEncoded, $passwordUser)) {
+            if (password_verify($password . $salt, $passwordUser)) {
                 $_SESSION['logged'] = true;
                 $_SESSION['user']   = $user;
 
@@ -88,7 +79,6 @@ class AuthenticationController extends DefaultAbstractController
         session_destroy();
 
         header("Refresh: 3; URL= /Home");
-        //header('location: /Home');
         echo 'Veuillez patientez vous allez être redirigé.';
         exit();
     }

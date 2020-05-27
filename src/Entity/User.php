@@ -13,6 +13,21 @@ class User extends DefaultAbstractEntity
     protected $password;
     protected $role;
 
+    public function __serialize()
+    {
+        return $this->getSessionValues();
+    }
+
+    public function getSessionValues()
+    {
+        return [
+            'mail'     => $this->getMail(),
+            'username' => $this->getLogin(),
+            'password' => $this->getPassword(),
+            'role'     => $this->getRole()
+        ];
+    }
+
     /**
      * @return mixed
      */
@@ -70,6 +85,13 @@ class User extends DefaultAbstractEntity
         $this->password = static::encodePassword($plainText);
     }
 
+    static function encodePassword(string $password)
+    {
+        $salt = ConfigurationProvider::getInstance()->getSalt();
+
+        return password_hash($password . $salt, PASSWORD_ARGON2ID);
+    }
+
     /**
      * @return mixed
      */
@@ -87,29 +109,5 @@ class User extends DefaultAbstractEntity
     {
         $this->role = $role;
         return $this;
-    }
-
-    public function __serialize()
-    {
-        return $this->getSessionValues();
-    }
-
-    public function getSessionValues()
-    {
-        return [
-            'mail' => $this->getMail(),
-            'username' => $this->getLogin(),
-            'password' => $this->getPassword(),
-            'role' => $this->getRole()
-        ];
-    }
-
-    static function encodePassword(string $password)
-    {
-        $config       = ConfigurationProvider::getInstance();
-        $salt         = $config->getSalt();
-        $pwd_peppered = hash_hmac("sha256", $password, $salt);
-
-        return password_hash($pwd_peppered, PASSWORD_ARGON2ID);
     }
 }

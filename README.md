@@ -34,3 +34,5 @@ you can check requirements on :
 ## Configure .env file
  
 ## Load database file
+
+## For Argon2iD to have minimum PHP 7.3
