@@ -2,8 +2,6 @@
 
 namespace Core;
 
-use mysql_xdevapi\Exception;
-
 /**
  * Class Request
  * @package Core

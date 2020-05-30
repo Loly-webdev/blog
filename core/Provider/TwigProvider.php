@@ -21,7 +21,6 @@ class TwigProvider
     /**
      * Instance of Twig
      * @return mixed
-     * @throws CoreException
      */
     public static function getTwig()
     {
