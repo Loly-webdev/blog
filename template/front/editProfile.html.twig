@@ -1,0 +1,32 @@
+{% extends "layout.html.twig" %}
+{% block nav %}
+    {{ include('partial/_navAdmin.html.twig') }}
+{% endblock %}
+{% block content %}
+    <section class="form">
+        <h4>Modification du profil :</h4>
+        <form action="" method="POST">
+            <div>
+                <label for="login">Mon identifiant :</label><br/>
+                <input type="text" id="login" name="user[login]" value="{{ user.login }}"/>
+            </div>
+            <div>
+                <label for="password">Nouveau mot de passe :</label><br/>
+                <input type="password" id="password" name="user[password]" value=""/>
+            </div>
+            <div>
+                <label for="mail">Mon adresse mail :</label><br/>
+                <input type="text" id="mail" name="user[mail]" value="{{ user.mail }}"/>
+            </div>
+            <div>
+                <input type="submit"/>
+            </div>
+        </form>
+    </section>
+    <br>
+    {{ message }}
+    <br>
+    <section class="link">
+        <a href="/home">Retour à l'accueil'</a>
+    </section>
+{% endblock %}

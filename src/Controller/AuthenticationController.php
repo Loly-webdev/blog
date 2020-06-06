@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
+use Core\Provider\ConfigurationProvider;
+use Exception;
 
 /**
  * Class AuthenticationController
@@ -20,29 +21,54 @@ class AuthenticationController extends DefaultAbstractController
     public function indexAction()
     {
         $this->renderView(
-            'connexion.html.twig'
+            'formAuthentication.html.twig'
         );
     }
 
     /**
      * User login
-     * @throws CoreException
+     * @throws Exception
      */
     public function loginAction(): void
     {
-        if ($this->hasFormSubmitted('authentication')) {
-            $dataSubmitted = $this->getFormSubmittedValues('User');
-            $entity        = (new User)->hydrate($dataSubmitted);
+        if ($this->hasFormSubmitted('formAuthentication')) {
+            $formData = $this->getFormSubmittedValues('formAuthentication');
+            $login    = $formData['login'] ?? '';
+            $password = $formData['password'] ?? '';
+            $salt     = ConfigurationProvider::getInstance()->getSalt();
 
-            $message = (new UserRepository())->insert($entity)
-                ? "Votre requête à bien était enregistré !"
-                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
+            $user = (new UserRepository())->findOne(
+                [
+                    'login' => $login
+                ]
+            );
 
-            $_SESSION['login'] = $entity['login'];
+            $passwordUser = $user->getPassword();
+
+            if (session_id()) {
+                session_unset();
+            }
+
+            if (password_verify($password . $salt, $passwordUser)) {
+                $_SESSION['logged'] = true;
+                $_SESSION['user']   = $user->getId();
+                $code               = $user->getRole();
+
+                if ($code === 'admin') {
+                    $page = '/home/welcome';
+                    header('Location: ' . $page);
+                    exit();
+                }
+                if ($code === 'user') {
+                    $page = '/home/welcome';
+                    header('Location: ' . $page);
+                    exit();
+                }
+            }
+            $message = "Echec de l'authentification";
         }
-
         $this->renderView(
-            'connexion.html.twig',
+            'formAuthentication.html.twig',
             [
                 'message' => $message ?? ''
             ]
@@ -57,14 +83,8 @@ class AuthenticationController extends DefaultAbstractController
         session_unset();
         session_destroy();
 
-       /* //Si lutilisateur est connecte, on le deconecte
-        if(isset($_SESSION['login']))
-        {
-            //On le deconecte en supprimant la session
-            unset($_SESSION['login']);
-        }*/
-
-        header('location: index.php');
+        header("Refresh: 3; URL= /Home");
+        echo 'Veuillez patientez vous allez être redirigé vers l\'accueil.';
         exit();
     }
 }

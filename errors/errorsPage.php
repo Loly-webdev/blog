@@ -43,10 +43,11 @@ $codes = [
 ];
 
 if ($codeHTTP === 200 || $codeHTTP == false || strlen($codeHTTP) != 3) {
-    $code = '';
+    $code    = '';
     $message = 'Désolé nous rencontrons une erreur';
-} else {
-    $code = $codes[$codeHTTP][0] ?? $codeHTTP;
+}
+else {
+    $code    = $codes[$codeHTTP][0] ?? $codeHTTP;
     $message = $codes[$codeHTTP][1] ?? 'Désolé nous rencontrons une erreur';
 }
 

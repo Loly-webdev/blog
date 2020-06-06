@@ -20,9 +20,15 @@
     "ext-pdo": "*",
     "symfony/var-dumper": "^5.0",
     "ext-yaml": "*",
-    "ext-dom": "*"
+    "ext-dom": "*",
+    "twbs/bootstrap": "^4.5"
   },
   "require-dev": {
     "phpstan/phpstan": "^0.12.19"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "cp -R config/env.yml.sample config/env.yml"
+    ]
   }
 }

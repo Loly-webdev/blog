@@ -25,7 +25,6 @@ class Comment extends DefaultAbstractEntity
      */
     public function setArticleId($articleId)
     {
-
         $this->articleId = $articleId;
 
         return $this;

@@ -25,14 +25,14 @@ class DatabaseProvider
      */
     public function __construct($databaseKey = 'default')
     {
-        $config = ConfigurationProvider::getInstance();
+        $config    = ConfigurationProvider::getInstance();
         $databases = $config->getDatabaseConfig();
-        if ($databases === null){
+        if ($databases === null) {
             throw new CoreException('Désolé, nous ne trouvons pas les informations de configuration pour la base de données.');
         }
 
         $default = $databases[$databaseKey] ?? null;
-        if ($databases === null){
+        if ($databases === null) {
             throw new CoreException("Désolé, La clée pour la base de données $databaseKey n'existe pas.");
         }
 
@@ -78,7 +78,7 @@ class DatabaseProvider
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }

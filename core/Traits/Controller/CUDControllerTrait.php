@@ -2,10 +2,7 @@
 
 namespace Core\Traits\Controller;
 
-use Core\DefaultAbstract\{
-    DefaultAbstractEntity,
-    DefaultAbstractRepository
-};
+use Core\DefaultAbstract\DefaultAbstractRepository;
 use Core\Exception\CoreException;
 
 trait CUDControllerTrait
@@ -43,15 +40,19 @@ trait CUDControllerTrait
     {
         // Get id to the URL
         $entityId = $this->getRequest()->getParamAsInt($entityParamId);
-
         // Load post associate to the Id or return null
-        $entity = $repository->findOne($entityId);
+        $entity = $repository->findOneById($entityId);
         if (null === $entity) {
             // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
             throw new \LogicException("Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
         }
 
+        if (method_exists($entity, 'getTitle')) {
+            $title = $entity->getTitle();
+        }
+
         $data = [
+            'title'     => $title ?? '',
             $entityName => $entity
         ];
 
@@ -62,62 +63,6 @@ trait CUDControllerTrait
         $this->renderView(
             $viewTemplate,
             $data
-        );
-    }
-
-    /**
-     * Insert action of controller
-     */
-    public function addAction(): void
-    {
-        $params = $this->getAddParam();
-
-        $this->addEntity(...$params);
-    }
-
-    /**
-     * Get Params of addAction
-     * @return array
-     */
-    abstract public function getAddParam(): array;
-
-    /**
-     * Method to add entity
-     *
-     * @param string                    $entityName
-     * @param DefaultAbstractEntity     $entityClass
-     * @param DefaultAbstractRepository $repository
-     * @param string                    $viewTemplate
-     */
-    protected function addEntity(
-        string $entityName,
-        DefaultAbstractEntity $entityClass,
-        DefaultAbstractRepository $repository,
-        string $viewTemplate
-    ): void
-    {
-        if ($this->hasFormSubmitted($entityName)) {
-        	$dataSubmitted = $this->getFormSubmittedValues($entityName);
-            $entity = $entityClass->hydrate($dataSubmitted);
-
-            if (method_exists($this, 'postHydrate')) {
-                $this->postHydrate($entity);
-            }
-
-            if ($entity->hasId()) {
-	            throw new \LogicException("L'id ne devrait pas exister.");
-            }
-
-            $message  = $repository->insert($entity)
-                ? "Votre $entityName à bien était enregistré !"
-                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
-        }
-
-        $this->renderView(
-            $viewTemplate,
-            [
-                'message' => $message ?? ''
-            ]
         );
     }
 
@@ -161,7 +106,7 @@ trait CUDControllerTrait
             throw new CoreException("Désolé nous ne trouvons pas les paramétres de l'entité $entityParamId.");
         }
 
-        $entity = $repository->findOne($entityId);
+        $entity = $repository->findOneById($entityId);
         if (!isset($entity)) {
             throw new CoreException('Désolé nous rencontrons un problème avec votre demande.');
         }
@@ -199,7 +144,6 @@ trait CUDControllerTrait
 
     /**
      *  Get Params of delete action
-     *
      * @return array
      */
     abstract public function getDeleteParam(): array;
@@ -208,17 +152,15 @@ trait CUDControllerTrait
      * Method to delete entity
      *
      * @param DefaultAbstractRepository $repository
-     * @param string $entityParamId
-     * @param string $entityName
-     * @param string $viewTemplate
-     * @param string $page
+     * @param string                    $entityParamId
+     * @param string                    $entityLabel
+     * @param string                    $viewTemplate
      */
     protected function deleteEntity(
         DefaultAbstractRepository $repository,
         string $entityParamId,
-        string $entityName,
-        string $viewTemplate,
-        string $page
+        string $entityLabel,
+        string $viewTemplate
     ): void
     {
         $message = '';
@@ -229,17 +171,13 @@ trait CUDControllerTrait
         );
 
         $message = $deleted
-            ? "Votre $entityName à bien était supprimé !"
+            ? "Votre $entityLabel à bien était supprimé !"
             : "Une erreur est survenue.";
-
-        $redirect = "Veuillez patientez , vous allez être redirigé vers la page : $page.";
 
         $this->renderView(
             $viewTemplate,
             [
-                'message' => $message,
-                'redirect' => $redirect,
-                $this->redirect($page)
+                'message' => $message
             ]
         );
     }
