@@ -3,9 +3,9 @@
 namespace Core\DefaultAbstract;
 
 use Core\DefaultControllerInterface;
+use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
 use Core\Request;
-use Core\Exception\CoreException;
 use LogicException;
 
 /**
@@ -25,15 +25,6 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         $this->request = Request::getInstance();
     }
 
-    /**
-     * @return Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->request;
-    }
-
-
     public function hasFormSubmitted(string $formName): bool
     {
         $data = $this->getRequest()->getParam($formName);
@@ -41,6 +32,13 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         return isset($data);
     }
 
+    /**
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
 
     public function getFormSubmittedValues($formName): array
     {
@@ -83,12 +81,8 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      */
     public function getFolderView(): string
     {
+
         // Define the view directory
         return 'front/';
-    }
-
-    public function redirect($page)
-    {
-        return header("Refresh: 5; URL= /" . $page);
     }
 }

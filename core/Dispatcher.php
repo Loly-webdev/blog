@@ -21,8 +21,10 @@ class Dispatcher
     {
         $this->router     = new Router();
         $controllerName   = $this->router->getControllerName();
-        $controllerPath = $this->router->isAdmin() ? '\\App\\Controller\\Admin\\' : '\\App\\Controller\\';
-        $controller       = '\\App\\Controller\\' . $controllerName;
+        $controllerPath   = $this->router->isAdmin()
+            ? '\\App\\Controller\\Admin\\'
+            : '\\App\\Controller\\';
+        $controller       = $controllerPath . $controllerName;
         $this->controller = new $controller();
     }
 

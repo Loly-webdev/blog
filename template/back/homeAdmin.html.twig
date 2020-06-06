@@ -1,12 +1,12 @@
-{% extends "/layout.html.twig" %}
+{% extends "layout.html.twig" %}
 {% block nav %}
-    {{ include('partial/_nav.html.twig') }}
+    {{ include('partial/_navAdmin.html.twig') }}
 {% endblock %}
 {% block content %}
     <section id="about">
         <img alt="Eloïse RUIZ-RODRIGUEZ" src="/public/images/profile.png">
         <div>
-            <strong>Bonjour et bienvenue sur mon Site !</strong>
+            <strong>{{ message }}</strong>
         </div>
         <article>
             <h1>Eloïse RUIZ-RODRIGUEZ</h1>
@@ -21,9 +21,7 @@
         </article>
     </section>
     <!-- CV -->
-    <section id="cv">
-        <h3>Télécharger mon Cv :</h3>
-    </section>
+    <section id="cv"></section>
     <!-- Social -->
     <section id="social">
         <h3>Suivez-moi :</h3>

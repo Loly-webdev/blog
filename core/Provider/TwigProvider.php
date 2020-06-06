@@ -2,12 +2,7 @@
 
 namespace Core\Provider;
 
-use Core\Exception\CoreException;
-use Twig\{
-    Environment,
-    Extension\DebugExtension,
-    Loader\FilesystemLoader
-};
+use Twig\{Environment, Extension\DebugExtension, Loader\FilesystemLoader};
 
 /**
  * Class TwigProvider
@@ -21,12 +16,11 @@ class TwigProvider
     /**
      * Instance of Twig
      * @return mixed
-     * @throws CoreException
      */
     public static function getTwig()
     {
         $config = ConfigurationProvider::getInstance();
-        $debug = $config->getTwigConfig();
+        $debug  = $config->getTwigConfig();
 
         if (null === static::$twig) {
             $loader       = new FilesystemLoader('template/');

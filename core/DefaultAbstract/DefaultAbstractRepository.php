@@ -2,13 +2,10 @@
 
 namespace Core\DefaultAbstract;
 
-use Core\Provider\PDOProvider;
 use Core\Exception\CoreException;
+use Core\Provider\PDOProvider;
+use Core\Traits\Repository\{CUDRepositoryTrait, ReadRepositoryTrait};
 use PDO;
-use Core\Traits\Repository\{
-    CUDRepositoryTrait,
-    ReadRepositoryTrait
-};
 
 /**
  * Class DefaultAbstractRepository
@@ -19,10 +16,10 @@ abstract class DefaultAbstractRepository
     use CUDRepositoryTrait,
         ReadRepositoryTrait;
 
-    private $pdo;
-    static  $tablePk    = 'id';
-    static  $tableOrder = 'createdAt';
+    static         $tablePk    = 'id';
+    static         $tableOrder = 'createdAt';
     private static $tableName;
+    private        $pdo;
 
     /**
      * DefaultAbstractRepository constructor.

@@ -1,17 +1,19 @@
 {% extends "layout.html.twig" %}
-{% block title %}Profil{% endblock %}
+{% block nav %}
+    {{ include('partial/_navAdmin.html.twig') }}
+{% endblock %}
 {% block content %}
-    <section class="user">
+    <section class="form">
         <h2>Mon profil :</h2>
-        <h4>Mon identifiant :</h4>
-        <strong>{{ user.login }}</strong>
-        <h4>Mon mot de passe :</h4>
-        <strong>{{ user.password }}</strong>
-        <h4>Date de création du compte :</h4>
-        <strong>{{ user.createdAt }}</strong>
+        <em>
+            Date de création du compte : {{ user.createdAt }}<br>
+            Dernière mise à jour : {{ user.updatedAt }}
+        </em>
+        <br>
+        <h4>Salutation {{ user.login }} !</h4>
         <div>
-            <a href="/user/edit?articleId={{ article.id }}">Éditer</a>
-            <a href="/user/delete?articleId={{ article.id }}">Supprimer</a>
+            <a href="/Admin/userAdmin/edit?userId={{ user.id }}">Éditer</a>
+            <a href="/Admin/userAdmin/delete?userId={{ user.id }}">Supprimer</a>
         </div>
     </section>
     <section class="link">

@@ -3,7 +3,6 @@ session_start();
 
 // Load autoload of composer
 require 'vendor/autoload.php';
-
 // Load framework constants
 require_once 'config/constant.php';
 
@@ -15,7 +14,6 @@ if ('dev' === PRJ_ENV) {
 
 use Core\Dispatcher;
 
-$codeHTTP = http_response_code();
 try {
     $dispatcher = new Dispatcher();
     $dispatcher->dispatch();
