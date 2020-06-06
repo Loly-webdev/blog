@@ -19,14 +19,13 @@ try {
     $dispatcher->dispatch();
 } catch (Throwable $t) {
     if ('dev' === PRJ_ENV) {
-        $type = $t->getCode();
+        $type    = $t->getCode();
         $message = $t->getMessage();
-        $file = $t->getFile();
-        $line = $t->getLine();
+        $file    = $t->getFile();
+        $line    = $t->getLine();
 
         require_once('errors/template/errorsManagementView.php');
         exit;
     }
-
     require_once('errors/errorsPage.php');
 }

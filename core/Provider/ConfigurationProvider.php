@@ -2,7 +2,7 @@
 
 namespace Core\Provider;
 
-use Core\Exception\CoreException;
+use Exception;
 
 /**
  * Class Configuration
@@ -16,13 +16,13 @@ class ConfigurationProvider
     /**
      * Configuration constructor.
      * Prevents the creation of an instance
-     * @throws CoreException
+     * @throws Exception
      */
     private function __construct()
     {
         $path = CONF_ROOT . "env.yml";
         if (false === file_exists($path)) {
-            throw new CoreException("Le fichier $path n'existe pas.");
+            throw new Exception("Le fichier $path n'existe pas.");
         }
 
         static::$config = yaml_parse_file($path);
