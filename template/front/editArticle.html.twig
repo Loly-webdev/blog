@@ -1,4 +1,7 @@
 {% extends "layout.html.twig" %}
+{% block nav %}
+    {{ include('partial/_navAdmin.html.twig') }}
+{% endblock %}
 {% block content %}
     <section class="form">
         <h4>Modification de l'article : {{ article.title }}</h4>

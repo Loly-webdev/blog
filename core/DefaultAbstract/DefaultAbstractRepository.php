@@ -3,12 +3,9 @@
 namespace Core\DefaultAbstract;
 
 use Core\Provider\PDOProvider;
-use Core\Exception\CoreException;
+use Core\Traits\Repository\{CUDRepositoryTrait, ReadRepositoryTrait};
+use Exception;
 use PDO;
-use Core\Traits\Repository\{
-    CUDRepositoryTrait,
-    ReadRepositoryTrait
-};
 
 /**
  * Class DefaultAbstractRepository
@@ -19,25 +16,25 @@ abstract class DefaultAbstractRepository
     use CUDRepositoryTrait,
         ReadRepositoryTrait;
 
-    private $pdo;
     static  $tablePk    = 'id';
     static  $tableOrder = 'createdAt';
-    private static $tableName;
+    static  $tableName;
+    private $pdo;
 
     /**
      * DefaultAbstractRepository constructor.
-     * @throws CoreException
+     * @throws Exception
      */
     final public function __construct()
     {
         $this->pdo = PDOProvider::PDOConnect();
 
         if (!isset(static::$tableName)) {
-            throw new CoreException('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
+            throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
         }
 
         if (!isset(static::$tableOrder)) {
-            throw new CoreException('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
+            throw new Exception('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
         }
     }
 

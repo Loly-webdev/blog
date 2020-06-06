@@ -34,3 +34,7 @@ you can check requirements on :
 ## Configure .env file
  
 ## Load database file
+
+## For Argon2iD to have PHP 7.4
+
+## Please change data to env.yml

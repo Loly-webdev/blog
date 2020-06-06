@@ -1,4 +1,7 @@
 {% extends "layout.html.twig" %}
+{% block nav %}
+    {{ include('partial/_navAdmin.html.twig') }}
+{% endblock %}
 {% block content %}
     <section class="form">
         <h4>Laisser un commentaire :</h4>
@@ -18,8 +21,6 @@
     </section>
     <br>
     {{ message }}
-    <br>
-    {{ redirect }}
     <br>
     <section class="link">
         <a href="/article">Retour à la liste des billets</a>

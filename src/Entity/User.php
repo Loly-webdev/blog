@@ -3,13 +3,40 @@
 namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\Provider\ConfigurationProvider;
 
 class User extends DefaultAbstractEntity
 {
+    const ROLE_ADMIN = 'admin';
+    const ROLE_USER  = 'user';
+
+    const ROLE_ADMIN_LABEL = 'Administrateur';
+    const ROLE_USER_LABEL  = 'Utilisateur';
+
+    const ROLES = [
+        self::ROLE_ADMIN => self::ROLE_ADMIN_LABEL,
+        self::ROLE_USER  => self::ROLE_USER_LABEL
+    ];
+
     protected $mail;
     protected $login;
     protected $password;
     protected $role;
+
+    public function __serialize()
+    {
+        return $this->getSessionValues();
+    }
+
+    public function getSessionValues()
+    {
+        return [
+            'mail'     => $this->getMail(),
+            'username' => $this->getLogin(),
+            'password' => $this->getPassword(),
+            'role'     => $this->getRole()
+        ];
+    }
 
     /**
      * @return mixed
@@ -53,21 +80,19 @@ class User extends DefaultAbstractEntity
     /**
      * @return mixed
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
     /**
-     * @param mixed $password
+     * @param string $plainText
      *
-     * @return User
+     * @return void
      */
-    public function setPassword($password)
+    public function setPassword(string $plainText)
     {
-        $this->password = $password;
-
-        return $this;
+        $this->password = static::encodePassword($plainText);
     }
 
     /**
@@ -78,6 +103,13 @@ class User extends DefaultAbstractEntity
         return $this->role;
     }
 
+    static function encodePassword(string $password)
+    {
+        $salt = ConfigurationProvider::getInstance()->getSalt();
+
+        return password_hash($password . $salt, PASSWORD_ARGON2ID);
+    }
+
     /**
      * @param mixed $role
      *
@@ -85,7 +117,21 @@ class User extends DefaultAbstractEntity
      */
     public function setRole($role)
     {
-        $this->role = $role;
-        return $this;
+        if (in_array($role, self::ROLES)) {
+            $this->role = $role;
+        }
+        return $this->role = $role;
+    }
+
+    public function isAdmin()
+    {
+        return self::ROLE_ADMIN === $this->getRole();
+    }
+
+    public function getRoleLabel($code)
+    {
+        return isset(self::ROLES[$code])
+            ? self::ROLES[$code]
+            : 'Aucun role définit';
     }
 }

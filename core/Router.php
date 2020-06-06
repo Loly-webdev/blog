@@ -31,10 +31,10 @@ class Router
     {
         // Load the instance of Request
         $request = Request::getInstance();
-        $params = $request->getUrlComponents();
+        $params  = $request->getUrlComponents();
 
         $index = 0;
-        if(isset($params[$index]) && 'admin' === $params[$index]) {
+        if (isset($params[$index]) && 'Admin' === $params[$index]) {
             ++$index;
             $this->admin = true;
         }
@@ -67,7 +67,7 @@ class Router
         return $this->actionName;
     }
 
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->admin;
     }

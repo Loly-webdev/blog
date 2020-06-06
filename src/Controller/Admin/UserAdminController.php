@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\RegisterController;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
@@ -20,7 +21,9 @@ class UserAdminController extends DefaultAbstractController
      */
     public function indexAction()
     {
-
+        $this->renderView(
+            'homeAdmin.html.twig'
+        );
     }
 
     /**
@@ -31,25 +34,10 @@ class UserAdminController extends DefaultAbstractController
     public function getSeeParam(): array
     {
         return [
-            'id',
+            'userId',
             'user',
             new UserRepository(),
-            'connexion.html.twig'
-        ];
-    }
-
-    /**
-     * Give params to addAction
-     * @return array
-     * @throws Exception
-     */
-    public function getAddParam(): array
-    {
-        return [
-            'user',
-            new User(),
-            new UserRepository(),
-            'registerForm.html.twig'
+            'profile.html.twig'
         ];
     }
 
@@ -61,10 +49,10 @@ class UserAdminController extends DefaultAbstractController
     public function getEditParam(): array
     {
         return [
-            'id',
+            'userId',
             new UserRepository(),
             'user',
-            'registerEdit.html.twig'
+            'editProfile.html.twig'
         ];
     }
 
@@ -75,11 +63,25 @@ class UserAdminController extends DefaultAbstractController
      */
     public function getDeleteParam(): array
     {
+        $register = new RegisterController();
         return [
             new UserRepository(),
-            'id',
-            'login',
-            'registerForm.html.twig',
+            'userId',
+            (new User())->getRoleLabel($register->role()),
+            'formRegister.html.twig',
         ];
+    }
+
+    public function profileAction()
+    {
+        $userId = $_SESSION['user'];
+        $user   = (new UserRepository())->findOneById($userId);
+
+        $this->renderView(
+            'profile.html.twig',
+            [
+                'user' => $user
+            ]
+        );
     }
 }

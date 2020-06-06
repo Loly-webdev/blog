@@ -3,15 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Repository\{
-    ArticleRepository,
-    CommentRepository
-};
-use Core\DefaultAbstract\{
-    DefaultAbstractController,
-    DefaultAbstractEntity
-};
-use Core\Traits\Controller\CUDControllerTrait;
+use App\Repository\{ArticleRepository, CommentRepository};
+use Core\DefaultAbstract\{DefaultAbstractController, DefaultAbstractEntity};
+use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
 use Exception;
 
 /**
@@ -22,7 +16,8 @@ class ArticleController extends DefaultAbstractController
 {
     protected $key;
 
-    use CUDControllerTrait;
+    use CUDControllerTrait,
+        AddControllerTrait;
 
     /**
      * Action by default
@@ -39,6 +34,7 @@ class ArticleController extends DefaultAbstractController
         $this->renderView(
             'articles.html.twig',
             [
+                'title'    => 'Derniers billets du blog :',
                 'articles' => $articles
             ]
         );
@@ -55,14 +51,14 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             'article',
             new ArticleRepository(),
-            'article.html.twig'
+            'articleById.html.twig',
         ];
     }
 
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
         $data['comments'] = $comments;
 
         return $data;
@@ -77,9 +73,10 @@ class ArticleController extends DefaultAbstractController
     {
         return [
             'article',
+            'article',
             new Article(),
             new ArticleRepository(),
-            'articleForm.html.twig'
+            'formArticle.html.twig'
         ];
     }
 
@@ -94,7 +91,7 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             new ArticleRepository(),
             'article',
-            'articleEdit.html.twig'
+            'editArticle.html.twig'
         ];
     }
 
@@ -109,8 +106,7 @@ class ArticleController extends DefaultAbstractController
             new ArticleRepository(),
             'articleId',
             'article',
-            'articleForm.html.twig',
-            'article'
+            'formArticle.html.twig'
         ];
     }
 }
