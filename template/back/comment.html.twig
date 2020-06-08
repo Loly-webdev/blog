@@ -1,7 +1,4 @@
-{% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_navAdmin.html.twig') }}
-{% endblock %}
+{% extends "back/layoutAdmin.html.twig" %}
 {% block content %}
     <h4>{{ comment.author }}</h4>
     <section class="comment">
@@ -13,11 +10,11 @@
             {{ comment.content }}
         </p>
         <div>
-            <a href="edit?commentId={{ comment.id }}">Éditer</a>
-            <a href="delete?commentId={{ comment.id }}">Supprimer</a>
+            <a href="../../index.php">Éditer</a>
+            <a href="../../index.php">Supprimer</a>
         </div>
         <div class="link">
-            <a href="/article">Retour à la liste des billets</a>
+            <a href="../../index.php">Retour à la liste des billets</a>
         </div>
     </section>
 {% endblock %}

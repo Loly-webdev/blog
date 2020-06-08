@@ -1,7 +1,4 @@
-{% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_navAdmin.html.twig') }}
-{% endblock %}
+{% extends "back/layoutAdmin.html.twig" %}
 {% block content %}
     <section class="article">
         <h2>{{ title }}</h2>
@@ -37,6 +34,6 @@
         <a href="/comment/add?articleId={{ article.id }}">Ajouter un nouveau commetaire</a>
     </section>
     <section class="link">
-        <a href="/article">Retour à la liste des billets</a>
+        <a href="../../index.php">Retour à la liste des billets</a>
     </section>
 {% endblock %}

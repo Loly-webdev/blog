@@ -2,6 +2,7 @@
 
 namespace Core\DefaultAbstract;
 
+use App\Repository\UserRepository;
 use Core\DefaultControllerInterface;
 use Core\Provider\TwigProvider;
 use Core\Request;
@@ -80,6 +81,9 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     public function getFolderView(): string
     {
         // Define the view directory
+        if (isset($_SESSION['logged']) === true) {
+            return 'back/';
+        }
         return 'front/';
     }
 }

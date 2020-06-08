@@ -39,13 +39,15 @@ class HomeController extends DefaultAbstractController
                 $viewTemplate,
                 [
                     'message' => "Ravi de te revoir $status $login !" ?? ''
-                ],
-                'back/'
+                ]
             );
             exit();
         }
         $this->renderView(
-            'home.html.twig'
+            'home.html.twig',
+            [
+                'message' => "Bonjour et bienvenu sur mon site !"
+            ]
         );
     }
 }
