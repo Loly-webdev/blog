@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Exception\CoreException;
 use Core\Provider\ConfigurationProvider;
 use Exception;
 
@@ -16,7 +15,7 @@ class AuthenticationController extends DefaultAbstractController
 {
     /**
      * Action by default
-     * @throws CoreException
+     * @throws Exception
      */
     public function indexAction()
     {
@@ -52,18 +51,9 @@ class AuthenticationController extends DefaultAbstractController
             if (password_verify($password . $salt, $passwordUser)) {
                 $_SESSION['logged'] = true;
                 $_SESSION['user']   = $user->getId();
-                $code               = $user->getRole();
-
-                if ($code === 'admin') {
-                    $page = '/home/welcome';
-                    header('Location: ' . $page);
-                    exit();
-                }
-                if ($code === 'user') {
-                    $page = '/home/welcome';
-                    header('Location: ' . $page);
-                    exit();
-                }
+                $page = '/home';
+                header('Location: ' . $page);
+                exit();
             }
             $message = "Echec de l'authentification";
         }
