@@ -51,8 +51,8 @@ class AuthenticationController extends DefaultAbstractController
             if (password_verify($password . $salt, $passwordUser)) {
                 $_SESSION['logged'] = true;
                 $_SESSION['user']   = $user->getId();
-                $page = '/home';
-                header('Location: ' . $page);
+
+                header('Location: /home');
                 exit();
             }
             $message = "Echec de l'authentification";
