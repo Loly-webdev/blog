@@ -1,29 +1,33 @@
 <section class="form">
     <h4>Contactez-moi :</h4>
     <form action="" method="POST">
-        <div>
-            <label for="name">Nom :</label><br/>
-            <input id="name" name="contact[name]" placeholder="Nom" type="text" value="{{ name }}" required/>
-        </div>
-        <div>
-            <label for="email">E-mail :</label><br/>
-            <input id="email" name="contact[email]" placeholder="Email" type="email" value="{{ mail }}" required/>
-            <br>
-            {{ errorMail }}
-        </div>
-        <div>
-            <label for="subject">Sujet :</label><br/>
-            <input id="subject" name="contact[subject]" placeholder="Sujet" type="text" required/>
-        </div>
-        <div>
-            <label for="message">Message :</label><br/>
-            <textarea id="message" name="contact[message]" placeholder="Message" rows="9" required></textarea>
-        </div>
+        <fieldset>
+            <p>
+                <label for="name">Nom :</label>
+                <br>
+                <input id="name" name="contact[name]" placeholder="Nom" type="text" value="{{ name }}" required/>
+                <br>
+                <label for="email">E-mail :</label>
+                <br>
+                <input id="email" name="contact[email]" placeholder="Email" type="email" value="{{ mail }}" required/>
+            </p>
+        </fieldset>
+        <fieldset>
+            <p>
+                <label for="subject">Sujet :</label>
+                <br>
+                <input id="subject" name="contact[subject]" placeholder="Sujet" type="text" required/>
+                <br>
+                <label for="message">Message :</label>
+                <br>
+                <textarea id="message" name="contact[message]" placeholder="Message" rows="9" required></textarea>
+            </p>
+        </fieldset>
         <div>
             <input class="button" type="submit" value="Envoyer"/>
         </div>
     </form>
 </section>
-<br>
 {{ message }}
 <br>
+{{ errorMail }}
