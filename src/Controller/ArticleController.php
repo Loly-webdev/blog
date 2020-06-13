@@ -28,8 +28,6 @@ class ArticleController extends DefaultAbstractController
     public function indexAction()
     {
         $articles = (new ArticleRepository())->find();
-        // For drop-down lists
-        // $article = (new ArticleRepository())->selectColumns(['title', 'content']);
 
         $this->renderView(
             'articles.html.twig',

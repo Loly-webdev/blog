@@ -2,11 +2,10 @@
 
 namespace Core\DefaultAbstract;
 
-use App\Repository\UserRepository;
 use Core\DefaultControllerInterface;
+use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
 use Core\Request;
-use Exception;
 use LogicException;
 
 /**
@@ -58,7 +57,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      * @param array       $params
      * @param string|null $viewFolder
      *
-     * @throws Exception
+     * @throws CoreException
      */
     public function renderView($viewName, array $params = [], string $viewFolder = null): void
     {
@@ -69,7 +68,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
-            throw new Exception("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
+            throw new CoreException("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
         }
         echo $view;
     }

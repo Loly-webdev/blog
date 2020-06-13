@@ -5,11 +5,11 @@
             <p>
                 <label for="name">Nom :</label>
                 <br>
-                <input id="name" name="contact[name]" placeholder="Nom" type="text" value="{{ name }}" required/>
+                <input id="name" name="contact[nameUser]" placeholder="Nom" type="text" value="{{ nameUser }}" required/>
                 <br>
                 <label for="email">E-mail :</label>
                 <br>
-                <input id="email" name="contact[email]" placeholder="Email" type="email" value="{{ mail }}" required/>
+                <input id="email" name="contact[email]" placeholder="Email" type="email" value="{{ email }}" required/>
             </p>
         </fieldset>
         <fieldset>
@@ -28,6 +28,6 @@
         </div>
     </form>
 </section>
-{{ message }}
+{{ errorMessage }}
 <br>
 {{ errorMail }}

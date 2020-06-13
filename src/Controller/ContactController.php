@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Service\Email;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Exception;
 
@@ -23,59 +24,40 @@ class ContactController extends DefaultAbstractController
         $entityName = 'contact';
 
         if (isset($_SESSION['logged']) === true) {
-            $userId   = $_SESSION['user'];
-            $user     = (new UserRepository())->findOneById($userId);
-            $name = $user->getLogin();
-            $mail = $user->getMail();
+            $userId    = $_SESSION['user'];
+            $user      = (new UserRepository())->findOneById($userId);
+            $nameUser  = $user->getLogin();
+            $emailUser = $user->getMail();
         }
 
         if ($this->hasFormSubmitted($entityName)) {
-            $myMail   = "lolywebdev@gmail.com";
-            $formData = $this->getFormSubmittedValues($entityName);
-            $name     = $formData['name'] ? $this->rec($formData['name']) : '';
-            $mail     = $formData['email'];
+            $formData  = $this->getFormSubmittedValues($entityName);
+            $nameUser  = $formData['nameUser'] ? Email::verifyText($formData['nameUser']) : '';
+            $emailUser = $formData['email'];
 
-            //on vérifie que l'adresse est correcte
-            $regex = "#^[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?@[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?\.[a-z]{2,}$#i";
-            if (!preg_match($regex, $mail)) {
-                $errorMail = "L'adresse $mail n'est pas valide";
+            // Check that the address is correct.
+            if (false === Email::verifyAddress($formData['email'])) {
+                $errorMail = "l'adresse $emailUser n'est pas valide";
             }
 
-            //tout est correctement renseigné, on envoi le mail
-            //on renseigne les entêtes de la fonction mail de PHP
-            $header = "MIME-Version: 1.0\r\n";
-            $header .= "Content-type: text/html; charset=UTF-8\r\n";
-            $header .= "From: $mail\r\n";
-            $header .= "Reply-To: $mail\r\n";
+            // We prepare the fields
+            $subject        = $formData['subject'] ? Email::verifyText($formData['subject']) : '';
+            $messageContent = $formData['message'] ? Email::verifyText($formData['message']) : '';
 
-            //on prépare les champs:
-            $subject        = $formData['subject'] ? $this->rec($formData['subject']) : '';
-            $messageContent = "<h2>MESSAGE DU SITE LOLYWEBDEV de $name, $mail</h2>"
-                . $formData['message'] ? $this->rec($formData['message']) : '';
+            $errorMessage = "une erreur est survenue, le mail n'a pas pu être envoyé";
 
-            //en fin, on envoi le mail
-            dump(mail($myMail, $subject, $messageContent, $header),$myMail, $subject, $messageContent, $header);
-            if (mail($myMail, $subject, $messageContent, $header)) {
-                $message = "Le mail à été envoyé avec succès!";
+            if (Email::sendMail($emailUser, $nameUser, $subject, $messageContent)) {
+                $errorMessage = "Le mail à été envoyé avec succès";
             }
-            $message = "Une erreur est survenue, le mail n'a pas été envoyé";
         }
         $this->renderView(
             'contact.html.twig',
             [
-                'name'         => $name ?? '',
-                'mail'         => $mail ?? '',
+                'nameUser'     => $nameUser ?? '',
+                'email'        => $emailUser ?? '',
                 'errorMail'    => $errorMail ?? '',
-                'message'      => $message ?? ''
+                'errorMessage' => $errorMessage ?? ''
             ]
         );
-    }
-
-    function Rec($text)
-    {
-        $text = htmlspecialchars(trim($text), ENT_QUOTES);
-        $text = nl2br($text);
-
-        return $text;
     }
 }
