@@ -33,12 +33,7 @@ class ContactController extends DefaultAbstractController
         if ($this->hasFormSubmitted($entityName)) {
             $formData  = $this->getFormSubmittedValues($entityName);
             $nameUser  = $formData['nameUser'] ? Email::verifyText($formData['nameUser']) : '';
-            $emailUser = $formData['email'];
-
-            // Check that the address is correct.
-            if (false === Email::verifyAddress($formData['email'])) {
-                $errorMail = "l'adresse $emailUser n'est pas valide";
-            }
+            $emailUser = $formData['email'] ?? '';
 
             // We prepare the fields
             $subject        = $formData['subject'] ? Email::verifyText($formData['subject']) : '';
@@ -50,6 +45,7 @@ class ContactController extends DefaultAbstractController
                 $errorMessage = "Le mail à été envoyé avec succès";
             }
         }
+
         $this->renderView(
             'contact.html.twig',
             [
