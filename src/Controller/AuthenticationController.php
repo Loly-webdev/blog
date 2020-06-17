@@ -52,9 +52,13 @@ class AuthenticationController extends DefaultAbstractController
                 $_SESSION['logged'] = true;
                 $_SESSION['user']   = $user->getId();
 
+                $status = "success";
+                $message = "Vous allez être redirigé";
+
                 header('Location: /home');
                 exit();
             }
+            $status = "danger";
             $message = "Echec de l'authentification";
         }
         $this->renderView(

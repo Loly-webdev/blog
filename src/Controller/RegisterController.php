@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\Email;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
 use Exception;
 
@@ -50,8 +52,37 @@ class RegisterController extends DefaultAbstractController
 
     public function postHydrate($entity): void
     {
+        $this->verifyEmail();
+        $this->verifyPassword();
         $role = $this->role();
 
         $entity->setRole($role);
+    }
+
+    public function verifyPassword()
+    {
+        if ($this->hasFormSubmitted('user')) {
+            $formData  = $this->getFormSubmittedValues('user');
+            $password  = $formData['password'] ?? '';
+            $password2 = $formData['password2'] ?? '';
+
+            if ($password !== $password2) {
+                throw new CoreException("Les deux mot de passe ne sont pas identique");
+            }
+            (new User())->setPassword($password);
+        }
+    }
+
+    public function verifyEmail()
+    {
+        if ($this->hasFormSubmitted('user')) {
+            $formData = $this->getFormSubmittedValues('user');
+            $email    = $formData['mail'] ?? '';
+
+            if (false === Email::verifyAddress($email)) {
+                throw new Exception("l'adresse $email n'est pas valide");
+            }
+            (new User())->setMail($email);
+        }
     }
 }

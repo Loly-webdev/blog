@@ -169,23 +169,7 @@ footer a:hover {
 }
 
 /* FORM */
-form {
-    flex-direction: column;
-}
 
-input,
-label,
-textarea {
-    margin: 0.5rem 9rem 0.3rem 9rem;
-}
-
-.button {
-    padding: 0.2rem;
-    border-radius: 25px;
-    width: 10%;
-    margin: 1rem;
-    font-size: 1rem;
-}
 
 /* CREDIT */
 footer {

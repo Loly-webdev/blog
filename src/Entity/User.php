@@ -54,6 +54,7 @@ class User extends DefaultAbstractEntity
     public function setMail($mail)
     {
         $this->mail = $mail;
+
         return $this;
     }
 

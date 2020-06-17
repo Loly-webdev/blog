@@ -51,14 +51,19 @@ trait AddControllerTrait
                 throw new \LogicException("L'id ne devrait pas exister.");
             }
 
-            $message     = $repository->insert($entity)
-                ? "Votre $entityLabel à bien était enregistré !"
-                : "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
+            $status  = "danger";
+            $message = "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
+
+            if ($repository->insert($entity)) {
+                $status  = "success";
+                $message = "Votre $entityLabel à bien était enregistré !";
+            }
         }
 
         $this->renderView(
             $viewTemplate,
             [
+                'status'  => $status ?? '',
                 'message' => $message ?? ''
             ]
         );

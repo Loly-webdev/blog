@@ -49,6 +49,9 @@ class ConfigurationProvider
         return static::$config['twig'] ?? [];
     }
 
+    /**
+     * @return string
+     */
     public static function getEnvironment(): string
     {
         return static::$config['env']
@@ -69,9 +72,20 @@ class ConfigurationProvider
         return static::$config['databases'] ?? [];
     }
 
+    /**
+     * @return string
+     */
     public function getSalt(): string
     {
         return static::$config['salt'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getMyMail(): string
+    {
+        return static::$config['myMail'];
     }
 
     /**
