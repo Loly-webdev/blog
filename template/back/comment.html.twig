@@ -10,11 +10,11 @@
             {{ comment.content }}
         </p>
         <div>
-            <a href="../../index.php">Éditer</a>
-            <a href="../../index.php">Supprimer</a>
+            <a href="edit?commentId={{ comment.id }}">Éditer</a>
+            <a href="delete?commentId={{ comment.id }}">Supprimer</a>
         </div>
         <div class="link">
-            <a href="../../index.php">Retour à la liste des billets</a>
+            <a href="/article">Retour à la liste des billets</a>
         </div>
     </section>
 {% endblock %}
