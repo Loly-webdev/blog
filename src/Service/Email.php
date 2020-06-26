@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repository\UserRepository;
+use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Provider\ConfigurationProvider;
 use Exception;
@@ -15,7 +16,7 @@ class Email extends DefaultAbstractController
         exit();
     }
 
-    public function sendMail(string $entityName, string $view): void
+    public function sendMail(string $entityName, string $view): bool
     {
         $myMail = ConfigurationProvider::getInstance()->getMyMail();
 
@@ -28,17 +29,17 @@ class Email extends DefaultAbstractController
 
         if ($this->hasFormSubmitted($entityName)) {
             $formData  = $this->getFormSubmittedValues($entityName);
-            $nameUser  = $formData['nameUser'] ? static::verifyText($formData['nameUser']) : '';
+            $nameUser  = $formData['nameUser'] ? Helper::verifyText($formData['nameUser']) : '';
             $emailUser = $formData['email'] ?? '';
 
-            if (false === static::verifyAddress($emailUser)) {
+            if (false === Helper::verifyAddress($emailUser)) {
                 throw new Exception("l'adresse $emailUser n'est pas valide");
             }
 
             // We prepare the fields
             $header         = static::getDefaultHeader($emailUser);
-            $subject        = $formData['subject'] ? static::verifyText($formData['subject']) : '';
-            $messageContent = $formData['message'] ? static::verifyText($formData['message']) : '';
+            $subject        = $formData['subject'] ? Helper::verifyText($formData['subject']) : '';
+            $messageContent = $formData['message'] ? Helper::verifyText($formData['message']) : '';
             $message        = "MESSAGE DU SITE LOLYWEBDEV de $nameUser, $emailUser\r\n"
                               . $messageContent;
 
@@ -48,33 +49,11 @@ class Email extends DefaultAbstractController
             if (mail($myMail, $subject, $message, $header)) {
                 $status        = "success";
                 $statusMessage = "Le mail à été envoyé avec succès";
+
+                return true;
             }
         }
-        $this->renderView(
-            $view,
-            [
-                'nameUser'      => $nameUser ?? '',
-                'email'         => $emailUser ?? '',
-                'status'        => $status ?? '',
-                'statusMessage' => $statusMessage ?? ''
-            ]
-        );
-    }
-
-    public static function verifyText($text): string
-    {
-        $text = htmlspecialchars(trim($text), ENT_QUOTES);
-        $text = nl2br($text);
-
-        return $text;
-    }
-
-    public static function verifyAddress($email): bool
-    {
-        //  We check that the address is correct
-        $regex = "#^[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?@[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?\.[a-z]{2,}$#i";
-
-        return preg_match($regex, $email);
+        return false;
     }
 
     public static function getDefaultHeader($emailUser)

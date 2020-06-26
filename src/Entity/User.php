@@ -116,7 +116,7 @@ class User extends DefaultAbstractEntity
      *
      * @return User
      */
-    public function setRole($role)
+    public function setRole($role): string
     {
         if (in_array($role, self::ROLES)) {
             $this->role = $role;

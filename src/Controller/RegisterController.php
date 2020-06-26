@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Service\Email;
+use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
@@ -79,7 +79,7 @@ class RegisterController extends DefaultAbstractController
             $formData = $this->getFormSubmittedValues('user');
             $email    = $formData['mail'] ?? '';
 
-            if (false === Email::verifyAddress($email)) {
+            if (false === Helper::verifyAddress($email)) {
                 throw new Exception("l'adresse $email n'est pas valide");
             }
             (new User())->setMail($email);

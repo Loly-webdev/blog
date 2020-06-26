@@ -26,10 +26,10 @@ class HomeController extends DefaultAbstractController
             $code   = $user->getRole();
 
             if ($code === 'admin') {
-                $viewTemplate = 'homeAdmin.html.twig';
+                $viewTemplate = 'homeBack.html.twig';
             }
             if ($code === 'user') {
-                $viewTemplate = 'homeAdmin.html.twig';
+                $viewTemplate = 'homeBack.html.twig';
             }
 
             $status = $user->getRoleLabel($code);

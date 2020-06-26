@@ -23,5 +23,15 @@ class ContactController extends DefaultAbstractController
         $entityName = 'contact';
         $view       = 'contact.html.twig';
         (new Email())->sendMail($entityName, $view);
+
+        $this->renderView(
+            $view,
+            [
+                'nameUser'      => $nameUser ?? '',
+                'email'         => $emailUser ?? '',
+                'status'        => $status ?? '',
+                'statusMessage' => $statusMessage ?? ''
+            ]
+        );
     }
 }

@@ -27,9 +27,9 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
 
     public function hasFormSubmitted(string $formName): bool
     {
-        $data = $this->getRequest()->getParam($formName);
+        $this->getRequest()->getParam($formName);
 
-        return isset($data);
+        return false;
     }
 
     /**
@@ -39,27 +39,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     {
         return $this->request;
     }
-
-    public function getFormSubmittedValues($formName): array
-    {
-        $data = $this->getRequest()->getParam($formName);
-
-        if (false === is_array($data)) {
-            throw new LogicException('Un formulaire doit être passer en tableau.');
-        }
-        return $data;
-    }
-
-    /**
-     * Method to see the views of the site
-     *
-     * @param string      $viewName
-     * @param array       $params
-     * @param string|null $viewFolder
-     *
-     * @throws CoreException
-     */
-    public function renderView($viewName, array $params = [], string $viewFolder = null): void
+da [], string $viewFolder = null): void
     {
         $defaultPath = VIEW_ROOT;
         $viewFolder  = $viewFolder ?? $this->getFolderView();
@@ -79,10 +59,16 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      */
     public function getFolderView(): string
     {
-        // Define the view directory
-        if (isset($_SESSION['logged']) === true) {
-            return 'back/';
-        }
         return 'front/';
+    }
+
+    /**
+     * redirect method
+     * @param string $route
+     */
+    public function redirectTo(string $route)
+    {
+        header('Location: /' . $route);
+        exit();
     }
 }

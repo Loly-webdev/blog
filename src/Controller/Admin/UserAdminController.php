@@ -22,7 +22,7 @@ class UserAdminController extends DefaultAbstractController
     public function indexAction()
     {
         $this->renderView(
-            'homeAdmin.html.twig'
+            'homeBack.html.twig'
         );
     }
 
