@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Exception;
@@ -21,8 +22,10 @@ class HomeController extends DefaultAbstractController
     public function indexAction()
     {
         if (isset($_SESSION['logged']) === true) {
-            $userId = $_SESSION['user'];
+            $userId = $_SESSION['id'];
+
             $user   = (new UserRepository())->findOneById($userId);
+            assert($user instanceof User);
             $code   = $user->getRole();
 
             if ($code === 'admin') {

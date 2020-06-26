@@ -22,7 +22,11 @@ abstract class FormValidatorAbstract
 
         $formValues = [];
         foreach ($this->formFields as $field) {
-            $formValues[$field] = $this->submittedValues;
+            // Si le champs du formulaire existe dans Request et qu'une valeur autre que null et vide est renseigné
+            // alors on hydrate le champs du formulaire
+            if (isset($this->submittedValues[$field]) && '' !== $this->submittedValues[$field]) {
+                $formValues[$field] = $this->submittedValues[$field];
+            }
         }
 
         $this->formValues = $formValues;
@@ -37,11 +41,6 @@ abstract class FormValidatorAbstract
         return $this->formValues;
     }
 
-    public function getSubmittedValues(): array
-    {
-        return $this->submittedValues;
-    }
-
     public function getFieldValue($key, $defaultValue = null)
     {
         return $this->formValues[$key] ?? $defaultValue;
@@ -49,14 +48,18 @@ abstract class FormValidatorAbstract
 
     public function getFormFieldToValidate(): array
     {
-        // return array_keys($this->getFormFieldToValidate());
-        return array_keys($this->formFieldsToValidate);
+        return $this->getformFields();
     }
 
     public function isValid(): bool
     {
-        foreach ($this->getFormFieldToValidate() as $values) {
-            if (empty($values)) {
+        $fieldsToValidate = $this->getFormFieldToValidate();
+        $formValues = $this->getFormValues();
+
+        // On parcours les champs obligatoire
+        foreach ($fieldsToValidate as $fieldToValidate) {
+            // si le champs obligatoire est vide ou null dans le formulaire 'populé' alors on stop
+            if (false === isset($formValues[$fieldToValidate]) || '' === $formValues[$fieldToValidate]) {
                 $isValid = false;
                 break;
             }

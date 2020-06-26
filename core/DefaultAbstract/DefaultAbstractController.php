@@ -25,13 +25,6 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         $this->request = Request::getInstance();
     }
 
-    public function hasFormSubmitted(string $formName): bool
-    {
-        $this->getRequest()->getParam($formName);
-
-        return false;
-    }
-
     /**
      * @return Request
      */
@@ -39,7 +32,17 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     {
         return $this->request;
     }
-da [], string $viewFolder = null): void
+
+    /**
+     * Method to see the views of the site
+     *
+     * @param string      $viewName
+     * @param array       $params
+     * @param string|null $viewFolder
+     *
+     * @throws CoreException
+     */
+    public function renderView($viewName, array $params = [], string $viewFolder = null): void
     {
         $defaultPath = VIEW_ROOT;
         $viewFolder  = $viewFolder ?? $this->getFolderView();

@@ -2,7 +2,7 @@
 
 namespace Core\DefaultAbstract;
 
-class LoggedAbstractController extends DefaultAbstractController
+abstract class LoggedAbstractController extends DefaultAbstractController
 {
     /**
      * DefaultAbstractController constructor
@@ -15,13 +15,6 @@ class LoggedAbstractController extends DefaultAbstractController
         if (false === isset($_SESSION['logged'])) {
             $this->redirectTo('authentication');
         }
-    }
-
-    public function indexAction()
-    {
-        $this->renderView(
-            'formAuthentication.html.twig'
-        );
     }
 
     public function getFolderView(): string

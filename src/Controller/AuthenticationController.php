@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\Provider\ConfigurationProvider;
 use Exception;
 
@@ -33,15 +34,19 @@ class AuthenticationController extends DefaultAbstractController
     {
         $formValidator = new FormAuthenticationValidator();
 
-        dump($formValidator, $formValidator->isValid());
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
             if (null !== $user = $this->retrieveAccount($formValidator->getFormValues())) {
+                assert($user instanceof User);
                 $this->addUserInSession($user);
 
                 $status  = "success";
                 $message = "Authentification réussi";
-                $this->redirectTo('admin');
+
+                //si role = admin, on redirige vers l'accueil de l'admin sinon vers celui de l'user
+                //$this->redirectTo($user->isAdmin() ? 'home' : 'home');
+                $this->redirectTo('home');
+
             }
 
             $status  = "danger";
@@ -58,16 +63,19 @@ class AuthenticationController extends DefaultAbstractController
     }
 
     /**
-     * @param mixed ...$params
+     * @param mixed $params
      *
-     * @return User|null
+     * @return DefaultAbstractEntity
      */
-    private function retrieveAccount(...$params): ?user
+    private function retrieveAccount($params): ?DefaultAbstractEntity
     {
         $login    = $params['login'];
         $password = $params['password'];
 
         $user = (new UserRepository())->findOne(['login' => $login]);
+
+        // On vérifie que $user est bien une instance de classe User
+        assert($user instanceof User);
 
         if (null === $user) {
             return null;
@@ -88,7 +96,8 @@ class AuthenticationController extends DefaultAbstractController
     private function addUserInSession(User $user)
     {
         $_SESSION['logged'] = true;
-        $_SESSION['user']   = $user->getSessionValues();
+        $_SESSION['user']   = $user;
+        $_SESSION['id'] = $user->getId();
     }
 
     /**
