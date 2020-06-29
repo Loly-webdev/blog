@@ -52,37 +52,33 @@ class RegisterController extends DefaultAbstractController
 
     public function postHydrate($entity): void
     {
-        $this->verifyEmail();
-        $this->verifyPassword();
+        $this->check();
         $role = $this->role();
 
         $entity->setRole($role);
     }
 
-    public function verifyPassword()
+    public function check()
     {
-        if ($this->hasFormSubmitted('user')) {
-            $formData  = $this->getFormSubmittedValues('user');
-            $password  = $formData['password'] ?? '';
-            $password2 = $formData['password2'] ?? '';
+        $formValidator = new FormRegisterValidator();
 
-            if ($password !== $password2) {
-                throw new CoreException("Les deux mot de passe ne sont pas identique");
-            }
-            (new User())->setPassword($password);
-        }
-    }
+        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
-    public function verifyEmail()
-    {
-        if ($this->hasFormSubmitted('user')) {
-            $formData = $this->getFormSubmittedValues('user');
-            $email    = $formData['mail'] ?? '';
+            $formValues = $formValidator->getFormValues();
+
+            $email     = $formValues['mail'] ?? '';
+            $password  = $formValues['password'] ?? '';
+            $password2 = $formValues['password2'] ?? '';
 
             if (false === Helper::verifyAddress($email)) {
                 throw new Exception("l'adresse $email n'est pas valide");
             }
-            (new User())->setMail($email);
+
+            if ($password !== $password2) {
+                throw new CoreException("Les deux mot de passe ne sont pas identique");
+            }
+            (new User())->setMail($email)
+                        ->setPassword($password);
         }
     }
 }

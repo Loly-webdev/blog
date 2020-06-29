@@ -3,6 +3,7 @@
 namespace Core\Traits\Controller;
 
 use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository};
+use LogicException;
 
 trait AddControllerTrait
 {
@@ -39,16 +40,21 @@ trait AddControllerTrait
         string $viewTemplate
     ): void
     {
-        if ($this->hasFormSubmitted($entityName)) {
-            $dataSubmitted = $this->getFormSubmittedValues($entityName);
-            $entity        = $entityClass->hydrate($dataSubmitted);
+        $formSubmitted = $this->getRequest()->getParam($entityName);
+        if (isset($formSubmitted)) {
+
+            if (false === is_array($formSubmitted)) {
+                throw new LogicException('Un formulaire doit être passer en tableau.');
+            }
+
+            $entity = $entityClass->hydrate($formSubmitted);
 
             if (method_exists($this, 'postHydrate')) {
                 $this->postHydrate($entity);
             }
 
             if ($entity->hasId()) {
-                throw new \LogicException("L'id ne devrait pas exister.");
+                throw new LogicException("L'id ne devrait pas exister.");
             }
 
             $status  = "danger";

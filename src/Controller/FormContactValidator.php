@@ -11,7 +11,9 @@ class FormContactValidator extends FormValidatorAbstract
     {
         return [
             'nameUser',
-            'email'
+            'email',
+            'subject',
+            'message'
         ];
     }
 
