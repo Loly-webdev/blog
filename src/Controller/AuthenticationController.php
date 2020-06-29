@@ -40,13 +40,8 @@ class AuthenticationController extends DefaultAbstractController
                 assert($user instanceof User);
                 $this->addUserInSession($user);
 
-                $status  = "success";
-                $message = "Authentification réussi";
-
-                //si role = admin, on redirige vers l'accueil de l'admin sinon vers celui de l'user
-                //$this->redirectTo($user->isAdmin() ? 'home' : 'home');
-                $this->redirectTo('home');
-
+                //On redirige vers l'userAdminController
+                $this->redirectTo('Admin/userAdmin');
             }
 
             $status  = "danger";

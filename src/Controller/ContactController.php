@@ -23,7 +23,11 @@ class ContactController extends DefaultAbstractController
      */
     public function indexAction()
     {
+        $viewFolder = 'front/';
+
         if (isset($_SESSION['logged']) === true) {
+            $viewFolder = 'back/';
+
             $userId    = $_SESSION['id'];
             $user      = (new UserRepository())->findOneById($userId);
             assert($user instanceof User);
@@ -65,7 +69,8 @@ class ContactController extends DefaultAbstractController
                 'email'         => $emailUser ?? '',
                 'status'        => $status ?? '',
                 'statusMessage' => $statusMessage ?? ''
-            ]
+            ],
+            $viewFolder
         );
     }
 }

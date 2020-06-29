@@ -5,11 +5,11 @@ namespace App\Controller\Admin;
 use App\Controller\RegisterController;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Core\DefaultAbstract\DefaultAbstractController;
+use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
 
-class UserAdminController extends DefaultAbstractController
+class UserAdminController extends LoggedAbstractController
 {
     use CUDControllerTrait;
 
@@ -21,8 +21,18 @@ class UserAdminController extends DefaultAbstractController
      */
     public function indexAction()
     {
+        $userId = $_SESSION['id'];
+        $user   = (new UserRepository())->findOneById($userId);
+        assert($user instanceof User);
+        $code   = $user->getRole();
+        $status = $user->getRoleLabel($code);
+        $login  = $user->getLogin();
+
         $this->renderView(
-            'homeBack.html.twig'
+            'homeBack.html.twig',
+            [
+                'message' => "Ravi de te revoir $status $login !" ?? ''
+            ]
         );
     }
 
@@ -74,7 +84,7 @@ class UserAdminController extends DefaultAbstractController
 
     public function profileAction()
     {
-        $userId = $_SESSION['user'];
+        $userId = $_SESSION['id'];
         $user   = (new UserRepository())->findOneById($userId);
 
         $this->renderView(

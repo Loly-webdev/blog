@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\{ArticleRepository, CommentRepository};
-use Core\DefaultAbstract\{DefaultAbstractController, DefaultAbstractEntity};
+use Core\DefaultAbstract\{DefaultAbstractController, DefaultAbstractEntity, LoggedAbstractController};
 use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
 use Exception;
 
@@ -12,7 +12,7 @@ use Exception;
  * Class ArticleController
  * @package App\Controller
  */
-class ArticleController extends DefaultAbstractController
+class ArticleController extends LoggedAbstractController
 {
     protected $key;
 

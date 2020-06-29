@@ -22,30 +22,9 @@ class HomeController extends DefaultAbstractController
     public function indexAction()
     {
         if (isset($_SESSION['logged']) === true) {
-            $userId = $_SESSION['id'];
-
-            $user   = (new UserRepository())->findOneById($userId);
-            assert($user instanceof User);
-            $code   = $user->getRole();
-
-            if ($code === 'admin') {
-                $viewTemplate = 'homeBack.html.twig';
-            }
-            if ($code === 'user') {
-                $viewTemplate = 'homeBack.html.twig';
-            }
-
-            $status = $user->getRoleLabel($code);
-            $login  = $user->getLogin();
-
-            $this->renderView(
-                $viewTemplate,
-                [
-                    'message' => "Ravi de te revoir $status $login !" ?? ''
-                ]
-            );
-            exit();
+            $this->redirectTo('Admin/userAdmin');
         }
+
         $this->renderView(
             'home.html.twig',
             [

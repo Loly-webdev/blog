@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
-use Core\DefaultAbstract\DefaultAbstractController;
+use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Traits\Controller\AddControllerTrait;
 use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
@@ -13,7 +13,7 @@ use Exception;
  * Class CommentController
  * @package App\Controller
  */
-class CommentController extends DefaultAbstractController
+class CommentController extends LoggedAbstractController
 {
     use CUDControllerTrait,
         AddControllerTrait;
