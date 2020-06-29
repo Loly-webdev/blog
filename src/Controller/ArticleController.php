@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\{ArticleRepository, CommentRepository};
-use Core\DefaultAbstract\{DefaultAbstractController, DefaultAbstractEntity, LoggedAbstractController};
+use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
 use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
 use Exception;
 
@@ -30,7 +30,7 @@ class ArticleController extends LoggedAbstractController
         $articles = (new ArticleRepository())->find();
 
         $this->renderView(
-            'articles.html.twig',
+            '/article/articles.html.twig',
             [
                 'title'    => 'Derniers billets du blog :',
                 'articles' => $articles
@@ -49,7 +49,7 @@ class ArticleController extends LoggedAbstractController
             'articleId',
             'article',
             new ArticleRepository(),
-            'articleById.html.twig',
+            'article/articleById.html.twig',
         ];
     }
 
@@ -74,7 +74,7 @@ class ArticleController extends LoggedAbstractController
             'article',
             new Article(),
             new ArticleRepository(),
-            'formArticle.html.twig'
+            'article/formArticle.html.twig'
         ];
     }
 
@@ -89,7 +89,7 @@ class ArticleController extends LoggedAbstractController
             'articleId',
             new ArticleRepository(),
             'article',
-            'editArticle.html.twig'
+            'article/editArticle.html.twig'
         ];
     }
 
@@ -104,7 +104,7 @@ class ArticleController extends LoggedAbstractController
             new ArticleRepository(),
             'articleId',
             'article',
-            'formArticle.html.twig'
+            'article/formArticle.html.twig'
         ];
     }
 }

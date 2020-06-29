@@ -6,7 +6,6 @@ use Core\DefaultControllerInterface;
 use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
 use Core\Request;
-use LogicException;
 
 /**
  * Class DefaultAbstractController
@@ -67,6 +66,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
 
     /**
      * redirect method
+     *
      * @param string $route
      */
     public function redirectTo(string $route)

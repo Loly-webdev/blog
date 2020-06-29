@@ -2,13 +2,11 @@
 
 namespace Core\DefaultAbstract;
 
-use Core\Exception\CoreException;
-
 /**
  * Class AdminAbstractController
  * @package Core\DefaultAbstract
  */
-class AdminAbstractController extends LoggedAbstractController
+abstract class AdminAbstractController extends LoggedAbstractController
 {
     protected $request;
 

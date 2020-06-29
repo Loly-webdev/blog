@@ -28,8 +28,8 @@ class ContactController extends DefaultAbstractController
         if (isset($_SESSION['logged']) === true) {
             $viewFolder = 'back/';
 
-            $userId    = $_SESSION['id'];
-            $user      = (new UserRepository())->findOneById($userId);
+            $userId = $_SESSION['id'];
+            $user   = (new UserRepository())->findOneById($userId);
             assert($user instanceof User);
             $nameUser  = $user->getLogin();
             $emailUser = $user->getMail();
@@ -56,10 +56,10 @@ class ContactController extends DefaultAbstractController
             $status        = "danger";
             $statusMessage = "une erreur est survenue, le mail n'a pas pu être envoyé";
 
-           if (true === (new Email())->sendMail($emailUser, $subject, $message)) {
-               $status        = "success";
-               $statusMessage = "Le mail à été envoyé avec succès";
-           }
+            if (true === (new Email())->sendMail($emailUser, $subject, $message)) {
+                $status        = "success";
+                $statusMessage = "Le mail à été envoyé avec succès";
+            }
         }
 
         $this->renderView(

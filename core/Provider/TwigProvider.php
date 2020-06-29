@@ -23,6 +23,7 @@ class TwigProvider
         $debug  = $config->getTwigConfig();
 
         if (null === static::$twig) {
+
             $loader       = new FilesystemLoader('template/');
             static::$twig = new Environment(
                 $loader,

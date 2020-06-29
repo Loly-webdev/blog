@@ -92,7 +92,7 @@ class AuthenticationController extends DefaultAbstractController
     {
         $_SESSION['logged'] = true;
         $_SESSION['user']   = $user;
-        $_SESSION['id'] = $user->getId();
+        $_SESSION['id']     = $user->getId();
     }
 
     /**

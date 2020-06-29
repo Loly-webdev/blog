@@ -39,7 +39,7 @@ class CommentController extends LoggedAbstractController
             'commentId',
             'comment',
             new CommentRepository(),
-            'comment.html.twig'
+            'comment/comment.html.twig'
         ];
     }
 
@@ -55,14 +55,14 @@ class CommentController extends LoggedAbstractController
             'comment',
             new Comment(),
             new CommentRepository(),
-            'formComment.html.twig'
+            'comment/formComment.html.twig'
         ];
     }
 
     public function postHydrate($entity): void
     {
         $entity->setArticleId(
-	        $this->getRequest()->getParamAsInt('articleId')
+            $this->getRequest()->getParamAsInt('articleId')
         );
     }
 
@@ -77,7 +77,7 @@ class CommentController extends LoggedAbstractController
             'commentId',
             new CommentRepository(),
             'comment',
-            'editComment.html.twig'
+            'comment/editComment.html.twig'
         ];
     }
 
@@ -92,7 +92,7 @@ class CommentController extends LoggedAbstractController
             new CommentRepository(),
             'commentId',
             'commentaire',
-            'formComment.html.twig'
+            'comment/formComment.html.twig'
         ];
     }
 }

@@ -6,9 +6,9 @@ use Core\Request;
 
 abstract class FormValidatorAbstract
 {
-    protected $formFields = []; // list des champs du formulaire
-    protected $submittedValues = []; // tableau content toutes les valeurs soumises dans la requete http
-    protected $formValues = []; // tableau content les champs et valeur du formulaire
+    protected $formFields           = []; // list des champs du formulaire
+    protected $submittedValues      = []; // tableau content toutes les valeurs soumises dans la requete http
+    protected $formValues           = []; // tableau content les champs et valeur du formulaire
     protected $formFieldsToValidate = []; // list des champs obligatoires
 
     /**
@@ -16,9 +16,9 @@ abstract class FormValidatorAbstract
      */
     public function __construct()
     {
-        $this->formFields = $this->getFormFields();
+        $this->formFields           = $this->getFormFields();
         $this->formFieldsToValidate = $this->getFormFieldToValidate();
-        $this->submittedValues = Request::getInstance()->getParam($this->getFormName());
+        $this->submittedValues      = Request::getInstance()->getParam($this->getFormName());
 
         $formValues = [];
         foreach ($this->formFields as $field) {
@@ -34,27 +34,22 @@ abstract class FormValidatorAbstract
 
     abstract function getFormFields(): array;
 
-    abstract function getFormName(): string;
-
-    public function getFormValues(): array
+    public function getFormFieldToValidate(): array
     {
-        return $this->formValues;
+        return $this->getformFields();
     }
+
+    abstract function getFormName(): string;
 
     public function getFieldValue($key, $defaultValue = null)
     {
         return $this->formValues[$key] ?? $defaultValue;
     }
 
-    public function getFormFieldToValidate(): array
-    {
-        return $this->getformFields();
-    }
-
     public function isValid(): bool
     {
         $fieldsToValidate = $this->getFormFieldToValidate();
-        $formValues = $this->getFormValues();
+        $formValues       = $this->getFormValues();
 
         // On parcours les champs obligatoire
         foreach ($fieldsToValidate as $fieldToValidate) {
@@ -65,6 +60,11 @@ abstract class FormValidatorAbstract
             }
         }
         return $isValid ?? true;
+    }
+
+    public function getFormValues(): array
+    {
+        return $this->formValues;
     }
 
     public function isSubmitted(): bool
