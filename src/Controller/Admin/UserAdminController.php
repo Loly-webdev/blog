@@ -47,7 +47,7 @@ class UserAdminController extends LoggedAbstractController
             'userId',
             'user',
             new UserRepository(),
-            'profile.html.twig'
+            'profile/profile.html.twig'
         ];
     }
 
@@ -62,7 +62,7 @@ class UserAdminController extends LoggedAbstractController
             'userId',
             new UserRepository(),
             'user',
-            'editProfile.html.twig'
+            'profile/editProfile.html.twig'
         ];
     }
 
@@ -88,7 +88,7 @@ class UserAdminController extends LoggedAbstractController
         $user   = (new UserRepository())->findOneById($userId);
 
         $this->renderView(
-            'profile.html.twig',
+            'profile/profile.html.twig',
             [
                 'user' => $user
             ]

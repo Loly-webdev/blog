@@ -55,13 +55,7 @@ a {
     text-decoration: none;
 }
 
-nav,
-footer {
-    background-color: rgb(105, 105, 105);
-}
-
-nav li a,
-footer p {
+nav li a {
     color: rgb(254, 255, 234);
 }
 
@@ -72,11 +66,7 @@ footer p {
 
 /* NAV */
 nav {
-    letter-spacing: 4px;
     text-transform: uppercase;
-    font-weight: bold;
-    justify-content: space-between;
-    position: fixed;
     width: 100%;
     top: 0;
 }
@@ -124,16 +114,19 @@ footer a:hover {
 }
 
 /* CV */
-#cv a {
-    background-color: rgb(105, 105, 105);
-    border: 2px solid rgb(250, 235, 215);
-    color: rgb(254, 255, 234);
+.button1 {
+    cursor: pointer;
     font-weight: bold;
     text-transform: uppercase;
+    text-align: center;
     padding: 15px 25px;
     margin: 10px;
-    border-radius: 25px;
+    border-radius: 15px;
     display: inline-block;
+    border: 1px solid rgb(184, 184, 184);
+    border-bottom: solid 2px rgb(184, 184, 184);
+    color: rgb(221, 221, 221);
+    background: rgba(52, 58, 64, 0.9);
 
     transition: all 0.15s ease-out;
     -webkit-transition: all 0.15s ease-out;
@@ -141,12 +134,40 @@ footer a:hover {
     -o-transition: all 0.15s ease-out;
 }
 
-#cv a:hover {
-    border: 2px solid rgb(105, 105, 105);
-    background-color: rgb(250, 235, 215);
-    color: rgb(105, 105, 105);
+.button1:hover {
     text-decoration: none;
-    transform: translateY(5px);
+    transform: translateY(1px);
+    border: 1px solid rgba(8, 8, 71, 0.9);
+    border-bottom: solid 2px rgba(8, 8, 71, 0.9);
+    color: rgba(8, 8, 71, 0.9);
+    background: rgb(184, 184, 184);
+}
+
+/* Anilmation css*/
+
+.text-js {
+    opacity: 0;
+}
+
+.cursor {
+    display: block;
+    position: absolute;
+    height: 85%;
+    top: 0;
+    right: -5px;
+    width: 2px;
+    z-index: 1;
+    animation: flash 0.5s none infinite alternate;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /* SOCIAL */
@@ -172,9 +193,14 @@ footer a:hover {
 
 
 /* CREDIT */
+.up {
+    justify-content: end;
+}
 footer {
     width: 100%;
     bottom: 0;
+    background: rgb(52, 58, 64);
+    color: rgba(228, 224, 224, 0.9);
     /*position: fixed;*/
 }
 
@@ -212,7 +238,7 @@ footer a {
 
 .link {
     width: 40%;
-    margin:  1.5rem auto;
+    margin: 1.5rem auto;
     padding: 1rem;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
