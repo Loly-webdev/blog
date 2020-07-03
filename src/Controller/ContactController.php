@@ -45,7 +45,7 @@ class ContactController extends DefaultAbstractController
 
             $fields = $this->prepareFields($formValues, $nameUser, $emailUser);
 
-            $status = $this->status($emailUser, $fields['subject'], $fields['message']);
+            $status = static::statusMessage($emailUser, $fields['subject'], $fields['message']);
         }
 
         $this->renderView(
@@ -69,20 +69,13 @@ class ContactController extends DefaultAbstractController
         return $user;
     }
 
-    public function status($emailUser, $subject, $message): array
+    static public function statusMessage($emailUser, $subject, $message): array
     {
-        $status = "danger";
-        $statusMessage = "une erreur est survenue, le mail n'a pas pu être envoyé";
+        $var = true === (new Email())->sendMail($emailUser, $subject, $message);
+        $messageFalse = "une erreur est survenue, le mail n'a pas pu être envoyé";
+        $messageTrue = $message = "Le mail à été envoyé avec succès";
 
-        if (true === (new Email())->sendMail($emailUser, $subject, $message)) {
-            $status = "success";
-            $statusMessage = "Le mail à été envoyé avec succès";
-        }
-
-        return [
-            'status' => $status ?? '',
-            'statusMessage' => $statusMessage ?? ''
-        ];
+        return static::status($var, $messageFalse, $messageTrue);
     }
 
     public function prepareFields($formValues, $nameUser, $emailUser): array

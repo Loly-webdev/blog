@@ -40,7 +40,7 @@ class AuthenticationController extends DefaultAbstractController
                 assert($user instanceof User);
                 $this->addUserInSession($user);
 
-                //On redirige vers l'userAdminController
+                // Redirect to userAdminController
                 $this->redirectTo('Admin/userAdmin');
             }
 
@@ -69,7 +69,7 @@ class AuthenticationController extends DefaultAbstractController
 
         $user = (new UserRepository())->findOne(['login' => $login]);
 
-        // On vérifie que $user est bien une instance de classe User
+        // Check if $user is an instance of User class
         assert($user instanceof User);
 
         if (null === $user) {

@@ -74,4 +74,20 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         header('Location: /' . $route);
         exit();
     }
+
+    static public function status(string $var, string $messageFalse, string $messageTrue):array
+    {
+        $status = "danger";
+        $statusMessage = $messageFalse;
+
+        if ($var) {
+            $status = "success";
+            $statusMessage = $messageTrue;
+        }
+
+        return [
+            'status' => $status ?? '',
+            'statusMessage' => $statusMessage ?? ''
+        ];
+    }
 }

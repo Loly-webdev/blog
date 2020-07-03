@@ -57,21 +57,24 @@ trait AddControllerTrait
                 throw new LogicException("L'id ne devrait pas exister.");
             }
 
-            $status  = "danger";
-            $message = "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
-
-            if ($repository->insert($entity)) {
-                $status  = "success";
-                $message = "Votre $entityLabel à bien était enregistré !";
-            }
+            $status = static::statusMessage($repository, $entity, $entityLabel);
         }
 
         $this->renderView(
             $viewTemplate,
             [
-                'status'  => $status ?? '',
-                'message' => $message ?? ''
+                'status'  => $status['status'] ?? '',
+                'statusMessage' => $status['statusMessage'] ?? ''
             ]
         );
+    }
+
+    static public function statusMessage($repository, $entity, $entityLabel): array
+    {
+        $var = $repository->insert($entity);
+        $messageFalse = "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
+        $messageTrue = $message = "Votre $entityLabel à bien était enregistré !";
+
+        return static::status($var, $messageFalse, $messageTrue);
     }
 }

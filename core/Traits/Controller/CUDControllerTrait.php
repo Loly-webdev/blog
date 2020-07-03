@@ -112,22 +112,26 @@ trait CUDControllerTrait
         }
 
         $data    = $this->getRequest()->getParam($entityName);
-        $message = '';
 
         if (isset($data)) {
             $entity = $entity->hydrate($data);
 
             $updated = $repository->update($entity);
-            $message = $updated
-                ? "Votre $entityName à bien était modifié !"
-                : "Une erreur est survenue.";
+
+            $var = $updated;
+            $success = "Votre $entityName à bien était modifié !";
+            $error = "Une erreur est survenue.";
+
+            $status = static::messageStatus($var, $success, $error);
+
         }
 
         $this->renderView(
             $viewTemplate,
             [
                 $entityName => $entity,
-                'message'   => $message
+                'status'  => $status['status'] ?? '',
+                'statusMessage' => $status['statusMessage'] ?? ''
             ]
         );
     }
@@ -163,22 +167,39 @@ trait CUDControllerTrait
         string $viewTemplate
     ): void
     {
-        $message = '';
-
         $deleted = $repository->delete(
             $this->getRequest()
                  ->getParam($entityParamId)
         );
 
-        $message = $deleted
-            ? "Votre $entityLabel à bien était supprimé !"
-            : "Une erreur est survenue.";
+        $var = $deleted;
+        $success = "Votre $entityLabel à bien était supprimé !";
+        $error = "Une erreur est survenue.";
+
+        $status = static::messageStatus($var, $success, $error);
 
         $this->renderView(
             $viewTemplate,
             [
-                'message' => $message
+                'status'  => $status['status'] ?? '',
+                'statusMessage' => $status['statusMessage'] ?? ''
             ]
         );
+    }
+
+    public function messageStatus(string $var, string $success, string $error)
+    {
+        $status = $var
+            ? "success"
+            : "danger";
+
+        $statusMessage = $var
+            ? $success
+            : $error;
+
+        return [
+            'status' => $status ?? '',
+            'statusMessage' => $statusMessage ?? ''
+        ];
     }
 }
