@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\Email;
+use App\Service\Message;
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Exception;
@@ -23,21 +24,15 @@ class ContactController extends DefaultAbstractController
      */
     public function indexAction()
     {
-        if (isset($_SESSION['logged']) === true) {
-            $viewFolder = 'back/';
-            $user = $this->contactLogged();
-            $nameUser = $user->getLogin();
-            $emailUser = $user->getMail();
-        }
+        $user = $this->contactLogged() ?? new User;
 
         $formValidator = new FormContactValidator();
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
             $formValues = $formValidator->getFormValues();
-            $nameUser = $formValues['nameUser'] ? Helper::verifyText($formValues['nameUser']) : '';
+            $nameUser = Helper::securizeText($formValues['nameUser']);
             $emailUser = $formValues['email'] ?? '';
-
 
             if (false === Helper::verifyAddress($emailUser)) {
                 throw new Exception("l'adresse $emailUser n'est pas valide");
@@ -51,16 +46,14 @@ class ContactController extends DefaultAbstractController
         $this->renderView(
             'contact.html.twig',
             [
-                'nameUser' => $nameUser ?? '',
-                'email' => $emailUser ?? '',
-                'status' => $status['status'] ?? '',
-                'statusMessage' => $status['statusMessage'] ?? ''
+                'user' => $user,
+                'status' => $status ?? '',
             ],
-            $viewFolder ?? 'front/'
+            $user ? 'back/' : 'front/'
         );
     }
 
-    public function contactLogged(): User
+    public function contactLogged(): ?User
     {
         $userId = $_SESSION['id'];
         $user = (new UserRepository())->findOneById($userId);
@@ -71,17 +64,17 @@ class ContactController extends DefaultAbstractController
 
     static public function statusMessage($emailUser, $subject, $message): array
     {
-        $var = true === (new Email())->sendMail($emailUser, $subject, $message);
-        $messageFalse = "une erreur est survenue, le mail n'a pas pu être envoyé";
-        $messageTrue = $message = "Le mail à été envoyé avec succès";
-
-        return static::status($var, $messageFalse, $messageTrue);
+        return Message::getMessage(
+            Email::sendMail($emailUser, $subject, $message),
+            'Le mail à été envoyé avec succès',
+            'une erreur est survenue, le mail n\'a pas pu être envoyé'
+        );
     }
 
     public function prepareFields($formValues, $nameUser, $emailUser): array
     {
-        $subject = $formValues['subject'] ? Helper::verifyText($formValues['subject']) : '';
-        $messageContent = $formValues['message'] ? Helper::verifyText($formValues['message']) : '';
+        $subject = $formValues['subject'] ? Helper::securizeText($formValues['subject']) : '';
+        $messageContent = $formValues['message'] ? Helper::securizeText($formValues['message']) : '';
         $message = "MESSAGE DU SITE LOLYWEBDEV de $nameUser, $emailUser\r\n"
             . $messageContent;
 

@@ -2,6 +2,7 @@
 
 namespace Core\Traits\Controller;
 
+use App\Service\Message;
 use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository};
 use LogicException;
 
@@ -57,7 +58,7 @@ trait AddControllerTrait
                 throw new LogicException("L'id ne devrait pas exister.");
             }
 
-            $status = static::statusMessage($repository, $entity, $entityLabel);
+            $status = self::statusMessage($repository, $entity, $entityLabel);
         }
 
         $this->renderView(
@@ -71,10 +72,10 @@ trait AddControllerTrait
 
     static public function statusMessage($repository, $entity, $entityLabel): array
     {
-        $var = $repository->insert($entity);
-        $messageFalse = "Désolé, une erreur est survenue. Si l'erreur persiste veuillez prendre contact avec l'administrateur.";
-        $messageTrue = $message = "Votre $entityLabel à bien était enregistré !";
-
-        return static::status($var, $messageFalse, $messageTrue);
+        return Message::getMessage(
+            $repository->insert($entity),
+            "Votre $entityLabel à bien était enregistré !",
+            'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Core\Traits\Controller;
 
+use App\Service\Message;
 use Core\DefaultAbstract\DefaultAbstractRepository;
 use Core\Exception\CoreException;
 
@@ -116,14 +117,10 @@ trait CUDControllerTrait
         if (isset($data)) {
             $entity = $entity->hydrate($data);
 
-            $updated = $repository->update($entity);
-
-            $var = $updated;
-            $success = "Votre $entityName à bien était modifié !";
-            $error = "Une erreur est survenue.";
-
-            $status = static::messageStatus($var, $success, $error);
-
+            $status = Message::getMessage(
+                $repository->update($entity),
+                "Votre $entityName à bien était modifié !",
+                'Une erreur est survenue.');
         }
 
         $this->renderView(
@@ -167,16 +164,11 @@ trait CUDControllerTrait
         string $viewTemplate
     ): void
     {
-        $deleted = $repository->delete(
-            $this->getRequest()
-                 ->getParam($entityParamId)
-        );
-
-        $var = $deleted;
-        $success = "Votre $entityLabel à bien était supprimé !";
-        $error = "Une erreur est survenue.";
-
-        $status = static::messageStatus($var, $success, $error);
+        $status = Message::getMessage(
+            $repository->delete($this->getRequest()
+                    ->getParam($entityParamId)),
+            "Votre $entityLabel à bien était supprimé !",
+            'Une erreur est survenue.');
 
         $this->renderView(
             $viewTemplate,
@@ -185,21 +177,5 @@ trait CUDControllerTrait
                 'statusMessage' => $status['statusMessage'] ?? ''
             ]
         );
-    }
-
-    public function messageStatus(string $var, string $success, string $error)
-    {
-        $status = $var
-            ? "success"
-            : "danger";
-
-        $statusMessage = $var
-            ? $success
-            : $error;
-
-        return [
-            'status' => $status ?? '',
-            'statusMessage' => $statusMessage ?? ''
-        ];
     }
 }
