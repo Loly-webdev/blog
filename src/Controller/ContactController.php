@@ -24,7 +24,10 @@ class ContactController extends DefaultAbstractController
      */
     public function indexAction()
     {
-        $user = $this->contactLogged() ?? new User;
+        if ($_SESSION['logged']) {
+            $viewFolder = 'back/';
+            $user = $this->getUserLogged();
+        }
 
         $formValidator = new FormContactValidator();
 
@@ -46,28 +49,10 @@ class ContactController extends DefaultAbstractController
         $this->renderView(
             'contact.html.twig',
             [
-                'user' => $user,
+                'user' => $user ?? new User,
                 'status' => $status ?? '',
             ],
-            $user ? 'back/' : 'front/'
-        );
-    }
-
-    public function contactLogged(): ?User
-    {
-        $userId = $_SESSION['id'];
-        $user = (new UserRepository())->findOneById($userId);
-        assert($user instanceof User);
-
-        return $user;
-    }
-
-    static public function statusMessage($emailUser, $subject, $message): array
-    {
-        return Message::getMessage(
-            Email::sendMail($emailUser, $subject, $message),
-            'Le mail à été envoyé avec succès',
-            'une erreur est survenue, le mail n\'a pas pu être envoyé'
+            $viewFolder ?? 'front/'
         );
     }
 
@@ -82,5 +67,14 @@ class ContactController extends DefaultAbstractController
             'subject' => $subject,
             'message' => $message
         ];
+    }
+
+    static public function statusMessage($emailUser, $subject, $message): array
+    {
+        return Message::getMessage(
+            Email::sendMail($emailUser, $subject, $message),
+            'Le mail à été envoyé avec succès',
+            'une erreur est survenue, le mail n\'a pas pu être envoyé'
+        );
     }
 }

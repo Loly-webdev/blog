@@ -2,6 +2,8 @@
 
 namespace Core\DefaultAbstract;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Core\DefaultControllerInterface;
 use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
@@ -35,8 +37,8 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     /**
      * Method to see the views of the site
      *
-     * @param string      $viewName
-     * @param array       $params
+     * @param string $viewName
+     * @param array $params
      * @param string|null $viewFolder
      *
      * @throws CoreException
@@ -44,9 +46,9 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     public function renderView($viewName, array $params = [], string $viewFolder = null): void
     {
         $defaultPath = VIEW_ROOT;
-        $viewFolder  = $viewFolder ?? $this->getFolderView();
-        $view        = (new TwigProvider())->getTwig()
-                                           ->render($viewFolder . $viewName, $params);
+        $viewFolder = $viewFolder ?? $this->getFolderView();
+        $view = (new TwigProvider())->getTwig()
+            ->render($viewFolder . $viewName, $params);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
@@ -73,5 +75,14 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     {
         header('Location: /' . $route);
         exit();
+    }
+
+    public function getUserLogged(): ?User
+    {
+        $userId = $_SESSION['id'];
+        $user = (new UserRepository())->findOneById($userId);
+        assert($user instanceof User);
+
+        return $user;
     }
 }
