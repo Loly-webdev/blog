@@ -44,19 +44,9 @@ trait AddControllerTrait
         $formSubmitted = $this->getRequest()->getParam($entityName);
         if (isset($formSubmitted)) {
 
-            if (false === is_array($formSubmitted)) {
-                throw new LogicException('Un formulaire doit être passer en tableau.');
-            }
-
             $entity = $entityClass->hydrate($formSubmitted);
 
-            if (method_exists($this, 'postHydrate')) {
-                $this->postHydrate($entity);
-            }
-
-            if ($entity->hasId()) {
-                throw new LogicException("L'id ne devrait pas exister.");
-            }
+            $this->checkForm($formSubmitted, $entityClass);
 
             $status = self::statusMessage($repository, $entity, $entityLabel);
         }
@@ -77,5 +67,20 @@ trait AddControllerTrait
             "Votre $entityLabel à bien était enregistré !",
             'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
         );
+    }
+
+    public function checkForm($formSubmitted, $entity)
+    {
+        if (false === is_array($formSubmitted)) {
+            throw new LogicException('Un formulaire doit être passer en tableau.');
+        }
+
+        if (method_exists($this, 'postHydrate')) {
+            $this->postHydrate($entity);
+        }
+
+        if ($entity->hasId()) {
+            throw new LogicException("L'id ne devrait pas exister.");
+        }
     }
 }
