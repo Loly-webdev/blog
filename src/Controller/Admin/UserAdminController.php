@@ -26,8 +26,7 @@ class UserAdminController extends LoggedAbstractController
      */
     public function indexAction()
     {
-        $userId = $_SESSION['id'];
-        $user = (new UserRepository())->findOneById($userId);
+        $user = $this->getUserLogged();
         assert($user instanceof User);
         $code = $user->getRole();
         $status = $user->getRoleLabel($code);

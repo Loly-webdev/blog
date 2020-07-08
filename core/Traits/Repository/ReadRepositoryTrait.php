@@ -34,7 +34,7 @@ trait ReadRepositoryTrait
     /**
      * Polymorphism method
      *
-     * @param array|null $filters
+     * @param array|mixed[] $filters
      *
      * @return DefaultAbstractEntity[]
      * If no match returns an empty array otherwise an array of DefaultAbstractEntity
@@ -47,15 +47,15 @@ trait ReadRepositoryTrait
     /**
      * Allows you to perform an sql query with filters or to retrieve all of them if no filter is found.
      *
-     * @param array|null $filters Contains in key the columns of the table and in value the "equal to".
+     * @param array|mixed[] $filters Contains in key the columns of the table and in value the "equal to".
      *
      * @return DefaultAbstractEntity[] If no match returns an empty array otherwise an array of DefaultAbstractEntity
      */
     public function search(array $filters = []): array
     {
-        $limit   = isset($filters['limit']) && is_int($filters['limit']) ? $filters['limit'] : null;
+        $limit = isset($filters['limit']) && is_int($filters['limit']) ? $filters['limit'] : null;
         $orderBy = isset($filters['orderBy']) && is_int($filters['orderBy']) ? $filters['orderBy'] : 1;
-        $sorted  = isset($filters['sorted']) && true === $filters['sorted'] ? 'ASC' : 'DESC';
+        $sorted = isset($filters['sorted']) && true === $filters['sorted'] ? 'ASC' : 'DESC';
         unset($filters['limit'], $filters['orderBy'], $filters['sorted']);
 
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
@@ -81,14 +81,14 @@ trait ReadRepositoryTrait
     /**
      * Polymorphism method
      *
-     * @param array|null $filters
+     * @param array|mixed[] $filters
      *
      * @return DefaultAbstractEntity|null ?DefaultAbstractEntity
      */
     public function findOne(array $filters = []): ?DefaultAbstractEntity
     {
         $filters['limit'] = 1;
-        $data             = $this->search($filters);
+        $data = $this->search($filters);
 
         return !empty($data)
             ? reset($data)

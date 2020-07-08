@@ -47,9 +47,9 @@ class RegisterController extends DefaultAbstractController
     public function role(): string
     {
         if ((new User())->isAdmin() === true) {
-            return $role = (new User())::ROLE_ADMIN;
+            return User::ROLE_ADMIN;
         }
-        return $role = (new User())::ROLE_USER;
+        return User::ROLE_USER;
     }
 
     /**

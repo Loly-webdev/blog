@@ -18,7 +18,7 @@ abstract class AdminAbstractController extends LoggedAbstractController
         parent::__construct();
 
         // Define the view directory
-        if ('admin' === isset($_SESSION['role'])) {
+        if ('admin' === $_SESSION['role']) {
             $this->redirectTo('home/logged');
         }
     }

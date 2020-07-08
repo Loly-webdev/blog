@@ -85,7 +85,7 @@ class ConfigurationProvider
      */
     public function getMyMail(): string
     {
-        return static::$config['myMail'];
+        return static::$config['myMail'] ?? '';
     }
 
     /**

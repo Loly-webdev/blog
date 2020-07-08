@@ -77,12 +77,10 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         exit();
     }
 
-    public function getUserLogged(): ?User
+    public function getUserLogged(): DefaultAbstractEntity
     {
         $userId = $_SESSION['id'];
-        $user = (new UserRepository())->findOneById($userId);
-        assert($user instanceof User);
 
-        return $user;
+        return (new UserRepository())->findOneById($userId);
     }
 }

@@ -22,9 +22,9 @@ class Helper
 
     /**
      * @param mixed $email
-     * @return bool
+     * @return mixed
      */
-    public static function verifyAddress($email): bool
+    public static function verifyAddress($email)
     {
         //  We check that the address is correct
         $regex = "#^[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?@[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?\.[a-z]{2,}$#i";

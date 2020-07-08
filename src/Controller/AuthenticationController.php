@@ -73,7 +73,6 @@ class AuthenticationController extends DefaultAbstractController
         assert($user instanceof User);
 
         if (empty($user)) {
-
             return null;
         }
 

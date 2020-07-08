@@ -43,7 +43,6 @@ trait AddControllerTrait
     {
         $formSubmitted = $this->getRequest()->getParam($entityName);
         if (isset($formSubmitted)) {
-
             $entity = $entityClass->hydrate($formSubmitted);
 
             $this->checkForm($formSubmitted, $entityClass);

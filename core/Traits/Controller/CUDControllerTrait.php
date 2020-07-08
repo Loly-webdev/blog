@@ -27,10 +27,10 @@ trait CUDControllerTrait
     /**
      * Method to see entity
      *
-     * @param string                    $entityParamId
-     * @param string                    $entityName
+     * @param string $entityParamId
+     * @param string $entityName
      * @param DefaultAbstractRepository $repository
-     * @param string                    $viewTemplate
+     * @param string $viewTemplate
      */
     protected function seeEntity(
         string $entityParamId,
@@ -53,7 +53,7 @@ trait CUDControllerTrait
         }
 
         $data = [
-            'title'     => $title ?? '',
+            'title' => $title ?? '',
             $entityName => $entity
         ];
 
@@ -87,10 +87,10 @@ trait CUDControllerTrait
     /**
      * Method to edit entity
      *
-     * @param string                    $entityParamId
+     * @param string $entityParamId
      * @param DefaultAbstractRepository $repository
-     * @param string                    $entityName
-     * @param string                    $viewTemplate
+     * @param string $entityName
+     * @param string $viewTemplate
      *
      * @throws CoreException
      */
@@ -112,7 +112,7 @@ trait CUDControllerTrait
             throw new CoreException('Désolé nous rencontrons un problème avec votre demande.');
         }
 
-        $data    = $this->getRequest()->getParam($entityName);
+        $data = $this->getRequest()->getParam($entityName);
 
         if (isset($data)) {
             $entity = $entity->hydrate($data);
@@ -127,7 +127,7 @@ trait CUDControllerTrait
             $viewTemplate,
             [
                 $entityName => $entity,
-                'status'  => $status['status'] ?? '',
+                'status' => $status['status'] ?? '',
                 'statusMessage' => $status['statusMessage'] ?? ''
             ]
         );
@@ -153,9 +153,9 @@ trait CUDControllerTrait
      * Method to delete entity
      *
      * @param DefaultAbstractRepository $repository
-     * @param string                    $entityParamId
-     * @param string                    $entityLabel
-     * @param string                    $viewTemplate
+     * @param string $entityParamId
+     * @param string $entityLabel
+     * @param string $viewTemplate
      */
     protected function deleteEntity(
         DefaultAbstractRepository $repository,
@@ -166,14 +166,14 @@ trait CUDControllerTrait
     {
         $status = Message::getMessage(
             $repository->delete($this->getRequest()
-                    ->getParam($entityParamId)),
+                ->getParam($entityParamId)),
             "Votre $entityLabel à bien était supprimé !",
             'Une erreur est survenue.');
 
         $this->renderView(
             $viewTemplate,
             [
-                'status'  => $status['status'] ?? '',
+                'status' => $status['status'] ?? '',
                 'statusMessage' => $status['statusMessage'] ?? ''
             ]
         );
