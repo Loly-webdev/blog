@@ -44,14 +44,14 @@ class AuthenticationController extends DefaultAbstractController
                 $this->redirectTo('Admin/userAdmin');
             }
 
-            $status  = "danger";
+            $status = "danger";
             $message = "Echec de l'authentification";
         }
 
         $this->renderView(
             'formAuthentication.html.twig',
             [
-                'status'  => $status ?? '',
+                'status' => $status ?? '',
                 'message' => $message ?? ''
             ]
         );
@@ -64,7 +64,7 @@ class AuthenticationController extends DefaultAbstractController
      */
     private function retrieveAccount($params): ?DefaultAbstractEntity
     {
-        $login    = $params['login'];
+        $login = $params['login'];
         $password = $params['password'];
 
         $user = (new UserRepository())->findOne(['login' => $login]);
@@ -82,6 +82,11 @@ class AuthenticationController extends DefaultAbstractController
         return $accountIsValid ? $user : null;
     }
 
+    /**
+     * @param string $password
+     * @param string $passwordUser
+     * @return bool
+     */
     private function checkPassword(string $password, string $passwordUser): bool
     {
         $salt = ConfigurationProvider::getInstance()->getSalt();
@@ -89,17 +94,21 @@ class AuthenticationController extends DefaultAbstractController
         return password_verify($password . $salt, $passwordUser);
     }
 
-    private function addUserInSession(User $user)
+    /**
+     * @param User $user
+     * @return void
+     */
+    private function addUserInSession(User $user): void
     {
         $_SESSION['logged'] = true;
-        $_SESSION['user']   = $user;
-        $_SESSION['id']     = $user->getId();
+        $_SESSION['id'] = $user->getId();
     }
 
     /**
      * User logout
+     * @return void
      */
-    public function logoutAction()
+    public function logoutAction(): void
     {
         session_unset();
         session_destroy();

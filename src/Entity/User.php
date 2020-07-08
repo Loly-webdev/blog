@@ -5,38 +5,40 @@ namespace App\Entity;
 use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\Provider\ConfigurationProvider;
 
+/**
+ * Class User
+ * @package App\Entity
+ */
 class User extends DefaultAbstractEntity
 {
+    /**
+     *
+     */
     const ROLE_ADMIN = 'admin';
-    const ROLE_USER  = 'user';
-
+    const ROLE_USER = 'user';
     const ROLE_ADMIN_LABEL = 'Administrateur';
-    const ROLE_USER_LABEL  = 'Utilisateur';
-
+    const ROLE_USER_LABEL = 'Utilisateur';
     const ROLES = [
         self::ROLE_ADMIN => self::ROLE_ADMIN_LABEL,
-        self::ROLE_USER  => self::ROLE_USER_LABEL
+        self::ROLE_USER => self::ROLE_USER_LABEL
     ];
 
+    /**
+     * @var mixed
+     */
     protected $mail;
+    /**
+     * @var mixed
+     */
     protected $login;
+    /**
+     * @var mixed
+     */
     protected $password;
+    /**
+     * @var string
+     */
     protected $role;
-
-    public function __serialize()
-    {
-        return $this->getSessionValues();
-    }
-
-    public function getSessionValues()
-    {
-        return [
-            'mail'     => $this->getMail(),
-            'username' => $this->getLogin(),
-            'password' => $this->getPassword(),
-            'role'     => $this->getRole()
-        ];
-    }
 
     /**
      * @return mixed
@@ -79,21 +81,40 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
 
     /**
-     * @param string $plainText
+     * @param mixed $plainText
      *
      * @return void
      */
-    public function setPassword(string $plainText)
+    public function setPassword($plainText)
     {
         $this->password = static::encodePassword($plainText);
+    }
+
+    /**
+     * @param mixed $password
+     * @return false|mixed|null
+     */
+    static function encodePassword($password)
+    {
+        $salt = ConfigurationProvider::getInstance()->getSalt();
+
+        return password_hash($password . $salt, PASSWORD_ARGON2ID);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return self::ROLE_ADMIN === $this->getRole();
     }
 
     /**
@@ -104,19 +125,12 @@ class User extends DefaultAbstractEntity
         return $this->role;
     }
 
-    static function encodePassword(string $password)
-    {
-        $salt = ConfigurationProvider::getInstance()->getSalt();
-
-        return password_hash($password . $salt, PASSWORD_ARGON2ID);
-    }
-
     /**
-     * @param mixed $role
+     * @param string $role
      *
-     * @return User
+     * @return string
      */
-    public function setRole($role): User
+    public function setRole(string $role): string
     {
         if (in_array($role, self::ROLES)) {
             $this->role = $role;
@@ -124,12 +138,11 @@ class User extends DefaultAbstractEntity
         return $this->role = $role;
     }
 
-    public function isAdmin()
-    {
-        return self::ROLE_ADMIN === $this->getRole();
-    }
-
-    public function getRoleLabel($code)
+    /**
+     * @param string $code
+     * @return string
+     */
+    public function getRoleLabel($code): string
     {
         return isset(self::ROLES[$code])
             ? self::ROLES[$code]

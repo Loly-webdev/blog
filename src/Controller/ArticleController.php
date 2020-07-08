@@ -14,8 +14,6 @@ use Exception;
  */
 class ArticleController extends LoggedAbstractController
 {
-    protected $key;
-
     use CUDControllerTrait,
         AddControllerTrait;
 
@@ -32,7 +30,7 @@ class ArticleController extends LoggedAbstractController
         $this->renderView(
             '/article/articles.html.twig',
             [
-                'title'    => 'Derniers billets du blog :',
+                'title' => 'Derniers billets du blog :',
                 'articles' => $articles
             ]
         );
@@ -40,7 +38,7 @@ class ArticleController extends LoggedAbstractController
 
     /**
      * Give params to seeAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getSeeParam(): array
@@ -53,10 +51,15 @@ class ArticleController extends LoggedAbstractController
         ];
     }
 
+    /**
+     * @param array|mixed[] $data
+     * @param DefaultAbstractEntity $entity
+     * @return array|mixed[]
+     */
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
         $data['comments'] = $comments;
 
         return $data;
@@ -64,7 +67,7 @@ class ArticleController extends LoggedAbstractController
 
     /**
      * Give params to addAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getAddParam(): array
@@ -80,7 +83,7 @@ class ArticleController extends LoggedAbstractController
 
     /**
      * Give params to editAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getEditParam(): array
@@ -95,7 +98,7 @@ class ArticleController extends LoggedAbstractController
 
     /**
      * Give params to deleteAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getDeleteParam(): array

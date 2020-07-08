@@ -4,8 +4,15 @@ namespace App\Controller;
 
 use Core\DefaultAbstract\FormValidatorAbstract;
 
+/**
+ * Class FormAuthenticationValidator
+ * @package App\Controller
+ */
 class FormAuthenticationValidator extends FormValidatorAbstract
 {
+    /**
+     * @return array|mixed[]
+     */
     public function getFormFields(): array
     {
         return [
@@ -14,6 +21,9 @@ class FormAuthenticationValidator extends FormValidatorAbstract
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getFormName(): string
     {
         return 'formAuthentication';

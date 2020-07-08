@@ -4,9 +4,19 @@ namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
 
+/**
+ * Class Comment
+ * @package App\Entity
+ */
 class Comment extends DefaultAbstractEntity
 {
+    /**
+     * @var mixed
+     */
     protected $author;
+    /**
+     * @var mixed
+     */
     protected $content;
 
     /**

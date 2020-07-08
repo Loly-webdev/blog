@@ -56,7 +56,13 @@ class ContactController extends DefaultAbstractController
         );
     }
 
-    public function prepareFields($formValues, $nameUser, $emailUser): array
+    /**
+     * @param array|mixed[] $formValues
+     * @param mixed $nameUser
+     * @param mixed $emailUser
+     * @return array|mixed[]
+     */
+    public function prepareFields(array $formValues, $nameUser, $emailUser): array
     {
         $subject = $formValues['subject'] ? Helper::secureText($formValues['subject']) : '';
         $messageContent = $formValues['message'] ? Helper::secureText($formValues['message']) : '';
@@ -69,6 +75,12 @@ class ContactController extends DefaultAbstractController
         ];
     }
 
+    /**
+     * @param mixed $emailUser
+     * @param mixed $subject
+     * @param mixed $message
+     * @return array|mixed[]
+     */
     static public function statusMessage($emailUser, $subject, $message): array
     {
         return Message::getMessage(

@@ -28,8 +28,7 @@ class RegisterController extends DefaultAbstractController
 
     /**
      * Give params to addAction
-     * @return array
-     * @throws Exception
+     * @return array|mixed[]
      */
     public function getAddParam(): array
     {
@@ -42,7 +41,10 @@ class RegisterController extends DefaultAbstractController
         ];
     }
 
-    public function role()
+    /**
+     * @return string
+     */
+    public function role(): string
     {
         if ((new User())->isAdmin() === true) {
             return $role = (new User())::ROLE_ADMIN;
@@ -50,6 +52,10 @@ class RegisterController extends DefaultAbstractController
         return $role = (new User())::ROLE_USER;
     }
 
+    /**
+     * @param object $entity
+     * @throws CoreException
+     */
     public function postHydrate($entity): void
     {
         $formValidator = new FormRegisterValidator();
@@ -69,7 +75,14 @@ class RegisterController extends DefaultAbstractController
         $entity->setRole($role);
     }
 
-    public function check($email, $password, $password2)
+    /**
+     * @param mixed $email
+     * @param mixed $password
+     * @param mixed $password2
+     * @return void
+     * @throws CoreException
+     */
+    public function check($email, $password, $password2): void
     {
         if (false === Helper::verifyAddress($email)) {
             throw new Exception("l'adresse $email n'est pas valide");

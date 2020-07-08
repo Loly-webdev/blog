@@ -12,6 +12,9 @@ use Core\DefaultAbstract\DefaultAbstractRepository;
  */
 class ArticleRepository extends DefaultAbstractRepository
 {
+    /**
+     * @var string
+     */
     static $tableName = 'article';
 
     /**

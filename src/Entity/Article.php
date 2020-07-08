@@ -4,10 +4,23 @@ namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
 
+/**
+ * Class Article
+ * @package App\Entity
+ */
 class Article extends DefaultAbstractEntity
 {
+    /**
+     * @var mixed
+     */
     protected $title;
+    /**
+     * @var mixed
+     */
     protected $author;
+    /**
+     * @var mixed
+     */
     protected $content;
 
     /**

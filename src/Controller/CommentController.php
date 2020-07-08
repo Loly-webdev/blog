@@ -30,7 +30,7 @@ class CommentController extends LoggedAbstractController
 
     /**
      * Give params to seeAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getSeeParam(): array
@@ -45,7 +45,7 @@ class CommentController extends LoggedAbstractController
 
     /**
      * Give params to addAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getAddParam(): array
@@ -59,6 +59,10 @@ class CommentController extends LoggedAbstractController
         ];
     }
 
+    /**
+     * @param object $entity
+     * @return void
+     */
     public function postHydrate($entity): void
     {
         $entity->setArticleId(
@@ -68,7 +72,7 @@ class CommentController extends LoggedAbstractController
 
     /**
      * Give params to edit Action
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getEditParam(): array
@@ -83,7 +87,7 @@ class CommentController extends LoggedAbstractController
 
     /**
      * Give params to deleteAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getDeleteParam(): array
