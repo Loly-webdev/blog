@@ -34,7 +34,7 @@ class ContactController extends DefaultAbstractController
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
             $formValues = $formValidator->getFormValues();
-            $nameUser = Helper::securizeText($formValues['nameUser']);
+            $nameUser = Helper::secureText($formValues['nameUser']);
             $emailUser = $formValues['email'] ?? '';
 
             if (false === Helper::verifyAddress($emailUser)) {
@@ -58,8 +58,8 @@ class ContactController extends DefaultAbstractController
 
     public function prepareFields($formValues, $nameUser, $emailUser): array
     {
-        $subject = $formValues['subject'] ? Helper::securizeText($formValues['subject']) : '';
-        $messageContent = $formValues['message'] ? Helper::securizeText($formValues['message']) : '';
+        $subject = $formValues['subject'] ? Helper::secureText($formValues['subject']) : '';
+        $messageContent = $formValues['message'] ? Helper::secureText($formValues['message']) : '';
         $message = "MESSAGE DU SITE LOLYWEBDEV de $nameUser, $emailUser\r\n"
             . $messageContent;
 

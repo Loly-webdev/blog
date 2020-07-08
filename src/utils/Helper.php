@@ -4,7 +4,7 @@ namespace App\utils;
 
 class Helper
 {
-    public static function securizeText($text): string
+    public static function secureText($text): string
     {
         $text = htmlspecialchars(trim($text), ENT_QUOTES);
         $text = nl2br($text);

@@ -26,6 +26,7 @@ class Article extends DefaultAbstractEntity
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -45,6 +46,7 @@ class Article extends DefaultAbstractEntity
     public function setAuthor($author)
     {
         $this->author = $author;
+
         return $this;
     }
 
@@ -64,6 +66,7 @@ class Article extends DefaultAbstractEntity
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 }

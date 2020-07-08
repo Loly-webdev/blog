@@ -72,7 +72,8 @@ class AuthenticationController extends DefaultAbstractController
         // Check if $user is an instance of User class
         assert($user instanceof User);
 
-        if (null === $user) {
+        if (empty($user)) {
+
             return null;
         }
 
