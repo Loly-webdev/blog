@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\Provider\ConfigurationProvider;
 
@@ -95,18 +96,7 @@ class User extends DefaultAbstractEntity
      */
     public function setPassword($plainText)
     {
-        $this->password = static::encodePassword($plainText);
-    }
-
-    /**
-     * @param mixed $password
-     * @return false|mixed|null
-     */
-    static function encodePassword($password)
-    {
-        $salt = ConfigurationProvider::getInstance()->getSalt();
-
-        return password_hash($password . $salt, PASSWORD_ARGON2ID);
+        $this->password = Helper::encodePassword($plainText);
     }
 
     /**
@@ -114,7 +104,7 @@ class User extends DefaultAbstractEntity
      */
     public function isAdmin(): bool
     {
-        return self::ROLE_ADMIN === $this->getRole();
+        return static::ROLE_ADMIN === $this->getRole();
     }
 
     /**
@@ -132,10 +122,7 @@ class User extends DefaultAbstractEntity
      */
     public function setRole(string $role): string
     {
-        if (in_array($role, self::ROLES)) {
-            $this->role = $role;
-        }
-        return $this->role = $role;
+        $this->role = in_array($role, static::ROLES);
     }
 
     /**
@@ -144,8 +131,6 @@ class User extends DefaultAbstractEntity
      */
     public function getRoleLabel($code): string
     {
-        return isset(self::ROLES[$code])
-            ? self::ROLES[$code]
-            : 'Aucun role définit';
+        return self::ROLES[$code] ?? 'Aucun role définit';
     }
 }

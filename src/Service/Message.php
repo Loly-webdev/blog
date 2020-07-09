@@ -25,5 +25,4 @@ class Message
             'statusMessage' => $isValid ? $success : $error
         ];
     }
-
 }

@@ -32,12 +32,11 @@ class ContactController extends DefaultAbstractController
         $formValidator = new FormContactValidator();
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
-
             $formValues = $formValidator->getFormValues();
             $nameUser = Helper::secureText($formValues['nameUser']);
             $emailUser = $formValues['email'] ?? '';
 
-            if (false === Helper::verifyAddress($emailUser)) {
+            if (false === Helper::checkEmail($emailUser)) {
                 throw new Exception("l'adresse $emailUser n'est pas valide");
             }
 
@@ -49,7 +48,7 @@ class ContactController extends DefaultAbstractController
         $this->renderView(
             'contact.html.twig',
             [
-                'user' => $user ?? new User,
+                'user' => $user ?? new User(),
                 'status' => $status ?? '',
             ],
             $viewFolder ?? 'front/'

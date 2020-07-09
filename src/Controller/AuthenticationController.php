@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\Provider\ConfigurationProvider;
@@ -65,7 +66,6 @@ class AuthenticationController extends DefaultAbstractController
     private function retrieveAccount($params): ?DefaultAbstractEntity
     {
         $login = $params['login'];
-        $password = $params['password'];
 
         $user = (new UserRepository())->findOne(['login' => $login]);
 
@@ -75,22 +75,9 @@ class AuthenticationController extends DefaultAbstractController
         if (empty($user)) {
             return null;
         }
-
-        $accountIsValid = $this->checkPassword($password, $user->getPassword());
+        $accountIsValid = Helper::checkPassword($params['password'], $user->getPassword());
 
         return $accountIsValid ? $user : null;
-    }
-
-    /**
-     * @param string $password
-     * @param string $passwordUser
-     * @return bool
-     */
-    private function checkPassword(string $password, string $passwordUser): bool
-    {
-        $salt = ConfigurationProvider::getInstance()->getSalt();
-
-        return password_verify($password . $salt, $passwordUser);
     }
 
     /**

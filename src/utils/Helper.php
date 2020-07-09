@@ -2,6 +2,8 @@
 
 namespace App\utils;
 
+use Core\Provider\ConfigurationProvider;
+
 /**
  * Class Helper
  * @package App\utils
@@ -14,21 +16,41 @@ class Helper
      */
     public static function secureText($text)
     {
-        $text = htmlspecialchars(trim($text), ENT_QUOTES);
-        $text = nl2br($text);
-
-        return $text;
+        return nl2br(htmlspecialchars(trim($text), ENT_QUOTES));
     }
 
     /**
      * @param mixed $email
-     * @return mixed
+     * @return bool
      */
-    public static function verifyAddress($email)
+    public static function checkEmail($email): bool
     {
-        //  We check that the address is correct
-        $regex = "#^[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?@[a-z0-9_-]+((\.[a-z0-9_-]+){1,})?\.[a-z]{2,}$#i";
+        // Remove all illegal characters from email
+        $emailFilter = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-        return preg_match($regex, $email);
+        return filter_var($emailFilter, FILTER_VALIDATE_EMAIL);
+    }
+
+    /**
+     * @param mixed $password
+     * @return bool
+     */
+    static function encodePassword($password): bool
+    {
+        $salt = ConfigurationProvider::getInstance()->getSalt();
+
+        return password_hash($password . $salt, PASSWORD_ARGON2ID);
+    }
+
+    /**
+     * @param string $passwordSubmitted
+     * @param string $passwordUser
+     * @return bool
+     */
+    public static function checkPassword(string $passwordSubmitted, string $passwordUser): bool
+    {
+        $salt = ConfigurationProvider::getInstance()->getSalt();
+
+        return password_verify($passwordSubmitted . $salt, $passwordUser);
     }
 }

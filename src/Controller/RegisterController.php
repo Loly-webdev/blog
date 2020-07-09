@@ -46,7 +46,7 @@ class RegisterController extends DefaultAbstractController
      */
     public function role(): string
     {
-        if ((new User())->isAdmin() === true) {
+        if ((new User())->isAdmin()) {
             return User::ROLE_ADMIN;
         }
         return User::ROLE_USER;
@@ -61,37 +61,29 @@ class RegisterController extends DefaultAbstractController
         $formValidator = new FormRegisterValidator();
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
-
             $formValues = $formValidator->getFormValues();
-
-            $email = $formValues['mail'] ?? '';
-            $password = $formValues['password'] ?? '';
-            $password2 = $formValues['password2'] ?? '';
-
-            $this->check($email, $password, $password2);
+            $this->check($formValues);
         }
-
-        $role = $this->role();
-        $entity->setRole($role);
+        $entity->setRole($this->role());
     }
 
     /**
-     * @param mixed $email
-     * @param mixed $password
-     * @param mixed $password2
-     * @return void
+     * @param array $formValues
      * @throws CoreException
      */
-    public function check($email, $password, $password2): void
+    public function check(array $formValues)
     {
-        if (false === Helper::verifyAddress($email)) {
+        $email = $formValues['mail'] ?? '';
+
+        if (false === Helper::checkEmail($email)) {
             throw new Exception("l'adresse $email n'est pas valide");
         }
 
-        if ($password !== $password2) {
+        if ($formValues['password'] !== $formValues['password2']) {
             throw new CoreException("Les deux mot de passe ne sont pas identique");
         }
+
         (new User())->setMail($email)
-            ->setPassword($password);
+            ->setPassword($formValues['password']);
     }
 }

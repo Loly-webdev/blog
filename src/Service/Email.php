@@ -23,12 +23,7 @@ abstract class Email extends DefaultAbstractController
 
         $header = static::getDefaultHeader($emailUser);
 
-        if (mail($myMail, $subject, $message, $header)) {
-
-            return true;
-        }
-
-        return false;
+        return mail($myMail, $subject, $message, $header);
     }
 
     /**

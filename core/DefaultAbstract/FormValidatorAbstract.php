@@ -4,12 +4,32 @@ namespace Core\DefaultAbstract;
 
 use Core\Request;
 
+/**
+ * Class FormValidatorAbstract
+ * @package Core\DefaultAbstract
+ */
 abstract class FormValidatorAbstract
 {
-    protected $formFields           = []; // list des champs du formulaire
-    protected $submittedValues      = []; // tableau content toutes les valeurs soumises dans la requete http
-    protected $formValues           = []; // tableau content les champs et valeur du formulaire
-    protected $formFieldsToValidate = []; // list des champs obligatoires
+    /**
+     * liste des champs du formulaire
+     * @var array
+     */
+    protected $formFields           = [];
+    /**
+     * tableau content toutes les valeurs soumises dans la requete http
+     * @var array|mixed|null
+     */
+    protected $submittedValues      = [];
+    /**
+     * tableau content les champs et valeur du formulaire
+     * @var array
+     */
+    protected $formValues           = [];
+    /**
+     * liste des champs obligatoires
+     * @var array
+     */
+    protected $formFieldsToValidate = [];
 
     /**
      * FormValidatorAbstract constructor.
@@ -32,20 +52,37 @@ abstract class FormValidatorAbstract
         $this->formValues = $formValues;
     }
 
+    /**
+     * @return array
+     */
     abstract function getFormFields(): array;
 
+    /**
+     * @return array
+     */
     public function getFormFieldToValidate(): array
     {
         return $this->getformFields();
     }
 
+    /**
+     * @return string
+     */
     abstract function getFormName(): string;
 
+    /**
+     * @param $key
+     * @param null $defaultValue
+     * @return mixed|null
+     */
     public function getFieldValue($key, $defaultValue = null)
     {
         return $this->formValues[$key] ?? $defaultValue;
     }
 
+    /**
+     * @return bool
+     */
     public function isValid(): bool
     {
         $fieldsToValidate = $this->getFormFieldToValidate();
@@ -62,11 +99,17 @@ abstract class FormValidatorAbstract
         return $isValid ?? true;
     }
 
+    /**
+     * @return array
+     */
     public function getFormValues(): array
     {
         return $this->formValues;
     }
 
+    /**
+     * @return bool
+     */
     public function isSubmitted(): bool
     {
         return null !== Request::getInstance()->getParam($this->getFormName());
