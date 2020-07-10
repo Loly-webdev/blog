@@ -117,7 +117,6 @@ class User extends DefaultAbstractEntity
 
     /**
      * @param string $role
-     *
      * @return string
      */
     public function setRole(string $role): string
