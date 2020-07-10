@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractEntity;
-use Core\Exception\CoreException;
-use Core\Provider\ConfigurationProvider;
 
 /**
  * Class User
@@ -119,21 +117,24 @@ class User extends DefaultAbstractEntity
 
     /**
      * @param string $role
-     * @return User
+     * @return string
      */
-    public function setRole(string $role)
+    public function setRole(string $role): string
     {
-        $this->role = $role;
+        if (in_array($role, static::ROLES)) {
+            $this->role = $role;
+        }
 
         return $this;
     }
 
     /**
-     * @param string $code
      * @return string
      */
-    public function getRoleLabel($code): string
+    public function getRoleLabel(): string
     {
+        $code =$this->getRole();
+
         return self::ROLES[$code] ?? 'Aucun role définit';
     }
 }

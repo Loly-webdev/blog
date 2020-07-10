@@ -78,6 +78,8 @@ trait AddControllerTrait
             $this->postHydrate($entity);
         }
 
+        dump($entity);
+
         if ($entity->hasId()) {
             throw new LogicException("L'id ne devrait pas exister.");
         }

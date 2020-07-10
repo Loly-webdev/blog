@@ -11,31 +11,28 @@ use Core\Provider\ConfigurationProvider;
 class Helper
 {
     /**
-     * @param mixed $text
-     * @return mixed
+     * @param string $text
+     * @return string
      */
-    public static function secureText($text)
+    public static function secureText(string $text = ''): string
     {
         return nl2br(htmlspecialchars(trim($text), ENT_QUOTES));
     }
 
     /**
-     * @param mixed $email
+     * @param string $email
      * @return bool
      */
-    public static function checkEmail($email): bool
+    public static function checkEmail(string $email): bool
     {
-        // Remove all illegal characters from email
-        $emailFilter = filter_var($email, FILTER_SANITIZE_EMAIL);
-
-        return filter_var($emailFilter, FILTER_VALIDATE_EMAIL);
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      * @return string
      */
-    static function encodePassword($password): string
+    static function encodePassword(string $password): string
     {
         $salt = ConfigurationProvider::getInstance()->getSalt();
 
@@ -47,8 +44,10 @@ class Helper
      * @param string $passwordUser
      * @return bool
      */
-    public static function checkPassword(string $passwordSubmitted, string $passwordUser): bool
-    {
+    public static function checkPassword(
+        string $passwordSubmitted,
+        string $passwordUser
+    ): bool {
         $salt = ConfigurationProvider::getInstance()->getSalt();
 
         return password_verify($passwordSubmitted . $salt, $passwordUser);

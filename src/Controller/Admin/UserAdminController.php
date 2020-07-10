@@ -26,16 +26,19 @@ class UserAdminController extends LoggedAbstractController
      */
     public function indexAction()
     {
+        if (null === $this->getUserLogged()) {
+            throw new CoreException('Vous n\'etes pas authentifié.');
+        }
+
         $user = $this->getUserLogged();
         assert($user instanceof User);
-        $code = $user->getRole();
-        $status = $user->getRoleLabel($code);
+        $status = $user->getRoleLabel();
         $login = $user->getLogin();
 
         $this->renderView(
             'homeBack.html.twig',
             [
-                'message' => "Ravi de te revoir $status $login !" ?? ''
+                'message' => "Ravi de te revoir $status $login !"
             ]
         );
     }
@@ -77,11 +80,11 @@ class UserAdminController extends LoggedAbstractController
      */
     public function getDeleteParam(): array
     {
-        $register = new RegisterController();
+        new RegisterController();
         return [
             new UserRepository(),
             'userId',
-            (new User())->getRoleLabel($register->role()),
+            (new User())->getRoleLabel(),
             'formRegister.html.twig',
         ];
     }

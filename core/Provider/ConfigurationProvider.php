@@ -77,7 +77,7 @@ class ConfigurationProvider
      */
     public function getSalt(): string
     {
-        return static::$config['salt'];
+        return static::$config['salt'] ?? '';
     }
 
     /**

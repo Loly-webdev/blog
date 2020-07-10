@@ -63,16 +63,16 @@ class RegisterController extends DefaultAbstractController
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
             $formValues = $formValidator->getFormValues();
             $entity->setRole($this->role());
-            $this->check($formValues);
-
+            $this->check($formValues, $entity);
         }
     }
 
     /**
      * @param array $formValues
+     * @param object $entity
      * @throws CoreException
      */
-    public function check(array $formValues)
+    public function check(array $formValues, $entity)
     {
         $email = $formValues['mail'] ?? '';
         $password = $formValues['password'] ?? '';
@@ -85,7 +85,7 @@ class RegisterController extends DefaultAbstractController
             throw new CoreException("Les deux mot de passe ne sont pas identique");
         }
 
-        (new User())->setMail($email)
+        $entity->setMail($email)
             ->setPassword($password);
     }
 }
