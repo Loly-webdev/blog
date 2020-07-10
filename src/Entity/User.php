@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\Exception\CoreException;
 use Core\Provider\ConfigurationProvider;
 
 /**
@@ -90,13 +91,14 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @param mixed $plainText
-     *
-     * @return void
+     * @param mixed $passwordSubmitted
+     * @return User
      */
-    public function setPassword($plainText)
+    public function setPassword($passwordSubmitted)
     {
-        $this->password = Helper::encodePassword($plainText);
+        $this->password = Helper::encodePassword($passwordSubmitted);
+
+        return $this;
     }
 
     /**
@@ -117,11 +119,13 @@ class User extends DefaultAbstractEntity
 
     /**
      * @param string $role
-     * @return string
+     * @return User
      */
-    public function setRole(string $role): string
+    public function setRole(string $role)
     {
-        $this->role = in_array($role, static::ROLES);
+        $this->role = $role;
+
+        return $this;
     }
 
     /**

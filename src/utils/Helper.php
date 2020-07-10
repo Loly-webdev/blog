@@ -33,9 +33,9 @@ class Helper
 
     /**
      * @param mixed $password
-     * @return bool
+     * @return string
      */
-    static function encodePassword($password): bool
+    static function encodePassword($password): string
     {
         $salt = ConfigurationProvider::getInstance()->getSalt();
 

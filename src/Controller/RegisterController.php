@@ -62,9 +62,10 @@ class RegisterController extends DefaultAbstractController
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
             $formValues = $formValidator->getFormValues();
+            $entity->setRole($this->role());
             $this->check($formValues);
+
         }
-        $entity->setRole($this->role());
     }
 
     /**
@@ -74,6 +75,7 @@ class RegisterController extends DefaultAbstractController
     public function check(array $formValues)
     {
         $email = $formValues['mail'] ?? '';
+        $password = $formValues['password'] ?? '';
 
         if (false === Helper::checkEmail($email)) {
             throw new Exception("l'adresse $email n'est pas valide");
@@ -84,6 +86,6 @@ class RegisterController extends DefaultAbstractController
         }
 
         (new User())->setMail($email)
-            ->setPassword($formValues['password']);
+            ->setPassword($password);
     }
 }
