@@ -33,7 +33,7 @@ class RegisterController extends DefaultAbstractController
     public function getAddParam(): array
     {
         return [
-            (new User())->getRoleLabel($this->role()),
+            (new User())->getRoleLabel(),
             'user',
             new User(),
             new UserRepository(),
@@ -42,27 +42,15 @@ class RegisterController extends DefaultAbstractController
     }
 
     /**
-     * @return string
-     */
-    public function role(): string
-    {
-        if ((new User())->isAdmin()) {
-            return User::ROLE_ADMIN;
-        }
-        return User::ROLE_USER;
-    }
-
-    /**
-     * @param object $entity
+     * @param User $entity
      * @throws CoreException
      */
     public function postHydrate($entity): void
     {
         $formValidator = new FormRegisterValidator();
-
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
             $formValues = $formValidator->getFormValues();
-            $entity->setRole($this->role());
+            $entity->setRole($entity->role());
             $this->check($formValues, $entity);
         }
     }

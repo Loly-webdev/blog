@@ -17,11 +17,15 @@ interface DefaultControllerInterface
     /**
      * Template Method
      *
-     * @param string      $viewName
-     * @param array       $params
+     * @param string $viewName
+     * @param array $params
      * @param string|null $viewFolder
      */
-    public function renderView(string $viewName, array $params, string $viewFolder = null): void;
+    public function renderView(
+        string $viewName,
+        array  $params,
+        string $viewFolder = null
+    ): void;
 
     /**
      * Path of view files
@@ -30,7 +34,6 @@ interface DefaultControllerInterface
     public function getFolderView(): string;
 
     /**
-     * To instantiate the request object
      * @return mixed
      */
     public function getRequest();

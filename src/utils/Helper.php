@@ -47,7 +47,8 @@ class Helper
     public static function checkPassword(
         string $passwordSubmitted,
         string $passwordUser
-    ): bool {
+    ): bool
+    {
         $salt = ConfigurationProvider::getInstance()->getSalt();
 
         return password_verify($passwordSubmitted . $salt, $passwordUser);

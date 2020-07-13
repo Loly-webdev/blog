@@ -12,9 +12,6 @@ use Core\DefaultAbstract\DefaultAbstractRepository;
  */
 class CommentRepository extends DefaultAbstractRepository
 {
-    /**
-     * @var string
-     */
     static $tableName = 'comment';
 
     /**

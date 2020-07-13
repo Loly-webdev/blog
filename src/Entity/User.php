@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\Exception\CoreException;
 
 /**
  * Class User
@@ -23,37 +24,25 @@ class User extends DefaultAbstractEntity
         self::ROLE_USER => self::ROLE_USER_LABEL
     ];
 
-    /**
-     * @var mixed
-     */
-    protected $mail;
-    /**
-     * @var mixed
-     */
-    protected $login;
-    /**
-     * @var mixed
-     */
-    protected $password;
-    /**
-     * @var string
-     */
-    protected $role;
+    protected $mail = '';
+    protected $login = '';
+    protected $password = '';
+    protected $role = '';
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getMail()
+    public function getMail(): string
     {
         return $this->mail;
     }
 
     /**
-     * @param mixed $mail
+     * @param string $mail
      *
      * @return User
      */
-    public function setMail($mail)
+    public function setMail(string $mail)
     {
         $this->mail = $mail;
 
@@ -61,19 +50,19 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLogin()
+    public function getLogin(): string
     {
         return $this->login;
     }
 
     /**
-     * @param mixed $login
+     * @param string $login
      *
      * @return User
      */
-    public function setLogin($login)
+    public function setLogin(string $login)
     {
         $this->login = $login;
 
@@ -81,18 +70,18 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
     /**
-     * @param mixed $passwordSubmitted
+     * @param string $passwordSubmitted
      * @return User
      */
-    public function setPassword($passwordSubmitted)
+    public function setPassword(string $passwordSubmitted)
     {
         $this->password = Helper::encodePassword($passwordSubmitted);
 
@@ -108,22 +97,25 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getRole()
+    public function getRole():string
     {
         return $this->role;
     }
 
     /**
      * @param string $role
-     * @return string
+     * @return User
+     * @throws CoreException
      */
-    public function setRole(string $role): string
+    public function setRole(string $role)
     {
-        if (in_array($role, static::ROLES)) {
-            $this->role = $role;
+        $existingRole = [self::ROLE_ADMIN, self::ROLE_USER];
+        if (!in_array($role, $existingRole)) {
+            throw new CoreException('Le rôle ' . $role . ' saisie n\'existe pas ou n\'est pas valide');
         }
+        $this->role = $role;
 
         return $this;
     }
@@ -133,8 +125,20 @@ class User extends DefaultAbstractEntity
      */
     public function getRoleLabel(): string
     {
-        $code =$this->getRole();
+        $role = $this->role();
 
-        return self::ROLES[$code] ?? 'Aucun role définit';
+        return static::ROLES[$role] ?? 'Aucun role définit';
+    }
+
+
+    /**
+     * @return string
+     */
+    public function role(): string
+    {
+        if ($this->isAdmin()) {
+            return User::ROLE_ADMIN;
+        }
+        return User::ROLE_USER;
     }
 }

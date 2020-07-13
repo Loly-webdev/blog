@@ -2,7 +2,6 @@
 
 namespace Core\DefaultAbstract;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use Core\DefaultControllerInterface;
 use Core\Exception\CoreException;

@@ -10,25 +10,13 @@ use Core\Request;
  */
 abstract class FormValidatorAbstract
 {
-    /**
-     * liste des champs du formulaire
-     * @var array
-     */
-    protected $formFields           = [];
-    /**
-     * tableau content toutes les valeurs soumises dans la requete http
-     * @var array|mixed|null
-     */
-    protected $submittedValues      = [];
-    /**
-     * tableau content les champs et valeur du formulaire
-     * @var array
-     */
-    protected $formValues           = [];
-    /**
-     * liste des champs obligatoires
-     * @var array
-     */
+    // List of form fields
+    protected $formFields = [];
+    // Table containing all the values submitted in the http request
+    protected $submittedValues = [];
+    // Table contains the fields and values of the form
+    protected $formValues = [];
+    // List of required fields
     protected $formFieldsToValidate = [];
 
     /**
@@ -36,14 +24,14 @@ abstract class FormValidatorAbstract
      */
     public function __construct()
     {
-        $this->formFields           = $this->getFormFields();
+        $this->formFields = $this->getFormFields();
         $this->formFieldsToValidate = $this->getFormFieldToValidate();
-        $this->submittedValues      = Request::getInstance()->getParam($this->getFormName());
+        $this->submittedValues = Request::getInstance()->getParam($this->getFormName());
 
         $formValues = [];
         foreach ($this->formFields as $field) {
-            // Si le champs du formulaire existe dans Request et qu'une valeur autre que null et vide est renseigné
-            // alors on hydrate le champs du formulaire
+            // If the form field exists in Request and a value other than null and empty is filled in,
+            // then we hydrate the form field.
             if (isset($this->submittedValues[$field]) && '' !== $this->submittedValues[$field]) {
                 $formValues[$field] = $this->submittedValues[$field];
             }
@@ -86,11 +74,11 @@ abstract class FormValidatorAbstract
     public function isValid(): bool
     {
         $fieldsToValidate = $this->getFormFieldToValidate();
-        $formValues       = $this->getFormValues();
+        $formValues = $this->getFormValues();
 
-        // On parcours les champs obligatoire
+        // We go through the required fields
         foreach ($fieldsToValidate as $fieldToValidate) {
-            // si le champs obligatoire est vide ou null dans le formulaire 'populé' alors on stop
+            // If the required field is empty or null in the form 'populated' then we stop
             if (false === isset($formValues[$fieldToValidate]) || '' === $formValues[$fieldToValidate]) {
                 $isValid = false;
                 break;

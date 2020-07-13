@@ -12,12 +12,12 @@ use Core\Provider\ConfigurationProvider;
 abstract class Email extends DefaultAbstractController
 {
     /**
-     * @param mixed $emailUser
+     * @param string $emailUser
      * @param string $subject
      * @param string $message
      * @return bool
      */
-    static public function sendMail($emailUser, string $subject, string $message): bool
+    static public function sendMail(string $emailUser, string $subject, string $message): bool
     {
         $myMail = ConfigurationProvider::getInstance()->getMyMail();
 
@@ -27,10 +27,10 @@ abstract class Email extends DefaultAbstractController
     }
 
     /**
-     * @param mixed $emailUser
+     * @param string $emailUser
      * @return string
      */
-    static public function getDefaultHeader($emailUser): string
+    static public function getDefaultHeader(string $emailUser): string
     {
         // We fill in the headers of the PHP mail function
         return "MIME-Version: 1.0\r\n"

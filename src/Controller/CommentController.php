@@ -60,7 +60,7 @@ class CommentController extends LoggedAbstractController
     }
 
     /**
-     * @param object $entity
+     * @param Comment $entity
      * @return void
      */
     public function postHydrate($entity): void

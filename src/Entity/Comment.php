@@ -10,29 +10,24 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
  */
 class Comment extends DefaultAbstractEntity
 {
-    /**
-     * @var mixed
-     */
+
     protected $author;
-    /**
-     * @var mixed
-     */
     protected $content;
+    protected $articleId;
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
 
     /**
-     * @param mixed $author
-     *
+     * @param string $author
      * @return Comment
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author)
     {
         $this->author = $author;
 
@@ -40,21 +35,39 @@ class Comment extends DefaultAbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
     /**
-     * @param mixed $content
-     *
+     * @param string $content
      * @return Comment
      */
-    public function setContent($content)
+    public function setContent(string $content)
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getArticleId(): int
+    {
+        return $this->articleId;
+    }
+
+    /**
+     * @param int $articleId
+     * @return Comment
+     */
+    public function setArticleId(int $articleId)
+    {
+        $this->articleId = $articleId;
 
         return $this;
     }

@@ -6,6 +6,10 @@ use App\Service\Message;
 use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository};
 use LogicException;
 
+/**
+ * Trait AddControllerTrait
+ * @package Core\Traits\Controller
+ */
 trait AddControllerTrait
 {
     /**
@@ -14,7 +18,6 @@ trait AddControllerTrait
     public function addAction(): void
     {
         $params = $this->getAddParam();
-
         $this->addEntity(...$params);
     }
 
@@ -27,11 +30,11 @@ trait AddControllerTrait
     /**
      * Method to add entity
      *
-     * @param string                    $entityLabel
-     * @param string                    $entityName
-     * @param DefaultAbstractEntity     $entityClass
+     * @param string $entityLabel
+     * @param string $entityName
+     * @param DefaultAbstractEntity $entityClass
      * @param DefaultAbstractRepository $repository
-     * @param string                    $viewTemplate
+     * @param string $viewTemplate
      */
     protected function addEntity(
         string $entityLabel,
@@ -44,30 +47,22 @@ trait AddControllerTrait
         $formSubmitted = $this->getRequest()->getParam($entityName);
         if (isset($formSubmitted)) {
             $entity = $entityClass->hydrate($formSubmitted);
-
             $this->checkForm($formSubmitted, $entityClass);
-
             $status = self::statusMessage($repository, $entity, $entityLabel);
         }
-
         $this->renderView(
             $viewTemplate,
             [
-                'status'  => $status['status'] ?? '',
+                'status' => $status['status'] ?? '',
                 'statusMessage' => $status['statusMessage'] ?? ''
             ]
         );
     }
 
-    static public function statusMessage($repository, $entity, $entityLabel): array
-    {
-        return Message::getMessage(
-            $repository->insert($entity),
-            "Votre $entityLabel à bien était enregistré !",
-            'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
-        );
-    }
-
+    /**
+     * @param $formSubmitted
+     * @param $entity
+     */
     public function checkForm($formSubmitted, $entity)
     {
         if (false === is_array($formSubmitted)) {
@@ -78,10 +73,23 @@ trait AddControllerTrait
             $this->postHydrate($entity);
         }
 
-        dump($entity);
-
         if ($entity->hasId()) {
             throw new LogicException("L'id ne devrait pas exister.");
         }
+    }
+
+    /**
+     * @param $repository
+     * @param $entity
+     * @param string $entityLabel
+     * @return array
+     */
+    static public function statusMessage($repository, $entity, string $entityLabel): array
+    {
+        return Message::getMessage(
+            $repository->insert($entity),
+            "Votre $entityLabel à bien était enregistré !",
+            'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
+        );
     }
 }

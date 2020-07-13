@@ -10,7 +10,8 @@ use Core\Exception\CoreException;
  */
 class ConfigurationProvider
 {
-    private static $instance; // Will contain the instance of our class.
+    // Will contain the instance of our class.
+    private static $instance;
     private static $config = [];
 
     /**
@@ -59,7 +60,10 @@ class ConfigurationProvider
             : 'prod';
     }
 
-    public static function isValid()
+    /**
+     * @return bool
+     */
+    public static function isValid(): bool
     {
         return !empty(static::getDatabaseConfig());
     }

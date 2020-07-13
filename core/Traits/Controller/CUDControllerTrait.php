@@ -5,6 +5,7 @@ namespace Core\Traits\Controller;
 use App\Service\Message;
 use Core\DefaultAbstract\DefaultAbstractRepository;
 use Core\Exception\CoreException;
+use LogicException;
 
 trait CUDControllerTrait
 {
@@ -44,8 +45,8 @@ trait CUDControllerTrait
         // Load post associate to the Id or return null
         $entity = $repository->findOneById($entityId);
         if (null === $entity) {
-            // \LogicException() : Exception qui représente les erreurs dans la logique du programme.
-            throw new \LogicException("Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
+            // Exception that represents errors in the program logic.
+            throw new LogicException("Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");
         }
 
         if (method_exists($entity, 'getTitle')) {
@@ -139,7 +140,6 @@ trait CUDControllerTrait
     public function deleteAction(): void
     {
         $params = $this->getDeleteParam();
-
         $this->deleteEntity(...$params);
     }
 

@@ -12,9 +12,6 @@ use Core\DefaultAbstract\DefaultAbstractRepository;
  */
 class UserRepository extends DefaultAbstractRepository
 {
-    /**
-     * @var string
-     */
     static $tableName = 'user';
 
     /**

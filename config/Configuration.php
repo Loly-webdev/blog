@@ -10,7 +10,8 @@ use Exception;
  */
 class Configuration
 {
-    private static $instance; // Will contain the instance of our class.
+    // Will contain the instance of our class.
+    private static $instance;
     private static $config = [];
 
     /**
@@ -63,12 +64,5 @@ class Configuration
     static function getEnvironment(): string
     {
         return static::$config['env'] ?? 'prod';
-    }
-
-    /**
-     * Denies access to the __clone() method
-     */
-    private function __clone()
-    {
     }
 }

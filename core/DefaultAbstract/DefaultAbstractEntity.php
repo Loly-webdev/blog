@@ -15,10 +15,8 @@ abstract class DefaultAbstractEntity
 
     /**
      * Method to hydrate an object
-     *
      * @param array $params
-     *
-     * @return $this
+     * @return DefaultAbstractEntity
      */
     public function hydrate(array $params)
     {
@@ -44,9 +42,9 @@ abstract class DefaultAbstractEntity
 
     /**
      * Get an id
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
