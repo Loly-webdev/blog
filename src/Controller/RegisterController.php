@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
 use Exception;
 
@@ -26,13 +28,12 @@ class RegisterController extends DefaultAbstractController
 
     /**
      * Give params to addAction
-     * @return array
-     * @throws Exception
+     * @return array|mixed[]
      */
     public function getAddParam(): array
     {
         return [
-            (new User())->getRoleLabel($this->role()),
+            (new User())->getRoleLabel(),
             'user',
             new User(),
             new UserRepository(),
@@ -40,18 +41,39 @@ class RegisterController extends DefaultAbstractController
         ];
     }
 
-    public function role()
-    {
-        if ((new User())->isAdmin() === true) {
-            return $role = (new User())::ROLE_ADMIN;
-        }
-        return $role = (new User())::ROLE_USER;
-    }
-
+    /**
+     * @param User $entity
+     * @throws CoreException
+     */
     public function postHydrate($entity): void
     {
-        $role = $this->role();
+        $formValidator = new FormRegisterValidator();
+        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
+            $formValues = $formValidator->getFormValues();
+            $entity->setRole($entity->role());
+            $this->check($formValues, $entity);
+        }
+    }
 
-        $entity->setRole($role);
+    /**
+     * @param array $formValues
+     * @param object $entity
+     * @throws CoreException
+     */
+    public function check(array $formValues, $entity)
+    {
+        $email = $formValues['mail'] ?? '';
+        $password = $formValues['password'] ?? '';
+
+        if (false === Helper::checkEmail($email)) {
+            throw new Exception("l'adresse $email n'est pas valide");
+        }
+
+        if ($formValues['password'] !== $formValues['password2']) {
+            throw new CoreException("Les deux mot de passe ne sont pas identique");
+        }
+
+        $entity->setMail($email)
+            ->setPassword($password);
     }
 }

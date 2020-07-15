@@ -31,7 +31,7 @@ class Router
     {
         // Load the instance of Request
         $request = Request::getInstance();
-        $params  = $request->getUrlComponents();
+        $params = $request->getUrlComponents();
 
         $index = 0;
         if (isset($params[$index]) && 'Admin' === $params[$index]) {
@@ -41,7 +41,7 @@ class Router
         // Find the ControllerName and ActionName with the function getUrlComponents()
         // or return a defaultValue
         $controllerName = $params[$index] ?? "Home";
-        $actionName     = $params[++$index] ?? "index";
+        $actionName = $params[++$index] ?? "index";
 
         // Add "Controller" to the controllerName find
         $this->controllerName = ucfirst($controllerName) . 'Controller';
@@ -67,6 +67,9 @@ class Router
         return $this->actionName;
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return $this->admin;

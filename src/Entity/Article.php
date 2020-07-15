@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
 
+/**
+ * Class Article
+ * @package App\Entity
+ */
 class Article extends DefaultAbstractEntity
 {
     protected $title;
@@ -11,59 +15,59 @@ class Article extends DefaultAbstractEntity
     protected $content;
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * @param mixed $title
-     *
+     * @param string $title
      * @return Article
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
 
     /**
-     * @param mixed $author
-     *
+     * @param string $author
      * @return Article
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author)
     {
         $this->author = $author;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
     /**
-     * @param mixed $content
-     *
+     * @param string $content
      * @return Article
      */
-    public function setContent($content)
+    public function setContent(string $content)
     {
         $this->content = $content;
+
         return $this;
     }
 }

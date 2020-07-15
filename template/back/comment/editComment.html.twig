@@ -1,21 +1,18 @@
-{% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_navAdmin.html.twig') }}
-{% endblock %}
+{% extends "back/layoutBack.html.twig" %}
 {% block content %}
     <section class="form">
-        <h4>Laisser un commentaire :</h4>
+        <h4>Modification du commentaire n°{{ comment.id }}</h4>
         <form action="" method="POST">
             <div>
                 <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="comment[author]"/>
+                <input type="text" id="author" name="comment[author]" value="{{ comment.author }}"/>
             </div>
             <div>
-                <label for="comment">Commentaire</label><br/>
-                <textarea id="comment" name="comment[content]"></textarea>
+                <label for="content">Article</label><br/>
+                <textarea id="content" name="comment[content]">{{ comment.content }}</textarea>
             </div>
             <div>
-                <input class="button" type="submit" value="Envoyer"/>
+                <input type="submit"/>
             </div>
         </form>
     </section>

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\{ArticleRepository, CommentRepository};
-use Core\DefaultAbstract\{DefaultAbstractController, DefaultAbstractEntity};
+use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
 use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
 use Exception;
 
@@ -12,10 +12,8 @@ use Exception;
  * Class ArticleController
  * @package App\Controller
  */
-class ArticleController extends DefaultAbstractController
+class ArticleController extends LoggedAbstractController
 {
-    protected $key;
-
     use CUDControllerTrait,
         AddControllerTrait;
 
@@ -28,13 +26,11 @@ class ArticleController extends DefaultAbstractController
     public function indexAction()
     {
         $articles = (new ArticleRepository())->find();
-        // For drop-down lists
-        // $article = (new ArticleRepository())->selectColumns(['title', 'content']);
 
         $this->renderView(
-            'articles.html.twig',
+            '/article/articles.html.twig',
             [
-                'title'    => 'Derniers billets du blog :',
+                'title' => 'Derniers billets du blog :',
                 'articles' => $articles
             ]
         );
@@ -42,7 +38,7 @@ class ArticleController extends DefaultAbstractController
 
     /**
      * Give params to seeAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getSeeParam(): array
@@ -51,14 +47,19 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             'article',
             new ArticleRepository(),
-            'articleById.html.twig',
+            'article/articleById.html.twig',
         ];
     }
 
+    /**
+     * @param array|mixed[] $data
+     * @param DefaultAbstractEntity $entity
+     * @return array|mixed[]
+     */
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
         $data['comments'] = $comments;
 
         return $data;
@@ -66,7 +67,7 @@ class ArticleController extends DefaultAbstractController
 
     /**
      * Give params to addAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getAddParam(): array
@@ -76,13 +77,13 @@ class ArticleController extends DefaultAbstractController
             'article',
             new Article(),
             new ArticleRepository(),
-            'formArticle.html.twig'
+            'article/formArticle.html.twig'
         ];
     }
 
     /**
      * Give params to editAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getEditParam(): array
@@ -91,13 +92,13 @@ class ArticleController extends DefaultAbstractController
             'articleId',
             new ArticleRepository(),
             'article',
-            'editArticle.html.twig'
+            'article/editArticle.html.twig'
         ];
     }
 
     /**
      * Give params to deleteAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getDeleteParam(): array
@@ -106,7 +107,7 @@ class ArticleController extends DefaultAbstractController
             new ArticleRepository(),
             'articleId',
             'article',
-            'formArticle.html.twig'
+            'article/formArticle.html.twig'
         ];
     }
 }

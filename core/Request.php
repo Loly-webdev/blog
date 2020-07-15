@@ -20,7 +20,8 @@ namespace Core;
  */
 final class Request
 {
-    private static $instance; // Will contain the instance of our class.
+    // Will contain the instance of our class.
+    private static $instance;
 
     /**
      * Request constructor.
@@ -50,13 +51,17 @@ final class Request
     public function getUrlComponents(): array
     {
         $server = parse_url($_SERVER["REQUEST_URI"]);
-        $path   = trim($server['path'], "/");
+        $path = trim($server['path'], "/");
 
         return "" !== $path
             ? explode('/', $path)
             : [];
     }
 
+    /**
+     * @param string $param
+     * @return int
+     */
     public function getParamAsInt(string $param): int
     {
         $param = $this->getParam($param)
@@ -75,14 +80,13 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
-     *
      * @return mixed|null
      */
     public function getParam($key, $defaultValue = null)
     {
         return $this->getQueryParam($key) ??
-               $this->getRequestParam($key) ??
-               $defaultValue;
+            $this->getRequestParam($key) ??
+            $defaultValue;
     }
 
     /**
@@ -90,7 +94,6 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
-     *
      * @return mixed|null
      */
     public function getQueryParam($key, $defaultValue = null)
@@ -105,7 +108,6 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
-     *
      * @return mixed|null
      */
     public function getRequestParam($key, $defaultValue = null)

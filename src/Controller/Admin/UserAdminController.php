@@ -5,11 +5,16 @@ namespace App\Controller\Admin;
 use App\Controller\RegisterController;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Core\DefaultAbstract\DefaultAbstractController;
+use Core\DefaultAbstract\LoggedAbstractController;
+use Core\Exception\CoreException;
 use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
 
-class UserAdminController extends DefaultAbstractController
+/**
+ * Class UserAdminController
+ * @package App\Controller\Admin
+ */
+class UserAdminController extends LoggedAbstractController
 {
     use CUDControllerTrait;
 
@@ -21,14 +26,26 @@ class UserAdminController extends DefaultAbstractController
      */
     public function indexAction()
     {
+        if (null === $this->getUserLogged()) {
+            throw new CoreException('Vous n\'etes pas authentifié.');
+        }
+
+        $user = $this->getUserLogged();
+        assert($user instanceof User);
+        $status = $user->getRoleLabel();
+        $login = $user->getLogin();
+
         $this->renderView(
-            'homeAdmin.html.twig'
+            'homeBack.html.twig',
+            [
+                'message' => "Ravi de te revoir $status $login !"
+            ]
         );
     }
 
     /**
      * Give params to seeAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getSeeParam(): array
@@ -37,13 +54,13 @@ class UserAdminController extends DefaultAbstractController
             'userId',
             'user',
             new UserRepository(),
-            'profile.html.twig'
+            'profile/profile.html.twig'
         ];
     }
 
     /**
      * Give params to edit Action
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getEditParam(): array
@@ -52,33 +69,37 @@ class UserAdminController extends DefaultAbstractController
             'userId',
             new UserRepository(),
             'user',
-            'editProfile.html.twig'
+            'profile/editProfile.html.twig'
         ];
     }
 
     /**
      * Give params to deleteAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getDeleteParam(): array
     {
-        $register = new RegisterController();
+        new RegisterController();
         return [
             new UserRepository(),
             'userId',
-            (new User())->getRoleLabel($register->role()),
+            (new User())->getRoleLabel(),
             'formRegister.html.twig',
         ];
     }
 
+    /**
+     * @return void
+     * @throws CoreException
+     */
     public function profileAction()
     {
-        $userId = $_SESSION['user'];
-        $user   = (new UserRepository())->findOneById($userId);
+        $userId = $_SESSION['id'];
+        $user = (new UserRepository())->findOneById($userId);
 
         $this->renderView(
-            'profile.html.twig',
+            'profile/profile.html.twig',
             [
                 'user' => $user
             ]

@@ -1,7 +1,4 @@
-{% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_navAdmin.html.twig') }}
-{% endblock %}
+{% extends "back/layoutBack.html.twig" %}
 {% block content %}
     <h4>{{ comment.author }}</h4>
     <section class="comment">
@@ -21,4 +18,3 @@
         </div>
     </section>
 {% endblock %}
-

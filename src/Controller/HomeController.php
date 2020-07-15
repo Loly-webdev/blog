@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Exception;
 
@@ -20,33 +19,15 @@ class HomeController extends DefaultAbstractController
      */
     public function indexAction()
     {
-        $this->renderView(
-            'home.html.twig'
-        );
-    }
-
-    public function welcomeAction()
-    {
-        $userId = $_SESSION['user'];
-        $user   = (new UserRepository())->findOneById($userId);
-        $code   = $user->getRole();
-
-        if ($code === 'admin') {
-            $viewTemplate = 'homeAdmin.html.twig';
-        }
-        if ($code === 'user') {
-            $viewTemplate = 'homeAdmin.html.twig';
+        if (isset($_SESSION['logged']) === true) {
+            $this->redirectTo('Admin/userAdmin');
         }
 
-        $status = $user->getRoleLabel($code);
-        $login  = $user->getLogin();
-
         $this->renderView(
-            $viewTemplate,
+            'home.html.twig',
             [
-                'message' => "Ravi de te revoir $status $login !" ?? ''
-            ],
-            'back/'
+                'message' => "Bonjour et bienvenu sur mon site !"
+            ]
         );
     }
 }

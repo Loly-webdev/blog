@@ -2,7 +2,7 @@
 
 namespace Core\Provider;
 
-use Exception;
+use Core\Exception\CoreException;
 
 /**
  * Class Configuration
@@ -10,19 +10,20 @@ use Exception;
  */
 class ConfigurationProvider
 {
-    private static $instance; // Will contain the instance of our class.
+    // Will contain the instance of our class.
+    private static $instance;
     private static $config = [];
 
     /**
      * Configuration constructor.
      * Prevents the creation of an instance
-     * @throws Exception
+     * @throws CoreException
      */
     private function __construct()
     {
         $path = CONF_ROOT . "env.yml";
         if (false === file_exists($path)) {
-            throw new Exception("Le fichier $path n'existe pas.");
+            throw new CoreException("Le fichier $path n'existe pas.");
         }
 
         static::$config = yaml_parse_file($path);
@@ -49,6 +50,9 @@ class ConfigurationProvider
         return static::$config['twig'] ?? [];
     }
 
+    /**
+     * @return string
+     */
     public static function getEnvironment(): string
     {
         return static::$config['env']
@@ -56,7 +60,10 @@ class ConfigurationProvider
             : 'prod';
     }
 
-    public static function isValid()
+    /**
+     * @return bool
+     */
+    public static function isValid(): bool
     {
         return !empty(static::getDatabaseConfig());
     }
@@ -69,9 +76,20 @@ class ConfigurationProvider
         return static::$config['databases'] ?? [];
     }
 
+    /**
+     * @return string
+     */
     public function getSalt(): string
     {
-        return static::$config['salt'];
+        return static::$config['salt'] ?? '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getMyMail(): string
+    {
+        return static::$config['myMail'] ?? '';
     }
 
     /**

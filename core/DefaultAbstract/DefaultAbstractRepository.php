@@ -2,9 +2,9 @@
 
 namespace Core\DefaultAbstract;
 
+use Core\Exception\CoreException;
 use Core\Provider\PDOProvider;
 use Core\Traits\Repository\{CUDRepositoryTrait, ReadRepositoryTrait};
-use Exception;
 use PDO;
 
 /**
@@ -23,18 +23,18 @@ abstract class DefaultAbstractRepository
 
     /**
      * DefaultAbstractRepository constructor.
-     * @throws Exception
+     * @throws CoreException
      */
     final public function __construct()
     {
         $this->pdo = PDOProvider::PDOConnect();
 
         if (!isset(static::$tableName)) {
-            throw new Exception('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
+            throw new CoreException('vous devez déclarez le nom de la table pour la classe ' . __CLASS__);
         }
 
         if (!isset(static::$tableOrder)) {
-            throw new Exception('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
+            throw new CoreException('vous devez déclarez l\'ordre de tri de la table pour la classe ' . __CLASS__);
         }
     }
 

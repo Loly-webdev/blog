@@ -1,0 +1,37 @@
+{% extends "back/layoutBack.html.twig" %}
+{% block content %}
+    <h4>Ecrire un nouvel article :</h4>
+    <div class="container">
+        <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        <div class="starter-template">
+            <form action="" method="POST">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="title">Titre</label>
+                            <input class="form-control" type="text" id="title" name="article[title]" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="author">Auteur</label><br/>
+                            <input class="form-control" type="text" id="author" name="article[author]" required/>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="content">Article</label><br/>
+                            <textarea class="form-control" id="content" name="article[content]" rows="9"
+                                      required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <section class="link">
+        <a href="/article">Retour à la liste des billets</a>
+    </section>
+{% endblock %}
+

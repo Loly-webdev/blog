@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\Exception\CoreException;
+use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\Provider\ConfigurationProvider;
 use Exception;
 
@@ -16,7 +18,7 @@ class AuthenticationController extends DefaultAbstractController
 {
     /**
      * Action by default
-     * @throws CoreException
+     * @throws Exception
      */
     public function indexAction()
     {
@@ -31,60 +33,72 @@ class AuthenticationController extends DefaultAbstractController
      */
     public function loginAction(): void
     {
-        if ($this->hasFormSubmitted('formAuthentication')) {
-            $formData = $this->getFormSubmittedValues('formAuthentication');
-            $login    = $formData['login'] ?? '';
-            $password = $formData['password'] ?? '';
-            $salt     = ConfigurationProvider::getInstance()->getSalt();
+        $formValidator = new FormAuthenticationValidator();
 
-            $user = (new UserRepository())->findOne(
-                [
-                    'login' => $login
-                ]
-            );
+        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
-            $passwordUser = $user->getPassword();
+            if (null !== $user = $this->retrieveAccount($formValidator->getFormValues())) {
+                assert($user instanceof User);
+                $this->addUserInSession($user);
 
-            if (session_id()) {
-                session_unset();
+                // Redirect to userAdminController
+                $this->redirectTo('Admin/userAdmin');
             }
 
-            if (password_verify($password . $salt, $passwordUser)) {
-                $_SESSION['logged'] = true;
-                $_SESSION['user']   = $user->getId();
-                $code               = $user->getRole();
-
-                if ($code === 'admin') {
-                    $page = '/home/welcome';
-                    header('Location: ' . $page);
-                    exit();
-                }
-                if ($code === 'user') {
-                    $page = '/home/welcome';
-                    header('Location: ' . $page);
-                    exit();
-                }
-            }
+            $status = "danger";
             $message = "Echec de l'authentification";
         }
+
         $this->renderView(
             'formAuthentication.html.twig',
             [
+                'status' => $status ?? '',
                 'message' => $message ?? ''
             ]
         );
     }
 
     /**
-     * User logout
+     * @param mixed $params
+     *
+     * @return DefaultAbstractEntity
      */
-    public function logoutAction()
+    private function retrieveAccount($params): ?DefaultAbstractEntity
+    {
+        $login = $params['login'];
+
+        $user = (new UserRepository())->findOne(['login' => $login]);
+
+        // Check if $user is an instance of User class
+        assert($user instanceof User);
+
+        if (empty($user)) {
+            return null;
+        }
+        $accountIsValid = Helper::checkPassword($params['password'], $user->getPassword());
+
+        return $accountIsValid ? $user : null;
+    }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    private function addUserInSession(User $user): void
+    {
+        $_SESSION['logged'] = true;
+        $_SESSION['id'] = $user->getId();
+    }
+
+    /**
+     * User logout
+     * @return void
+     */
+    public function logoutAction(): void
     {
         session_unset();
         session_destroy();
 
-        header("Refresh: 3; URL= /Home");
-        echo 'Veuillez patientez vous allez être redirigé vers l\'accueil.';
-        exit();
+        $this->redirectTo('home');
     }
 }

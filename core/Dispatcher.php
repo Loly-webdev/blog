@@ -30,7 +30,7 @@ class Dispatcher
 
     /**
      * Retrieve URL and parameter information for dispatching to controllers
-     * @return $this
+     * @return Dispatcher
      * @throws CoreException
      */
     public function dispatch()

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {{ include('partial/_head.html.twig') }}
+</head>
+<body>
+<header>
+    {{ include('back/partial/_navBack.html.twig') }}
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    {{ include('back/partial/_footerBack.html.twig') }}
+</footer>
+</body>
+</html>

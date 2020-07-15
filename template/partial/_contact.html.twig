@@ -1,0 +1,41 @@
+<h4>Contactez-moi :</h4>
+<div class="container">
+    <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
+    <div class="starter-template">
+        <form action="" method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Nom :</label>
+                        <input class="form-control" id="name" name="contact[nameUser]" placeholder="Nom" type="text"
+                               value="{{ user . login }}"
+                               required/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">E-mail :</label>
+                        <input class="form-control" id="email" name="contact[email]" placeholder="Email" type="email"
+                               value="{{ user . mail }}"
+                               required/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="subject">Sujet :</label>
+                        <input class="form-control" id="subject" name="contact[subject]" placeholder="Sujet" type="text"
+                               required/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="message">Message :</label>
+                        <textarea class="form-control" id="message" name="contact[message]" placeholder="Message"
+                                  rows="9" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

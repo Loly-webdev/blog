@@ -1,7 +1,4 @@
-{% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_navAdmin.html.twig') }}
-{% endblock %}
+{% extends "back/layoutBack.html.twig" %}
 {% block content %}
     <section class="form">
         <h4>Modification du profil :</h4>
@@ -27,6 +24,6 @@
     {{ message }}
     <br>
     <section class="link">
-        <a href="/home">Retour à l'accueil'</a>
+        <a href="/home">Retour à l'accueil</a>
     </section>
 {% endblock %}

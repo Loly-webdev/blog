@@ -5,7 +5,7 @@
 </head>
 <body>
 <header>
-    {% block nav %}{% endblock %}
+    {{ include('partial/_nav.html.twig') }}
 </header>
 <main>
     {% block content %}{% endblock %}

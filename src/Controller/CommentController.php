@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
-use Core\DefaultAbstract\DefaultAbstractController;
+use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Traits\Controller\AddControllerTrait;
 use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
@@ -13,7 +13,7 @@ use Exception;
  * Class CommentController
  * @package App\Controller
  */
-class CommentController extends DefaultAbstractController
+class CommentController extends LoggedAbstractController
 {
     use CUDControllerTrait,
         AddControllerTrait;
@@ -30,7 +30,7 @@ class CommentController extends DefaultAbstractController
 
     /**
      * Give params to seeAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getSeeParam(): array
@@ -39,13 +39,13 @@ class CommentController extends DefaultAbstractController
             'commentId',
             'comment',
             new CommentRepository(),
-            'comment.html.twig'
+            'comment/comment.html.twig'
         ];
     }
 
     /**
      * Give params to addAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getAddParam(): array
@@ -55,20 +55,24 @@ class CommentController extends DefaultAbstractController
             'comment',
             new Comment(),
             new CommentRepository(),
-            'formComment.html.twig'
+            'comment/formComment.html.twig'
         ];
     }
 
+    /**
+     * @param Comment $entity
+     * @return void
+     */
     public function postHydrate($entity): void
     {
         $entity->setArticleId(
-	        $this->getRequest()->getParamAsInt('articleId')
+            $this->getRequest()->getParamAsInt('articleId')
         );
     }
 
     /**
      * Give params to edit Action
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getEditParam(): array
@@ -77,13 +81,13 @@ class CommentController extends DefaultAbstractController
             'commentId',
             new CommentRepository(),
             'comment',
-            'editComment.html.twig'
+            'comment/editComment.html.twig'
         ];
     }
 
     /**
      * Give params to deleteAction
-     * @return array
+     * @return array|mixed[]
      * @throws Exception
      */
     public function getDeleteParam(): array
@@ -92,7 +96,7 @@ class CommentController extends DefaultAbstractController
             new CommentRepository(),
             'commentId',
             'commentaire',
-            'formComment.html.twig'
+            'comment/formComment.html.twig'
         ];
     }
 }

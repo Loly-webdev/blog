@@ -1,33 +1,41 @@
 {% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_nav.html.twig') }}
-{% endblock %}
 {% block content %}
-    <h2>Inscrivez-vous</h2>
-    <form action="" method="post">
-        <div>
-            <label for="login">Identifiant :</label><br/>
-            <input id="login" name="user[login]" type="text" required>
+    <h4>Inscription :</h4>
+    <div class="container align-items-center">
+        <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        <div class="starter-template">
+            <form class="center" action="" method="POST">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="login">Identifiant :</label>
+                        <input class="form-control" id="login" name="user[login]" type="text"
+                               required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input class="form-control" id="email" name="user[mail]" type="text"
+                               required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass1">Mot de passe (3 caractères minimum) :</label>
+                        <input class="form-control" id="pass1" name="user[password]" type="password"
+                               minlength="3"
+                               required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass2">Mot de passe (3 caractères minimum) :</label>
+                        <input class="form-control" id="pass2" name="user[password2]" type="password"
+                               minlength="3"
+                               required/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">connexion</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="email">Email</label><br>
-            <input type="text" id="email" name="user[mail]" required>
-        </div>
-        <div>
-            <label for="pass">Mot de passe (3 caractères minimum) :</label><br/>
-            <input id="pass" name="user[password]" type="password" minlength="3"
-                   required>
-        </div>
-        <div>
-            <input class="button" type="submit" value="Envoyer"/>
-        </div>
-    </form>
+    </div>
     <section class="link">
         <h4>Déjà inscrit ?</h4>
         <a href="/authentication/login">Connectez-vous</a>
     </section>
-    <br>
-    {{ message }}
-    <br>
 {% endblock %}
 

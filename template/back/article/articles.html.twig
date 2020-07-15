@@ -1,7 +1,4 @@
-{% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_navAdmin.html.twig') }}
-{% endblock %}
+{% extends "back/layoutBack.html.twig" %}
 {% block content %}
     <h2>{{ title }}</h2>
     {% for article in articles %}

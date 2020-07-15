@@ -1,30 +1,29 @@
 {% extends "layout.html.twig" %}
-{% block nav %}
-    {{ include('partial/_nav.html.twig') }}
-{% endblock %}
 {% block content %}
-    <section class="form">
-        <h4>{{ title }}</h4>
-        <form action="" method="POST">
-            <div>
-                <label for="login">Identifiant :</label><br/>
-                <input id="login" name="formAuthentication[login]" type="text"/>
-            </div>
-            <div>
-                <label for="pass">Mot de passe :</label><br/>
-                <input id="pass" name="formAuthentication[password]" type="password" minlength="3"
-                       required/>
-            </div>
-            <div>
-                <input class="button" type="submit" value="connexion"/>
-            </div>
-        </form>
-    </section>
+    <h4>Connexion :</h4>
+    <div class="container align-items-center">
+        <div class="alert alert-{{ status }}">{{ message }}</div>
+        <div class="starter-template">
+            <form class="center" action="" method="POST">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="login">Identifiant :</label>
+                        <input class="form-control" id="login" name="formAuthentication[login]" type="text"
+                               required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Mot de passe :</label>
+                        <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
+                               minlength="3"
+                               required/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">connexion</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <section class="link">
         <h4>Pas encore de compte ?</h4>
         <a href="/register">S'inscrire</a>
     </section>
-    <br>
-    {{ message }}
-    <br>
 {% endblock %}

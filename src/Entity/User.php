@@ -2,75 +2,67 @@
 
 namespace App\Entity;
 
+use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractEntity;
-use Core\Provider\ConfigurationProvider;
+use Core\Exception\CoreException;
 
+/**
+ * Class User
+ * @package App\Entity
+ */
 class User extends DefaultAbstractEntity
 {
+    /**
+     *
+     */
     const ROLE_ADMIN = 'admin';
-    const ROLE_USER  = 'user';
-
+    const ROLE_USER = 'user';
     const ROLE_ADMIN_LABEL = 'Administrateur';
-    const ROLE_USER_LABEL  = 'Utilisateur';
-
+    const ROLE_USER_LABEL = 'Utilisateur';
     const ROLES = [
         self::ROLE_ADMIN => self::ROLE_ADMIN_LABEL,
-        self::ROLE_USER  => self::ROLE_USER_LABEL
+        self::ROLE_USER => self::ROLE_USER_LABEL
     ];
 
-    protected $mail;
-    protected $login;
-    protected $password;
-    protected $role;
-
-    public function __serialize()
-    {
-        return $this->getSessionValues();
-    }
-
-    public function getSessionValues()
-    {
-        return [
-            'mail'     => $this->getMail(),
-            'username' => $this->getLogin(),
-            'password' => $this->getPassword(),
-            'role'     => $this->getRole()
-        ];
-    }
+    protected $mail = '';
+    protected $login = '';
+    protected $password = '';
+    protected $role = '';
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getMail()
+    public function getMail(): string
     {
         return $this->mail;
     }
 
     /**
-     * @param mixed $mail
+     * @param string $mail
      *
      * @return User
      */
-    public function setMail($mail)
+    public function setMail(string $mail)
     {
         $this->mail = $mail;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLogin()
+    public function getLogin(): string
     {
         return $this->login;
     }
 
     /**
-     * @param mixed $login
+     * @param string $login
      *
      * @return User
      */
-    public function setLogin($login)
+    public function setLogin(string $login)
     {
         $this->login = $login;
 
@@ -78,7 +70,7 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPassword(): string
     {
@@ -86,52 +78,67 @@ class User extends DefaultAbstractEntity
     }
 
     /**
-     * @param string $plainText
-     *
-     * @return void
+     * @param string $passwordSubmitted
+     * @return User
      */
-    public function setPassword(string $plainText)
+    public function setPassword(string $passwordSubmitted)
     {
-        $this->password = static::encodePassword($plainText);
+        $this->password = Helper::encodePassword($passwordSubmitted);
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getRole()
+    public function isAdmin(): bool
+    {
+        return static::ROLE_ADMIN === $this->getRole();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole():string
     {
         return $this->role;
     }
 
-    static function encodePassword(string $password)
+    /**
+     * @param string $role
+     * @return User
+     * @throws CoreException
+     */
+    public function setRole(string $role)
     {
-        $salt = ConfigurationProvider::getInstance()->getSalt();
+        $existingRole = [self::ROLE_ADMIN, self::ROLE_USER];
+        if (!in_array($role, $existingRole)) {
+            throw new CoreException('Le rôle ' . $role . ' saisie n\'existe pas ou n\'est pas valide');
+        }
+        $this->role = $role;
 
-        return password_hash($password . $salt, PASSWORD_ARGON2ID);
+        return $this;
     }
 
     /**
-     * @param mixed $role
-     *
-     * @return User
+     * @return string
      */
-    public function setRole($role)
+    public function getRoleLabel(): string
     {
-        if (in_array($role, self::ROLES)) {
-            $this->role = $role;
+        $role = $this->role();
+
+        return static::ROLES[$role] ?? 'Aucun role définit';
+    }
+
+
+    /**
+     * @return string
+     */
+    public function role(): string
+    {
+        if ($this->isAdmin()) {
+            return User::ROLE_ADMIN;
         }
-        return $this->role = $role;
-    }
-
-    public function isAdmin()
-    {
-        return self::ROLE_ADMIN === $this->getRole();
-    }
-
-    public function getRoleLabel($code)
-    {
-        return isset(self::ROLES[$code])
-            ? self::ROLES[$code]
-            : 'Aucun role définit';
+        return User::ROLE_USER;
     }
 }
