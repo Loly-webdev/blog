@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Service\Email;
 use App\Service\Message;
 use App\utils\Helper;
@@ -24,7 +23,7 @@ class ContactController extends DefaultAbstractController
      */
     public function indexAction()
     {
-        if ($_SESSION['logged']) {
+        if (isset($_SESSION['logged'])) {
             $viewFolder = 'back/';
             $user = $this->getUserLogged();
         }
