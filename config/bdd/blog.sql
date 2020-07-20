@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : mer. 01 juil. 2020 à 10:07
--- Version du serveur :  5.7.30-0ubuntu0.18.04.1
--- Version de PHP : 7.4.6
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  lun. 20 juil. 2020 à 08:26
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.4.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,9 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `blog`
+-- Base de données :  `blog`
 --
-CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+DROP DATABASE IF EXISTS `blog`;
+CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `blog`;
 
 -- --------------------------------------------------------
@@ -30,14 +31,16 @@ USE `blog`;
 -- Structure de la table `article`
 --
 
-CREATE TABLE `article` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `author` varchar(30) NOT NULL,
-  `content` text NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE IF NOT EXISTS `article` (
+                                         `id` int(11) NOT NULL AUTO_INCREMENT,
+                                         `title` varchar(255) NOT NULL,
+                                         `author` varchar(30) NOT NULL,
+                                         `content` text NOT NULL,
+                                         `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+                                         `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+                                         PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `article`
@@ -54,14 +57,17 @@ INSERT INTO `article` (`id`, `title`, `author`, `content`, `createdAt`, `updated
 -- Structure de la table `comment`
 --
 
-CREATE TABLE `comment` (
-  `id` int(11) NOT NULL,
-  `articleId` int(11) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE IF NOT EXISTS `comment` (
+                                         `id` int(11) NOT NULL AUTO_INCREMENT,
+                                         `articleId` int(11) NOT NULL,
+                                         `author` varchar(255) NOT NULL,
+                                         `content` text NOT NULL,
+                                         `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+                                         `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+                                         PRIMARY KEY (`id`),
+                                         KEY `articleId` (`articleId`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `comment`
@@ -81,15 +87,17 @@ INSERT INTO `comment` (`id`, `articleId`, `author`, `content`, `createdAt`, `upd
 -- Structure de la table `user`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `login` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(250) CHARACTER SET utf8 NOT NULL,
-  `mail` varchar(250) CHARACTER SET utf8 NOT NULL,
-  `role` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+                                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                                      `login` varchar(30) CHARACTER SET utf8 NOT NULL,
+                                      `password` varchar(250) CHARACTER SET utf8 NOT NULL,
+                                      `mail` varchar(250) CHARACTER SET utf8 NOT NULL,
+                                      `role` varchar(30) CHARACTER SET utf8 NOT NULL,
+                                      `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
+                                      `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),
+                                      PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
@@ -100,51 +108,6 @@ INSERT INTO `user` (`id`, `login`, `password`, `mail`, `role`, `createdAt`, `upd
 (7, 'Plop', '$argon2id$v=19$m=65536,t=4,p=1$TEpkZFJULlBMcU9TOXplYw$K7PeeQQOwSpIpGO4OyZkU7xhwaoZqlmdcQyL0A4q8ps', 'plop@hotmail.fr', 'user', '2020-06-03 10:51:25', '2020-06-03 10:51:25');
 
 --
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `article`
---
-ALTER TABLE `article`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `comment`
---
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `articleId` (`articleId`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `article`
---
-ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT pour la table `comment`
---
-ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT pour la table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
 -- Contraintes pour les tables déchargées
 --
 
@@ -152,9 +115,9 @@ ALTER TABLE `user`
 -- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE;
+    ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
