@@ -40,7 +40,6 @@ class ContactController extends DefaultAbstractController
             }
 
             $fields = $this->prepareFields($formValues, $nameUser, $emailUser);
-
             $status = static::statusMessage($emailUser, $fields['subject'], $fields['message']);
         }
 

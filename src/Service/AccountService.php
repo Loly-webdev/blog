@@ -2,13 +2,19 @@
 
 namespace App\Service;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
+use App\utils\Helper;
+use Core\DefaultAbstract\DefaultAbstractController;
+use Core\DefaultAbstract\DefaultAbstractEntity;
+
 /**
  * Class AccountService
  * @package App\Service
  */
 abstract class AccountService extends DefaultAbstractController
 {
-/**
+    /**
      * @param mixed $params
      *
      * @return DefaultAbstractEntity
@@ -29,4 +35,6 @@ abstract class AccountService extends DefaultAbstractController
 
         return $accountIsValid ? $user : null;
     }
+
+
 }

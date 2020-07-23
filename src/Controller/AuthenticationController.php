@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
-use App\utils\Helper;
+use App\Service\AccountService;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\DefaultAbstract\DefaultAbstractEntity;
-use Core\Provider\ConfigurationProvider;
 use Exception;
 
 /**
@@ -37,7 +34,7 @@ class AuthenticationController extends DefaultAbstractController
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
-            if (null !== $user = $this->retrieveAccount($formValidator->getFormValues())) {
+            if (null !== $user = AccountService::retrieveAccount($formValidator->getFormValues())) {
                 assert($user instanceof User);
                 $this->addUserInSession($user);
 
@@ -56,28 +53,6 @@ class AuthenticationController extends DefaultAbstractController
                 'message' => $message ?? ''
             ]
         );
-    }
-
-    /**
-     * @param mixed $params
-     *
-     * @return DefaultAbstractEntity
-     */
-    private function retrieveAccount($params): ?DefaultAbstractEntity
-    {
-        $login = $params['login'];
-
-        $user = (new UserRepository())->findOne(['login' => $login]);
-
-        // Check if $user is an instance of User class
-        assert($user instanceof User);
-
-        if (empty($user)) {
-            return null;
-        }
-        $accountIsValid = Helper::checkPassword($params['password'], $user->getPassword());
-
-        return $accountIsValid ? $user : null;
     }
 
     /**
