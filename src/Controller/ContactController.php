@@ -64,7 +64,7 @@ class ContactController extends DefaultAbstractController
     {
         $subject = $formValues['subject'] ? Helper::secureText($formValues['subject']) : '';
         $messageContent = $formValues['message'] ? Helper::secureText($formValues['message']) : '';
-        $message = "MESSAGE DU SITE LOLYWEBDEV de $nameUser, $emailUser\r\n"
+        $message = "MESSAGE DU SITE LOLYWEBDEV de $nameUser, $emailUser<br>"
             . $messageContent;
 
         return [
