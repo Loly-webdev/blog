@@ -48,7 +48,7 @@ trait AddControllerTrait
         if (isset($formSubmitted)) {
             $entity = $entityClass->hydrate($formSubmitted);
             $this->checkForm($formSubmitted, $entityClass);
-            $status = self::statusMessage($repository, $entity, $entityLabel);
+            $status = static::statusMessage($repository, $entity, $entityLabel);
         }
         $this->renderView(
             $viewTemplate,

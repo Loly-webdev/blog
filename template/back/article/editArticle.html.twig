@@ -20,15 +20,18 @@
                                    value="{{ article.author }}" required/>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="content">Article</label><br/>
-                            <textarea class="form-control" id="content" name="article[content]" rows="9"
-                                      required>{{ article.content }}</textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Envoyer</button>
-                    </div>
                 </div>
+                <div class="form-group">
+                    <label for="hat">Chapô</label><br/>
+                    <textarea class="form-control" id="hat" name="article[hat]" rows="5"
+                              required>{{ article.hat }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content">Article</label><br/>
+                    <textarea class="form-control" id="content" name="article[content]" rows="9"
+                              required>{{ article.content }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
             </form>
         </div>
     </div>

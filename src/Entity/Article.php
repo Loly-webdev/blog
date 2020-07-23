@@ -12,6 +12,7 @@ class Article extends DefaultAbstractEntity
 {
     protected $title;
     protected $author;
+    protected $hat;
     protected $content;
 
     /**
@@ -48,6 +49,25 @@ class Article extends DefaultAbstractEntity
     public function setAuthor(string $author)
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHat(): string
+    {
+        return $this->hat;
+    }
+
+    /**
+     * @param string $hat
+     * @return Article
+     */
+    public function setHat(string $hat)
+    {
+        $this->hat = $hat;
 
         return $this;
     }

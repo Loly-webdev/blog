@@ -2,19 +2,19 @@
 {% block content %}
     <h2>{{ title }}</h2>
     {% for article in articles %}
-        <section class="article">
+        <article>
             <h3>{{ article.title }}</h3>
             <em>
                 Créer le : {{ article.createdAt }}<br>
                 Dernière mise à jour : {{ article.updatedAt }}
             </em>
-            <p>
-                {{ article.content }}
-            </p>
+            <article class="hat">
+                {{ article.hat }}
+            </article>
             <div class="link">
                 <a href="/article/see?articleId={{ article.id }}">Voir les commentaires associés</a>
             </div>
-        </section>
+        </article>
     {% endfor %}
     <section class="link">
         <a href="/article/add">Ajouter un nouvel article</a>

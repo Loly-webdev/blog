@@ -216,12 +216,17 @@ footer a {
 }
 
 /*blog*/
-.article {
+article {
     width: 70%;
     margin: auto;
 }
 
-.article p {
+article .hat {
+    background-color: rgba(201, 197, 211, 0.5);
+    padding: 1rem;
+}
+
+article .content {
     background-color: rgb(201, 197, 211);
     padding: 1rem;
 }
