@@ -12,7 +12,10 @@
                 {{ article.hat }}
             </article>
             <div class="link">
-                <a href="/article/see?articleId={{ article.id }}">Voir les commentaires associés</a>
+                <a href="/article/see?articleId={{ article.id }}">
+                    Voir l'article
+                    <span class="fas fa-angle-double-right"></span>
+                </a>
             </div>
         </article>
     {% endfor %}
