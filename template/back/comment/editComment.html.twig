@@ -1,25 +1,32 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <section class="form">
-        <h4>Modification du commentaire n°{{ comment.id }}</h4>
+<h4>Modification du commentaire n°{{ comment.id }}</h4>
+<div class="container">
+    <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+    <div class="starter-template">
         <form action="" method="POST">
-            <div>
-                <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="comment[author]" value="{{ comment.author }}"/>
+            <div class="col">
+                <div class="form-group">
+                    <label for="author">Auteur</label><br/>
+                    <input class="form-control" type="text" id="author" name="comment[author]"
+                           value="{{ comment.author }}" required/>
+                </div>
             </div>
-            <div>
-                <label for="content">Article</label><br/>
-                <textarea id="content" name="comment[content]">{{ comment.content }}</textarea>
+            <div class="col">
+                <div class="form-group">
+                    <label for="content">Article</label><br/>
+                    <textarea class="form-control" id="content" name="comment[content]" required>{{ comment.content }}</textarea>
+                </div>
             </div>
             <div>
                 <input type="submit"/>
             </div>
         </form>
-    </section>
+    </div>
     <br>
     {{ message }}
     <br>
     <section class="link">
         <a href="/article">Retour à la liste des billets</a>
     </section>
-{% endblock %}
+    {% endblock %}

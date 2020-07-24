@@ -1,20 +1,22 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h4>{{ comment.author }}</h4>
-    <section class="comment">
+    <article>
+        <h4>{{ comment.author }}</h4>
         <em>
             Créer le : {{ comment.createdAt }}<br>
             Dernière mise à jour : {{ comment.updatedAt }}
         </em>
-        <p>
-            {{ comment.content }}
-        </p>
-        <div>
+        <article class="content">
+            <p>
+                {{ comment.content }}
+            </p>
+        </article>
+        <div class="link">
             <a href="edit?commentId={{ comment.id }}">Éditer</a>
             <a href="delete?commentId={{ comment.id }}">Supprimer</a>
         </div>
-        <div class="link">
-            <a href="/article">Retour à la liste des billets</a>
-        </div>
+    </article>
+    <section class="link">
+        <a href="/article">Retour à la liste des billets</a>
     </section>
 {% endblock %}
