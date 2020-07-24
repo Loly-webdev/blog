@@ -50,18 +50,35 @@ p {
     font-size: 1.1rem;
 }
 
-a {
-    padding: 0.5rem;
-    text-decoration: none;
-}
-
-nav li a {
-    color: rgb(254, 255, 234);
-}
-
 #cv,
 #social {
     padding: 1rem;
+}
+
+article {
+    width: 82%;
+    margin: auto;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: rgba(105, 105, 105, 0.5);
+}
+
+#about a,
+.blog a,
+.link a,
+.panel-heading a {
+    padding: 0.5rem;
+    text-decoration: none;
+    color: rgb(102, 51, 153);
+    font-weight: bold;
+}
+
+#about a:hover,
+.blog a:hover,
+.link a:hover,
+.panel-heading a:hover{
+    color: rgb(141, 91, 153);
+    text-decoration: none;
 }
 
 /* NAV */
@@ -84,6 +101,10 @@ nav li {
     list-style: none;
 }
 
+nav li a {
+    color: rgb(254, 255, 234);
+}
+
 nav li a:hover,
 footer a:hover {
     color: rgb(255, 222, 173);
@@ -95,23 +116,6 @@ footer a:hover {
     border-radius: 70% 90% 90% 70% / 80% 90% 70% 80%;
     max-width: 65%;
     height: auto;
-}
-
-article {
-    width: 82%;
-    margin: auto;
-    border-radius: 1rem;
-    padding: 1rem;
-    background-color: rgba(105, 105, 105, 0.5);
-}
-
-#about a {
-    color: rgb(102, 51, 153);
-    font-weight: bold;
-}
-
-#about a:hover {
-    color: rgb(141, 91, 153);
 }
 
 /* CV */
@@ -190,9 +194,6 @@ article {
     -webkit-filter: saturate(6);
 }
 
-/* FORM */
-
-
 /* CREDIT */
 .up {
     justify-content: end;
@@ -220,6 +221,7 @@ footer a {
 article .hat {
     background-color: rgba(201, 197, 211, 0.5);
     padding: 1rem;
+    font-weight: bold;
 }
 
 article .content {
@@ -235,6 +237,14 @@ article .content {
 .comment p {
     background-color: rgba(201, 197, 211, 0.6);
     padding: 1rem;
+}
+
+.panel-heading {
+    width: 82%;
+    margin: auto;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: rgba(201, 197, 211, 0.5);
 }
 
 .link {

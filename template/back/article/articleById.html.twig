@@ -8,16 +8,20 @@
             Dernière mise à jour : {{ article.updatedAt }}
         </em>
         <article class="hat">
-            {{ article.hat }}
+            <p>
+                {{ article.hat }}
+            </p>
         </article>
         <article class="content">
-            {{ article.content }}
+            <p>
+                {{ article.content }}
+            </p>
         </article>
+        <div class="link">
+            <a href="/article/edit?articleId={{ article.id }}">Éditer</a>
+            <a href="/article/delete?articleId={{ article.id }}">Supprimer</a>
+        </div>
     </article>
-    <div>
-        <a href="/article/edit?articleId={{ article.id }}">Éditer</a>
-        <a href="/article/delete?articleId={{ article.id }}">Supprimer</a>
-    </div>
     <hr>
     {% if comments %}
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -35,16 +39,23 @@
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                         {% for comment in comments %}
-                            <strong>{{ comment.author }}</strong>
+                            <article>
+                                <strong>{{ comment.author }}</strong>
+                                <br>
+                                <em>
+                                    Créer le : {{ comment.createdAt }}<br>
+                                    Dernière mise à jour : {{ comment.updatedAt }}
+                                </em>
+                                <article class="content">
+                                    <p>
+                                        {{ comment.content }}
+                                    </p>
+                                </article>
+                                <div class="link">
+                                    <a href="/comment/see?commentId={{ comment.id }}">Voir le commentaire</a>
+                                </div>
+                            </article>
                             <br>
-                            <em>
-                                Créer le : {{ comment.createdAt }}<br>
-                                Dernière mise à jour : {{ comment.updatedAt }}
-                            </em>
-                            <article class="content">{{ comment.content }}</article>
-                            <div>
-                                <a href="/comment/see?commentId={{ comment.id }}">Voir le commentaire</a>
-                            </div>
                         {% endfor %}
                     </div>
                 </div>
