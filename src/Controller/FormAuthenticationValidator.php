@@ -11,7 +11,7 @@ use Core\DefaultAbstract\FormValidatorAbstract;
 class FormAuthenticationValidator extends FormValidatorAbstract
 {
     /**
-     * @return array|mixed[]
+     * @return array|string[]
      */
     public function getFormFields(): array
     {

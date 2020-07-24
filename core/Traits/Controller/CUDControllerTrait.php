@@ -44,6 +44,7 @@ trait CUDControllerTrait
         $entityId = $this->getRequest()->getParamAsInt($entityParamId);
         // Load post associate to the Id or return null
         $entity = $repository->findOneById($entityId);
+
         if (null === $entity) {
             // Exception that represents errors in the program logic.
             throw new LogicException("Désolé, nous n'avons pas trouvé $entityName avec l'id: $entityId");

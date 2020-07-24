@@ -5,10 +5,10 @@ namespace App\Controller;
 use Core\DefaultAbstract\FormValidatorAbstract;
 
 /**
- * Class FormArticleValidator
+ * Class FormCommentValidator
  * @package App\Controller
  */
-class FormArticleValidator extends FormValidatorAbstract
+class FormCommentValidator extends FormValidatorAbstract
 {
 
     /**
@@ -17,9 +17,7 @@ class FormArticleValidator extends FormValidatorAbstract
     function getFormFields(): array
     {
         return [
-            'title',
             'author',
-            'hat',
             'content'
         ];
     }
@@ -29,6 +27,6 @@ class FormArticleValidator extends FormValidatorAbstract
      */
     function getFormName(): string
     {
-        return 'article';
+        return 'comment';
     }
 }

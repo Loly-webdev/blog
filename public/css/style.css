@@ -109,7 +109,6 @@ footer a:hover {
 #about article {
     border-radius: 1rem;
     padding: 1rem;
-    margin: 2rem;
     background-color: rgba(105, 105, 105, 0.5);
 }
 
@@ -219,6 +218,7 @@ footer a {
 article {
     width: 70%;
     margin: auto;
+
 }
 
 article .hat {

@@ -51,8 +51,8 @@ class CommentController extends LoggedAbstractController
     public function getAddParam(): array
     {
         return [
+            new FormCommentValidator(),
             'commentaire',
-            'comment',
             new Comment(),
             new CommentRepository(),
             'comment/formComment.html.twig'

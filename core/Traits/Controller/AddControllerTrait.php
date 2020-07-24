@@ -3,7 +3,7 @@
 namespace Core\Traits\Controller;
 
 use App\Service\Message;
-use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository};
+use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository, FormValidatorAbstract};
 use LogicException;
 
 /**
@@ -30,24 +30,25 @@ trait AddControllerTrait
     /**
      * Method to add entity
      *
+     * @param FormValidatorAbstract $formValidator
      * @param string $entityLabel
-     * @param string $entityName
      * @param DefaultAbstractEntity $entityClass
      * @param DefaultAbstractRepository $repository
      * @param string $viewTemplate
      */
     protected function addEntity(
+        FormValidatorAbstract$formValidator,
         string $entityLabel,
-        string $entityName,
         DefaultAbstractEntity $entityClass,
         DefaultAbstractRepository $repository,
         string $viewTemplate
     ): void
     {
-        $formSubmitted = $this->getRequest()->getParam($entityName);
-        if (isset($formSubmitted)) {
+        $formSubmitted = $formValidator;
+        if ($formSubmitted->isSubmitted() && $formSubmitted->isValid()) {
+            $formSubmitted = $formSubmitted->getFormValues();
             $entity = $entityClass->hydrate($formSubmitted);
-            $this->checkForm($formSubmitted, $entityClass);
+            $this->checkForm($entityClass);
             $status = static::statusMessage($repository, $entity, $entityLabel);
         }
         $this->renderView(
@@ -60,15 +61,10 @@ trait AddControllerTrait
     }
 
     /**
-     * @param $formSubmitted
      * @param $entity
      */
-    public function checkForm($formSubmitted, $entity)
+    public function checkForm($entity)
     {
-        if (false === is_array($formSubmitted)) {
-            throw new LogicException('Un formulaire doit être passer en tableau.');
-        }
-
         if (method_exists($this, 'postHydrate')) {
             $this->postHydrate($entity);
         }

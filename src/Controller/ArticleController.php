@@ -73,7 +73,7 @@ class ArticleController extends LoggedAbstractController
     public function getAddParam(): array
     {
         return [
-            'article',
+            new FormArticleValidator(),
             'article',
             new Article(),
             new ArticleRepository(),

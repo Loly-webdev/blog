@@ -1,24 +1,27 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <section class="form">
-        <h4>Laisser un commentaire :</h4>
-        <form action="" method="POST">
-            <div>
-                <label for="author">Auteur</label><br/>
-                <input type="text" id="author" name="comment[author]"/>
-            </div>
-            <div>
-                <label for="comment">Commentaire</label><br/>
-                <textarea id="comment" name="comment[content]"></textarea>
-            </div>
-            <div>
-                <input class="button" type="submit" value="Envoyer"/>
-            </div>
-        </form>
-    </section>
-    <br>
-    {{ message }}
-    <br>
+    <h4>Ecrire un nouveau commentaire :</h4>
+    <div class="container">
+        <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        <div class="starter-template">
+            <form action="" method="POST">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="author">Auteur</label>
+                        <input class="form-control" type="text" id="author" name="comment[author]" required/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="comment">Commentaire</label>
+                        <textarea class="form-control" id="comment" name="comment[content]" rows="5"
+                                  required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <section class="link">
         <a href="/article">Retour à la liste des billets</a>
     </section>

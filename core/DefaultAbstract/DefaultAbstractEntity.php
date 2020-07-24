@@ -18,7 +18,7 @@ abstract class DefaultAbstractEntity
      * @param array $params
      * @return DefaultAbstractEntity
      */
-    public function hydrate(array $params)
+    public function hydrate(array $params): DefaultAbstractEntity
     {
         foreach ($params as $key => $data) {
             // We retrieve the name of the setter corresponding to the class attribute.
