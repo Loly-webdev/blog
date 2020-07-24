@@ -18,6 +18,9 @@ class UserAdminController extends LoggedAbstractController
 {
     use CUDControllerTrait;
 
+    /**
+     * @var string
+     */
     static $entityLabel = "profil";
 
     /**

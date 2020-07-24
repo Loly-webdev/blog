@@ -56,11 +56,11 @@ class RegisterController extends DefaultAbstractController
     }
 
     /**
-     * @param array $formValues
+     * @param array|mixed[] $formValues
      * @param object $entity
      * @throws CoreException
      */
-    public function check(array $formValues, $entity)
+    public function check(array $formValues, $entity): void
     {
         $email = $formValues['mail'] ?? '';
         $password = $formValues['password'] ?? '';

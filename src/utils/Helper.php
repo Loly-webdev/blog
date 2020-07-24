@@ -21,18 +21,18 @@ class Helper
 
     /**
      * @param string $email
-     * @return bool
+     * @return mixed
      */
-    public static function checkEmail(string $email): bool
+    public static function checkEmail(string $email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
      * @param string $password
-     * @return string
+     * @return false|string|null
      */
-    static function encodePassword(string $password): string
+    static function encodePassword(string $password)
     {
         $salt = ConfigurationProvider::getInstance()->getSalt();
 
