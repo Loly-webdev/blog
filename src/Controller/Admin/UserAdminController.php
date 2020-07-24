@@ -26,10 +26,6 @@ class UserAdminController extends LoggedAbstractController
      */
     public function indexAction()
     {
-        if (null === $this->getUserLogged()) {
-            throw new CoreException('Vous n\'etes pas authentifié.');
-        }
-
         $user = $this->getUserLogged();
         assert($user instanceof User);
         $status = $user->getRoleLabel();

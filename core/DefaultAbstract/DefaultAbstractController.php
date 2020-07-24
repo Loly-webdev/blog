@@ -2,11 +2,11 @@
 
 namespace Core\DefaultAbstract;
 
-use App\Repository\UserRepository;
 use Core\DefaultControllerInterface;
 use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
 use Core\Request;
+use Core\Session;
 
 /**
  * Class DefaultAbstractController
@@ -31,6 +31,14 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     public function getRequest(): Request
     {
         return $this->request;
+    }
+
+    /**
+     * @return DefaultAbstractEntity|null
+     */
+    public function getUserLogged(): ?DefaultAbstractEntity
+    {
+        return Session::getUserLogged();
     }
 
     /**
@@ -76,10 +84,12 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         exit();
     }
 
-    public function getUserLogged(): DefaultAbstractEntity
+    /**
+     * @return bool
+     */
+    public function isLogged(): bool
     {
-        $userId = $_SESSION['id'];
-
-        return (new UserRepository())->findOneById($userId);
+        return Session::getValue('logged', false);
     }
+
 }
