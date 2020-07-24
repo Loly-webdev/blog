@@ -17,6 +17,8 @@ class ArticleController extends LoggedAbstractController
     use CUDControllerTrait,
         AddControllerTrait;
 
+    static $entityLabel = "article";
+
     /**
      * Action by default
      * Show all articles
@@ -74,7 +76,6 @@ class ArticleController extends LoggedAbstractController
     {
         return [
             new FormArticleValidator(),
-            'article',
             new Article(),
             new ArticleRepository(),
             'article/formArticle.html.twig'
@@ -92,7 +93,6 @@ class ArticleController extends LoggedAbstractController
             'articleId',
             new ArticleRepository(),
             'article',
-            'article',
             'article/editArticle.html.twig'
         ];
     }
@@ -107,7 +107,6 @@ class ArticleController extends LoggedAbstractController
         return [
             new ArticleRepository(),
             'articleId',
-            'article',
             'article/formArticle.html.twig'
         ];
     }

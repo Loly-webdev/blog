@@ -18,6 +18,8 @@ class UserAdminController extends LoggedAbstractController
 {
     use CUDControllerTrait;
 
+    static $entityLabel = "profil";
+
     /**
      * Action by default
      * Show form to connexion
@@ -65,7 +67,6 @@ class UserAdminController extends LoggedAbstractController
             'userId',
             new UserRepository(),
             'user',
-            'profil',
             'profile/editProfile.html.twig'
         ];
     }
@@ -81,25 +82,7 @@ class UserAdminController extends LoggedAbstractController
         return [
             new UserRepository(),
             'userId',
-            (new User())->getRoleLabel(),
             'formRegister.html.twig',
         ];
-    }
-
-    /**
-     * @return void
-     * @throws CoreException
-     */
-    public function profileAction()
-    {
-        $userId = $_SESSION['id'];
-        $user = (new UserRepository())->findOneById($userId);
-
-        $this->renderView(
-            'profile/profile.html.twig',
-            [
-                'user' => $user
-            ]
-        );
     }
 }

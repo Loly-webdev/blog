@@ -18,6 +18,8 @@ class CommentController extends LoggedAbstractController
     use CUDControllerTrait,
         AddControllerTrait;
 
+    static $entityLabel = "commentaire";
+
     /**
      * Action by default
      * Show an comment
@@ -52,7 +54,6 @@ class CommentController extends LoggedAbstractController
     {
         return [
             new FormCommentValidator(),
-            'commentaire',
             new Comment(),
             new CommentRepository(),
             'comment/formComment.html.twig'
@@ -96,7 +97,6 @@ class CommentController extends LoggedAbstractController
         return [
             new CommentRepository(),
             'commentId',
-            'commentaire',
             'comment/formComment.html.twig'
         ];
     }

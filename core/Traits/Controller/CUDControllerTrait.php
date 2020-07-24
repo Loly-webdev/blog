@@ -92,7 +92,6 @@ trait CUDControllerTrait
      * @param string $entityParamId
      * @param DefaultAbstractRepository $repository
      * @param string $entityName
-     * @param string $entityLabel
      * @param string $viewTemplate
      *
      * @throws CoreException
@@ -101,7 +100,6 @@ trait CUDControllerTrait
         string $entityParamId,
         DefaultAbstractRepository $repository,
         string $entityName,
-        string $entityLabel,
         string $viewTemplate
     ): void
     {
@@ -123,7 +121,7 @@ trait CUDControllerTrait
 
             $status = Message::getMessage(
                 $repository->update($entity),
-                "Votre $entityLabel à bien était modifié !",
+                'Votre ' . static::$entityLabel . ' à bien était modifié !',
                 'Une erreur est survenue.');
         }
 
@@ -157,20 +155,18 @@ trait CUDControllerTrait
      *
      * @param DefaultAbstractRepository $repository
      * @param string $entityParamId
-     * @param string $entityLabel
      * @param string $viewTemplate
      */
     protected function deleteEntity(
         DefaultAbstractRepository $repository,
         string $entityParamId,
-        string $entityLabel,
         string $viewTemplate
     ): void
     {
         $status = Message::getMessage(
             $repository->delete($this->getRequest()
                 ->getParam($entityParamId)),
-            "Votre $entityLabel à bien était supprimé !",
+            'Votre ' . static::$entityLabel . ' à bien était supprimé !',
             'Une erreur est survenue.');
 
         $this->renderView(

@@ -31,14 +31,12 @@ trait AddControllerTrait
      * Method to add entity
      *
      * @param FormValidatorAbstract $formValidator
-     * @param string $entityLabel
      * @param DefaultAbstractEntity $entityClass
      * @param DefaultAbstractRepository $repository
      * @param string $viewTemplate
      */
     protected function addEntity(
         FormValidatorAbstract$formValidator,
-        string $entityLabel,
         DefaultAbstractEntity $entityClass,
         DefaultAbstractRepository $repository,
         string $viewTemplate
@@ -49,7 +47,7 @@ trait AddControllerTrait
             $formSubmitted = $formSubmitted->getFormValues();
             $entity = $entityClass->hydrate($formSubmitted);
             $this->checkForm($entityClass);
-            $status = static::statusMessage($repository, $entity, $entityLabel);
+            $status = static::statusMessage($repository, $entity);
         }
         $this->renderView(
             $viewTemplate,
@@ -77,14 +75,13 @@ trait AddControllerTrait
     /**
      * @param $repository
      * @param $entity
-     * @param string $entityLabel
      * @return array
      */
-    static public function statusMessage($repository, $entity, string $entityLabel): array
+    static public function statusMessage($repository, $entity): array
     {
         return Message::getMessage(
             $repository->insert($entity),
-            "Votre $entityLabel à bien était enregistré !",
+            'Votre ' . static::$entityLabel . ' à bien était enregistré !',
             'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
         );
     }
