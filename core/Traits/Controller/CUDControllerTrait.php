@@ -92,6 +92,7 @@ trait CUDControllerTrait
      * @param string $entityParamId
      * @param DefaultAbstractRepository $repository
      * @param string $entityName
+     * @param string $entityLabel
      * @param string $viewTemplate
      *
      * @throws CoreException
@@ -100,6 +101,7 @@ trait CUDControllerTrait
         string $entityParamId,
         DefaultAbstractRepository $repository,
         string $entityName,
+        string $entityLabel,
         string $viewTemplate
     ): void
     {
@@ -121,7 +123,7 @@ trait CUDControllerTrait
 
             $status = Message::getMessage(
                 $repository->update($entity),
-                "Votre $entityName à bien était modifié !",
+                "Votre $entityLabel à bien était modifié !",
                 'Une erreur est survenue.');
         }
 

@@ -81,6 +81,7 @@ class CommentController extends LoggedAbstractController
             'commentId',
             new CommentRepository(),
             'comment',
+            'commentaire',
             'comment/editComment.html.twig'
         ];
     }

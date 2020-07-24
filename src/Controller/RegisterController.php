@@ -33,7 +33,7 @@ class RegisterController extends DefaultAbstractController
     public function getAddParam(): array
     {
         return [
-            (new User())->getRoleLabel(),
+            new FormRegisterValidator(),
             'user',
             new User(),
             new UserRepository(),

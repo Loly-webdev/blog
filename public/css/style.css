@@ -12,11 +12,6 @@ main {
     text-align: center;
 }
 
-.flex {
-    display: flex;
-    padding: 0.5rem;
-}
-
 hr {
     margin: 0 2rem;
 }
@@ -35,19 +30,24 @@ h1 {
 }
 
 h2 {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
 }
 
 h3 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
 
 h4 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+}
+
+h5 {
+    font-size: 1.2rem;
+    padding: 1rem;
 }
 
 p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 a {
@@ -97,6 +97,14 @@ footer a:hover {
     height: auto;
 }
 
+article {
+    width: 82%;
+    margin: auto;
+    border-radius: 1rem;
+    padding: 1rem;
+    background-color: rgba(105, 105, 105, 0.5);
+}
+
 #about a {
     color: rgb(102, 51, 153);
     font-weight: bold;
@@ -104,12 +112,6 @@ footer a:hover {
 
 #about a:hover {
     color: rgb(141, 91, 153);
-}
-
-#about article {
-    border-radius: 1rem;
-    padding: 1rem;
-    background-color: rgba(105, 105, 105, 0.5);
 }
 
 /* CV */
@@ -215,12 +217,6 @@ footer a {
 }
 
 /*blog*/
-article {
-    width: 70%;
-    margin: auto;
-
-}
-
 article .hat {
     background-color: rgba(201, 197, 211, 0.5);
     padding: 1rem;

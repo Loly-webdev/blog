@@ -1,19 +1,25 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <section class="form">
-        <h2>Mon profil :</h2>
-        <em>
-            Date de création du compte : {{ user.createdAt }}<br>
-            Dernière mise à jour : {{ user.updatedAt }}
-        </em>
-        <br>
+    <h2>Mon profil :</h2>
+    <div class="container">
         <h4>Salutation {{ user.login }} !</h4>
-        <div>
-            <a href="/Admin/userAdmin/edit?userId={{ user.id }}">Éditer</a>
-            <a href="/Admin/userAdmin/delete?userId={{ user.id }}">Supprimer</a>
+        <div class="form-group">
+            Date de création du compte : {{ user.createdAt }}
         </div>
-    </section>
-    <section class="link">
-        <a href="/home">Retour à l'accueil</a>
-    </section>
+        <div class="form-group">
+            Dernière mise à jour : {{ user.updatedAt }}
+        </div>
+        <div class="form-group">
+            mon adresse mail : {{ user.mail }}
+        </div>
+    </div>
+    <div class="link">
+        <a href="/Admin/userAdmin/edit?userId={{ user.id }}">Éditer</a>
+        <a href="/Admin/userAdmin/delete?userId={{ user.id }}">Supprimer</a>
+    </div>
+    <div class="link">
+        <a href="/home">
+            <span class="fas fa-angle-double-left"></span>
+            Retour à l'accueil</a>
+    </div>
 {% endblock %}

@@ -1,16 +1,16 @@
 /* ANIMATION TITLE */
 
 function autoType(elementClass, typingSpeed) {
-    var typed = $(elementClass);
+    let typed = $(elementClass);
     typed.css({
         "position": "relative",
         "display": "inline-block"
     });
     typed.prepend('<div class="cursor" style="right: initial; left:0;"></div>');
     typed = typed.find(".text-js");
-    var text = typed.text().trim().split('');
-    var amntOfChars = text.length;
-    var newString = "";
+    const text = typed.text().trim().split('');
+    const amntOfChars = text.length;
+    let newString = "";
     typed.text("|");
     setTimeout(function () {
         typed.css("opacity", 1);

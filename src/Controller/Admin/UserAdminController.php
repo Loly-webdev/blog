@@ -69,6 +69,7 @@ class UserAdminController extends LoggedAbstractController
             'userId',
             new UserRepository(),
             'user',
+            'profil',
             'profile/editProfile.html.twig'
         ];
     }

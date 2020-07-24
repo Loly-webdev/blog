@@ -92,6 +92,7 @@ class ArticleController extends LoggedAbstractController
             'articleId',
             new ArticleRepository(),
             'article',
+            'article',
             'article/editArticle.html.twig'
         ];
     }
