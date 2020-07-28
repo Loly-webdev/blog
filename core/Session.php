@@ -3,6 +3,7 @@
 namespace Core;
 
 use App\Repository\UserRepository;
+use Core\DefaultAbstract\DefaultAbstractEntity;
 
 /**
  * Class Session
@@ -22,21 +23,28 @@ final class Session
     private function __construct()
     {
         $this->data = $_SESSION;
+
+        if (null === $_SESSION['id']) {
+            // Redirect to home
+            header('Location: /home');
+            exit();
+        }
+
         $this->userLogged = (new userRepository())->findOneById($_SESSION['id']);
     }
 
     /**
-     * @return DefaultAbstract\DefaultAbstractEntity|null
+     * @return DefaultAbstractEntity|null
      */
-    public static function getUserLogged()
+    public static function getUserLogged(): ?DefaultAbstractEntity
     {
         return (static::getInstance())->retrieveUserLogged();
     }
 
     /**
-     * @return DefaultAbstract\DefaultAbstractEntity|null
+     * @return DefaultAbstractEntity|null
      */
-    public function retrieveUserLogged(): ?DefaultAbstract\DefaultAbstractEntity
+    public function retrieveUserLogged(): ?DefaultAbstractEntity
     {
         return $this->userLogged;
     }

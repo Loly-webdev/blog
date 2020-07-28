@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Core\DefaultAbstract\DefaultAbstractController;
-use Exception;
+use Core\Exception\CoreException;
 
 /**
  * Class HomeController
@@ -15,7 +15,7 @@ class HomeController extends DefaultAbstractController
      * Action by default
      * Show Home page
      * @return mixed|void
-     * @throws Exception
+     * @throws CoreException
      */
     public function indexAction()
     {

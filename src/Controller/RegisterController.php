@@ -18,6 +18,8 @@ class RegisterController extends DefaultAbstractController
 {
     use AddControllerTrait;
 
+    static $entityLabel = "inscription";
+
     /**
      * Action by default
      */
@@ -34,7 +36,6 @@ class RegisterController extends DefaultAbstractController
     {
         return [
             new FormRegisterValidator(),
-            'user',
             new User(),
             new UserRepository(),
             'formRegister.html.twig'

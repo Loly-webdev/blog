@@ -15,8 +15,7 @@ if ('dev' === PRJ_ENV) {
 use Core\Dispatcher;
 
 try {
-    $dispatcher = new Dispatcher();
-    $dispatcher->dispatch();
+    $dispatcher = (new Dispatcher())->dispatch();
 } catch (Throwable $t) {
     if ('dev' === PRJ_ENV) {
         $type    = $t->getCode();

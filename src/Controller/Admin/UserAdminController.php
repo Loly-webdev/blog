@@ -88,4 +88,21 @@ class UserAdminController extends LoggedAbstractController
             'formRegister.html.twig',
         ];
     }
+
+    /**
+     * @return void
+     * @throws CoreException
+     */
+    public function profileAction()
+    {
+        $userId = $_SESSION['id'];
+        $user = (new UserRepository())->findOneById($userId);
+
+        $this->renderView(
+            'profile/profile.html.twig',
+            [
+                'user' => $user
+            ]
+        );
+    }
 }
