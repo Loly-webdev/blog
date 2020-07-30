@@ -24,7 +24,7 @@ final class Session
     {
         $this->data = $_SESSION;
 
-        if (null === $_SESSION['id']) {
+        if (null === $_SESSION) {
             // Redirect to home
             header('Location: /home');
             exit();

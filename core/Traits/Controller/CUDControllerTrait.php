@@ -121,7 +121,7 @@ trait CUDControllerTrait
 
             $status = Message::getMessage(
                 $repository->update($entity),
-                'Votre ' . static::$entityLabel . ' à bien était modifié !',
+                'Votre ' . static::$entityLabel . ' à bien été modifié !',
                 'Une erreur est survenue.');
         }
 
