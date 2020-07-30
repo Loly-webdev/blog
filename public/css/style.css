@@ -1,58 +1,48 @@
 /* GENERAL */
 body {
-    margin: 0;
-    padding: 0;
     font-family: "Roboto", sans-serif;
     letter-spacing: 1px;
+    margin: 7rem 0 0 0 !important;
+    padding: 0;
 }
 
 main {
-    margin: 1rem;
-    padding: 7rem 0 3rem 0;
     text-align: center;
 }
 
-hr {
-    margin: 0 2rem;
-}
-
-h1,
-h2,
-h3,
-h4 {
+main h1,
+main h3{
     font-family: 'Roboto Slab', sans-serif;
     letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-h1 {
+#title {
     font-size: 2rem;
 }
 
-h2 {
-    font-size: 1.7rem;
-}
-
-h3 {
+#subtitle {
     font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-h4 {
+main h3 {
+    font-size: 1.4rem;
+}
+
+main h4 {
     font-size: 1.3rem;
-}
-
-h5 {
-    font-size: 1.2rem;
-    padding: 1rem;
 }
 
 p {
     font-size: 1.1rem;
 }
-
-#cv,
-#social {
-    padding: 1rem;
+.welcome {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: rgba(0, 92, 225, 1);
 }
 
 article {
@@ -60,23 +50,17 @@ article {
     margin: auto;
     border-radius: 1rem;
     padding: 1rem;
-    background-color: rgba(105, 105, 105, 0.5);
+    background-color: rgba(224, 237, 251, 1);
 }
 
-#about a,
-.blog a,
-.link a,
-.panel-heading a {
+main a {
     padding: 0.5rem;
     text-decoration: none;
     color: rgb(102, 51, 153);
     font-weight: bold;
 }
 
-#about a:hover,
-.blog a:hover,
-.link a:hover,
-.panel-heading a:hover{
+main a:hover{
     color: rgb(141, 91, 153);
     text-decoration: none;
 }
@@ -93,26 +77,8 @@ nav img {
     height: auto;
 }
 
-nav ul {
-
-}
-
-nav li {
-    list-style: none;
-}
-
-nav li a {
-    color: rgb(254, 255, 234);
-}
-
-nav li a:hover,
-footer a:hover {
-    color: rgb(255, 222, 173);
-}
-
 /* ABOUT */
 #about img {
-    margin-bottom: 1rem;
     border-radius: 70% 90% 90% 70% / 80% 90% 70% 80%;
     max-width: 65%;
     height: auto;
@@ -128,9 +94,9 @@ footer a:hover {
     margin: 10px;
     border-radius: 15px;
     display: inline-block;
-    border: 1px solid rgb(184, 184, 184);
-    border-bottom: solid 2px rgb(184, 184, 184);
-    color: rgb(221, 221, 221);
+    border: 1px solid rgba(224, 237, 251, 1);
+    border-bottom: solid 2px rgba(224, 237, 251, 1);
+    color: rgba(224, 237, 251, 1);
     background: rgba(52, 58, 64, 0.9);
 
     transition: all 0.15s ease-out;
@@ -145,10 +111,10 @@ footer a:hover {
     border: 1px solid rgba(8, 8, 71, 0.9);
     border-bottom: solid 2px rgba(8, 8, 71, 0.9);
     color: rgba(8, 8, 71, 0.9);
-    background: rgb(184, 184, 184);
+    background: rgba(224, 237, 251, 1);
 }
 
-/* Anilmation css*/
+/* Animation css*/
 
 .text-js {
     opacity: 0;
@@ -195,15 +161,11 @@ footer a:hover {
 }
 
 /* CREDIT */
-.up {
-    justify-content: end;
-}
 footer {
     width: 100%;
     bottom: 0;
     background: rgb(52, 58, 64);
-    color: rgba(228, 224, 224, 0.9);
-    /*position: fixed;*/
+    color: rgba(180, 180, 180, 0.9);
 }
 
 footer p {
@@ -215,6 +177,10 @@ footer p {
 footer a {
     color: rgb(201, 197, 211);
     font-weight: bold;
+}
+
+footer a:hover {
+    color: rgb(255, 222, 173);
 }
 
 /*blog*/
@@ -253,8 +219,4 @@ article .content {
     padding: 1rem;
     border-top: solid 1px black;
     border-bottom: solid 1px black;
-}
-
-.form {
-
 }

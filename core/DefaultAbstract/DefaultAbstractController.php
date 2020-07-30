@@ -38,6 +38,12 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      */
     public function getUserLogged(): ?DefaultAbstractEntity
     {
+        if (null === $_SESSION) {
+            // Redirect to home
+            header('Location: /home');
+            exit();
+        }
+
         return Session::getUserLogged();
     }
 

@@ -23,13 +23,6 @@ final class Session
     private function __construct()
     {
         $this->data = $_SESSION;
-
-        if (null === $_SESSION) {
-            // Redirect to home
-            header('Location: /home');
-            exit();
-        }
-
         $this->userLogged = (new userRepository())->findOneById($_SESSION['id']);
     }
 

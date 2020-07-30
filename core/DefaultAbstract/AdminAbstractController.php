@@ -2,6 +2,8 @@
 
 namespace Core\DefaultAbstract;
 
+use Core\Exception\CoreException;
+
 /**
  * Class AdminAbstractController
  * @package Core\DefaultAbstract
@@ -12,6 +14,7 @@ abstract class AdminAbstractController extends LoggedAbstractController
 
     /**
      *  DefaultAbstractController
+     * @throws CoreException
      */
     public function __construct()
     {

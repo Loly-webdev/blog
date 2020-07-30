@@ -1,8 +1,9 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
     <h2>Mon profil :</h2>
-    <div class="container">
+    <article class="container">
         <h4>Salutation {{ user.login }} !</h4>
+        <hr>
         <div class="form-group">
             Date de création du compte : {{ user.createdAt }}
         </div>
@@ -12,7 +13,7 @@
         <div class="form-group">
             mon adresse mail : {{ user.mail }}
         </div>
-    </div>
+    </article>
     <div class="link">
         <a href="/Admin/userAdmin/edit?userId={{ user.id }}">Éditer</a>
         <a href="/Admin/userAdmin/delete?userId={{ user.id }}">Supprimer</a>
