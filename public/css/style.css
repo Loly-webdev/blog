@@ -11,6 +11,7 @@ main {
 }
 
 main h1,
+main h2,
 main h3{
     font-family: 'Roboto Slab', sans-serif;
     letter-spacing: 2px;
@@ -23,8 +24,6 @@ main h3{
 
 #subtitle {
     font-size: 1.5rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
 }
 
 main h3 {
@@ -36,7 +35,7 @@ main h4 {
 }
 
 p {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 .welcome {
     font-size: 1.3rem;
