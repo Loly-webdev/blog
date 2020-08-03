@@ -15,6 +15,7 @@ final class Session
     private static $instance;
     private $userLogged = null;
     private $data = [];
+    private static $hasLogged = false;
 
     /**
      * Request constructor.
@@ -23,13 +24,8 @@ final class Session
     private function __construct()
     {
         $this->data = $_SESSION;
-
-        if (empty($_SESSION)) {
-            header('Location: /Home');
-            exit();
-        }
-
-        $this->userLogged = (new userRepository())->findOneById($_SESSION['id']);
+        $this->userLogged = (new userRepository())->findOneById(static::getValue('id'));
+        static::$hasLogged = null !== $this->userLogged;
     }
 
     /**
@@ -79,11 +75,38 @@ final class Session
     }
 
     /**
+     * @param string $key
+     * @param        $value
+     */
+    public static function setValue(string $key, $value): void
+    {
+        $data = (self::getInstance())->getData();
+        $data[$key] = $value;
+        (static::getInstance())->setData($data);
+    }
+
+    /**
      * @return array
      */
     public function getData(): array
     {
         return $this->data;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function hasLogged(): bool
+    {
+        return static::$hasLogged;
+    }
+
+    /**
+     * @param array $data
+     */
+    private function setData(array $data): void
+    {
+        $this->data = $data;
     }
 }
 

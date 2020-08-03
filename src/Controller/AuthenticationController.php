@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\AccountService;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Session;
 use Exception;
 
 /**
@@ -61,8 +62,8 @@ class AuthenticationController extends DefaultAbstractController
      */
     private function addUserInSession(User $user): void
     {
-        $_SESSION['logged'] = true;
-        $_SESSION['id'] = $user->getId();
+        Session::setValue('logged', true);
+        Session::setValue('id', $user->getId());
     }
 
     /**

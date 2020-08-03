@@ -8,6 +8,7 @@ abstract class LoggedAbstractController extends DefaultAbstractController
 {
     /**
      * DefaultAbstractController constructor
+     * @throws CoreException
      */
     public function __construct()
     {

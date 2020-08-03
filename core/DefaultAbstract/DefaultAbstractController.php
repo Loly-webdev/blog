@@ -35,13 +35,18 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
 
     /**
      * @return DefaultAbstractEntity|null
+     * @throws CoreException
      */
     public function getUserLogged(): ?DefaultAbstractEntity
     {
-        if (null === $_SESSION) {
-            // Redirect to home
-            header('Location: /home');
-            exit();
+        // error 401
+        if (false === $this->isLogged()) {
+            throw new CoreException('Vous devez être authentifié pour accéder à cette page.');
+        }
+
+        // error 403
+        if (false === Session::hasLogged()) {
+            throw new CoreException('L\'utilisateur n\'est pas reconnu.');
         }
 
         return Session::getUserLogged();
