@@ -13,9 +13,9 @@ final class Session
 {
     // Will contain the instance of our class.
     private static $instance;
-    private $userLogged = null;
-    private $data = [];
-    private static $hasLogged = false;
+    private static $hasLogged  = false;
+    private        $userLogged;
+    private        $data;
 
     /**
      * Request constructor.
@@ -23,9 +23,50 @@ final class Session
      */
     private function __construct()
     {
-        $this->data = $_SESSION;
-        $this->userLogged = (new userRepository())->findOneById(static::getValue('id'));
+        $this->data        = $_SESSION;
+        $this->userLogged  = (new userRepository())->findOneById($_SESSION['id']);
         static::$hasLogged = null !== $this->userLogged;
+    }
+
+    /**
+     * recovers a value from the session
+     * and returns the value or returns the default value.
+     *
+     * @param string $key
+     * @param null   $defaultValue
+     *
+     * @return mixed|null
+     */
+    public static function getValue(string $key, $defaultValue = null)
+    {
+        $data = (static::getInstance())->getData();
+
+        return $data[$key] ?? $defaultValue;
+
+        /*return isset($data[$key])
+            ? $data[$key]
+            : $defaultValue;*/
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * Singleton of session object to load once this method
+     * @return Session
+     */
+    public static function getInstance(): Session
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
     /**
@@ -45,52 +86,18 @@ final class Session
     }
 
     /**
-     * Singleton of request object to load once this method
-     * @return Session
-     */
-    public static function getInstance(): Session
-    {
-        if (!isset(self::$instance)) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * reccupere une valeur de la session
-     * et retourne la valeur ou retourne la valeur par defaut
-     *
-     * @param string $key
-     * @param null $defaultValue
-     * @return mixed|null
-     */
-    public static function getValue(string $key, $defaultValue = null)
-    {
-        $data = (self::getInstance())->getData();
-
-        return isset($data[$key])
-            ? $data[$key]
-            : $defaultValue;
-    }
-
-    /**
      * @param string $key
      * @param        $value
+     *
+     * @return void
      */
     public static function setValue(string $key, $value): void
     {
-        $data = (self::getInstance())->getData();
-        $data[$key] = $value;
-        (static::getInstance())->setData($data);
-    }
+        $_SESSION[$key] = $value;
 
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
+        /*$data       = (static::getInstance())->getData();
+        $data[$key] = $value;
+        (static::getInstance())->setData($data);*/
     }
 
     /**
@@ -99,14 +106,6 @@ final class Session
     public static function hasLogged(): bool
     {
         return static::$hasLogged;
-    }
-
-    /**
-     * @param array $data
-     */
-    private function setData(array $data): void
-    {
-        $this->data = $data;
     }
 }
 

@@ -19,7 +19,7 @@ abstract class LoggedAbstractController extends DefaultAbstractController
             $this->redirectTo('authentication');
         }
 
-        if ($this->getUserLogged() === null) {
+        if (false === $this->getUserLogged()) {
             throw new CoreException('Votre utilisateur n\'est pas reconnu.');
         }
     }
