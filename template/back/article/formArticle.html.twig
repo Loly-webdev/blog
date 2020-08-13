@@ -1,40 +1,45 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h4>Ecrire un nouvel article :</h4>
+    <h3>
+        <span class="fas fa-feather-alt"></span>
+        Ecrire un nouvel article :
+    </h3>
     <div class="container">
-        <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
-        <div class="starter-template">
-            <form action="" method="POST">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="title">Titre</label>
-                            <input class="form-control" type="text" id="title" name="article[title]" required/>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="author">Auteur</label>
-                            <input class="form-control" type="text" id="author" name="article[author]" required/>
-                        </div>
-                    </div>
+        <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
+        <form action="" method="POST" class="p-3 starter-template rounded">
+            <div class="col">
+                <div class="form-group">
+                    <label for="title" class="text-secondary font-weight-bold">Titre :</label>
+                    <input class="form-control" type="text" id="title" name="article[title]"
+                           placeholder="Titre" required/>
                 </div>
                 <div class="form-group">
-                    <label for="hat">Chapô</label>
+                    <label for="author" class="text-secondary font-weight-bold">Auteur :</label>
+                    <input class="form-control" type="text" id="author" name="article[author]"
+                           placeholder="Auteur" value="{{ user.login }}" required/>
+                </div>
+                <div class="form-group">
+                    <label for="hat" class="text-secondary font-weight-bold">Chapô :</label>
                     <textarea class="form-control" id="hat" name="article[hat]" rows="5"
-                              required></textarea>
+                              placeholder="Chapô" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="content">Article</label>
+                    <label for="content" class="text-secondary font-weight-bold">Article :</label>
                     <textarea class="form-control" id="content" name="article[content]" rows="9"
-                              required></textarea>
+                              placeholder="Article" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </form>
-        </div>
+                <button type="submit" class="btn btn-primary">
+                    Envoyer
+                    <span class="fas fa-share"></span>
+                </button>
+            </div>
+        </form>
     </div>
-    <section class="link">
-        <a href="/article">Retour à la liste des billets</a>
-    </section>
+    <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
+        <a href="/article">
+            <span class="fas fa-angle-double-left"></span>
+            Retour à la liste des billets
+        </a>
+    </div>
 {% endblock %}
 

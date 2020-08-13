@@ -51,7 +51,7 @@ class AuthenticationController extends DefaultAbstractController
             'formAuthentication.html.twig',
             [
                 'status' => $status ?? '',
-                'message' => $message ?? ''
+                'statusMessage' => $message ?? ''
             ]
         );
     }

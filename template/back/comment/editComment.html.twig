@@ -1,32 +1,34 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-<h4>Modification du commentaire n°{{ comment.id }}</h4>
-<div class="container">
-    <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
-    <div class="starter-template">
-        <form action="" method="POST">
+    <h3>
+        <span class="far fa-newspaper"></span>
+        Modification du commentaire n°{{ comment.id }}
+    </h3>
+    <div class="container">
+        <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        <form action="" method="POST" class="p-3 starter-template rounded">
             <div class="col">
                 <div class="form-group">
-                    <label for="author">Auteur</label><br/>
+                    <label for="author" class="text-secondary font-weight-bold">Auteur :</label><br/>
                     <input class="form-control" type="text" id="author" name="comment[author]"
                            value="{{ comment.author }}" required/>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="content">Article</label><br/>
-                    <textarea class="form-control" id="content" name="comment[content]" required>{{ comment.content }}</textarea>
+                    <label for="content" class="text-secondary font-weight-bold">Article :</label><br/>
+                    <textarea class="form-control" id="content" name="comment[content]"
+                              required>{{ comment.content }}</textarea>
                 </div>
             </div>
-            <div>
-                <input type="submit"/>
-            </div>
+            <button type="submit" class="btn btn-primary">
+                Envoyer
+                <span class="fas fa-share"></span>
+            </button>
         </form>
     </div>
-    <br>
-    {{ message }}
-    <br>
-    <section class="link">
+    <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
+        <span class="fas fa-angle-double-left"></span>
         <a href="/article">Retour à la liste des billets</a>
-    </section>
-    {% endblock %}
+    </div>
+{% endblock %}

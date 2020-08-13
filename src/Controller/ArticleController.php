@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\User;
 use App\Repository\{ArticleRepository, CommentRepository};
+use Core\Exception\CoreException;
+use Core\Session;
 use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
 use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
 use Exception;
@@ -32,7 +35,7 @@ class ArticleController extends LoggedAbstractController
         $this->renderView(
             '/article/articles.html.twig',
             [
-                'title' => 'Derniers billets du blog :',
+                'title'    => 'Derniers billets du blog :',
                 'articles' => $articles
             ]
         );
@@ -54,14 +57,15 @@ class ArticleController extends LoggedAbstractController
     }
 
     /**
-     * @param array|mixed[] $data
+     * @param array|mixed[]         $data
      * @param DefaultAbstractEntity $entity
+     *
      * @return array|mixed[]
      */
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
         $data['comments'] = $comments;
 
         return $data;
@@ -80,6 +84,20 @@ class ArticleController extends LoggedAbstractController
             new ArticleRepository(),
             'article/formArticle.html.twig'
         ];
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     * @throws CoreException
+     */
+    public function prePost(array $data): array
+    {
+        $user         = $this->getUserLogged();
+        $data['user'] = $user;
+
+        return $data;
     }
 
     /**

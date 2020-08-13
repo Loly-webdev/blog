@@ -1,26 +1,35 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h2>Mon profil :</h2>
-    <article class="container">
-        <h4>Salutation {{ user.login }} !</h4>
-        <hr>
-        <div class="form-group">
-            Date de création du compte : {{ user.createdAt }}
-        </div>
-        <div class="form-group">
-            Dernière mise à jour : {{ user.updatedAt }}
-        </div>
-        <div class="form-group">
-            mon adresse mail : {{ user.mail }}
+    <h3>
+        <span class="far fa-address-card"></span>
+        Mon profil :
+    </h3>
+    <article class="p-3 mt-5 rounded-pill">
+        <h4 class=" p-2 w-25 m-auto border-bottom border-secondary">Salutation {{ user.login }} !</h4>
+        <article class="p-2 mt-3 text-secondary bg-light text-dark rounded">
+            <div class="form-group">
+                <span class="font-weight-bold">Date de création du compte : </span>{{ user.createdAt }}
+            </div>
+            <div class="form-group">
+                <span class="font-weight-bold">Dernière mise à jour : </span>{{ user.updatedAt }}
+            </div>
+            <div class="form-group">
+                <span class="font-weight-bold">mon adresse mail : </span>{{ user.mail }}
+            </div>
+        </article>
+        <div class="row p-2 my-4 mx-auto w-75 border-right-0 border-left-0 border border-primary">
+            <a class="col md-6" href="/Admin/userAdmin/edit?userId={{ user.id }}">
+                <span class="fas fa-edit"></span>
+                Éditer
+            </a>
+            <a class="col md-6" href="/Admin/userAdmin/delete?userId={{ user.id }}">
+                <span class="fas fa-trash-alt"></span>
+                Supprimer
+            </a>
         </div>
     </article>
-    <div class="link">
-        <a href="/Admin/userAdmin/edit?userId={{ user.id }}">Éditer</a>
-        <a href="/Admin/userAdmin/delete?userId={{ user.id }}">Supprimer</a>
-    </div>
-    <div class="link">
-        <a href="/home">
-            <span class="fas fa-angle-double-left"></span>
-            Retour à l'accueil</a>
+    <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
+        <span class="fas fa-angle-double-left"></span>
+        <a href="/home">Retour à l'accueil</a>
     </div>
 {% endblock %}

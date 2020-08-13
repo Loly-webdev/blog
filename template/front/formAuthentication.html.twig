@@ -1,29 +1,34 @@
 {% extends "layout.html.twig" %}
 {% block content %}
-    <h3>Connexion :</h3>
-    <div class="container align-items-center">
-        <div class="alert alert-{{ status }}">{{ message }}</div>
-        <div class="starter-template">
-            <form class="center" action="" method="POST">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="login">Identifiant :</label>
-                        <input class="form-control" id="login" name="formAuthentication[login]" type="text"
-                               required/>
-                    </div>
-                    <div class="form-group">
-                        <label for="pass">Mot de passe :</label>
-                        <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
-                               minlength="3"
-                               required/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">connexion</button>
+    <h3>
+        <span class="fas fa-power-off"></span>
+        Connexion :
+    </h3>
+    <div class="container">
+        <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        <form action="" method="POST" class="p-3 starter-template rounded">
+            <div class="col">
+                <div class="form-group">
+                    <label for="login" class="text-secondary font-weight-bold">Identifiant :</label>
+                    <input class="form-control" id="login" name="formAuthentication[login]" type="text"
+                           placeholder="Identifiant" required/>
                 </div>
-            </form>
-        </div>
+                <div class="form-group">
+                    <label for="pass" class="text-secondary font-weight-bold">Mot de passe :</label>
+                    <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
+                           minlength="3" placeholder="Mot de passe" required/>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Connexion
+                    <span class="fas fa-sign-in-alt"></span>
+                </button>
+            </div>
+        </form>
     </div>
-    <section class="link">
+    <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
         <h4>Pas encore de compte ?</h4>
-        <a href="/register">S'inscrire</a>
-    </section>
+        <a href="/register">
+            <span class="fas fa-file-signature"></span>
+            S'inscrire</a>
+    </div>
 {% endblock %}

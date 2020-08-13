@@ -49,12 +49,19 @@ trait AddControllerTrait
             $this->checkForm($entityClass);
             $status = static::statusMessage($repository, $entity);
         }
+
+        $data = [
+            'status' => $status['status'] ?? '',
+            'statusMessage' => $status['statusMessage'] ?? ''
+        ];
+
+        if (method_exists($this, 'prePost')) {
+            $data = $this->prePost($data);
+        }
+
         $this->renderView(
             $viewTemplate,
-            [
-                'status' => $status['status'] ?? '',
-                'statusMessage' => $status['statusMessage'] ?? ''
-            ]
+            $data
         );
     }
 

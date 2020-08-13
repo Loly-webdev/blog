@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
+use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
 use Core\Traits\Controller\CUDControllerTrait;
 use Exception;
@@ -61,6 +62,20 @@ class CommentController extends LoggedAbstractController
     }
 
     /**
+     * @param array $data
+     *
+     * @return array
+     * @throws CoreException
+     */
+    public function prePost(array $data): array
+    {
+        $user         = $this->getUserLogged();
+        $data['user'] = $user;
+
+        return $data;
+    }
+
+    /**
      * @param Comment $entity
      * @return void
      */
@@ -82,7 +97,6 @@ class CommentController extends LoggedAbstractController
             'commentId',
             new CommentRepository(),
             'comment',
-            'commentaire',
             'comment/editComment.html.twig'
         ];
     }
