@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\FormValidator\FormAuthenticationValidator;
 use App\Entity\User;
 use App\Service\AccountService;
 use Core\DefaultAbstract\DefaultAbstractController;

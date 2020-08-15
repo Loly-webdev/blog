@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
+use App\Controller\FormValidator\FormArticleValidator;
 use App\Entity\Article;
-use App\Entity\User;
 use App\Repository\{ArticleRepository, CommentRepository};
 use Core\Exception\CoreException;
-use Core\Session;
 use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
 use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
 use Exception;

@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\FormValidator;
 
 use Core\DefaultAbstract\FormValidatorAbstract;
 
 /**
- * Class FormContactValidator
+ * Class FormArticleValidator
  * @package App\Controller
  */
-class FormContactValidator extends FormValidatorAbstract
+class FormArticleValidator extends FormValidatorAbstract
 {
 
     /**
-     * @return array|mixed[]
+     * @return array|string[]
      */
     function getFormFields(): array
     {
         return [
-            'nameUser',
-            'email',
-            'subject',
-            'message'
+            'title',
+            'author',
+            'hat',
+            'content'
         ];
     }
 
@@ -29,6 +29,6 @@ class FormContactValidator extends FormValidatorAbstract
      */
     function getFormName(): string
     {
-        return 'contact';
+        return 'article';
     }
 }

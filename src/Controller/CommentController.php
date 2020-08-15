@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\FormValidator\FormCommentValidator;
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Core\DefaultAbstract\LoggedAbstractController;

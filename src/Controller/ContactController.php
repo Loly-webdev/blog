@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\FormValidator\FormContactValidator;
 use App\Entity\User;
 use App\Service\Email;
 use App\Service\Message;
