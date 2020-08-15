@@ -1,11 +1,23 @@
-<p>
-<span class="fa fa-copyright"></span>
-    Eloïse RUIZ-RODRIGUEZ | {{ "now"|date("Y") }}
-    <br>
-    Dans le cadre de ma formation avec OpenClassrooms.
-    <br>
-    <a href="/authentication/login">Connexion</a>
-</p>
+<div class="row d-flex pt-3">
+    <div class="col-md-6">
+        <!--Copyright-->
+        <p class="text-center h6">
+            <span class="fa fa-copyright"></span>
+            {{ "now"|date("Y") }} Copyright: Eloïse RUIZ-RODRIGUEZ
+            <br>
+            Dans le cadre de ma formation avec OpenClassrooms.
+        </p>
+    </div>
+    <div class="col-md-6">
+        <!-- Connexion -->
+        <div class="text-center pb-3">
+            <a href="/authentication" class="btn btn-outline-primary">
+                <span class="fas fa-power-off"></span>
+                Connection
+            </a>
+        </div>
+    </div>
+</div>
 <!-- script jquery -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
