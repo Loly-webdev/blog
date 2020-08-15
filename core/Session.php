@@ -15,7 +15,6 @@ final class Session
     private static $instance;
     private static $hasLogged  = false;
     private        $userLogged;
-    private        $data;
 
     /**
      * Request constructor.
@@ -23,8 +22,12 @@ final class Session
      */
     private function __construct()
     {
-        $this->data        = $_SESSION;
-        $this->userLogged  = (new userRepository())->findOneById($_SESSION['id']);
+        $userId = static::getValue('id');
+
+        $this->userLogged  = empty($userId)
+            ? null
+            : (new userRepository())->findOneById($userId);
+
         static::$hasLogged = null !== $this->userLogged;
     }
 
@@ -39,21 +42,17 @@ final class Session
      */
     public static function getValue(string $key, $defaultValue = null)
     {
-        $data = (static::getInstance())->getData();
+        $data = static::getData();
 
         return $data[$key] ?? $defaultValue;
-
-        /*return isset($data[$key])
-            ? $data[$key]
-            : $defaultValue;*/
     }
 
     /**
      * @return array
      */
-    public function getData(): array
+    public static function getData(): array
     {
-        return $this->data;
+        return $_SESSION;
     }
 
     /**
@@ -94,10 +93,6 @@ final class Session
     public static function setValue(string $key, $value): void
     {
         $_SESSION[$key] = $value;
-
-        /*$data       = (static::getInstance())->getData();
-        $data[$key] = $value;
-        (static::getInstance())->setData($data);*/
     }
 
     /**
@@ -105,7 +100,7 @@ final class Session
      */
     public static function hasLogged(): bool
     {
-        return static::$hasLogged;
+        return Session::getValue('id', null);
     }
 }
 
