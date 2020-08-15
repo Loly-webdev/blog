@@ -20,17 +20,6 @@ class AuthenticationController extends DefaultAbstractController
      */
     public function indexAction()
     {
-        $this->renderView(
-            'formAuthentication.html.twig'
-        );
-    }
-
-    /**
-     * User login
-     * @throws Exception
-     */
-    public function loginAction(): void
-    {
         $formValidator = new FormAuthenticationValidator();
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
