@@ -2,11 +2,11 @@
 
 namespace Core\DefaultAbstract;
 
+use App\Service\SessionUserService;
 use Core\DefaultControllerInterface;
 use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
 use Core\Request;
-use Core\Session;
 
 /**
  * Class DefaultAbstractController
@@ -44,12 +44,13 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
             throw new CoreException('Vous devez être authentifié pour accéder à cette page.');
         }
 
+        $user = SessionUserService::getUserLogged();
         // error 403
-        if (false === Session::hasLogged()) {
+        if (null === $user) {
             throw new CoreException('L\'utilisateur n\'est pas reconnu.');
         }
 
-        return Session::getUserLogged();
+        return $user;
     }
 
     /**
@@ -100,7 +101,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      */
     public function isLogged(): bool
     {
-        return Session::getValue('logged', false);
+        return SessionUserService::hasLogged();
     }
 
 }

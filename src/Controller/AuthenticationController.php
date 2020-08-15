@@ -61,9 +61,7 @@ class AuthenticationController extends DefaultAbstractController
      */
     public function logoutAction(): void
     {
-        session_unset();
-        session_destroy();
-
+        Session::destroy();
         $this->redirectTo('home');
     }
 }
