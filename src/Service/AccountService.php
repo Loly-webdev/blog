@@ -28,13 +28,12 @@ abstract class AccountService extends DefaultAbstractController
         // Check if $user is an instance of User class
         assert($user instanceof User);
 
-        if (empty($user)) {
+        if (null === $user) {
             return null;
         }
         $accountIsValid = Helper::checkPassword($params['password'], $user->getPassword());
 
         return $accountIsValid ? $user : null;
     }
-
 
 }

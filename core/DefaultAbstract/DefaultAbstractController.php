@@ -54,20 +54,33 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isLogged(): bool
+    {
+        return SessionUserService::hasLogged();
+    }
+
+    /**
      * Method to see the views of the site
      *
-     * @param string $viewName
-     * @param array $params
+     * @param string      $viewName
+     * @param array       $params
      * @param string|null $viewFolder
      *
+     * @return void
      * @throws CoreException
      */
-    public function renderView($viewName, array $params = [], string $viewFolder = null): void
+    public function renderView(
+        string $viewName,
+        array $params = [],
+        string $viewFolder = null
+    ): void
     {
         $defaultPath = VIEW_ROOT;
-        $viewFolder = $viewFolder ?? $this->getFolderView();
-        $view = (new TwigProvider())->getTwig()
-            ->render($viewFolder . $viewName, $params);
+        $viewFolder  = $viewFolder ?? $this->getFolderView();
+        $view        = TwigProvider::getTwig()
+                                   ->render($viewFolder . $viewName, $params);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
@@ -90,18 +103,9 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      *
      * @param string $route
      */
-    public function redirectTo(string $route)
+    public function redirectTo(string $route): void
     {
         header('Location: /' . $route);
         exit();
     }
-
-    /**
-     * @return bool
-     */
-    public function isLogged(): bool
-    {
-        return SessionUserService::hasLogged();
-    }
-
 }

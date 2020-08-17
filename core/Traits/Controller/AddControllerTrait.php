@@ -30,13 +30,13 @@ trait AddControllerTrait
     /**
      * Method to add entity
      *
-     * @param FormValidatorAbstract $formValidator
-     * @param DefaultAbstractEntity $entityClass
+     * @param FormValidatorAbstract     $formValidator
+     * @param DefaultAbstractEntity     $entityClass
      * @param DefaultAbstractRepository $repository
-     * @param string $viewTemplate
+     * @param string                    $viewTemplate
      */
     protected function addEntity(
-        FormValidatorAbstract$formValidator,
+        FormValidatorAbstract $formValidator,
         DefaultAbstractEntity $entityClass,
         DefaultAbstractRepository $repository,
         string $viewTemplate
@@ -45,13 +45,13 @@ trait AddControllerTrait
         $formSubmitted = $formValidator;
         if ($formSubmitted->isSubmitted() && $formSubmitted->isValid()) {
             $formSubmitted = $formSubmitted->getFormValues();
-            $entity = $entityClass->hydrate($formSubmitted);
+            $entity        = $entityClass->hydrate($formSubmitted);
             $this->checkForm($entityClass);
             $status = static::statusMessage($repository, $entity);
         }
 
         $data = [
-            'status' => $status['status'] ?? '',
+            'status'        => $status['status'] ?? '',
             'statusMessage' => $status['statusMessage'] ?? ''
         ];
 
@@ -67,24 +67,27 @@ trait AddControllerTrait
 
     /**
      * @param $entity
+     *
+     * @return void
      */
-    public function checkForm($entity)
+    public function checkForm($entity): void
     {
         if (method_exists($this, 'postHydrate')) {
             $this->postHydrate($entity);
         }
 
         if ($entity->hasId()) {
-            throw new LogicException("L'id ne devrait pas exister.");
+            throw new LogicException('L\'id ne devrait pas exister.');
         }
     }
 
     /**
      * @param $repository
      * @param $entity
+     *
      * @return array
      */
-    static public function statusMessage($repository, $entity): array
+    public static function statusMessage($repository, $entity): array
     {
         return Message::getMessage(
             $repository->insert($entity),

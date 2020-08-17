@@ -21,7 +21,7 @@ class UserAdminController extends LoggedAbstractController
     /**
      * @var string
      */
-    static $entityLabel = "profil";
+    public static $entityLabel = "profil";
 
     /**
      * Action by default
@@ -93,7 +93,7 @@ class UserAdminController extends LoggedAbstractController
      * @return void
      * @throws CoreException
      */
-    public function profileAction()
+    public function profileAction(): void
     {
         $this->renderView(
             'profile/profile.html.twig',

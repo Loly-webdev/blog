@@ -1,6 +1,9 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h2>{{ title }}</h2>
+    <h2>
+        <span class="far fa-newspaper"></span>
+        Derniers billets du blog :
+    </h2>
     {% for article in articles %}
         <article class="p-3 mt-4 rounded">
             <h3>{{ article.title }}</h3>

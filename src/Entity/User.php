@@ -12,22 +12,19 @@ use Core\Exception\CoreException;
  */
 class User extends DefaultAbstractEntity
 {
-    /**
-     *
-     */
-    const ROLE_ADMIN = 'admin';
-    const ROLE_USER = 'user';
-    const ROLE_ADMIN_LABEL = 'Administrateur';
-    const ROLE_USER_LABEL = 'Utilisateur';
-    const ROLES = [
+    public const ROLE_ADMIN       = 'admin';
+    public const ROLE_USER        = 'user';
+    public const ROLE_ADMIN_LABEL = 'Administrateur';
+    public const ROLE_USER_LABEL  = 'Utilisateur';
+    public const ROLES            = [
         self::ROLE_ADMIN => self::ROLE_ADMIN_LABEL,
-        self::ROLE_USER => self::ROLE_USER_LABEL
+        self::ROLE_USER  => self::ROLE_USER_LABEL
     ];
 
-    protected $mail = '';
-    protected $login = '';
+    protected $mail     = '';
+    protected $login    = '';
     protected $password = '';
-    protected $role = '';
+    protected $role     = '';
 
     /**
      * @return string
@@ -42,7 +39,7 @@ class User extends DefaultAbstractEntity
      *
      * @return User
      */
-    public function setMail(string $mail)
+    public function setMail(string $mail): User
     {
         $this->mail = $mail;
 
@@ -62,7 +59,7 @@ class User extends DefaultAbstractEntity
      *
      * @return User
      */
-    public function setLogin(string $login)
+    public function setLogin(string $login): User
     {
         $this->login = $login;
 
@@ -79,43 +76,12 @@ class User extends DefaultAbstractEntity
 
     /**
      * @param string $passwordSubmitted
+     *
      * @return User
      */
-    public function setPassword(string $passwordSubmitted)
+    public function setPassword(string $passwordSubmitted): User
     {
         $this->password = Helper::encodePassword($passwordSubmitted);
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAdmin(): bool
-    {
-        return static::ROLE_ADMIN === $this->getRole();
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole():string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role
-     * @return User
-     * @throws CoreException
-     */
-    public function setRole(string $role)
-    {
-        $existingRole = [self::ROLE_ADMIN, self::ROLE_USER];
-        if (!in_array($role, $existingRole)) {
-            throw new CoreException('Le rôle ' . $role . ' saisie n\'existe pas ou n\'est pas valide');
-        }
-        $this->role = $role;
 
         return $this;
     }
@@ -130,15 +96,47 @@ class User extends DefaultAbstractEntity
         return static::ROLES[$role] ?? 'Aucun role définit';
     }
 
-
     /**
      * @return string
      */
     public function role(): string
     {
         if ($this->isAdmin()) {
-            return User::ROLE_ADMIN;
+            return static::ROLE_ADMIN;
         }
-        return User::ROLE_USER;
+        return static::ROLE_USER;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return static::ROLE_ADMIN === $this->getRole();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return User
+     * @throws CoreException
+     */
+    public function setRole(string $role): User
+    {
+        $existingRole = [static::ROLE_ADMIN, static::ROLE_USER];
+        if (!in_array($role, $existingRole)) {
+            throw new CoreException('Le rôle ' . $role . ' saisie n\'existe pas ou n\'est pas valide');
+        }
+        $this->role = $role;
+
+        return $this;
     }
 }

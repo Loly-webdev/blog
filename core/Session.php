@@ -43,7 +43,10 @@ final class Session
         $_SESSION[$key] = $value;
     }
 
-    public static function destroy()
+    /**
+     * @return void
+     */
+    public static function destroy(): void
     {
         session_unset();
         session_destroy();

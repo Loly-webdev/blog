@@ -18,7 +18,7 @@ class RegisterController extends DefaultAbstractController
 {
     use AddControllerTrait;
 
-    static $entityLabel = "inscription";
+    public static $entityLabel = "inscription";
 
     /**
      * Action by default
@@ -49,6 +49,7 @@ class RegisterController extends DefaultAbstractController
     public function postHydrate($entity): void
     {
         $formValidator = new FormRegisterValidator();
+
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
             $formValues = $formValidator->getFormValues();
             $entity->setRole($entity->role());

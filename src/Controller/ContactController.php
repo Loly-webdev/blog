@@ -8,7 +8,7 @@ use App\Service\Email;
 use App\Service\Message;
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Exception;
+use Core\Exception\CoreException;
 
 /**
  * Class ContactController
@@ -20,24 +20,24 @@ class ContactController extends DefaultAbstractController
      * Action by default
      * Show form to contact
      * @return mixed|void
-     * @throws Exception
+     * @throws CoreException
      */
     public function indexAction()
     {
         if (isset($_SESSION['logged'])) {
             $viewFolder = 'back/';
-            $user = $this->getUserLogged();
+            $user       = $this->getUserLogged();
         }
 
         $formValidator = new FormContactValidator();
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
             $formValues = $formValidator->getFormValues();
-            $nameUser = Helper::secureText($formValues['nameUser']);
-            $emailUser = $formValues['email'] ?? '';
+            $nameUser   = Helper::secureText($formValues['nameUser']);
+            $emailUser  = $formValues['email'] ?? '';
 
             if (false === Helper::checkEmail($emailUser)) {
-                throw new Exception("l'adresse $emailUser n'est pas valide");
+                throw new CoreException("l'adresse $emailUser n'est pas valide");
             }
 
             $fields = $this->prepareFields($formValues, $nameUser, $emailUser);
@@ -47,8 +47,8 @@ class ContactController extends DefaultAbstractController
         $this->renderView(
             'contact.html.twig',
             [
-                'user' => $user ?? new User(),
-                'status' => $status ?? '',
+                'user'   => $user ?? new User(),
+                'status' => $status ?? [''],
             ],
             $viewFolder ?? 'front/'
         );
@@ -56,16 +56,21 @@ class ContactController extends DefaultAbstractController
 
     /**
      * @param array|mixed[] $formValues
-     * @param mixed $nameUser
-     * @param mixed $emailUser
+     * @param string        $nameUser
+     * @param string        $emailUser
+     *
      * @return array|mixed[]
      */
-    public function prepareFields(array $formValues, $nameUser, $emailUser): array
+    public function prepareFields(
+        array $formValues,
+        string $nameUser,
+        string $emailUser
+    ): array
     {
-        $subject = $formValues['subject'] ? Helper::secureText($formValues['subject']) : '';
+        $subject        = $formValues['subject'] ? Helper::secureText($formValues['subject']) : '';
         $messageContent = $formValues['message'] ? Helper::secureText($formValues['message']) : '';
-        $message = "MESSAGE DU SITE LOLYWEBDEV de $nameUser, $emailUser<br>"
-            . $messageContent;
+        $message        = "MESSAGE DU SITE BlogLWD de $nameUser, $emailUser<br>"
+                          . $messageContent;
 
         return [
             'subject' => $subject,
@@ -74,12 +79,17 @@ class ContactController extends DefaultAbstractController
     }
 
     /**
-     * @param mixed $emailUser
-     * @param mixed $subject
-     * @param mixed $message
+     * @param string $emailUser
+     * @param string $subject
+     * @param string $message
+     *
      * @return array|mixed[]
      */
-    static public function statusMessage($emailUser, $subject, $message): array
+    public static function statusMessage(
+        string $emailUser,
+        string $subject,
+        string $message
+    ): array
     {
         return Message::getMessage(
             Email::sendMail($emailUser, $subject, $message),

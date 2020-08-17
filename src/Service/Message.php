@@ -9,17 +9,22 @@ namespace App\Service;
 class Message
 {
     /**
-     * @param mixed $value
+     * @param mixed  $value
      * @param string $success
      * @param string $error
+     *
      * @return array|string[]
      */
-    static public function getMessage($value, string $success, string $error): array
+    public static function getMessage(
+        $value,
+        string $success,
+        string $error
+    ): array
     {
         $isValid = ('' !== $value && true === $value);
 
         return [
-            'status' => $isValid ? 'success' : 'danger',
+            'status'        => $isValid ? 'success' : 'danger',
             'statusMessage' => $isValid ? $success : $error
         ];
     }

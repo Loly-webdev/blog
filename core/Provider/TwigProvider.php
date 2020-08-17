@@ -20,10 +20,10 @@ class TwigProvider
     public static function getTwig()
     {
         $config = ConfigurationProvider::getInstance();
-        $debug = $config->getTwigConfig();
+        $debug  = $config::getTwigConfig();
 
         if (null === static::$twig) {
-            $loader = new FilesystemLoader('template/');
+            $loader       = new FilesystemLoader('template/');
             static::$twig = new Environment(
                 $loader,
                 // To the prod define the path of directory Cache, else to dev keep false

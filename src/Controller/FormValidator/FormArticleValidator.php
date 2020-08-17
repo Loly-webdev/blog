@@ -14,7 +14,7 @@ class FormArticleValidator extends FormValidatorAbstract
     /**
      * @return array|string[]
      */
-    function getFormFields(): array
+    public function getFormFields(): array
     {
         return [
             'title',
@@ -27,7 +27,7 @@ class FormArticleValidator extends FormValidatorAbstract
     /**
      * @return string
      */
-    function getFormName(): string
+    public function getFormName(): string
     {
         return 'article';
     }

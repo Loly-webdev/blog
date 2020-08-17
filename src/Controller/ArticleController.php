@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Controller\FormValidator\FormArticleValidator;
 use App\Entity\Article;
 use App\Repository\{ArticleRepository, CommentRepository};
-use Core\Exception\CoreException;
 use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
+use Core\Exception\CoreException;
 use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
 use Exception;
 
@@ -19,7 +19,7 @@ class ArticleController extends LoggedAbstractController
     use CUDControllerTrait,
         AddControllerTrait;
 
-    static $entityLabel = "article";
+    public static $entityLabel = "article";
 
     /**
      * Action by default
@@ -34,7 +34,6 @@ class ArticleController extends LoggedAbstractController
         $this->renderView(
             '/article/articles.html.twig',
             [
-                'title'    => 'Derniers billets du blog :',
                 'articles' => $articles
             ]
         );

@@ -6,40 +6,38 @@
     </h3>
     <div class="container">
         <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
-        <div class="starter-template">
-            <form action="" method="POST" class="p-3 rounded">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="login" class="text-secondary font-weight-bold">Identifiant :</label>
-                        <input class="form-control" id="login" name="user[login]" type="text"
-                               placeholder="Identifiant" required/>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="text-secondary font-weight-bold">Email</label>
-                        <input class="form-control" id="email" name="user[mail]" type="text"
-                               placeholder="Email" required/>
-                    </div>
-                    <div class="form-group">
-                        <label for="pass1" class="text-secondary font-weight-bold">Mot de passe :</label>
-                        <input class="form-control" id="pass1" name="user[password]" type="password"
-                               minlength="3" placeholder="Mot de passe" required/>
-                    </div>
-                    <div class="form-group">
-                        <label for="pass2" class="text-secondary font-weight-bold">Répéter le mot de passe :</label>
-                        <input class="form-control" id="pass2" name="user[password2]" type="password"
-                               minlength="3" placeholder="Mot de passe" required/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        Envoyer
-                        <span class="fas fa-share"></span>
-                    </button>
+        <form action="" method="POST" class="p-3 starter-template rounded">
+            <div class="col">
+                <div class="form-group">
+                    <label for="login" class="text-secondary font-weight-bold">Identifiant :</label>
+                    <input class="form-control" id="login" name="user[login]" type="text"
+                           placeholder="Identifiant" required/>
                 </div>
-            </form>
-        </div>
+                <div class="form-group">
+                    <label for="email" class="text-secondary font-weight-bold">Email</label>
+                    <input class="form-control" id="email" name="user[mail]" type="text"
+                           placeholder="Email" required/>
+                </div>
+                <div class="form-group">
+                    <label for="pass1" class="text-secondary font-weight-bold">Mot de passe :</label>
+                    <input class="form-control" id="pass1" name="user[password]" type="password"
+                           minlength="3" placeholder="Mot de passe" required/>
+                </div>
+                <div class="form-group">
+                    <label for="pass2" class="text-secondary font-weight-bold">Répéter le mot de passe :</label>
+                    <input class="form-control" id="pass2" name="user[password2]" type="password"
+                           minlength="3" placeholder="Mot de passe" required/>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Envoyer
+                    <span class="fas fa-share"></span>
+                </button>
+            </div>
+        </form>
     </div>
     <div class="p-3 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
         <h4>Déjà inscrit ?</h4>
-        <a href="/authentication/login">
+        <a href="/authentication">
             <span class="fas fa-sign-in-alt"></span>
             Connectez-vous
         </a>

@@ -27,8 +27,7 @@ trait ReadRepositoryTrait
         );
 
         return reset($data)
-            ? reset($data)
-            : null;
+            ?: null;
     }
 
     /**
@@ -53,9 +52,9 @@ trait ReadRepositoryTrait
      */
     public function search(array $filters = []): array
     {
-        $limit = isset($filters['limit']) && is_int($filters['limit']) ? $filters['limit'] : null;
+        $limit   = isset($filters['limit']) && is_int($filters['limit']) ? $filters['limit'] : null;
         $orderBy = isset($filters['orderBy']) && is_int($filters['orderBy']) ? $filters['orderBy'] : 1;
-        $sorted = isset($filters['sorted']) && true === $filters['sorted'] ? 'ASC' : 'DESC';
+        $sorted  = isset($filters['sorted']) && true === $filters['sorted'] ? 'ASC' : 'DESC';
         unset($filters['limit'], $filters['orderBy'], $filters['sorted']);
 
         // We specify a where 1 = 1 to avoid managing the WHERE || AND
@@ -88,7 +87,7 @@ trait ReadRepositoryTrait
     public function findOne(array $filters = []): ?DefaultAbstractEntity
     {
         $filters['limit'] = 1;
-        $data = $this->search($filters);
+        $data             = $this->search($filters);
 
         return !empty($data)
             ? reset($data)

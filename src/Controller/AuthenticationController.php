@@ -33,14 +33,14 @@ class AuthenticationController extends DefaultAbstractController
                 $this->redirectTo('Admin/userAdmin');
             }
 
-            $status = "danger";
+            $status  = "danger";
             $message = "Echec de l'authentification";
         }
 
         $this->renderView(
             'formAuthentication.html.twig',
             [
-                'status' => $status ?? '',
+                'status'        => $status ?? '',
                 'statusMessage' => $message ?? ''
             ]
         );
@@ -48,6 +48,7 @@ class AuthenticationController extends DefaultAbstractController
 
     /**
      * @param User $user
+     *
      * @return void
      */
     private function addUserInSession(User $user): void

@@ -51,7 +51,7 @@ final class Request
     public function getUrlComponents(): array
     {
         $server = parse_url($_SERVER["REQUEST_URI"]);
-        $path = trim($server['path'], "/");
+        $path   = trim($server['path'], "/");
 
         return "" !== $path
             ? explode('/', $path)
@@ -60,6 +60,7 @@ final class Request
 
     /**
      * @param string $param
+     *
      * @return int
      */
     public function getParamAsInt(string $param): int
@@ -80,13 +81,14 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
+     *
      * @return mixed|null
      */
     public function getParam($key, $defaultValue = null)
     {
         return $this->getQueryParam($key) ??
-            $this->getRequestParam($key) ??
-            $defaultValue;
+               $this->getRequestParam($key) ??
+               $defaultValue;
     }
 
     /**
@@ -94,6 +96,7 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
+     *
      * @return mixed|null
      */
     public function getQueryParam($key, $defaultValue = null)
@@ -108,6 +111,7 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
+     *
      * @return mixed|null
      */
     public function getRequestParam($key, $defaultValue = null)

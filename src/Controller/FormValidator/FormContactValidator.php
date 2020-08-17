@@ -14,7 +14,7 @@ class FormContactValidator extends FormValidatorAbstract
     /**
      * @return array|mixed[]
      */
-    function getFormFields(): array
+    public function getFormFields(): array
     {
         return [
             'nameUser',
@@ -27,7 +27,7 @@ class FormContactValidator extends FormValidatorAbstract
     /**
      * @return string
      */
-    function getFormName(): string
+    public function getFormName(): string
     {
         return 'contact';
     }

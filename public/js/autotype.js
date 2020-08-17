@@ -16,7 +16,7 @@ function autoType(elementClass, typingSpeed) {
         typed.css("opacity", 1);
         typed.prev().removeAttr("style");
         typed.text("_");
-        for (var i = 0; i < amntOfChars; i++) {
+        for (let i = 0; i < amntOfChars; i++) {
             (function (i, char) {
                 setTimeout(function () {
                     newString += char;
@@ -30,6 +30,6 @@ function autoType(elementClass, typingSpeed) {
 $(document).ready(function () {
     // Now to start autoTyping just call the autoType function with the
     // class of outer div
-    // The second paramter is the speed between each letter is typed.
+    // The second parameter is the speed between each letter is typed.
     autoType(".type-js", 200);
 });

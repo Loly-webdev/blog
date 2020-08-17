@@ -20,7 +20,7 @@ class CommentController extends LoggedAbstractController
     use CUDControllerTrait,
         AddControllerTrait;
 
-    static $entityLabel = "commentaire";
+    public static $entityLabel = "commentaire";
 
     /**
      * Action by default
@@ -78,6 +78,7 @@ class CommentController extends LoggedAbstractController
 
     /**
      * @param Comment $entity
+     *
      * @return void
      */
     public function postHydrate($entity): void

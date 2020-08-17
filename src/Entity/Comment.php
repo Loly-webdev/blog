@@ -25,9 +25,10 @@ class Comment extends DefaultAbstractEntity
 
     /**
      * @param string $author
+     *
      * @return Comment
      */
-    public function setAuthor(string $author)
+    public function setAuthor(string $author): Comment
     {
         $this->author = $author;
 
@@ -44,9 +45,10 @@ class Comment extends DefaultAbstractEntity
 
     /**
      * @param string $content
+     *
      * @return Comment
      */
-    public function setContent(string $content)
+    public function setContent(string $content): Comment
     {
         $this->content = $content;
 
@@ -63,9 +65,10 @@ class Comment extends DefaultAbstractEntity
 
     /**
      * @param int $articleId
+     *
      * @return Comment
      */
-    public function setArticleId(int $articleId)
+    public function setArticleId(int $articleId): Comment
     {
         $this->articleId = $articleId;
 
