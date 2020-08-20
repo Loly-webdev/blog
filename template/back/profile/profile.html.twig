@@ -1,35 +1,45 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h3>
+    <h3 class="mb-5">
         <span class="far fa-address-card"></span>
         Mon profil :
     </h3>
-    <article class="p-3 mt-5 rounded-pill">
-        <h4 class=" p-2 w-25 m-auto border-bottom border-secondary">Salutation {{ user.login }} !</h4>
-        <article class="p-2 mt-3 text-secondary bg-light text-dark rounded">
-            <div class="form-group">
-                <span class="font-weight-bold">Date de création du compte : </span>{{ user.createdAt }}
+    <div class="container mb-5">
+        <div class="mb-5 p-3 rounded bg-blue shadow">
+            <p class="h3 p-2 my-2 mx-auto text-info font-weight-bold">
+                Salutation {{ user.login }} !
+            </p>
+            <div class="h5 p-2 mt-3 text-secondary bg-light text-dark rounded">
+                <div class="form-group">
+                    <span class="font-weight-bold">Date de création du compte : </span>{{ user.createdAt }}
+                </div>
+                <div class="form-group">
+                    <span class="font-weight-bold">Dernière mise à jour : </span>{{ user.updatedAt }}
+                </div>
+                <div class="form-group">
+                    <span class="font-weight-bold">mon adresse mail : </span>{{ user.mail }}
+                </div>
             </div>
-            <div class="form-group">
-                <span class="font-weight-bold">Dernière mise à jour : </span>{{ user.updatedAt }}
+            <div class="row d-flex p-2 my-2 mx-auto">
+                <div class="col-md-6 text-center py-2">
+                    <a href="/Admin/userAdmin/edit?userId={{ user.id }}" class="p-2 btn btn-info">
+                        <span class="fas fa-edit"></span>
+                        Éditer
+                    </a>
+                </div>
+                <div class="col-md-6 text-center py-2">
+                    <a href="/Admin/userAdmin/delete?userId={{ user.id }}" class="p-2 btn btn-danger">
+                        <span class="fas fa-trash-alt"></span>
+                        Supprimer
+                    </a>
+                </div>
             </div>
-            <div class="form-group">
-                <span class="font-weight-bold">mon adresse mail : </span>{{ user.mail }}
-            </div>
-        </article>
-        <div class="row p-2 my-4 mx-auto w-75 border-right-0 border-left-0 border border-primary">
-            <a class="col md-6" href="/Admin/userAdmin/edit?userId={{ user.id }}">
-                <span class="fas fa-edit"></span>
-                Éditer
-            </a>
-            <a class="col md-6" href="/Admin/userAdmin/delete?userId={{ user.id }}">
-                <span class="fas fa-trash-alt"></span>
-                Supprimer
-            </a>
         </div>
-    </article>
-    <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
-        <span class="fas fa-angle-double-left"></span>
-        <a href="/home">Retour à l'accueil</a>
+    </div>
+    <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
+        <a href="/home" class="m-2 p-2 btn btn-primary">
+            <span class="fas fa-angle-double-left"></span>
+            Retour à l'accueil
+        </a>
     </div>
 {% endblock %}

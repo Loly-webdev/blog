@@ -1,12 +1,14 @@
 {% extends "layout.html.twig" %}
 {% block content %}
-    <h3>
-        <span class="fas fa-power-off"></span>
+    <h3 class="mb-5">
+        <span class="fas fa-sign-in-alt"></span></span>
         Connexion :
     </h3>
-    <div class="container">
-        <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
-        <form action="" method="POST" class="p-3 starter-template rounded">
+    <div class="container mb-5">
+        {% if status.status == true %}
+            <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
+        {% endif %}
+        <form action="" method="POST" class="p-3 starter-template rounded shadow">
             <div class="col">
                 <div class="form-group">
                     <label for="login" class="text-secondary font-weight-bold">Identifiant :</label>
@@ -18,17 +20,20 @@
                     <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
                            minlength="3" placeholder="Mot de passe" required/>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="p-2 btn btn-success">
                     Connexion
                     <span class="fas fa-sign-in-alt"></span>
                 </button>
             </div>
         </form>
     </div>
-    <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
+    <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
         <h4>Pas encore de compte ?</h4>
-        <a href="/register">
-            <span class="fas fa-file-signature"></span>
-            S'inscrire</a>
+        <div class="text-center pt-2 pb-3">
+            <a href="/register" class="p-2 btn btn-info">
+                <span class="fas fa-file-signature"></span>
+                S'inscrire
+            </a>
+        </div>
     </div>
 {% endblock %}

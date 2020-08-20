@@ -3,11 +3,11 @@
 <head>
     {{ include('partial/_head.html.twig') }}
 </head>
-<body>
+<body class="p-0 bg-light">
 <header>
     {{ include('partial/_nav.html.twig') }}
 </header>
-<main class="m-4 p-2">
+<main class="mx-4 mb-4 p-2 text-center">
     {% block content %}{% endblock %}
 </main>
 <footer class="fixed-bottom bg-dark text-secondary">

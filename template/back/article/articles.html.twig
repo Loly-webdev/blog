@@ -1,34 +1,38 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h2>
+    <h2 class="mb-5">
         <span class="far fa-newspaper"></span>
         Derniers billets du blog :
     </h2>
-    {% for article in articles %}
-        <article class="p-3 mt-4 rounded">
-            <h3>{{ article.title }}</h3>
-            <article class="p-2 mt-3 text-secondary font-italic">
-                <span class="font-weight-bold">Créer le : </span>{{ article.createdAt }}<br>
-                <span class="font-weight-bold">Dernière mise à jour : </span>{{ article.updatedAt }}
-            </article>
-            <article class="p-2 mt-3 bg-light text-dark font-weight-bold rounded-pill">
-                <p class="mb-0">
-                    {{ article.hat }}
-                </p>
-            </article>
-            <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-primary">
-                <a href="/article/see?articleId={{ article.id }}">
-                    Voir l'article
-                    <span class="fas fa-angle-double-right"></span>
-                </a>
+    <div class="container mx-auto">
+        {% for article in articles %}
+            <div class="p-3 my-2 rounded bg-blue shadow">
+                <h3>{{ article.title }}</h3>
+                <div class="p-2 my-3 mx-auto w-50 border-top border-bottom border-info">
+                    <p class="h6 text-secondary font-italic">
+                        <span class="font-weight-bold">Créer le : </span>{{ article.createdAt }}<br>
+                        <span class="font-weight-bold">Dernière mise à jour : </span>{{ article.updatedAt }}
+                    </p>
+                </div>
+                <div class="p-2 my-3 mx-2 bg-light text-dark font-weight-bold rounded">
+                    <p class="font-weight-bold h4">
+                        {{ article.hat }}
+                    </p>
+                </div>
+                <div class="text-center p-2 mt-3">
+                    <a href="/article/see?articleId={{ article.id }}" class="p-2 btn btn-primary">
+                        Voir l'article
+                        <span class="fas fa-angle-double-right"></span>
+                    </a>
+                </div>
             </div>
-        </article>
-        <br>
-    {% endfor %}
-    <div class="p-2 my-4 mx-auto w-50 border-right-0 border-left-0 border border-secondary">
-        <a href="/article/add">
-            <span class="fas fa-plus-circle"></span>
-            Ajouter un nouvel article
+            <br>
+        {% endfor %}
+    </div>
+    <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
+        <a href="/article/add" class="m-2 p-2 btn btn-info">
+            <span class="fas fa-feather-alt"></span>
+            Écrire un nouvel article
         </a>
     </div>
 {% endblock %}
