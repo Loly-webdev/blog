@@ -23,7 +23,7 @@ try {
         $file    = $t->getFile();
         $line    = $t->getLine();
 
-        require_once('errors/template/errorsManagementView.php');
+        require_once('errors/template/errorsDev.php');
         exit;
     }
     require_once('errors/errorsPage.php');

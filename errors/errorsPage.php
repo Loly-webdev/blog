@@ -47,7 +47,6 @@ $message = $codes[$codeHTTP][1] ?? 'Désolé nous rencontrons une erreur';
 
 if ($codeHTTP === 200 || $codeHTTP === false || strlen($codeHTTP) !== 3) {
     $code    = '';
-    $message = 'Désolé nous rencontrons une erreur';
 }
 
 require_once('template/errorsPageView.php');
