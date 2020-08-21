@@ -1,0 +1,71 @@
+/* GENERAL */
+body {
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 1px;
+    margin: 7rem 0 !important;
+}
+
+form,
+.bg-blue {
+    background-color: rgba(224, 237, 251, 1);
+}
+
+/* NAV */
+nav img {
+    width: 100px;
+}
+
+/* ABOUT */
+#about img {
+    border-radius: 70% 90% 90% 70% / 80% 90% 70% 80%;
+    max-width: 65%;
+}
+
+/* Animation css*/
+.text-js {
+    opacity: 0;
+}
+
+.cursor {
+    display: block;
+    position: absolute;
+    height: 85%;
+    top: 0;
+    right: -5px;
+    width: 2px;
+    z-index: 1;
+    animation: flash 0.5s none infinite alternate;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* SOCIAL */
+#more img {
+    width: 50px;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    border-radius: 50%;
+}
+
+#more img:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    z-index: 10;
+    filter: saturate(6);
+    -webkit-filter: saturate(6);
+}
+
+/*blog*/
+.panel-heading {
+    width: 82%;
+}
