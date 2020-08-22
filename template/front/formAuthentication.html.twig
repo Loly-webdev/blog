@@ -1,14 +1,14 @@
 {% extends "layout.html.twig" %}
 {% block content %}
     <h3 class="mb-5">
-        <span class="fas fa-sign-in-alt"></span></span>
+        <span class="fas fa-sign-in-alt"></span>
         Connexion :
     </h3>
     <div class="container mb-5">
-        {% if status.status == true %}
-            <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
+        {% if status == true %}
+            <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
         {% endif %}
-        <form action="" method="POST" class="p-3 starter-template rounded shadow">
+        <form action="/authentication/login" method="POST" class="p-3 starter-template rounded shadow">
             <div class="col">
                 <div class="form-group">
                     <label for="login" class="text-secondary font-weight-bold">Identifiant :</label>

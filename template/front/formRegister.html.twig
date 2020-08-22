@@ -5,10 +5,10 @@
         Inscription :
     </h3>
     <div class="container mb-5">
-        {% if status.status == true %}
-            <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
+        {% if status == true %}
+            <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
         {% endif %}
-        <form action="" method="POST" class="p-3 starter-template rounded shadow">
+        <form action="/register/add" method="POST" class="p-3 starter-template rounded shadow">
             <div class="col">
                 <div class="form-group">
                     <label for="login" class="text-secondary font-weight-bold">Identifiant :</label>
@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label for="pass2" class="text-secondary font-weight-bold">Répéter le mot de passe :</label>
                     <input class="form-control" id="pass2" name="user[password2]" type="password"
-                           minlength="3" placeholder="Mot de passe" required/>
+                           minlength="3" placeholder="Répéter le mot de passe" required/>
                 </div>
                 <button type="submit" class="p-2 btn btn-primary">
                     Envoyer

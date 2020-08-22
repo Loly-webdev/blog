@@ -1,0 +1,29 @@
+<h2 class="mb-5">
+    <span class="far fa-newspaper"></span>
+    Derniers billets du blog :
+</h2>
+<div class="container mx-auto">
+    {% for article in articles %}
+        <div class="p-3 my-2 rounded bg-blue shadow">
+            <h3>{{ article.title }}</h3>
+            <div class="p-2 my-3 mx-auto w-50 border-top border-bottom border-info">
+                <p class="h6 text-secondary font-italic">
+                    <span class="font-weight-bold">Créer le : </span>{{ article.createdAt }}<br>
+                    <span class="font-weight-bold">Dernière mise à jour : </span>{{ article.updatedAt }}
+                </p>
+            </div>
+            <div class="p-2 my-3 mx-2 bg-light text-dark font-weight-bold rounded">
+                <p class="font-weight-bold h4">
+                    {{ article.hat }}
+                </p>
+            </div>
+            <div class="text-center p-2 mt-3">
+                <a href="/{{ page }}/see?articleId={{ article.id }}" class="p-2 btn btn-primary">
+                    Voir l'article
+                    <span class="fas fa-angle-double-right"></span>
+                </a>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+</div>

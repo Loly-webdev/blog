@@ -22,10 +22,13 @@ class RegisterController extends DefaultAbstractController
 
     /**
      * Action by default
+     * @throws CoreException
      */
     public function indexAction()
     {
-        $this->addAction();
+        $this->renderView(
+            'formRegister.html.twig'
+        );
     }
 
     /**

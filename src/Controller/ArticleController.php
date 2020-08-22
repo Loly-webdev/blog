@@ -7,7 +7,7 @@ use App\Entity\Article;
 use App\Repository\{ArticleRepository, CommentRepository};
 use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
 use Core\Exception\CoreException;
-use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
+use Core\Traits\Controller\{AddControllerTrait, DeleteControllerTrait, EditControllerTrait, SeeControllerTrait};
 use Exception;
 
 /**
@@ -16,8 +16,10 @@ use Exception;
  */
 class ArticleController extends LoggedAbstractController
 {
-    use CUDControllerTrait,
-        AddControllerTrait;
+    use SeeControllerTrait,
+        AddControllerTrait,
+        EditControllerTrait,
+        DeleteControllerTrait;
 
     public static $entityLabel = "article";
 
@@ -34,7 +36,8 @@ class ArticleController extends LoggedAbstractController
         $this->renderView(
             '/article/articles.html.twig',
             [
-                'articles' => $articles
+                'articles' => $articles,
+                'page' => 'article'
             ]
         );
     }
@@ -80,7 +83,7 @@ class ArticleController extends LoggedAbstractController
             new FormArticleValidator(),
             new Article(),
             new ArticleRepository(),
-            'article/formArticle.html.twig'
+            'admin/article/formArticle.html.twig'
         ];
     }
 

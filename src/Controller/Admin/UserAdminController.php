@@ -4,10 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Controller\RegisterController;
 use App\Entity\User;
+use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
-use Core\Traits\Controller\CUDControllerTrait;
+use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
 /**
@@ -16,7 +17,7 @@ use Exception;
  */
 class UserAdminController extends LoggedAbstractController
 {
-    use CUDControllerTrait;
+    use SeeControllerTrait;
 
     /**
      * @var string
@@ -34,12 +35,19 @@ class UserAdminController extends LoggedAbstractController
         $user = $this->getUserLogged();
         assert($user instanceof User);
         $status = $user->getRoleLabel();
+
+        if ($status !== 'Administrateur') {
+            $this->redirectTo('home');
+        }
+
         $login = $user->getLogin();
+        $articles = (new ArticleRepository())->find();
 
         $this->renderView(
-            'homeBack.html.twig',
+            'admin/dashboard.html.twig',
             [
-                'message' => "Ravi de te revoir $status $login !"
+                'message' => "Ravi de te revoir $status $login !",
+                'articles' => $articles
             ]
         );
     }

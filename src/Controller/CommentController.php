@@ -8,7 +8,9 @@ use App\Repository\CommentRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
-use Core\Traits\Controller\CUDControllerTrait;
+use Core\Traits\Controller\DeleteControllerTrait;
+use Core\Traits\Controller\EditControllerTrait;
+use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
 /**
@@ -17,8 +19,10 @@ use Exception;
  */
 class CommentController extends LoggedAbstractController
 {
-    use CUDControllerTrait,
-        AddControllerTrait;
+    use SeeControllerTrait,
+        AddControllerTrait,
+        EditControllerTrait,
+        DeleteControllerTrait;
 
     public static $entityLabel = "commentaire";
 

@@ -6,8 +6,8 @@ use App\Controller\FormValidator\FormAuthenticationValidator;
 use App\Entity\User;
 use App\Service\AccountService;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Exception\CoreException;
 use Core\Session;
-use Exception;
 
 /**
  * Class AuthenticationController
@@ -17,9 +17,19 @@ class AuthenticationController extends DefaultAbstractController
 {
     /**
      * Action by default
-     * @throws Exception
+     * @throws CoreException
      */
     public function indexAction()
+    {
+        $this->renderView(
+            'formAuthentication.html.twig'
+        );
+    }
+
+    /**
+     * @throws CoreException
+     */
+    public function loginAction(): void
     {
         $formValidator = new FormAuthenticationValidator();
 
@@ -30,7 +40,7 @@ class AuthenticationController extends DefaultAbstractController
                 $this->addUserInSession($user);
 
                 // Redirect to userAdminController
-                $this->redirectTo('Admin/userAdmin');
+                $this->redirectTo('user');
             }
 
             $status  = "danger";

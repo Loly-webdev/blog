@@ -1,0 +1,63 @@
+<div class="container mx-auto">
+    <div class="p-3 mt-5 rounded bg-blue shadow">
+        <h2>{{ article.title }}</h2>
+        <div class="p-2 my-3 mx-auto w-50 border-top border-bottom border-info">
+            <p class="h6 p-2 text-secondary font-italic">
+                <span class="h5 font-weight-bold text-secondary font-italic">Auteur :</span>
+                {{ article.author }}
+                <br class="mb-2">
+                <span class="font-weight-bold">Créer le : </span>{{ article.createdAt }}
+                <br>
+                <span class="font-weight-bold">Dernière mise à jour : </span>{{ article.updatedAt }}
+            </p>
+        </div>
+        <div class="p-2 mt-3 mx-2 bg-light rounded-top">
+            <p class="h4 font-weight-bold">
+                {{ article.hat }}
+            </p>
+        </div>
+        <div class="p-3 mb-3 mx-2 bg-white text-dark rounded-bottom">
+            <p class="h4">
+                {{ article.content }}
+            </p>
+        </div>
+    </div>
+    {% if comments %}
+        <div class="panel-group bg-light shadow rounded" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading p-2 mt-3 mx-auto"
+                     role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a class="text-decoration-none text-info font-weight-bold" role="button"
+                           data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseOne"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            <span class="fas fa-angle-double-down"></span>
+                            Voir les commentaires
+                            <span class="fas fa-angle-double-down"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        {% for comment in comments %}
+                            <div class="p-3 my-3 rounded bg-blue shadow">
+                                <p class="h6 p-2 text-secondary font-italic">
+                                    <span class="h5 font-weight-bold text-secondary font-italic">Auteur :</span>
+                                    {{ comment.author }}
+                                    <br class="mb-2">
+                                    <span class="font-weight-bold">Créer le : </span>{{ comment.createdAt }}<br>
+                                    <span class="font-weight-bold">Dernière mise à jour : </span>{{ comment.updatedAt }}
+                                </p>
+                                <p class="h5 p-3 mb-3 mx-2 bg-white rounded">
+                                    {{ comment.content }}
+                                </p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
