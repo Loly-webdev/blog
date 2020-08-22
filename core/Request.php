@@ -65,15 +65,13 @@ final class Request
      */
     public function getParamAsInt(string $param): int
     {
-        $param = $this->getParam($param)
-            ? (int)$this->getParam($param)
-            : null;
+        $param = $this->getParam($param, false);
 
-        if (false === is_int($param)) {
-            throw new \LogicException("L'argument fournis n'est pas valide.");
+        if ($param === false) {
+            throw new \LogicException("L'argument fourni n'est pas valide.");
         }
 
-        return $param;
+        return (int)$param;
     }
 
     /**

@@ -31,7 +31,7 @@
     "post-install-cmd": [
       "cp -R config/env.yml.sample config/env.yml",
       "rm -rf public/ && mkdir public",
-      "cp src/public/* public"
+      "cp -r src/public/* public"
     ]
   }
 }

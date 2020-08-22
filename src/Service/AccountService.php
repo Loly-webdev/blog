@@ -25,12 +25,13 @@ abstract class AccountService extends DefaultAbstractController
 
         $user = (new UserRepository())->findOne(['login' => $login]);
 
-        // Check if $user is an instance of User class
-        assert($user instanceof User);
-
         if (null === $user) {
             return null;
         }
+
+        // Check if $user is an instance of User class
+        assert($user instanceof User);
+
         $accountIsValid = Helper::checkPassword($params['password'], $user->getPassword());
 
         return $accountIsValid ? $user : null;
