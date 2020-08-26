@@ -1,0 +1,48 @@
+{% extends "back/admin/layoutAdmin.html.twig" %}
+{% block content %}
+<div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
+    <a href="/Admin/articleAdmin/add" class="m-2 p-2 btn btn-info">
+        <span class="fas fa-feather-alt"></span>
+        Écrire un nouvel article
+    </a>
+</div>
+<div class="container mx-auto">
+    {% for article in articles %}
+        <div class="p-3 my-2 rounded bg-blue shadow">
+            <h3>{{ article.title }}</h3>
+            <div class="p-2 my-3 mx-auto w-50 border-top border-bottom border-info">
+                <p class="h6 text-secondary font-italic">
+                    <span class="font-weight-bold">Créer le : </span>{{ article.createdAt }}<br>
+                    <span class="font-weight-bold">Dernière mise à jour : </span>{{ article.updatedAt }}
+                </p>
+            </div>
+            <div class="p-2 my-3 mx-2 bg-light text-dark font-weight-bold rounded">
+                <p class="font-weight-bold h4">
+                    {{ article.hat }}
+                </p>
+            </div>
+            <div class="text-center p-2 mt-3">
+                <a href="/article/see?articleId={{ article.id }}" class="p-2 btn btn-primary">
+                    Voir l'article
+                    <span class="fas fa-angle-double-right"></span>
+                </a>
+            </div>
+            <div class="row d-flex p-2 my-2 mx-auto">
+                <div class="col-md-6 text-center py-2">
+                    <a href="/Admin/articleAdmin/edit?articleId={{ article.id }}" class="p-2 btn btn-info">
+                        <span class="fas fa-edit"></span>
+                        Éditer
+                    </a>
+                </div>
+                <div class="col-md-6 text-center py-2">
+                    <a href="/Admin/articleAdmin/delete?articleId={{ article.id }}" class="p-2 btn btn-danger">
+                        <span class="fas fa-trash-alt"></span>
+                        Supprimer
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+</div>
+{% endblock %}

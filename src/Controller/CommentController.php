@@ -28,12 +28,13 @@ class CommentController extends LoggedAbstractController
 
     /**
      * Action by default
-     * Show an comment
-     * @return mixed|void
+     * @throws CoreException
      */
     public function indexAction()
     {
-        $this->seeAction();
+        $this->renderView(
+            'formComment.html.twig'
+        );
     }
 
     /**

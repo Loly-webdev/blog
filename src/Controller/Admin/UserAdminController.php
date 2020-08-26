@@ -41,13 +41,11 @@ class UserAdminController extends LoggedAbstractController
         }
 
         $login = $user->getLogin();
-        $articles = (new ArticleRepository())->find();
 
         $this->renderView(
             'admin/dashboard.html.twig',
             [
                 'message' => "Ravi de te revoir $status $login !",
-                'articles' => $articles
             ]
         );
     }

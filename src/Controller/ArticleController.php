@@ -16,10 +16,7 @@ use Exception;
  */
 class ArticleController extends LoggedAbstractController
 {
-    use SeeControllerTrait,
-        AddControllerTrait,
-        EditControllerTrait,
-        DeleteControllerTrait;
+    use SeeControllerTrait;
 
     public static $entityLabel = "article";
 

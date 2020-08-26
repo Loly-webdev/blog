@@ -7,8 +7,10 @@
 <header>
     {{ include('back/admin/partial/_nav.html.twig') }}
 </header>
-<main class="m-4 p-2 text-center">
-    {% block content %}{% endblock %}
+<main id="space" class="m-4 p-2 container">
+        {{ include('back/admin/partial/_navLeft.html.twig') }}
+        {% block content %}{% endblock %}
+    </div>
 </main>
 <footer class="fixed-bottom bg-dark text-secondary">
     {{ include('back/admin/partial/_footerAdmin.html.twig') }}

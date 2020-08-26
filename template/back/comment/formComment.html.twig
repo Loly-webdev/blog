@@ -1,6 +1,6 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h3 class="mb-5">
+    <h3 class="mb-5 text-uppercase">
         <span class="fas fa-feather-alt"></span>
         Ecrire un nouveau commentaire :
     </h3>
@@ -8,19 +8,19 @@
         {% if status == true %}
             <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
         {% endif %}
-        <form action="" method="POST" class="p-3 starter-template rounded shadow">
+        <form action="" method="POST" class="p-4 starter-template rounded shadow">
             <div class="col">
                 <div class="form-group">
-                    <label for="author" class="text-secondary font-weight-bold">Auteur :</label>
+                    <label for="author" class="mt-3 mb-2 text-secondary font-weight-bold">Auteur :</label>
                     <input class="form-control" type="text" id="author" name="comment[author]"
                            placeholder="Auteur" value="{{ user.login }}" required/>
                 </div>
                 <div class="form-group">
-                    <label for="comment" class="text-secondary font-weight-bold">Commentaire :</label>
+                    <label for="comment" class="mt-3 mb-2 text-secondary font-weight-bold">Commentaire :</label>
                     <textarea class="form-control" id="comment" name="comment[content]" rows="5"
                               placeholder="Commentaire" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="p-2 mt-4 btn btn-success">
                     Envoyer
                     <span class="fas fa-share"></span>
                 </button>

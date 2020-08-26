@@ -49,6 +49,7 @@ nav img {
 
 /* SOCIAL */
 #more img {
+    min-width: 50px;
     width: 50px;
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -68,4 +69,9 @@ nav img {
 /*blog*/
 .panel-heading {
     width: 82%;
+}
+
+/* dashboard */
+#dashboard {
+    top: 50px;
 }
