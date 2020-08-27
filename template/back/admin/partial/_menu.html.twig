@@ -1,0 +1,42 @@
+<div class="dashboard mt-4 w-25 fixed-bottom flex-sm-row bg-dark">
+    <p class="mt-5 px-2">
+        <a class="h4 text-decoration-none" href="/Admin/userAdmin">
+            <span class="fas fa-tachometer-alt"></span>
+            Tableau de bord
+        </a>
+    </p>
+    <div class="h5 container flex-column panel-group rounded" id="accordion" role="tablist"
+         aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading m-auto"
+                 role="tab" id="headingOne">
+                <h5 class="panel-title">
+                    <a class="text-decoration-none text-light font-weight-bold" role="button"
+                       data-toggle="collapse"
+                       data-parent="#accordion" href="#collapseOne"
+                       aria-expanded="true" aria-controls="collapseOne">
+                        <span class="far fa-newspaper"></span>
+                        Blog
+                    </a>
+                </h5>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                 aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <p>
+                    <a class="text-decoration-none text-info" href="/Admin/articleAdmin">
+                        <span class="far fa-newspaper"></span>
+                        Voir les articles
+                    </a>
+                    </p>
+                    <p>
+                        <a class="text-decoration-none text-info" href="/Admin/articleAdmin/add">
+                            <span class="far fa-newspaper"></span>
+                            Ajouter un article
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
