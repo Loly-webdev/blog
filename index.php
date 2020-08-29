@@ -15,8 +15,7 @@ if ('dev' === PRJ_ENV) {
 use Core\Dispatcher;
 
 try {
-    $dispatcher = new Dispatcher();
-    $dispatcher->dispatch();
+    $dispatcher = (new Dispatcher())->dispatch();
 } catch (Throwable $t) {
     if ('dev' === PRJ_ENV) {
         $type    = $t->getCode();
@@ -24,7 +23,7 @@ try {
         $file    = $t->getFile();
         $line    = $t->getLine();
 
-        require_once('errors/template/errorsManagementView.php');
+        require_once('errors/template/errorsDev.php');
         exit;
     }
     require_once('errors/errorsPage.php');

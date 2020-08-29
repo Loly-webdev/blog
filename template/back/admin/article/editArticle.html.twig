@@ -1,0 +1,48 @@
+{% extends "back/layoutBack.html.twig" %}
+{% block content %}
+    <h3 class="mb-5">
+        <span class="far fa-newspaper"></span>
+        Modification de l'article : {{ article.title }}
+    </h3>
+    <div class="container mb-5">
+        {% if status == true %}
+            <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        {% endif %}
+        <form action="" method="POST" class="p-3 starter-template rounded shadow">
+            <div class="col">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="title" class="text-secondary font-weight-bold">Titre :</label>
+                        <input class="form-control" type="text" id="title" name="article[title]"
+                               value="{{ article.title }}" required/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="author" class="text-secondary font-weight-bold">Auteur :</label><br/>
+                        <input class="form-control" type="text" id="author" name="article[author]"
+                               value="{{ article.author }}" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hat" class="text-secondary font-weight-bold">Chapô :</label><br/>
+                    <textarea class="form-control" id="hat" name="article[hat]" rows="5"
+                              required>{{ article.hat }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content" class="text-secondary font-weight-bold">Article :</label><br/>
+                    <textarea class="form-control" id="content" name="article[content]" rows="9"
+                              required>{{ article.content }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Envoyer
+                    <span class="fas fa-share"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
+        <a href="/Admin/articleAdmin" class="btn btn-primary p-2 my-2">
+            <span class="fas fa-angle-double-left"></span>
+            Retour à la liste des billets
+        </a>
+    </div>
+{% endblock %}

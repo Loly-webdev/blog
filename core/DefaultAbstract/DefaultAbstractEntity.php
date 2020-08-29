@@ -15,14 +15,17 @@ abstract class DefaultAbstractEntity
 
     /**
      * Method to hydrate an object
+     *
      * @param array $params
+     *
      * @return DefaultAbstractEntity
      */
-    public function hydrate(array $params)
+    public function hydrate(array $params): DefaultAbstractEntity
     {
         foreach ($params as $key => $data) {
             // We retrieve the name of the setter corresponding to the class attribute.
             $method = 'set' . ucfirst($key);
+
             // If the corresponding setter exists, it is called up.
             if (method_exists($this, $method)) {
                 $this->$method($data);

@@ -12,7 +12,7 @@ use Core\DefaultAbstract\DefaultAbstractRepository;
  */
 class UserRepository extends DefaultAbstractRepository
 {
-    static $tableName = 'user';
+    public static $tableName = 'user';
 
     /**
      * @return string

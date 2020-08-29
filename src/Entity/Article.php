@@ -10,9 +10,10 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
  */
 class Article extends DefaultAbstractEntity
 {
-    protected $title;
-    protected $author;
-    protected $content;
+    protected $title = '';
+    protected $author = '';
+    protected $hat = '';
+    protected $content = '';
 
     /**
      * @return string
@@ -24,9 +25,10 @@ class Article extends DefaultAbstractEntity
 
     /**
      * @param string $title
+     *
      * @return Article
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): Article
     {
         $this->title = $title;
 
@@ -43,11 +45,32 @@ class Article extends DefaultAbstractEntity
 
     /**
      * @param string $author
+     *
      * @return Article
      */
-    public function setAuthor(string $author)
+    public function setAuthor(string $author): Article
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHat(): string
+    {
+        return $this->hat;
+    }
+
+    /**
+     * @param string $hat
+     *
+     * @return Article
+     */
+    public function setHat(string $hat): Article
+    {
+        $this->hat = $hat;
 
         return $this;
     }
@@ -62,9 +85,10 @@ class Article extends DefaultAbstractEntity
 
     /**
      * @param string $content
+     *
      * @return Article
      */
-    public function setContent(string $content)
+    public function setContent(string $content): Article
     {
         $this->content = $content;
 

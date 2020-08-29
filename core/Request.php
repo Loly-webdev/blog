@@ -38,7 +38,7 @@ final class Request
     public static function getInstance(): Request
     {
         if (!isset(self::$instance)) {
-            self::$instance = new self;
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -51,7 +51,7 @@ final class Request
     public function getUrlComponents(): array
     {
         $server = parse_url($_SERVER["REQUEST_URI"]);
-        $path = trim($server['path'], "/");
+        $path   = trim($server['path'], "/");
 
         return "" !== $path
             ? explode('/', $path)
@@ -60,19 +60,18 @@ final class Request
 
     /**
      * @param string $param
+     *
      * @return int
      */
     public function getParamAsInt(string $param): int
     {
-        $param = $this->getParam($param)
-            ? (int)$this->getParam($param)
-            : null;
+        $param = $this->getParam($param, false);
 
-        if (false === is_int($param)) {
-            throw new \LogicException("L'argument fournis n'est pas valide.");
+        if ($param === false) {
+            throw new \LogicException("L'argument fourni n'est pas valide.");
         }
 
-        return $param;
+        return (int)$param;
     }
 
     /**
@@ -80,13 +79,14 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
+     *
      * @return mixed|null
      */
     public function getParam($key, $defaultValue = null)
     {
         return $this->getQueryParam($key) ??
-            $this->getRequestParam($key) ??
-            $defaultValue;
+               $this->getRequestParam($key) ??
+               $defaultValue;
     }
 
     /**
@@ -94,6 +94,7 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
+     *
      * @return mixed|null
      */
     public function getQueryParam($key, $defaultValue = null)
@@ -108,6 +109,7 @@ final class Request
      *
      * @param      $key
      * @param null $defaultValue
+     *
      * @return mixed|null
      */
     public function getRequestParam($key, $defaultValue = null)

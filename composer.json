@@ -11,8 +11,8 @@
     "psr-4": {
       "App\\": "src/",
       "Config\\": "config/",
-      "Core\\":"core/",
-      "Errors\\":"errors/"
+      "Core\\": "core/",
+      "Errors\\": "errors/"
     }
   },
   "require": {
@@ -21,14 +21,17 @@
     "symfony/var-dumper": "^5.0",
     "ext-yaml": "*",
     "ext-dom": "*",
-    "twbs/bootstrap": "^4.5"
+    "twbs/bootstrap": "5.0.0-alpha1"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "phpstan/phpstan": "^0.12.19"
   },
   "scripts": {
     "post-install-cmd": [
-      "cp -R config/env.yml.sample config/env.yml"
+      "cp -R config/env.yml.sample config/env.yml",
+      "rm -rf public/ && mkdir public",
+      "cp -r src/public/* public"
     ]
   }
 }

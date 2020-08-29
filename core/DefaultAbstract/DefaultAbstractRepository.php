@@ -16,10 +16,10 @@ abstract class DefaultAbstractRepository
     use CUDRepositoryTrait,
         ReadRepositoryTrait;
 
-    static  $tablePk    = 'id';
-    static  $tableOrder = 'createdAt';
-    static  $tableName;
-    private $pdo;
+    public static $tablePk    = 'id';
+    public static $tableOrder = 'createdAt';
+    public static $tableName;
+    private       $pdo;
 
     /**
      * DefaultAbstractRepository constructor.
@@ -42,7 +42,7 @@ abstract class DefaultAbstractRepository
      * Get entity
      * @return string
      */
-    public abstract function getEntity(): string;
+    abstract public function getEntity(): string;
 
     /**
      * Select columns of BDD for drop-down lists
@@ -51,13 +51,12 @@ abstract class DefaultAbstractRepository
      *
      * @return array
      */
-    public function selectColumns(array $columns = [])
+    public function selectColumns(array $columns = []): array
     {
         $sql = 'SELECT ' . implode(', ', $columns)
                . ' FROM ' . static::$tableName;
 
-        $pdo = $this->getPDO()->prepare($sql);
-        $pdo->execute();
+        $pdo = $this->getPDO()->query($sql);
 
         return $pdo->fetchAll();
     }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {{ include('partial/_head.html.twig') }}
+</head>
+<body class="p-0 bg-light">
+<header>
+    {{ include('back/admin/partial/_nav.html.twig') }}
+</header>
+<main id="space" class="m-4 p-2 container">
+        {{ include('back/admin/partial/_navLeft.html.twig') }}
+        {% block content %}{% endblock %}
+    </div>
+</main>
+<footer class="fixed-bottom bg-dark text-secondary">
+    {{ include('back/admin/partial/_footerAdmin.html.twig') }}
+</footer>
+</body>
+</html>

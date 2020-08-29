@@ -24,9 +24,9 @@ abstract class FormValidatorAbstract
      */
     public function __construct()
     {
-        $this->formFields = $this->getFormFields();
+        $this->formFields           = $this->getFormFields();
         $this->formFieldsToValidate = $this->getFormFieldToValidate();
-        $this->submittedValues = Request::getInstance()->getParam($this->getFormName());
+        $this->submittedValues      = Request::getInstance()->getParam($this->getFormName());
 
         $formValues = [];
         foreach ($this->formFields as $field) {
@@ -43,7 +43,7 @@ abstract class FormValidatorAbstract
     /**
      * @return array
      */
-    abstract function getFormFields(): array;
+    abstract public function getFormFields(): array;
 
     /**
      * @return array
@@ -56,11 +56,12 @@ abstract class FormValidatorAbstract
     /**
      * @return string
      */
-    abstract function getFormName(): string;
+    abstract public function getFormName(): string;
 
     /**
-     * @param $key
+     * @param      $key
      * @param null $defaultValue
+     *
      * @return mixed|null
      */
     public function getFieldValue($key, $defaultValue = null)
@@ -74,7 +75,7 @@ abstract class FormValidatorAbstract
     public function isValid(): bool
     {
         $fieldsToValidate = $this->getFormFieldToValidate();
-        $formValues = $this->getFormValues();
+        $formValues       = $this->getFormValues();
 
         // We go through the required fields
         foreach ($fieldsToValidate as $fieldToValidate) {

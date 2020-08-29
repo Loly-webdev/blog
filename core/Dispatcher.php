@@ -33,7 +33,7 @@ class Dispatcher
      * @return Dispatcher
      * @throws CoreException
      */
-    public function dispatch()
+    public function dispatch(): Dispatcher
     {
         $controllerName = get_class($this->controller);
         $actionName     = $this->router->getActionName();

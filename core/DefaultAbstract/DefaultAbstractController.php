@@ -2,7 +2,7 @@
 
 namespace Core\DefaultAbstract;
 
-use App\Repository\UserRepository;
+use App\Service\SessionUserService;
 use Core\DefaultControllerInterface;
 use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
@@ -34,20 +34,53 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     }
 
     /**
-     * Method to see the views of the site
-     *
-     * @param string $viewName
-     * @param array $params
-     * @param string|null $viewFolder
-     *
+     * @return DefaultAbstractEntity|null
      * @throws CoreException
      */
-    public function renderView($viewName, array $params = [], string $viewFolder = null): void
+    public function getUserLogged(): ?DefaultAbstractEntity
+    {
+        // error 401
+        if (false === $this->isLogged()) {
+            throw new CoreException('Vous devez être authentifié pour accéder à cette page.');
+        }
+
+        $user = SessionUserService::getUserLogged();
+        // error 403
+        if (null === $user) {
+            throw new CoreException('L\'utilisateur n\'est pas reconnu.');
+        }
+
+        return $user;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLogged(): bool
+    {
+        return SessionUserService::hasLogged();
+    }
+
+    /**
+     * Method to see the views of the site
+     *
+     * @param string      $viewName
+     * @param array       $params
+     * @param string|null $viewFolder
+     *
+     * @return void
+     * @throws CoreException
+     */
+    public function renderView(
+        string $viewName,
+        array $params = [],
+        string $viewFolder = null
+    ): void
     {
         $defaultPath = VIEW_ROOT;
-        $viewFolder = $viewFolder ?? $this->getFolderView();
-        $view = (new TwigProvider())->getTwig()
-            ->render($viewFolder . $viewName, $params);
+        $viewFolder  = $viewFolder ?? $this->getFolderView();
+        $view        = TwigProvider::getTwig()
+                                   ->render($viewFolder . $viewName, $params);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
@@ -70,16 +103,9 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
      *
      * @param string $route
      */
-    public function redirectTo(string $route)
+    public function redirectTo(string $route): void
     {
         header('Location: /' . $route);
         exit();
-    }
-
-    public function getUserLogged(): DefaultAbstractEntity
-    {
-        $userId = $_SESSION['id'];
-
-        return (new UserRepository())->findOneById($userId);
     }
 }

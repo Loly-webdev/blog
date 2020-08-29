@@ -11,10 +11,10 @@ you can check requirements on :
 
 ## Add vhost
 
-- On apache:  
-.htaccess file is versionned on project
+- On Apache:  
+.htaccess file is versioned on project
 
-- On nginx:  
+- On Nginx:  
 [vhost example](https://github.com/Loly-webdev/Ressources/blob/master/vhost_nginx.md)
 
 ## Install yaml

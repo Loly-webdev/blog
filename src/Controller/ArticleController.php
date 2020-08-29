@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Controller\FormValidator\FormArticleValidator;
 use App\Entity\Article;
 use App\Repository\{ArticleRepository, CommentRepository};
 use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
-use Core\Traits\Controller\{AddControllerTrait, CUDControllerTrait};
+use Core\Exception\CoreException;
+use Core\Traits\Controller\{AddControllerTrait, DeleteControllerTrait, EditControllerTrait, SeeControllerTrait};
 use Exception;
 
 /**
@@ -14,8 +16,9 @@ use Exception;
  */
 class ArticleController extends LoggedAbstractController
 {
-    use CUDControllerTrait,
-        AddControllerTrait;
+    use SeeControllerTrait;
+
+    public static $entityLabel = "article";
 
     /**
      * Action by default
@@ -30,8 +33,8 @@ class ArticleController extends LoggedAbstractController
         $this->renderView(
             '/article/articles.html.twig',
             [
-                'title' => 'Derniers billets du blog :',
-                'articles' => $articles
+                'articles' => $articles,
+                'page' => 'article'
             ]
         );
     }
@@ -52,14 +55,15 @@ class ArticleController extends LoggedAbstractController
     }
 
     /**
-     * @param array|mixed[] $data
+     * @param array|mixed[]         $data
      * @param DefaultAbstractEntity $entity
+     *
      * @return array|mixed[]
      */
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
         $data['comments'] = $comments;
 
         return $data;
@@ -73,12 +77,25 @@ class ArticleController extends LoggedAbstractController
     public function getAddParam(): array
     {
         return [
-            'article',
-            'article',
+            new FormArticleValidator(),
             new Article(),
             new ArticleRepository(),
-            'article/formArticle.html.twig'
+            'admin/article/formArticle.html.twig'
         ];
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     * @throws CoreException
+     */
+    public function prePost(array $data): array
+    {
+        $user         = $this->getUserLogged();
+        $data['user'] = $user;
+
+        return $data;
     }
 
     /**
@@ -106,7 +123,6 @@ class ArticleController extends LoggedAbstractController
         return [
             new ArticleRepository(),
             'articleId',
-            'article',
             'article/formArticle.html.twig'
         ];
     }

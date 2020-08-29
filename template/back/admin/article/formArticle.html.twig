@@ -1,0 +1,48 @@
+{% extends "back/admin/layoutAdmin.html.twig" %}
+{% block content %}
+    <h3 class="mb-5">
+        <span class="fas fa-feather-alt"></span>
+        Ecrire un nouvel article :
+    </h3>
+    <div class="container mb-5">
+        {% if status == true %}
+            <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        {% endif %}
+        <form action="" method="POST" class="p-3 starter-template rounded shadow">
+            <div class="col">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="title" class="text-secondary font-weight-bold">Titre :</label>
+                        <input class="form-control" type="text" id="title" name="article[title]"
+                               placeholder="Titre" required/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="author" class="text-secondary font-weight-bold">Auteur :</label>
+                        <input class="form-control" type="text" id="author" name="article[author]"
+                               placeholder="Auteur" value="{{ user.login }}" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hat" class="text-secondary font-weight-bold">Chapô :</label>
+                    <textarea class="form-control" id="hat" name="article[hat]" rows="5"
+                              placeholder="Chapô" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content" class="text-secondary font-weight-bold">Article :</label>
+                    <textarea class="form-control" id="content" name="article[content]" rows="9"
+                              placeholder="Article" required></textarea>
+                </div>
+                <button type="submit" class="p-2 btn btn-primary">
+                    Envoyer
+                    <span class="fas fa-share"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
+        <a href="../../../../index.php" class="btn btn-primary p-2 my-2">
+            <span class="fas fa-angle-double-left"></span>
+            Retour à la liste des billets</a>
+    </div>
+{% endblock %}
+

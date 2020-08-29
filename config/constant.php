@@ -1,9 +1,10 @@
 <?php
 
-define('PRJ_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
-define('CONF_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
-define('CORE_ROOT', PRJ_ROOT . 'core' . DIRECTORY_SEPARATOR);
-define('VIEW_ROOT', PRJ_ROOT . 'template' . DIRECTORY_SEPARATOR);
+define('DS', DIRECTORY_SEPARATOR);
+define('PRJ_ROOT', __DIR__ . DS . '..' . DS);
+define('CONF_ROOT', __DIR__ . DS);
+define('CORE_ROOT', PRJ_ROOT . 'core' . DS);
+define('VIEW_ROOT', PRJ_ROOT . 'template' . DS);
 
 use Core\Provider\ConfigurationProvider;
 

@@ -1,22 +1,4 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <h2>{{ title }}</h2>
-    {% for article in articles %}
-        <section class="article">
-            <h3>{{ article.title }}</h3>
-            <em>
-                Créer le : {{ article.createdAt }}<br>
-                Dernière mise à jour : {{ article.updatedAt }}
-            </em>
-            <p>
-                {{ article.content }}
-            </p>
-            <div class="link">
-                <a href="/article/see?articleId={{ article.id }}">Voir les commentaires associés</a>
-            </div>
-        </section>
-    {% endfor %}
-    <section class="link">
-        <a href="/article/add">Ajouter un nouvel article</a>
-    </section>
+    {{ include('partial/_article.html.twig') }}
 {% endblock %}

@@ -12,7 +12,7 @@ use PDOException;
  */
 class PDOProvider
 {
-    private static $cnx = null;
+    private static $cnx;
 
     /**
      * Connexion with the BDD
@@ -23,7 +23,7 @@ class PDOProvider
     {
         $driverOptions = [
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ];
 

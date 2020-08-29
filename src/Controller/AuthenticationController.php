@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
+use App\Controller\FormValidator\FormAuthenticationValidator;
 use App\Entity\User;
-use App\Repository\UserRepository;
-use App\utils\Helper;
+use App\Service\AccountService;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Core\DefaultAbstract\DefaultAbstractEntity;
-use Core\Provider\ConfigurationProvider;
-use Exception;
+use Core\Exception\CoreException;
+use Core\Session;
 
 /**
  * Class AuthenticationController
@@ -18,7 +17,7 @@ class AuthenticationController extends DefaultAbstractController
 {
     /**
      * Action by default
-     * @throws Exception
+     * @throws CoreException
      */
     public function indexAction()
     {
@@ -28,8 +27,7 @@ class AuthenticationController extends DefaultAbstractController
     }
 
     /**
-     * User login
-     * @throws Exception
+     * @throws CoreException
      */
     public function loginAction(): void
     {
@@ -37,57 +35,36 @@ class AuthenticationController extends DefaultAbstractController
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
-            if (null !== $user = $this->retrieveAccount($formValidator->getFormValues())) {
+            if (null !== $user = AccountService::retrieveAccount($formValidator->getFormValues())) {
                 assert($user instanceof User);
                 $this->addUserInSession($user);
 
                 // Redirect to userAdminController
-                $this->redirectTo('Admin/userAdmin');
+                $this->redirectTo('user');
             }
 
-            $status = "danger";
+            $status  = "danger";
             $message = "Echec de l'authentification";
         }
 
         $this->renderView(
             'formAuthentication.html.twig',
             [
-                'status' => $status ?? '',
-                'message' => $message ?? ''
+                'status'        => $status ?? '',
+                'statusMessage' => $message ?? ''
             ]
         );
     }
 
     /**
-     * @param mixed $params
-     *
-     * @return DefaultAbstractEntity
-     */
-    private function retrieveAccount($params): ?DefaultAbstractEntity
-    {
-        $login = $params['login'];
-
-        $user = (new UserRepository())->findOne(['login' => $login]);
-
-        // Check if $user is an instance of User class
-        assert($user instanceof User);
-
-        if (empty($user)) {
-            return null;
-        }
-        $accountIsValid = Helper::checkPassword($params['password'], $user->getPassword());
-
-        return $accountIsValid ? $user : null;
-    }
-
-    /**
      * @param User $user
+     *
      * @return void
      */
     private function addUserInSession(User $user): void
     {
-        $_SESSION['logged'] = true;
-        $_SESSION['id'] = $user->getId();
+        Session::setValue('logged', true);
+        Session::setValue('id', $user->getId());
     }
 
     /**
@@ -96,9 +73,7 @@ class AuthenticationController extends DefaultAbstractController
      */
     public function logoutAction(): void
     {
-        session_unset();
-        session_destroy();
-
+        Session::destroy();
         $this->redirectTo('home');
     }
 }

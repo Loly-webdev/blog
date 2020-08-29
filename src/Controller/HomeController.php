@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Core\DefaultAbstract\DefaultAbstractController;
-use Exception;
+use Core\Exception\CoreException;
 
 /**
  * Class HomeController
@@ -15,12 +16,14 @@ class HomeController extends DefaultAbstractController
      * Action by default
      * Show Home page
      * @return mixed|void
-     * @throws Exception
+     * @throws CoreException
      */
     public function indexAction()
     {
-        if (isset($_SESSION['logged']) === true) {
-            $this->redirectTo('Admin/userAdmin');
+        if ($this->isLogged()) {
+            $user = $this->getUserLogged();
+            assert($user instanceof User);
+            $this->redirectTo('user');
         }
 
         $this->renderView(

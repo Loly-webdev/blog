@@ -3,7 +3,7 @@
 namespace Core\Traits\Controller;
 
 use App\Service\Message;
-use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository};
+use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository, FormValidatorAbstract};
 use LogicException;
 
 /**
@@ -30,65 +30,68 @@ trait AddControllerTrait
     /**
      * Method to add entity
      *
-     * @param string $entityLabel
-     * @param string $entityName
-     * @param DefaultAbstractEntity $entityClass
+     * @param FormValidatorAbstract     $formValidator
+     * @param DefaultAbstractEntity     $entityClass
      * @param DefaultAbstractRepository $repository
-     * @param string $viewTemplate
+     * @param string                    $viewTemplate
      */
     protected function addEntity(
-        string $entityLabel,
-        string $entityName,
+        FormValidatorAbstract $formValidator,
         DefaultAbstractEntity $entityClass,
         DefaultAbstractRepository $repository,
         string $viewTemplate
     ): void
     {
-        $formSubmitted = $this->getRequest()->getParam($entityName);
-        if (isset($formSubmitted)) {
-            $entity = $entityClass->hydrate($formSubmitted);
-            $this->checkForm($formSubmitted, $entityClass);
-            $status = self::statusMessage($repository, $entity, $entityLabel);
+        $formSubmitted = $formValidator;
+        if ($formSubmitted->isSubmitted() && $formSubmitted->isValid()) {
+            $formSubmitted = $formSubmitted->getFormValues();
+            $entity        = $entityClass->hydrate($formSubmitted);
+            $this->checkForm($entityClass);
+            $status = static::statusMessage($repository, $entity);
         }
+
+        $data = [
+            'status'        => $status['status'] ?? '',
+            'statusMessage' => $status['statusMessage'] ?? ''
+        ];
+
+        if (method_exists($this, 'prePost')) {
+            $data = $this->prePost($data);
+        }
+
         $this->renderView(
             $viewTemplate,
-            [
-                'status' => $status['status'] ?? '',
-                'statusMessage' => $status['statusMessage'] ?? ''
-            ]
+            $data
         );
     }
 
     /**
-     * @param $formSubmitted
      * @param $entity
+     *
+     * @return void
      */
-    public function checkForm($formSubmitted, $entity)
+    public function checkForm($entity): void
     {
-        if (false === is_array($formSubmitted)) {
-            throw new LogicException('Un formulaire doit être passer en tableau.');
-        }
-
         if (method_exists($this, 'postHydrate')) {
             $this->postHydrate($entity);
         }
 
         if ($entity->hasId()) {
-            throw new LogicException("L'id ne devrait pas exister.");
+            throw new LogicException('L\'id ne devrait pas exister.');
         }
     }
 
     /**
      * @param $repository
      * @param $entity
-     * @param string $entityLabel
+     *
      * @return array
      */
-    static public function statusMessage($repository, $entity, string $entityLabel): array
+    public static function statusMessage($repository, $entity): array
     {
         return Message::getMessage(
             $repository->insert($entity),
-            "Votre $entityLabel à bien était enregistré !",
+            'Votre ' . static::$entityLabel . ' à bien était enregistré !',
             'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
         );
     }

@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Controller\FormValidator\FormCommentValidator;
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
+use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
-use Core\Traits\Controller\CUDControllerTrait;
+use Core\Traits\Controller\DeleteControllerTrait;
+use Core\Traits\Controller\EditControllerTrait;
+use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
 /**
@@ -15,17 +19,22 @@ use Exception;
  */
 class CommentController extends LoggedAbstractController
 {
-    use CUDControllerTrait,
-        AddControllerTrait;
+    use SeeControllerTrait,
+        AddControllerTrait,
+        EditControllerTrait,
+        DeleteControllerTrait;
+
+    public static $entityLabel = "commentaire";
 
     /**
      * Action by default
-     * Show an comment
-     * @return mixed|void
+     * @throws CoreException
      */
     public function indexAction()
     {
-        $this->seeAction();
+        $this->renderView(
+            'formComment.html.twig'
+        );
     }
 
     /**
@@ -51,8 +60,7 @@ class CommentController extends LoggedAbstractController
     public function getAddParam(): array
     {
         return [
-            'commentaire',
-            'comment',
+            new FormCommentValidator(),
             new Comment(),
             new CommentRepository(),
             'comment/formComment.html.twig'
@@ -60,7 +68,22 @@ class CommentController extends LoggedAbstractController
     }
 
     /**
+     * @param array $data
+     *
+     * @return array
+     * @throws CoreException
+     */
+    public function prePost(array $data): array
+    {
+        $user         = $this->getUserLogged();
+        $data['user'] = $user;
+
+        return $data;
+    }
+
+    /**
      * @param Comment $entity
+     *
      * @return void
      */
     public function postHydrate($entity): void
@@ -95,7 +118,6 @@ class CommentController extends LoggedAbstractController
         return [
             new CommentRepository(),
             'commentId',
-            'commentaire',
             'comment/formComment.html.twig'
         ];
     }

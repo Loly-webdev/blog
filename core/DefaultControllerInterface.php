@@ -17,13 +17,13 @@ interface DefaultControllerInterface
     /**
      * Template Method
      *
-     * @param string $viewName
-     * @param array $params
+     * @param string      $viewName
+     * @param array       $params
      * @param string|null $viewFolder
      */
     public function renderView(
         string $viewName,
-        array  $params,
+        array $params,
         string $viewFolder = null
     ): void;
 

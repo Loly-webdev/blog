@@ -4,10 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Controller\RegisterController;
 use App\Entity\User;
+use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
-use Core\Traits\Controller\CUDControllerTrait;
+use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
 /**
@@ -16,7 +17,12 @@ use Exception;
  */
 class UserAdminController extends LoggedAbstractController
 {
-    use CUDControllerTrait;
+    use SeeControllerTrait;
+
+    /**
+     * @var string
+     */
+    public static $entityLabel = "profil";
 
     /**
      * Action by default
@@ -26,19 +32,20 @@ class UserAdminController extends LoggedAbstractController
      */
     public function indexAction()
     {
-        if (null === $this->getUserLogged()) {
-            throw new CoreException('Vous n\'etes pas authentifié.');
-        }
-
         $user = $this->getUserLogged();
         assert($user instanceof User);
         $status = $user->getRoleLabel();
+
+        if ($status !== 'Administrateur') {
+            $this->redirectTo('home');
+        }
+
         $login = $user->getLogin();
 
         $this->renderView(
-            'homeBack.html.twig',
+            'admin/dashboard.html.twig',
             [
-                'message' => "Ravi de te revoir $status $login !"
+                'message' => "Ravi de te revoir $status $login !",
             ]
         );
     }
@@ -84,7 +91,6 @@ class UserAdminController extends LoggedAbstractController
         return [
             new UserRepository(),
             'userId',
-            (new User())->getRoleLabel(),
             'formRegister.html.twig',
         ];
     }
@@ -93,15 +99,12 @@ class UserAdminController extends LoggedAbstractController
      * @return void
      * @throws CoreException
      */
-    public function profileAction()
+    public function profileAction(): void
     {
-        $userId = $_SESSION['id'];
-        $user = (new UserRepository())->findOneById($userId);
-
         $this->renderView(
             'profile/profile.html.twig',
             [
-                'user' => $user
+                'user' => $this->getUserLogged()
             ]
         );
     }

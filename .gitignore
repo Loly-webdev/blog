@@ -3,4 +3,4 @@ composer.phar
 .idea
 config/env.yml
 vendor/
-
+public/

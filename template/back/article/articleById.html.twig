@@ -1,39 +1,18 @@
 {% extends "back/layoutBack.html.twig" %}
 {% block content %}
-    <section class="article">
-        <h2>{{ title }}</h2>
-        <h4>{{ article.author }}</h4>
-        <em>
-            Créer le : {{ article.createdAt }}<br>
-            Dernière mise à jour : {{ article.updatedAt }}
-        </em>
-        <p>
-            {{ article.content }}
-        </p>
-        <div>
-            <a href="/article/edit?articleId={{ article.id }}">Éditer</a>
-            <a href="/article/delete?articleId={{ article.id }}">Supprimer</a>
+    {{ include('partial/_articleById.html.twig') }}
+    <div class="row d-flex p-3 mt-4 mb-5 mx-auto w-75 border-top border-bottom border-info">
+        <div class="col-md-6 text-center py-2">
+            <a href="/comment/add?articleId={{ article.id }}" class="p-2 btn btn-info">
+                <span class="fas fa-feather-alt"></span>
+                Écrire un nouveau commetaire
+            </a>
         </div>
-    </section>
-    <section class="comment">
-        <h3>Commentaires :</h3>
-        {% for comment in comments %}
-            <strong>{{ comment.author }}</strong>
-            <br>
-            <em>
-                Créer le : {{ comment.createdAt }}<br>
-                Dernière mise à jour : {{ comment.updatedAt }}
-            </em>
-            <p>{{ comment.content }}</p>
-            <div>
-                <a href="/comment/see?commentId={{ comment.id }}">Voir le commentaire</a>
-            </div>
-        {% endfor %}
-    </section>
-    <section class="link">
-        <a href="/comment/add?articleId={{ article.id }}">Ajouter un nouveau commetaire</a>
-    </section>
-    <section class="link">
-        <a href="/article">Retour à la liste des billets</a>
-    </section>
+        <div class="col-md-6 text-center py-2">
+            <a href="/article" class="p-2 btn btn-primary">
+                <span class="fas fa-angle-double-left"></span>
+                Retour à la liste des billets
+            </a>
+        </div>
+    </div>
 {% endblock %}

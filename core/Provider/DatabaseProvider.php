@@ -25,8 +25,8 @@ class DatabaseProvider
      */
     public function __construct($databaseKey = 'default')
     {
-        $config = ConfigurationProvider::getInstance();
-        $databases = $config->getDatabaseConfig();
+        $config    = ConfigurationProvider::getInstance();
+        $databases = $config::getDatabaseConfig();
         if ($databases === null) {
             throw new CoreException('Désolé, nous ne trouvons pas les informations de configuration pour la base de données.');
         }
@@ -36,10 +36,10 @@ class DatabaseProvider
             throw new CoreException("Désolé, La clée pour la base de données $databaseKey n'existe pas.");
         }
 
-        $this->driver = $default['driver'] ?? null;
-        $this->host = $default['host'] ?? null;
+        $this->driver   = $default['driver'] ?? null;
+        $this->host     = $default['host'] ?? null;
         $this->database = $default['name'] ?? null;
-        $this->user = $default['user'] ?? null;
+        $this->user     = $default['user'] ?? null;
         $this->password = $default['password'] ?? null;
     }
 

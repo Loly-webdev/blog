@@ -6,19 +6,37 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse justify-content-end text-uppercase" id="navbarSupportedContent">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="/home">
+            <li id="userAdmin" class="nav-item">
+                <a class="nav-link" href="/home">
                     <i class="fas fa-home" style="font-size:20px"></i>
                     <span class="sr-only">(current)</span>
                     Accueil
                 </a>
             </li>
-            <li><a class="nav-link" href="/article">Blog</a></li>
-            <li><a class="nav-link" href="/contact">Contact</a></li>
-            <li><a class="nav-link" href="/Admin/userAdmin/profile">Profil</a></li>
-            <li><a class="nav-link" href="/authentication/logout">Deconnexion</a></li>
+            <li id="article" class="nav-item">
+                <a class="nav-link" href="/article">
+                    <span class="far fa-newspaper"></span>
+                    Blog
+                </a>
+            </li>
+            <li id="contact" class="nav-item">
+                <a class="nav-link" href="/contact">
+                    <span class="fas fa-envelope-open-text"></span>
+                    Contact
+                </a>
+            </li>
+            <li id="profile" class="nav-item">
+                <a class="nav-link" href="/user/profile">
+                    <span class="fas fa-user"></span>
+                    Profil
+                </a>
+            </li>
+            <li><a class="nav-link" href="/authentication/logout">
+                    <span class="fas fa-power-off"></span>
+                    Deconnexion
+                </a></li>
         </ul>
     </div>
 </nav>

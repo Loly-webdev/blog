@@ -33,7 +33,7 @@ class ConfigurationProvider
      * Singleton of request object to load once this method
      * @return ConfigurationProvider
      */
-    public static function getInstance()
+    public static function getInstance(): ConfigurationProvider
     {
         if (!isset(self::$instance)) {
             self::$instance = new self;
@@ -45,7 +45,7 @@ class ConfigurationProvider
     /**
      * @return array
      */
-    static function getTwigConfig(): array
+    public static function getTwigConfig(): array
     {
         return static::$config['twig'] ?? [];
     }
@@ -71,7 +71,7 @@ class ConfigurationProvider
     /**
      * @return array
      */
-    static function getDatabaseConfig(): array
+    public static function getDatabaseConfig(): array
     {
         return static::$config['databases'] ?? [];
     }

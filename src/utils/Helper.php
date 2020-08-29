@@ -12,6 +12,7 @@ class Helper
 {
     /**
      * @param string $text
+     *
      * @return string
      */
     public static function secureText(string $text = ''): string
@@ -21,18 +22,20 @@ class Helper
 
     /**
      * @param string $email
-     * @return bool
+     *
+     * @return mixed
      */
-    public static function checkEmail(string $email): bool
+    public static function checkEmail(string $email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
      * @param string $password
-     * @return string
+     *
+     * @return false|string|null
      */
-    static function encodePassword(string $password): string
+    public static function encodePassword(string $password)
     {
         $salt = ConfigurationProvider::getInstance()->getSalt();
 
@@ -42,6 +45,7 @@ class Helper
     /**
      * @param string $passwordSubmitted
      * @param string $passwordUser
+     *
      * @return bool
      */
     public static function checkPassword(
