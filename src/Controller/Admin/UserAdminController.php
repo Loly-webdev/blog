@@ -2,13 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\FormValidator\FormRegisterValidator;
 use App\Controller\RegisterController;
 use App\Entity\User;
-use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
-use Core\Traits\Controller\SeeControllerTrait;
+use Core\Traits\Controller\AddControllerTrait;
+use Core\Traits\Controller\DeleteControllerTrait;
+use Core\Traits\Controller\EditControllerTrait;
 use Exception;
 
 /**
@@ -17,7 +20,9 @@ use Exception;
  */
 class UserAdminController extends LoggedAbstractController
 {
-    use SeeControllerTrait;
+    use AddControllerTrait,
+        EditControllerTrait,
+        DeleteControllerTrait;
 
     /**
      * @var string
@@ -41,28 +46,15 @@ class UserAdminController extends LoggedAbstractController
         }
 
         $login = $user->getLogin();
+        $comments = (new CommentRepository())->find();
 
         $this->renderView(
             'admin/dashboard.html.twig',
             [
                 'message' => "Ravi de te revoir $status $login !",
+                'comments' => $comments
             ]
         );
-    }
-
-    /**
-     * Give params to seeAction
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getSeeParam(): array
-    {
-        return [
-            'userId',
-            'user',
-            new UserRepository(),
-            'profile/profile.html.twig'
-        ];
     }
 
     /**
@@ -76,7 +68,7 @@ class UserAdminController extends LoggedAbstractController
             'userId',
             new UserRepository(),
             'user',
-            'profile/editProfile.html.twig'
+            'admin/user/editProfile.html.twig'
         ];
     }
 
@@ -91,7 +83,7 @@ class UserAdminController extends LoggedAbstractController
         return [
             new UserRepository(),
             'userId',
-            'formRegister.html.twig',
+            'admin/user/formUser.html.twig',
         ];
     }
 
@@ -101,11 +93,26 @@ class UserAdminController extends LoggedAbstractController
      */
     public function profileAction(): void
     {
+        $users = (new UserRepository())->find();
+
         $this->renderView(
-            'profile/profile.html.twig',
+            'admin/user/users.html.twig',
             [
-                'user' => $this->getUserLogged()
+                'users' => $users
             ]
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getAddParam(): array
+    {
+        return [
+            new FormRegisterValidator(),
+            new User(),
+            new UserRepository(),
+            'admin/user/formUser.html.twig'
+        ];
     }
 }

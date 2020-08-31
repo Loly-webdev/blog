@@ -8,8 +8,6 @@ use App\Repository\CommentRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
-use Core\Traits\Controller\DeleteControllerTrait;
-use Core\Traits\Controller\EditControllerTrait;
 use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
@@ -20,9 +18,7 @@ use Exception;
 class CommentController extends LoggedAbstractController
 {
     use SeeControllerTrait,
-        AddControllerTrait,
-        EditControllerTrait,
-        DeleteControllerTrait;
+        AddControllerTrait;
 
     public static $entityLabel = "commentaire";
 
@@ -48,7 +44,7 @@ class CommentController extends LoggedAbstractController
             'commentId',
             'comment',
             new CommentRepository(),
-            'comment/comment.html.twig'
+            'comment/comments.html.twig'
         ];
     }
 
@@ -86,39 +82,10 @@ class CommentController extends LoggedAbstractController
      *
      * @return void
      */
-    public function postHydrate($entity): void
+    public function postHydrate(Comment $entity): void
     {
         $entity->setArticleId(
             $this->getRequest()->getParamAsInt('articleId')
         );
-    }
-
-    /**
-     * Give params to edit Action
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getEditParam(): array
-    {
-        return [
-            'commentId',
-            new CommentRepository(),
-            'comment',
-            'comment/editComment.html.twig'
-        ];
-    }
-
-    /**
-     * Give params to deleteAction
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getDeleteParam(): array
-    {
-        return [
-            new CommentRepository(),
-            'commentId',
-            'comment/formComment.html.twig'
-        ];
     }
 }

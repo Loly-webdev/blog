@@ -2,7 +2,7 @@
 {% block content %}
     <div class="px-5 pt-3 mb-3 col-9 mx-auto text-center">
         <h3 class="mb-5 text-uppercase">
-            <span class="far fa-newspaper"></span>
+            <span class="fas fa-users"></span>
             liste des Utilisateurs :
         </h3>
         <div class=" p-3 table-responsive rounded bg-blue shadow">
@@ -33,12 +33,12 @@
                             <div class="row d-flex p-2 my-2 mx-auto">
                                 <a href="/Admin/userAdmin/edit?userId={{ user.id }}"
                                    class="p-2 btn btn-info">
-                                    <span class="fas fa-edit"></span>
+                                    <span class="fas fa-user-edit"></span>
                                     Éditer
                                 </a>
                                 <a href="/Admin/userAdmin/delete?userId={{ user.id }}"
                                    class="p-2 btn btn-danger">
-                                    <span class="fas fa-trash-alt"></span>
+                                    <span class="fas fa-user-slash"></span>
                                     Supprimer
                                 </a>
                             </div>
@@ -49,7 +49,7 @@
             </table>
         </div>
         <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
-            <a href="/Admin/articleAdmin/add" class="p-2 btn btn-primary">
+            <a href="/Admin/userAdmin/add" class="p-2 btn btn-primary">
                 <span class="fas fa-user-plus"></span>
                 Ajouter un utilisateur
             </a>

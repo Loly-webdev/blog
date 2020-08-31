@@ -2,6 +2,9 @@
     <img class="mb-4 h-auto shadow" alt="Eloïse RUIZ-RODRIGUEZ" src="/public/images/profile.png">
     <p class="h4 mb-4 text-info">
         {{ message }}
+        {% if messageError != null %}
+            {{ messageError }}
+        {% endif %}
     </p>
     <div class="mb-4 p-4 rounded bg-blue shadow">
         <h1 class="h2">Eloïse RUIZ-RODRIGUEZ</h1>
@@ -36,9 +39,9 @@
                     Suivez-moi :
                 </h2>
                 <div class="row p-2 d-flex justify-content-center">
-                    <a class="col-md-2" href="https://www.linkedin.com/in/eloïse-ruiz-rodriguez" target="_blank">
+                    <a class="col-md-2 mx-1" href="https://www.linkedin.com/in/eloïse-ruiz-rodriguez" target="_blank">
                         <img class="my-2" alt="icone linkedin" src="/public/images/ico_in.png"></a>
-                    <a class="col-md-2" href="https://github.com/Loly-webdev" target="_blank">
+                    <a class="col-md-2 mx-1" href="https://github.com/Loly-webdev" target="_blank">
                         <img class="my-2" alt="icone github" src="/public/images/ico_git.png"></a>
                 </div>
             </div>

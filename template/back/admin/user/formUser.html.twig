@@ -1,0 +1,33 @@
+{% extends "back/admin/layoutAdmin.html.twig" %}
+{% block content %}
+    <div class="px-5 py-3 mb-3 col-9 mx-auto text-center">
+        <h3 class="mb-5 text-uppercase">
+            <span class="fas fa-user-plus"></span>
+            Ajouter un nouvel utilisateur :
+        </h3>
+        {% if status == true %}
+            <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        {% endif %}
+        <form action="/Admin/userAdmin/add" method="POST" class="p-4 starter-template rounded shadow">
+                <div class="col">
+                    {{ include('partial/_formRegister.html.twig') }}
+                    <div class="form-group">
+                        <label for="role" class="mt-3 mb-2 text-secondary font-weight-bold">Role
+                            :</label>
+                        <input class="form-control" id="role" name="user[role]" type="text"
+                               placeholder="Admin ou User" required/>
+                    </div>
+                    <button type="submit" class="p-2 mt-4 btn btn-success">
+                        Envoyer
+                        <span class="fas fa-share"></span>
+                    </button>
+                </div>
+            </form>
+        <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
+            <a href="/Admin/userAdmin/profile" class="p-2 btn btn-primary">
+                <span class="fas fa-angle-double-left"></span>
+                Retour à la liste des utilisateurs
+            </a>
+        </div>
+    </div>
+{% endblock %}

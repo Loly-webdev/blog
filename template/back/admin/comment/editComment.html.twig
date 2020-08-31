@@ -1,38 +1,48 @@
-{% extends "back/layoutBack.html.twig" %}
+{% extends "back/admin/layoutAdmin.html.twig" %}
 {% block content %}
-    <h3 class="mb-5">
-        <span class="far fa-newspaper"></span>
-        Modification du commentaire n°{{ comment.id }}
-    </h3>
-    <div class="container mb-5">
+    <div class="px-5 pt-3 mb-3 col-9 mx-auto text-center">
+        <h3 class="mb-5 text-uppercase">
+            <span class="far fa-newspaper"></span>
+            Modification du commentaire n°{{ comment.id }}
+        </h3>
         {% if status == true %}
             <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
         {% endif %}
-        <form action="" method="POST" class="p-3 starter-template rounded shadow">
+        <form action="" method="POST" class="p-4 starter-template rounded shadow">
             <div class="col">
                 <div class="form-group">
-                    <label for="author" class="text-secondary font-weight-bold">Auteur :</label><br/>
+                    <label for="author" class="mt-3 mb-2 text-secondary font-weight-bold">Auteur :</label><br/>
                     <input class="form-control" type="text" id="author" name="comment[author]"
                            value="{{ comment.author }}" required/>
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <label for="content" class="text-secondary font-weight-bold">Article :</label><br/>
+                    <label for="content" class="mt-3 mb-2 text-secondary font-weight-bold">Article :</label><br/>
                     <textarea class="form-control" id="content" name="comment[content]"
                               required>{{ comment.content }}</textarea>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <div class="row text-left mt-4 mb-2 mx-auto">
+                <div class="form-check">
+                    <input type="checkbox" id="approved" name="comment[approved]" class="form-check-input" value="oui">
+                    <label class="form-check-label text-success font-weight-bold h5" for="approved">Approuvé</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="refused" name="comment[approved]" class="form-check-input" value="non">
+                    <label class="form-check-label text-danger font-weight-bold h5" for="refused">Refusé</label>
+                </div>
+            </div>
+            <button type="submit" class="mt-3 mb-2 btn btn-success">
                 Envoyer
                 <span class="fas fa-share"></span>
             </button>
         </form>
-    </div>
-    <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
-        <a href="../../../../index.php" class="btn btn-primary p-2 my-2">
-            <span class="fas fa-angle-double-left"></span>
-            Retour à la liste des billets
-        </a>
+        <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
+            <a href="/Admin/commentAdmin" class="btn btn-primary p-2 my-2">
+                <span class="fas fa-angle-double-left"></span>
+                Retour à la liste des commentaires
+            </a>
+        </div>
     </div>
 {% endblock %}

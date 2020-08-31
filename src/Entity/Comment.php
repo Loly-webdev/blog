@@ -5,7 +5,7 @@ namespace App\Entity;
 use Core\DefaultAbstract\DefaultAbstractEntity;
 
 /**
- * Class Comment
+ * Class comment
  * @package App\Entity
  */
 class Comment extends DefaultAbstractEntity
@@ -14,6 +14,27 @@ class Comment extends DefaultAbstractEntity
     protected $author;
     protected $content;
     protected $articleId;
+    protected $approved = 'non';
+
+    /**
+     * @return string
+     */
+    public function getApproved(): string
+    {
+        return $this->approved;
+    }
+
+    /**
+     * @param string $approved
+     *
+     * @return Comment
+     */
+    public function setApproved(string $approved): Comment
+    {
+        $this->approved = $approved;
+
+        return $this;
+    }
 
     /**
      * @return string

@@ -20,6 +20,10 @@ class ArticleAdminController extends LoggedAbstractController
 
     public static $entityLabel = "article";
 
+    /**
+     * @return mixed|void
+     * @throws CoreException
+     */
     public function indexAction()
     {
         $articles = (new ArticleRepository())->find();
@@ -86,7 +90,7 @@ class ArticleAdminController extends LoggedAbstractController
         return [
             new ArticleRepository(),
             'articleId',
-            'admin/article/formArticle.html.twig'
+            'admin/article/articles.html.twig'
         ];
     }
 }
