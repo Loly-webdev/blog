@@ -7,8 +7,14 @@
 <header>
     {{ include('partial/_nav.html.twig') }}
 </header>
-<main class="mt-5 mx-0 p-0 text-center">
+<main class="mt-5 mx-0 p-0 text-center bg-light">
+    <div class="space row container-fluid p-0 m-0">
+        <div class="px-0 mx-auto mb-5 px-4 pb-2">
+            <div class="container mx-auto my-5 p-4">
     {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
 </main>
 <footer class="fixed-bottom bg-dark text-secondary">
     {{ include('partial/_footer.html.twig') }}
