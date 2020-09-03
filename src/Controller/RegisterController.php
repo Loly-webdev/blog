@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\FormValidator\FormRegisterValidator;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\Email;
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
@@ -65,9 +66,9 @@ class RegisterController extends DefaultAbstractController
      * @param array|mixed[] $formValues
      * @param object        $entity
      *
-     * @throws CoreException*@throws Exception
+     * @throws CoreException
      */
-    public function check(array $formValues, $entity): void
+    public function check(array $formValues, object $entity): void
     {
         $email    = $formValues['mail'] ?? '';
         $password = $formValues['password'] ?? '';
@@ -82,5 +83,23 @@ class RegisterController extends DefaultAbstractController
 
         $entity->setMail($email)
                ->setPassword($password);
+    }
+
+    /**
+     * @param $entity
+     *
+     * @return bool
+     */
+    public function mailInfo(User $entity): bool
+    {
+        $nameUser = $entity->getLogin();
+
+        $subject = 'Confirmation d\'inscription';
+        $message = '<br>Bienvenue à toi ' . $entity->getRoleLabel() . ' ' . $nameUser . ' !
+                    <br> Je te confirme ton inscription à mon blog, en esperant qu\'il sera à ton goût 
+                    <br>Pour toutes questions ou soucis que tu pourrais rencontrer, n\'hésite pas à me le signaler via le formulaire de contact.
+                    <br><a href="http://blog/">Aller sur le blog >></a>';
+
+        return Email::infoMail($entity->getMail(), $subject, $message);
     }
 }

@@ -48,6 +48,8 @@ trait AddControllerTrait
             $entity        = $entityClass->hydrate($formSubmitted);
             $this->checkForm($entityClass);
             $status = static::statusMessage($repository, $entity);
+
+            $this->mailFunction($entity);
         }
 
         $data = [
@@ -57,10 +59,6 @@ trait AddControllerTrait
 
         if (method_exists($this, 'prePost')) {
             $data = $this->prePost($data);
-        }
-
-        if (method_exists($this, 'mailApproved')) {
-            $this->mailApproved();
         }
 
         $this->renderView(
@@ -98,5 +96,23 @@ trait AddControllerTrait
             'Votre ' . static::$entityLabel . ' à bien était enregistré !',
             'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
         );
+    }
+
+    /**
+     * Methods for sending information or approval emails.
+     *
+     * @param $entity
+     *
+     * @return void
+     */
+    public function mailFunction($entity): void
+    {
+        if (method_exists($this, 'mailApproved')) {
+            $this->mailApproved();
+        }
+
+        if (method_exists($this, 'mailInfo')) {
+            $this->mailInfo($entity);
+        }
     }
 }
