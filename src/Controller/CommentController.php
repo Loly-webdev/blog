@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Controller\FormValidator\FormCommentValidator;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Repository\CommentRepository;
+use App\Service\Email;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
@@ -81,11 +83,33 @@ class CommentController extends LoggedAbstractController
      * @param Comment $entity
      *
      * @return void
+     * @throws CoreException
      */
     public function postHydrate(Comment $entity): void
     {
         $entity->setArticleId(
             $this->getRequest()->getParamAsInt('articleId')
         );
+
+        $user = $this->getUserLogged();
+        assert($user instanceof User);
+        $entity->setAuthor($user->getLogin());
+    }
+
+    /**
+     * @return bool
+     * @throws CoreException
+     */
+    public function mailApproved(): bool
+    {
+        $user = $this->getUserLogged();
+        assert($user instanceof User);
+        $nameUser = $user->getLogin();
+
+        $subject = 'Nouveau commentaire à approuver';
+        $message = '<br>Vous avez un nouveau commentaire à approuvé, de ' . $nameUser .
+                   '<br> <a href="http://blog/Admin/userAdmin">Voir les commentaires à approuver >></a>';
+
+        return Email::sendMail($user->getMail(), $subject, $message);
     }
 }

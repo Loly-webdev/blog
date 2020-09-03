@@ -9,6 +9,10 @@ use Core\Traits\Controller\DeleteControllerTrait;
 use Core\Traits\Controller\EditControllerTrait;
 use Exception;
 
+/**
+ * Class CommentAdminController
+ * @package App\Controller\Admin
+ */
 class CommentAdminController extends LoggedAbstractController
 {
     use EditControllerTrait,
@@ -25,12 +29,31 @@ class CommentAdminController extends LoggedAbstractController
     {
         $comments = (new CommentRepository())->find();
 
+        $data = [
+            'comments' => $comments
+        ];
+
+        if (method_exists($this, 'commentApproved')) {
+            $data = $this->commentApproved($data);
+        }
+
         $this->renderView(
             'admin/comment/comments.html.twig',
-            [
-                'comments' => $comments
-            ]
+            $data
         );
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function commentApproved(array $data): array
+    {
+        $approved         = 'oui';
+        $data['approved'] = $approved;
+
+        return $data;
     }
 
     /**
@@ -58,7 +81,7 @@ class CommentAdminController extends LoggedAbstractController
         return [
             new CommentRepository(),
             'commentId',
-            'admin/comment/comments.html.twig'
+            'admin/message.html.twig'
         ];
     }
 }

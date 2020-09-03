@@ -14,19 +14,22 @@ abstract class Email extends DefaultAbstractController
     /**
      * @param string $emailUser
      * @param string $subject
-     * @param string $message
+     * @param string $messageContent
      *
      * @return bool
      */
     public static function sendMail(
         string $emailUser,
         string $subject,
-        string $message
+        string $messageContent
     ): bool
     {
         $myMail = ConfigurationProvider::getInstance()->getMyMail();
 
         $header = static::getDefaultHeader($emailUser);
+
+        $message = 'MESSAGE DU SITE BlogLWD '
+                   . $messageContent;
 
         return mail($myMail, $subject, $message, $header);
     }

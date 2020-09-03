@@ -59,6 +59,10 @@ trait AddControllerTrait
             $data = $this->prePost($data);
         }
 
+        if (method_exists($this, 'mailApproved')) {
+            $this->mailApproved();
+        }
+
         $this->renderView(
             $viewTemplate,
             $data

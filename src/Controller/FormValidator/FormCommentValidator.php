@@ -17,7 +17,6 @@ class FormCommentValidator extends FormValidatorAbstract
     public function getFormFields(): array
     {
         return [
-            'author',
             'content'
         ];
     }

@@ -47,9 +47,10 @@ class RegisterController extends DefaultAbstractController
 
     /**
      * @param User $entity
+     *
      * @throws CoreException
      */
-    public function postHydrate($entity): void
+    public function postHydrate(User $entity): void
     {
         $formValidator = new FormRegisterValidator();
 
@@ -68,7 +69,7 @@ class RegisterController extends DefaultAbstractController
      */
     public function check(array $formValues, $entity): void
     {
-        $email = $formValues['mail'] ?? '';
+        $email    = $formValues['mail'] ?? '';
         $password = $formValues['password'] ?? '';
 
         if (false === Helper::checkEmail($email)) {
@@ -80,6 +81,6 @@ class RegisterController extends DefaultAbstractController
         }
 
         $entity->setMail($email)
-            ->setPassword($password);
+               ->setPassword($password);
     }
 }

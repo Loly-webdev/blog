@@ -90,7 +90,7 @@ class ArticleAdminController extends LoggedAbstractController
         return [
             new ArticleRepository(),
             'articleId',
-            'admin/article/articles.html.twig'
+            'admin/message.html.twig'
         ];
     }
 }

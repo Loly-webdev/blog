@@ -11,10 +11,10 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
 class Comment extends DefaultAbstractEntity
 {
 
-    protected $author;
-    protected $content;
-    protected $articleId;
-    protected $approved = 'non';
+    protected $author    = '';
+    protected $content   = '';
+    protected $articleId = '';
+    protected $approved  = 'non';
 
     /**
      * @return string

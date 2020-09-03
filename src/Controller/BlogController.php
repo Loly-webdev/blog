@@ -35,7 +35,7 @@ class BlogController extends DefaultAbstractController
             '/article/articles.html.twig',
             [
                 'articles' => $articles,
-                'page' => 'blog'
+                'page'     => 'blog'
             ]
         );
     }

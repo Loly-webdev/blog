@@ -45,16 +45,35 @@ class UserAdminController extends LoggedAbstractController
             $this->redirectTo('home');
         }
 
-        $login = $user->getLogin();
+        $login    = $user->getLogin();
         $comments = (new CommentRepository())->find();
+
+        $data = [
+            'message'  => "Ravi de te revoir $status $login !",
+            'comments' => $comments
+        ];
+
+        if (method_exists($this, 'commentApproved')) {
+            $data = $this->commentApproved($data);
+        }
 
         $this->renderView(
             'admin/dashboard.html.twig',
-            [
-                'message' => "Ravi de te revoir $status $login !",
-                'comments' => $comments
-            ]
+            $data
         );
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function commentApproved(array $data): array
+    {
+        $approved         = 'non';
+        $data['approved'] = $approved;
+
+        return $data;
     }
 
     /**
@@ -68,7 +87,7 @@ class UserAdminController extends LoggedAbstractController
             'userId',
             new UserRepository(),
             'user',
-            'admin/user/editProfile.html.twig'
+            'admin/user/editUser.html.twig'
         ];
     }
 
@@ -91,7 +110,7 @@ class UserAdminController extends LoggedAbstractController
      * @return void
      * @throws CoreException
      */
-    public function profileAction(): void
+    public function userListAction(): void
     {
         $users = (new UserRepository())->find();
 

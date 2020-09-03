@@ -1,5 +1,4 @@
-<div class="container mx-auto">
-    <div class="p-4 mt-5 rounded bg-blue shadow">
+ <div class="p-4 mt-5 rounded bg-blue shadow">
         <h2 class="text-uppercase">{{ article.title }}</h2>
         <div class="p-2 mt-3 mx-2 bg-light rounded-top">
             <p class="h4 font-weight-bold">
@@ -16,7 +15,7 @@
                 <span class="h5 font-weight-bold text-info font-italic">{{ article.author }}</span>
                 <span class="font-weight-bold">, le : </span>{{ article.createdAt|date("m/d/Y") }}
                 <br>
-                <span class="font-weight-bold">Dernière modification : </span>{{ article.updatedAt|date("m/d/Y") }}
+                <span class="font-weight-bold">Dernière modification le : </span>{{ article.updatedAt|date("m/d/Y") }}
             </p>
         </div>
     </div>
@@ -40,23 +39,24 @@
                      aria-labelledby="headingOne">
                     <div class="panel-body">
                         {% for comment in comments %}
-                            <div class="p-3 my-3 rounded bg-blue shadow">
-                                <p class="h5 p-3 mb-3 mx-2 bg-white rounded">
-                                    {{ comment.content }}
-                                </p>
-                                <div class="py-2 my-3 mx-auto w-75 border-top border-bottom border-info">
-                                    <p class="h6 text-secondary font-italic">
-                                        <span class="h5 font-weight-bold text-info font-italic">{{ comment.author }}</span>
-                                        <span class="font-weight-bold">, le : </span>{{ comment.createdAt|date("m/d/Y") }}
-                                        <br>
-                                        <span class="font-weight-bold">Dernière modification : </span>{{ comment.updatedAt|date("m/d/Y") }}
+                            {% if comment.approved == 'oui' %}
+                                <div class="p-3 my-3 rounded bg-blue shadow">
+                                    <p class="h5 p-3 mb-3 mx-2 bg-white rounded">
+                                        {{ comment.content }}
                                     </p>
+                                    <div class="py-2 my-3 mx-auto w-75 border-top border-bottom border-info">
+                                        <p class="h6 text-secondary font-italic">
+                                            <span class="h5 font-weight-bold text-info font-italic">{{ comment.author }}</span>
+                                            <span class="font-weight-bold">, le : </span>{{ comment.createdAt|date("m/d/Y") }}
+                                            <br>
+                                            <span class="font-weight-bold">Dernière modification le : </span>{{ comment.updatedAt|date("m/d/Y") }}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
-</div>

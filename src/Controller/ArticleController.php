@@ -34,7 +34,7 @@ class ArticleController extends LoggedAbstractController
             '/article/articles.html.twig',
             [
                 'articles' => $articles,
-                'page' => 'article'
+                'page'     => 'article'
             ]
         );
     }

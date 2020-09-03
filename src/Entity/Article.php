@@ -10,9 +10,9 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
  */
 class Article extends DefaultAbstractEntity
 {
-    protected $title = '';
-    protected $author = '';
-    protected $hat = '';
+    protected $title   = '';
+    protected $author  = '';
+    protected $hat     = '';
     protected $content = '';
 
     /**
