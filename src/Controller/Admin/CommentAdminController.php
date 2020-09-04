@@ -27,15 +27,15 @@ class CommentAdminController extends LoggedAbstractController
      */
     public function indexAction()
     {
-        $comments = (new CommentRepository())->find();
-
-        $data = [
-            'comments' => $comments
-        ];
+        $data = [];
 
         if (method_exists($this, 'commentApproved')) {
             $data = $this->commentApproved($data);
         }
+
+        $repository     = (new CommentRepository());
+        $paginationPath = "/Admin/commentAdmin?page=";
+        $data           = $this->pagination($repository, $data, $paginationPath);
 
         $this->renderView(
             'admin/comment/comments.html.twig',

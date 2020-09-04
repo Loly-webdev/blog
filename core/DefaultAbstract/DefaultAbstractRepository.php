@@ -68,4 +68,29 @@ abstract class DefaultAbstractRepository
     {
         return $this->pdo;
     }
+
+    /**
+     * @return array
+     */
+    public function countId():array
+    {
+        $sql = 'SELECT COUNT(id) as countId FROM ' . static::$tableName;
+        $pdo = $this->getPDO()->query($sql);
+
+        return $pdo->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param $cPage
+     * @param $perPage
+     *
+     * @return array
+     */
+    public function limitPage($cPage, $perPage): array
+    {
+        $sql = 'SELECT * FROM ' . static::$tableName . ' ORDER BY id DESC LIMIT ' . (($cPage-1)*$perPage) . ", $perPage";
+        $pdo = $this->getPDO()->query($sql);
+
+        return $pdo->fetchAll();
+    }
 }

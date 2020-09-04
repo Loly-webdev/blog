@@ -108,4 +108,38 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         header('Location: /' . $route);
         exit();
     }
+
+    /**
+     * @param $repository
+     * @param $data
+     * @param $paginationPath
+     *
+     * @return array
+     */
+    public function pagination(
+        $repository,
+        $data,
+        $paginationPath
+    ): array
+    {
+        $nbId        = $repository->countId();
+        $nbEntity    = $nbId['countId'];
+        $perPage     = 3;
+        $cPage       = 1;
+        $nbPage      = ceil($nbEntity / $perPage);
+        $currentPage = Request::getInstance()->getParamAsInt('page');
+
+        if (isset($currentPage)) {
+            $cPage = $currentPage;
+        }
+
+        $entities = $repository->limitPage($cPage, $perPage);
+
+        $data['entities']       = $entities;
+        $data['lastPage']       = $nbPage;
+        $data['currentPage']    = $cPage;
+        $data['paginationPath'] = $paginationPath;
+
+        return $data;
+    }
 }

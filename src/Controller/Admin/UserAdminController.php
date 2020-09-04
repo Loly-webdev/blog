@@ -45,17 +45,18 @@ class UserAdminController extends LoggedAbstractController
             $this->redirectTo('home');
         }
 
-        $login    = $user->getLogin();
-        $comments = (new CommentRepository())->find();
-
-        $data = [
-            'message'  => "Ravi de te revoir $status $login !",
-            'comments' => $comments
+        $login = $user->getLogin();
+        $data  = [
+            'message' => "Ravi de te revoir $status $login !"
         ];
 
         if (method_exists($this, 'commentApproved')) {
             $data = $this->commentApproved($data);
         }
+
+        $repository     = (new CommentRepository());
+        $paginationPath = "/Admin/userAdmin?page=";
+        $data           = $this->pagination($repository, $data, $paginationPath);
 
         $this->renderView(
             'admin/dashboard.html.twig',
@@ -112,13 +113,15 @@ class UserAdminController extends LoggedAbstractController
      */
     public function userListAction(): void
     {
-        $users = (new UserRepository())->find();
+        $data = [];
+
+        $repository     = (new UserRepository());
+        $paginationPath = "/Admin/commentAdmin?page=";
+        $data           = $this->pagination($repository, $data, $paginationPath);
 
         $this->renderView(
             'admin/user/users.html.twig',
-            [
-                'users' => $users
-            ]
+            $data
         );
     }
 
