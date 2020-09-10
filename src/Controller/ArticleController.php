@@ -63,7 +63,8 @@ class ArticleController extends LoggedAbstractController
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments         = (new CommentRepository())->search(['approved' => 'oui', 'articleId' => $entity->getId()]);
+
         $data['comments'] = $comments;
 
         return $data;
@@ -96,34 +97,5 @@ class ArticleController extends LoggedAbstractController
         $data['user'] = $user;
 
         return $data;
-    }
-
-    /**
-     * Give params to editAction
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getEditParam(): array
-    {
-        return [
-            'articleId',
-            new ArticleRepository(),
-            'article',
-            'article/editArticle.html.twig'
-        ];
-    }
-
-    /**
-     * Give params to deleteAction
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getDeleteParam(): array
-    {
-        return [
-            new ArticleRepository(),
-            'articleId',
-            'article/formArticle.html.twig'
-        ];
     }
 }

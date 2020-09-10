@@ -66,6 +66,7 @@ class ArticleAdminController extends LoggedAbstractController
      * @param array $data
      *
      * @return array
+     * @throws CoreException
      */
     public function preRenderView(array $data): array
     {
