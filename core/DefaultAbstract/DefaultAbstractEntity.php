@@ -18,9 +18,9 @@ abstract class DefaultAbstractEntity
      *
      * @param array $params
      *
-     * @return DefaultAbstractEntity
+     * @return void
      */
-    public function hydrate(array $params): DefaultAbstractEntity
+    public function hydrate(array $params): void
     {
         foreach ($params as $key => $data) {
             // We retrieve the name of the setter corresponding to the class attribute.
@@ -31,7 +31,6 @@ abstract class DefaultAbstractEntity
                 $this->$method($data);
             }
         }
-        return $this;
     }
 
     /**

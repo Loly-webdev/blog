@@ -103,4 +103,8 @@ abstract class FormValidatorAbstract
     {
         return null !== Request::getInstance()->getParam($this->getFormName());
     }
+
+    public function getErrors(): void
+    {
+    }
 }

@@ -17,25 +17,25 @@
             </tr>
             </thead>
             <tbody>
-            {% for entity in entities %}
+            {% for user in users %}
                 <tr>
-                    <th scope="row">{{ entity.id }}</th>
-                    <td class="bg-light text-info font-weight-bold">{{ entity.login }}</td>
-                    <td class="bg-light text-secondary font-weight-bold">{{ entity.role }}</td>
-                    <td class="bg-light text-secondary">{{ entity.mail }}</td>
+                    <th scope="row">{{ user.id }}</th>
+                    <td class="bg-light text-info font-weight-bold">{{ user.login }}</td>
+                    <td class="bg-light text-secondary font-weight-bold">{{ user.role }}</td>
+                    <td class="bg-light text-secondary">{{ user.mail }}</td>
                     <td class="h6 bg-light text-dark font-italic">
-                        <strong>Créé le :</strong>{{ entity.createdAt|date("m/d/Y à H:m:s") }}
+                        <strong>Créé le :</strong>{{ user.createdAt|date("m/d/Y à H:m:s") }}
                         <br>
-                        <strong>Mis à jour le :</strong>{{ entity.updatedAt|date("m/d/Y à H:m:s") }}
+                        <strong>Mis à jour le :</strong>{{ user.updatedAt|date("m/d/Y à H:m:s") }}
                     </td>
                     <td>
                         <div class="row d-flex p-2 my-2 mx-auto">
-                            <a href="/Admin/userAdmin/edit?userId={{ entity.id }}"
+                            <a href="/Admin/userAdmin/edit?userId={{ user.id }}"
                                class="p-2 btn btn-info">
                                 <span class="fas fa-user-edit"></span>
                                 Éditer
                             </a>
-                            <a href="/Admin/userAdmin/delete?userId={{ entity.id }}"
+                            <a href="/Admin/userAdmin/delete?userId={{ user.id }}"
                                class="p-2 btn btn-danger">
                                 <span class="fas fa-user-slash"></span>
                                 Supprimer

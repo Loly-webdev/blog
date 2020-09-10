@@ -15,32 +15,31 @@
         </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
-            {% if entity.approved == approved %}
+        {% for comment in comments %}
                 <tr>
-                    <th scope="row">{{ entity.id }}</th>
-                    <td class="bg-light text-secondary font-weight-bold">{{ entity.articleId }}</td>
-                    <td class="bg-light text-success font-weight-bold">{{ entity.approved }}</td>
-                    <td class="bg-light text-info font-weight-bold">{{ entity.author }}</td>
-                    <td class="bg-light text-dark">{{ entity.content }}</td>
+                    <th scope="row">{{ comment.id }}</th>
+                    <td class="bg-light text-secondary font-weight-bold">{{ comment.articleId }}</td>
+                    <td class="bg-light text-success font-weight-bold">{{ comment.approved }}</td>
+                    <td class="bg-light text-info font-weight-bold">{{ comment.author }}</td>
+                    <td class="bg-light text-dark">{{ comment.content }}</td>
                     <td class="h6 bg-light text-dark font-italic">
-                        <strong>Créé le :</strong>{{ entity.createdAt|date("m/d/Y à H:m:s") }}
+                        <strong>Créé le :</strong>{{ comment.createdAt|date("m/d/Y à H:m:s") }}
                         <br>
-                        <strong>Mis à jour le :</strong>{{ entity.updatedAt|date("m/d/Y à H:m:s") }}
+                        <strong>Mis à jour le :</strong>{{ comment.updatedAt|date("m/d/Y à H:m:s") }}
                     </td>
                     <td>
                         <div class="row d-flex p-2 my-2 mx-auto">
-                            <a href="/article/see?articleId={{ entity.articleId }}"
+                            <a href="/article/see?articleId={{ comment.articleId }}"
                                class="p-2 btn btn-primary">
                                 <span class="far fa-newspaper"></span>
                                 Voir l'article
                             </a>
-                            <a href="/Admin/commentAdmin/edit?commentId={{ entity.id }}"
+                            <a href="/Admin/commentAdmin/edit?commentId={{ comment.id }}"
                                class="p-2 btn btn-info">
                                 <span class="far fa-comment-dots"></span>
                                 Éditer
                             </a>
-                            <a href="/Admin/commentAdmin/delete?commentId={{ entity.id }}"
+                            <a href="/Admin/commentAdmin/delete?commentId={{ comment.id }}"
                                class="p-2 btn btn-danger">
                                 <span class="fas fa-comment-slash"></span>
                                 Supprimer
@@ -48,7 +47,6 @@
                         </div>
                     </td>
                 </tr>
-            {% endif %}
         {% endfor %}
         </tbody>
     </table>

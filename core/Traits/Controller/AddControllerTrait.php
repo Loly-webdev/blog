@@ -31,34 +31,39 @@ trait AddControllerTrait
      * Method to add entity
      *
      * @param FormValidatorAbstract     $formValidator
-     * @param DefaultAbstractEntity     $entityClass
+     * @param DefaultAbstractEntity     $entity
      * @param DefaultAbstractRepository $repository
      * @param string                    $viewTemplate
      */
     protected function addEntity(
         FormValidatorAbstract $formValidator,
-        DefaultAbstractEntity $entityClass,
+        DefaultAbstractEntity $entity,
         DefaultAbstractRepository $repository,
         string $viewTemplate
     ): void
     {
-        $formSubmitted = $formValidator;
-        if ($formSubmitted->isSubmitted() && $formSubmitted->isValid()) {
-            $formSubmitted = $formSubmitted->getFormValues();
-            $entity        = $entityClass->hydrate($formSubmitted);
-            $this->checkForm($entityClass);
-            $status = static::statusMessage($repository, $entity);
+        $formErrors = $formValidator->isSubmitted() && $formValidator->isValid()
+            ? $formValidator->getErrors()
+            : [];
 
-            $this->mailFunction($entity);
+            $data = [
+                'status'        => '',
+                'StatusMessage' => '',
+                'formErrors'    => $formErrors
+            ];
+
+        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
+            $formValidator = $formValidator->getFormValues();
+            $entity->hydrate($formValidator);
+
+            $this->preSave($entity);
+            $saved = $this->save($repository, $entity);
+            $data = static::prepareMessage($saved);
+            $this->postSave($entity);
         }
 
-        $data = [
-            'status'        => $status['status'] ?? '',
-            'statusMessage' => $status['statusMessage'] ?? ''
-        ];
-
-        if (method_exists($this, 'prePost')) {
-            $data = $this->prePost($data);
+        if (method_exists($this, 'preRenderView')) {
+            $data = $this->preRenderView($data, $entity);
         }
 
         $this->renderView(
@@ -68,11 +73,25 @@ trait AddControllerTrait
     }
 
     /**
+     * @param DefaultAbstractRepository $repository
+     * @param DefaultAbstractEntity     $entity
+     *
+     * @return bool
+     */
+    final public function save(
+        DefaultAbstractRepository $repository,
+        DefaultAbstractEntity $entity
+    ): bool
+    {
+        return $repository->insert($entity);
+    }
+
+    /**
      * @param $entity
      *
      * @return void
      */
-    public function checkForm($entity): void
+    public function preSave($entity): void
     {
         if (method_exists($this, 'postHydrate')) {
             $this->postHydrate($entity);
@@ -84,15 +103,23 @@ trait AddControllerTrait
     }
 
     /**
-     * @param $repository
      * @param $entity
+     *
+     * @return void
+     */
+    public function postSave($entity):void
+    {
+    }
+
+    /**
+     * @param $saved
      *
      * @return array
      */
-    public static function statusMessage($repository, $entity): array
+    public static function prepareMessage($saved): array
     {
         return Message::getMessage(
-            $repository->insert($entity),
+            $saved,
             'Votre ' . static::$entityLabel . ' à bien était enregistré !',
             'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
         );

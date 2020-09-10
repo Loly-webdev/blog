@@ -41,12 +41,18 @@ trait DeleteControllerTrait
             'Votre ' . static::$entityLabel . ' à bien était supprimé !',
             'Une erreur est survenue.');
 
+        $viewData = [
+            'status'        => $status['status'] ?? '',
+            'statusMessage' => $status['statusMessage'] ?? ''
+        ];
+
+        if (method_exists($this, 'preDelete')) {
+            $viewData = $this->preDelete($viewData);
+        }
+
         $this->renderView(
             $viewTemplate,
-            [
-                'status'        => $status['status'] ?? '',
-                'statusMessage' => $status['statusMessage'] ?? ''
-            ]
+            $viewData
         );
     }
 }

@@ -32,6 +32,15 @@ class RegisterController extends DefaultAbstractController
         );
     }
 
+    public function postSave($saved, $entity): void
+    {
+        parent::postSave($saved, $entity);
+
+        if ($saved()) {
+            $this->mailInfo($entity);
+        }
+    }
+
     /**
      * Give params to addAction
      * @return array|mixed[]

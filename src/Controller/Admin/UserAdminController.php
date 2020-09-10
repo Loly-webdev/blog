@@ -46,35 +46,22 @@ class UserAdminController extends LoggedAbstractController
         }
 
         $login = $user->getLogin();
-        $data  = [
+        $viewData  = [
             'message' => "Ravi de te revoir $status $login !"
         ];
 
-        if (method_exists($this, 'commentApproved')) {
-            $data = $this->commentApproved($data);
-        }
-
-        $repository     = (new CommentRepository());
-        $paginationPath = "/Admin/userAdmin?page=";
-        $data           = $this->pagination($repository, $data, $paginationPath);
+        $queryValues = (new CommentRepository())->search(['approved' => 'non']);
+        $viewData    = $this->pagination(
+            $queryValues,
+            $viewData,
+            "/Admin/userAdmin?_page=",
+            'comments'
+        );
 
         $this->renderView(
             'admin/dashboard.html.twig',
-            $data
+            $viewData
         );
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    public function commentApproved(array $data): array
-    {
-        $approved         = 'non';
-        $data['approved'] = $approved;
-
-        return $data;
     }
 
     /**
@@ -107,21 +94,33 @@ class UserAdminController extends LoggedAbstractController
         ];
     }
 
+    public function preDelete(array $viewData): array
+    {
+        $viewData['page'] = '/Admin/userAdmin/userList?_page=1';
+        $viewData['namePage'] = 'Retour à la liste des membres';
+
+        return $viewData;
+    }
+
     /**
      * @return void
      * @throws CoreException
      */
     public function userListAction(): void
     {
-        $data = [];
+        $viewData = [];
 
-        $repository     = (new UserRepository());
-        $paginationPath = "/Admin/commentAdmin?page=";
-        $data           = $this->pagination($repository, $data, $paginationPath);
+        $queryValues = (new UserRepository())->find();
+        $viewData    = $this->pagination(
+            $queryValues,
+            $viewData,
+            "/Admin/userAdmin/userList?_page=",
+            'users'
+        );
 
         $this->renderView(
             'admin/user/users.html.twig',
-            $data
+            $viewData
         );
     }
 

@@ -71,7 +71,7 @@ class CommentController extends LoggedAbstractController
      * @return array
      * @throws CoreException
      */
-    public function prePost(array $data): array
+    public function preRenderView(array $data): array
     {
         $user         = $this->getUserLogged();
         $data['user'] = $user;
@@ -108,7 +108,7 @@ class CommentController extends LoggedAbstractController
 
         $subject = 'Nouveau commentaire à approuver';
         $message = '<br>Vous avez un nouveau commentaire à approuvé, de ' . $nameUser .
-                   '<br> <a href="http://blog/Admin/userAdmin">Voir les commentaires à approuver >></a>';
+                   '<br> <a href="http://blog/Admin/userAdmin?_page=1">Voir les commentaires à approuver >></a>';
 
         return Email::sendMail($user->getMail(), $subject, $message);
     }

@@ -27,33 +27,20 @@ class CommentAdminController extends LoggedAbstractController
      */
     public function indexAction()
     {
-        $data = [];
+        $viewData = [];
 
-        if (method_exists($this, 'commentApproved')) {
-            $data = $this->commentApproved($data);
-        }
-
-        $repository     = (new CommentRepository());
-        $paginationPath = "/Admin/commentAdmin?page=";
-        $data           = $this->pagination($repository, $data, $paginationPath);
+        $queryValues = (new CommentRepository())->search(['approved' => 'oui']);
+        $viewData    = $this->pagination(
+            $queryValues,
+            $viewData,
+            "/Admin/commentAdmin?_page=",
+            'comments'
+        );
 
         $this->renderView(
             'admin/comment/comments.html.twig',
-            $data
+            $viewData
         );
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    public function commentApproved(array $data): array
-    {
-        $approved         = 'oui';
-        $data['approved'] = $approved;
-
-        return $data;
     }
 
     /**
@@ -83,5 +70,13 @@ class CommentAdminController extends LoggedAbstractController
             'commentId',
             'admin/message.html.twig'
         ];
+    }
+
+    public function preDelete(array $viewData): array
+    {
+        $viewData['page'] = '/Admin/commentAdmin?_page=1';
+        $viewData['namePage'] = 'Retour à la liste des commentaires';
+
+        return $viewData;
     }
 }

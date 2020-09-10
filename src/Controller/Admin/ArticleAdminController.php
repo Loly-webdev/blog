@@ -26,13 +26,19 @@ class ArticleAdminController extends LoggedAbstractController
      */
     public function indexAction()
     {
-        $articles = (new ArticleRepository())->find();
+        $viewData = [];
+
+        $queryValues = (new ArticleRepository())->find();
+        $viewData    = $this->pagination(
+            $queryValues,
+            $viewData,
+            "/Admin/articleAdmin?_page=",
+            'articles'
+        );
 
         $this->renderView(
             'admin/article/articles.html.twig',
-            [
-                'articles' => $articles
-            ]
+            $viewData
         );
     }
 
@@ -51,13 +57,17 @@ class ArticleAdminController extends LoggedAbstractController
         ];
     }
 
+    public function postSave($entity): void
+    {
+        $this->mailFunction($entity);
+    }
+
     /**
      * @param array $data
      *
      * @return array
-     * @throws CoreException
      */
-    public function prePost(array $data): array
+    public function preRenderView(array $data): array
     {
         $user         = $this->getUserLogged();
         $data['user'] = $user;
@@ -92,5 +102,13 @@ class ArticleAdminController extends LoggedAbstractController
             'articleId',
             'admin/message.html.twig'
         ];
+    }
+
+    public function preDelete(array $viewData): array
+    {
+        $viewData['page'] = '/Admin/articleAdmin?_page=1';
+        $viewData['namePage'] = 'Retour à la liste des articles';
+
+        return $viewData;
     }
 }

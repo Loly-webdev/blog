@@ -67,7 +67,7 @@ final class Request
     {
         $param = $this->getParam($param, false);
 
-        if ($param === false) {
+        if (false === $param) {
             throw new \LogicException("L'argument fourni n'est pas valide.");
         }
 
