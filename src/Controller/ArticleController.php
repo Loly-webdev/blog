@@ -63,7 +63,12 @@ class ArticleController extends LoggedAbstractController
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments         = (new CommentRepository())->search(['approved' => 'oui', 'articleId' => $entity->getId()]);
+        $comments         = (new CommentRepository())->search(
+            [
+            'approved' => 'oui',
+            'articleId' => $entity->getId()
+            ]
+        );
 
         $data['comments'] = $comments;
 
