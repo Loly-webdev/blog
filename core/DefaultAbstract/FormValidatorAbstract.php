@@ -3,6 +3,7 @@
 namespace Core\DefaultAbstract;
 
 use Core\Request;
+use Core\Session;
 
 /**
  * Class FormValidatorAbstract
@@ -18,6 +19,8 @@ abstract class FormValidatorAbstract
     protected $formValues = [];
     // List of required fields
     protected $formFieldsToValidate = [];
+    // List of errors
+    protected $formErrors = [];
 
     /**
      * FormValidatorAbstract constructor.
@@ -70,22 +73,26 @@ abstract class FormValidatorAbstract
     }
 
     /**
+     * @param $key
+     *
      * @return bool
      */
-    public function isValid(): bool
+    public function isValid($key): bool
     {
-        $fieldsToValidate = $this->getFormFieldToValidate();
-        $formValues       = $this->getFormValues();
+        $fieldsToValidate    = $this->getFormFieldToValidate();
+        $fieldsToValidate[]  = 'token';
+        $formValues          = $this->getFormValues();
+        $formValues['token'] = Session::getValue($key);
 
         // We go through the required fields
         foreach ($fieldsToValidate as $fieldToValidate) {
             // If the required field is empty or null in the form 'populated' then we stop
             if (false === isset($formValues[$fieldToValidate]) || '' === $formValues[$fieldToValidate]) {
-                $isValid = false;
-                break;
+                //$this->addError($this->getFormName(), $fieldToValidate);
+                return false;
             }
         }
-        return $isValid ?? true;
+        return Session::isValidToken($this->getFormName(), $formValues['token']);
     }
 
     /**
@@ -97,6 +104,17 @@ abstract class FormValidatorAbstract
     }
 
     /**
+     * @param string $getFormName
+     * @param string $fieldToValidate
+     *
+     * @return array
+     */
+    public function addError(string $getFormName, string $fieldToValidate): array
+    {
+        return [$getFormName => $fieldToValidate];
+    }
+
+    /**
      * @return bool
      */
     public function isSubmitted(): bool
@@ -104,7 +122,13 @@ abstract class FormValidatorAbstract
         return null !== Request::getInstance()->getParam($this->getFormName());
     }
 
-    public function getErrors(): void
+    /**
+     * @return array
+     */
+    public function getErrors(): array
     {
+        return [
+        ];
     }
+
 }

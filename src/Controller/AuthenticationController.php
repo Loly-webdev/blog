@@ -8,6 +8,7 @@ use App\Service\AccountService;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
 use Core\Session;
+use Exception;
 
 /**
  * Class AuthenticationController
@@ -15,6 +16,8 @@ use Core\Session;
  */
 class AuthenticationController extends DefaultAbstractController
 {
+    public static $key = 'formAuthentication';
+
     /**
      * Action by default
      * @throws CoreException
@@ -28,12 +31,14 @@ class AuthenticationController extends DefaultAbstractController
 
     /**
      * @throws CoreException
+     * @throws Exception
      */
     public function loginAction(): void
     {
         $formValidator = new FormAuthenticationValidator();
+        $token         = Session::generateToken(static::$key);
 
-        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
+        if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
 
             if (null !== $user = AccountService::retrieveAccount($formValidator->getFormValues())) {
                 assert($user instanceof User);
@@ -51,7 +56,9 @@ class AuthenticationController extends DefaultAbstractController
             'formAuthentication.html.twig',
             [
                 'status'        => $status ?? '',
-                'statusMessage' => $message ?? ''
+                'statusMessage' => $message ?? '',
+                'tokenValue'    => $token,
+                // 'errors' => $formValidator->getErrors() ?? ['']
             ]
         );
     }

@@ -18,7 +18,8 @@ class ArticleAdminController extends LoggedAbstractController
         EditControllerTrait,
         DeleteControllerTrait;
 
-    public static $entityLabel = "article";
+    public static  $entityLabel = "article";
+    private static $key         = 'article';
 
     /**
      * @return mixed|void
@@ -107,7 +108,7 @@ class ArticleAdminController extends LoggedAbstractController
 
     public function preDelete(array $viewData): array
     {
-        $viewData['page'] = '/Admin/articleAdmin?_page=1';
+        $viewData['page']     = '/Admin/articleAdmin?_page=1';
         $viewData['namePage'] = 'Retour à la liste des articles';
 
         return $viewData;

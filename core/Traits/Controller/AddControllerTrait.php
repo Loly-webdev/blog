@@ -3,7 +3,9 @@
 namespace Core\Traits\Controller;
 
 use App\Service\Message;
+use Core\Session;
 use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository, FormValidatorAbstract};
+use Exception;
 use LogicException;
 
 /**
@@ -34,6 +36,8 @@ trait AddControllerTrait
      * @param DefaultAbstractEntity     $entity
      * @param DefaultAbstractRepository $repository
      * @param string                    $viewTemplate
+     *
+     * @throws Exception
      */
     protected function addEntity(
         FormValidatorAbstract $formValidator,
@@ -42,24 +46,27 @@ trait AddControllerTrait
         string $viewTemplate
     ): void
     {
-        $formErrors = $formValidator->isSubmitted() && $formValidator->isValid()
+        $formErrors = $formValidator->isSubmitted() && $formValidator->isValid(static::$key)
             ? $formValidator->getErrors()
             : [];
 
-            $data = [
-                'status'        => '',
-                'StatusMessage' => '',
-                'formErrors'    => $formErrors
-            ];
+        $token = Session::generateToken(static::$key);
 
-        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
-            $formValidator = $formValidator->getFormValues();
-            $entity->hydrate($formValidator);
+        $data = [
+            'status'        => '',
+            'StatusMessage' => '',
+            'tokenValue'    => $token,
+            'formErrors'    => $formErrors
+        ];
 
-            $this->preSave($entity);
+        if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
+            $formValues = $formValidator->getFormValues();
+            $entity->hydrate($formValues);
+
+            $this->preSave($formValues, $entity);
             $saved = $this->save($repository, $entity);
-            $data = static::prepareMessage($saved);
-            $this->postSave($entity);
+            $data  = static::prepareMessage($saved);
+            $this->postSave($saved, $entity);
         }
 
         if (method_exists($this, 'preRenderView')) {
@@ -70,6 +77,23 @@ trait AddControllerTrait
             $viewTemplate,
             $data
         );
+    }
+
+    /**
+     * @param array|null $formValues
+     * @param            $entity
+     *
+     * @return void
+     */
+    public function preSave(?array $formValues, $entity): void
+    {
+        if (method_exists($this, 'postHydrate')) {
+            $this->postHydrate($entity);
+        }
+
+        if ($entity->hasId()) {
+            throw new LogicException('L\'id ne devrait pas exister.');
+        }
     }
 
     /**
@@ -87,31 +111,6 @@ trait AddControllerTrait
     }
 
     /**
-     * @param $entity
-     *
-     * @return void
-     */
-    public function preSave($entity): void
-    {
-        if (method_exists($this, 'postHydrate')) {
-            $this->postHydrate($entity);
-        }
-
-        if ($entity->hasId()) {
-            throw new LogicException('L\'id ne devrait pas exister.');
-        }
-    }
-
-    /**
-     * @param $entity
-     *
-     * @return void
-     */
-    public function postSave($entity):void
-    {
-    }
-
-    /**
      * @param $saved
      *
      * @return array
@@ -123,6 +122,16 @@ trait AddControllerTrait
             'Votre ' . static::$entityLabel . ' à bien était enregistré !',
             'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
         );
+    }
+
+    /**
+     * @param $saved
+     * @param $entity
+     *
+     * @return void
+     */
+    public function postSave($saved, $entity): void
+    {
     }
 
     /**

@@ -32,13 +32,12 @@ class TwigProvider
                     'debug' => $debug
                 ]
             );
-        }
 
-        // To debug
-        if (is_null($debug)) {
-            static::$twig->addExtension(new DebugExtension());
+            // To debug
+            if (is_null($debug)) {
+                static::$twig->addExtension(new DebugExtension());
+            }
         }
-
         return static::$twig;
     }
 }

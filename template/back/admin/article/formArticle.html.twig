@@ -31,6 +31,7 @@
                 <textarea class="form-control" id="content" name="article[content]" rows="7"
                           placeholder="Article" required></textarea>
             </div>
+            <input type="hidden" name="article[token]" value="{{ tokenValue }}"/>
             <button type="submit" class="p-2 mt-4 btn btn-success">
                 Envoyer
                 <span class="fas fa-share"></span>

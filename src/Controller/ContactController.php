@@ -9,6 +9,8 @@ use App\Service\Message;
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
+use Core\Session;
+use Exception;
 
 /**
  * Class ContactController
@@ -16,11 +18,14 @@ use Core\Exception\CoreException;
  */
 class ContactController extends DefaultAbstractController
 {
+    private static $key = 'contact';
+
     /**
      * Action by default
      * Show form to contact
      * @return mixed|void
      * @throws CoreException
+     * @throws Exception
      */
     public function indexAction()
     {
@@ -31,7 +36,7 @@ class ContactController extends DefaultAbstractController
 
         $formValidator = new FormContactValidator();
 
-        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
+        if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
             $formValues = $formValidator->getFormValues();
             $nameUser   = Helper::secureText($formValues['nameUser']);
             $emailUser  = $formValues['email'] ?? '';
@@ -44,11 +49,16 @@ class ContactController extends DefaultAbstractController
             $status = static::statusMessage($emailUser, $fields['subject'], $fields['message']);
         }
 
+        $key   = 'contact';
+        $token = Session::generateToken($key);
+
         $this->renderView(
             'contact.html.twig',
             [
-                'user'   => $user ?? new User(),
-                'status' => $status ?? [''],
+                'user'       => $user ?? new User(),
+                'status'     => $status ?? [''],
+                'tokenValue' => $token,
+                //'errors' => $formValidator->getErrors() ?? ['']
             ],
             $viewFolder ?? 'front/'
         );

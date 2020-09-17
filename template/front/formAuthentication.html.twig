@@ -20,6 +20,7 @@
                     <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
                            minlength="3" placeholder="Mot de passe" required/>
                 </div>
+                <input class="form-control" type="hidden" name="formAuthentication[token]" value="{{ tokenValue }}"/>
                 <button type="submit" class="p-2 mt-4 btn btn-success">
                     Connexion
                     <span class="fas fa-sign-in-alt"></span>

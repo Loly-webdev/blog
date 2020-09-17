@@ -22,7 +22,8 @@ class CommentController extends LoggedAbstractController
     use SeeControllerTrait,
         AddControllerTrait;
 
-    public static $entityLabel = "commentaire";
+    public static  $entityLabel = "commentaire";
+    private static $key         = 'comment';
 
     /**
      * Action by default

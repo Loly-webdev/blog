@@ -17,6 +17,7 @@
                     <textarea class="form-control" id="comment" name="comment[content]" rows="5"
                               placeholder="Commentaire" required></textarea>
                 </div>
+                <input type="hidden" name="comment[token]" value="{{ tokenValue }}"/>
                 <button type="submit" class="p-2 mt-4 btn btn-success">
                     Envoyer
                     <span class="fas fa-share"></span>

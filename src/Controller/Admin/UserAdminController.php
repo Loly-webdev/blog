@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Controller\FormValidator\FormRegisterValidator;
-use App\Controller\RegisterController;
 use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
@@ -27,7 +26,8 @@ class UserAdminController extends LoggedAbstractController
     /**
      * @var string
      */
-    public static $entityLabel = "profil";
+    public static  $entityLabel = "utilisateur";
+    private static $key         = 'user';
 
     /**
      * Action by default
@@ -45,8 +45,8 @@ class UserAdminController extends LoggedAbstractController
             $this->redirectTo('home');
         }
 
-        $login = $user->getLogin();
-        $viewData  = [
+        $login    = $user->getLogin();
+        $viewData = [
             'message' => "Ravi de te revoir $status $login !"
         ];
 
@@ -86,17 +86,16 @@ class UserAdminController extends LoggedAbstractController
      */
     public function getDeleteParam(): array
     {
-        new RegisterController();
         return [
             new UserRepository(),
             'userId',
-            'admin/user/formUser.html.twig',
+            'admin/message.html.twig'
         ];
     }
 
     public function preDelete(array $viewData): array
     {
-        $viewData['page'] = '/Admin/userAdmin/userList?_page=1';
+        $viewData['page']     = '/Admin/userAdmin/userList?_page=1';
         $viewData['namePage'] = 'Retour à la liste des membres';
 
         return $viewData;

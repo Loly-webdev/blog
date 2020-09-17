@@ -19,7 +19,8 @@ class RegisterController extends DefaultAbstractController
 {
     use AddControllerTrait;
 
-    public static $entityLabel = "inscription";
+    public static  $entityLabel = "inscription";
+    private static $key         = 'user';
 
     /**
      * Action by default
@@ -34,11 +35,29 @@ class RegisterController extends DefaultAbstractController
 
     public function postSave($saved, $entity): void
     {
-        parent::postSave($saved, $entity);
+        //parent::postSave($saved, $entity);
 
-        if ($saved()) {
+        if ($saved) {
             $this->mailInfo($entity);
         }
+    }
+
+    /**
+     * @param $entity
+     *
+     * @return bool
+     */
+    public function mailInfo(User $entity): bool
+    {
+        $nameUser = $entity->getLogin();
+
+        $subject = 'Confirmation d\'inscription';
+        $message = '<br>Bienvenue à toi ' . $entity->getRoleLabel() . ' ' . $nameUser . ' !
+                    <br> Je te confirme ton inscription à mon blog, en esperant qu\'il sera à ton goût 
+                    <br>Pour toutes questions ou soucis que tu pourrais rencontrer, n\'hésite pas à me le signaler via le formulaire de contact.
+                    <br><a href="http://blog/">Aller sur le blog >></a>';
+
+        return Email::infoMail($entity->getMail(), $subject, $message);
     }
 
     /**
@@ -56,19 +75,15 @@ class RegisterController extends DefaultAbstractController
     }
 
     /**
+     * @param      $formValues
      * @param User $entity
      *
      * @throws CoreException
      */
-    public function postHydrate(User $entity): void
+    public function postHydrate($formValues, User $entity): void
     {
-        $formValidator = new FormRegisterValidator();
-
-        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
-            $formValues = $formValidator->getFormValues();
-            $entity->setRole($entity->role());
-            $this->check($formValues, $entity);
-        }
+        $entity->setRole($entity->role());
+        $this->check($formValues, $entity);
     }
 
     /**
@@ -92,23 +107,5 @@ class RegisterController extends DefaultAbstractController
 
         $entity->setMail($email)
                ->setPassword($password);
-    }
-
-    /**
-     * @param $entity
-     *
-     * @return bool
-     */
-    public function mailInfo(User $entity): bool
-    {
-        $nameUser = $entity->getLogin();
-
-        $subject = 'Confirmation d\'inscription';
-        $message = '<br>Bienvenue à toi ' . $entity->getRoleLabel() . ' ' . $nameUser . ' !
-                    <br> Je te confirme ton inscription à mon blog, en esperant qu\'il sera à ton goût 
-                    <br>Pour toutes questions ou soucis que tu pourrais rencontrer, n\'hésite pas à me le signaler via le formulaire de contact.
-                    <br><a href="http://blog/">Aller sur le blog >></a>';
-
-        return Email::infoMail($entity->getMail(), $subject, $message);
     }
 }

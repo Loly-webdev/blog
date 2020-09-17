@@ -8,10 +8,9 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end text-uppercase" id="navbarSupportedContent">
         <ul class="navbar-nav">
-            <li id="home" class="nav-item">
+            <li id="home" class="active nav-item">
                 <a class="nav-link" href="/home">
                     <span class="fas fa-home"></span>
-                    <span class="sr-only">(current)</span>
                     Accueil
                 </a>
             </li>
@@ -27,18 +26,18 @@
                     Contact
                 </a>
             </li>
-            <li id="register" class="nav-item">
-                <a class="nav-link" href="/register">
-                    <span class="fas fa-file-signature"></span>
-                    Inscription
-                </a>
-            </li>
-            <li id="authentication" class="nav-item">
-                <a class="nav-link" href="/authentication">
-                    <span class="fas fa-sign-in-alt"></span>
-                    Connexion
-                </a>
-            </li>
         </ul>
+        <div class="text-center m-1">
+            <a id="register" href="/register" class="btn btn-outline-primary">
+                <span class="fas fa-file-signature"></span>
+                Inscription
+            </a>
+        </div>
+        <div class="text-center m-1">
+            <a id="authentication" href="/authentication" class="btn btn-outline-success">
+                <span class="fas fa-sign-in-alt"></span>
+                Connection
+            </a>
+        </div>
     </div>
 </nav>
