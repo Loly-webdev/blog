@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use LogicException;
+
 /**
  * Class Request
  * @package Core
@@ -68,7 +70,7 @@ final class Request
         $param = $this->getParam($param, false);
 
         if (false === $param) {
-            throw new \LogicException("L'argument fourni n'est pas valide.");
+            throw new LogicException("L'argument fourni n'est pas valide.");
         }
 
         return (int)$param;

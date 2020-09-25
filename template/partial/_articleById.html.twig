@@ -1,62 +1,58 @@
- <div class="p-4 mt-5 rounded bg-blue shadow">
-        <h2 class="text-uppercase">{{ article.title }}</h2>
-        <div class="p-2 mt-3 mx-2 bg-light rounded-top">
-            <p class="h5 font-weight-bold">
-                {{ article.hat }}
-            </p>
-        </div>
-        <div class="p-3 mb-3 mx-2 bg-white text-dark rounded-bottom">
-            <p class="h5">
-                {{ article.content }}
-            </p>
-        </div>
-        <div class="py-2 my-3 mx-auto w-75 border-top border-bottom border-info">
-            <p class="h6 text-secondary font-italic">
-                <span class="h5 font-weight-bold text-info font-italic">{{ article.author }}</span>
-                <span class="font-weight-bold">, le : </span>{{ article.createdAt|date("m/d/Y") }}
-                <br>
-                <span class="font-weight-bold">Dernière modification le : </span>{{ article.updatedAt|date("m/d/Y") }}
-            </p>
-        </div>
+<div class="card col p-0 my-5 shadow">
+    <div class="card-header">
+        <h4 class="card-title text-uppercase">{{ article.title }}</h4>
     </div>
-    {% if comments %}
-        <div class="panel-group bg-light shadow rounded" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading p-2 mt-3 mx-auto"
-                     role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                        <a class="text-decoration-none text-info font-weight-bold" role="button"
-                           data-toggle="collapse"
-                           data-parent="#accordion" href="#collapseOne"
-                           aria-expanded="true" aria-controls="collapseOne">
-                            <span class="fas fa-angle-double-down"></span>
-                            Voir les commentaires
-                            <span class="fas fa-angle-double-down"></span>
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                     aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        {% for comment in comments %}
-                            {% if comment.approved == 'oui' %}
-                                <div class="p-3 my-3 rounded bg-blue shadow">
-                                    <p class="h5 p-3 mb-3 mx-2 bg-white rounded">
+    <div class="card-body bg-blue">
+        <h5 class="card-subtitle mb-2 text-muted font-weight-bold">{{ article.hat }}</h5>
+        <p class="card-text h5">
+            {{ article.content }}
+        </p>
+    </div>
+    <div class="card-footer text-muted">
+        <span class="h5 font-weight-bold text-info font-italic">{{ article.author }}</span>
+        <span class="font-weight-bold">, le : </span>{{ article.createdAt|date("d/m/Y") }}
+        <br>
+        <span class="font-weight-bold">Dernière modification le : </span>{{ article.updatedAt|date("d/m/Y") }}
+    </div>
+</div>
+{% if comments %}
+    <div class="panel-group bg-light shadow rounded" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading p-2 mt-3 mx-auto"
+                 role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a class="text-decoration-none text-info font-weight-bold" role="button"
+                       data-toggle="collapse"
+                       data-parent="#accordion" href="#collapseOne"
+                       aria-expanded="true" aria-controls="collapseOne">
+                        <span class="fas fa-angle-double-down"></span>
+                        Voir les commentaires
+                        <span class="fas fa-angle-double-down"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                 aria-labelledby="headingOne">
+                <div class="panel-body">
+                    {% for comment in comments %}
+                        {% if comment.approved == 'oui' %}
+                            <div class="card my-2 shadow">
+                                <div class="card-body bg-blue">
+                                    <p class="card-text h5">
                                         {{ comment.content }}
                                     </p>
-                                    <div class="py-2 my-3 mx-auto w-75 border-top border-bottom border-info">
-                                        <p class="h6 text-secondary font-italic">
-                                            <span class="h5 font-weight-bold text-info font-italic">{{ comment.author }}</span>
-                                            <span class="font-weight-bold">, le : </span>{{ comment.createdAt|date("m/d/Y") }}
-                                            <br>
-                                            <span class="font-weight-bold">Dernière modification le : </span>{{ comment.updatedAt|date("m/d/Y") }}
-                                        </p>
-                                    </div>
                                 </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                                <div class="card-footer text-muted">
+                                    <span class="h5 font-weight-bold text-info font-italic">{{ comment.author }}</span>
+                                    <span class="font-weight-bold">, le : </span>{{ comment.createdAt|date("d/m/Y") }}
+                                    <br>
+                                    <span class="font-weight-bold">Dernière modification le : </span>{{ comment.updatedAt|date("d/m/Y") }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
-    {% endif %}
+    </div>
+{% endif %}
