@@ -28,7 +28,7 @@ class BlogController extends DefaultAbstractController
         $articles = (new ArticleRepository())->find();
 
         if ($this->isLogged()) {
-            $this->redirectTo('articleAdmin');
+            $this->redirectTo('article');
         }
 
         $this->renderView(
@@ -63,8 +63,13 @@ class BlogController extends DefaultAbstractController
      */
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
-        // Load comments associate to the articleId
-        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
+        $comments         = (new CommentRepository())->search(
+            [
+                'approved' => 'oui',
+                'articleId' => $entity->getId()
+            ]
+        );
+
         $data['comments'] = $comments;
 
         return $data;

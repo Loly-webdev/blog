@@ -88,7 +88,7 @@ abstract class FormValidatorAbstract
         foreach ($fieldsToValidate as $fieldToValidate) {
             // If the required field is empty or null in the form 'populated' then we stop
             if (false === isset($formValues[$fieldToValidate]) || '' === $formValues[$fieldToValidate]) {
-                //$this->addError($this->getFormName(), $fieldToValidate);
+                $this->addError($fieldToValidate);
                 return false;
             }
         }
@@ -104,14 +104,18 @@ abstract class FormValidatorAbstract
     }
 
     /**
-     * @param string $getFormName
-     * @param string $fieldToValidate
+     * @param string $fieldNameInvalid
      *
      * @return array
      */
-    public function addError(string $getFormName, string $fieldToValidate): array
+    public function addError(string $fieldNameInvalid): array
     {
-        return [$getFormName => $fieldToValidate];
+        $error   = "Le champ $fieldNameInvalid : n'est pas correctement rempli.";
+
+        return [
+            'status'        => 'danger',
+            'statusMessage' => $error
+        ];
     }
 
     /**
@@ -127,8 +131,7 @@ abstract class FormValidatorAbstract
      */
     public function getErrors(): array
     {
-        return [
-        ];
+        return $this->formErrors;
     }
 
 }

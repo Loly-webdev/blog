@@ -72,6 +72,7 @@ class AuthenticationController extends DefaultAbstractController
     {
         Session::setValue('logged', true);
         Session::setValue('id', $user->getId());
+        Session::setValue('role', $user->getRole());
     }
 
     /**

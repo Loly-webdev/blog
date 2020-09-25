@@ -18,15 +18,16 @@
   "require": {
     "twig/twig": "^2.0",
     "ext-pdo": "*",
-    "symfony/var-dumper": "^5.0",
     "ext-yaml": "*",
     "ext-dom": "*",
     "twbs/bootstrap": "5.0.0-alpha1",
-    "ext-mysqli": "*"
+    "ext-mysqli": "*",
+    "symfony/console": "^5.1"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
-    "phpstan/phpstan": "^0.12.19"
+    "phpstan/phpstan": "^0.12.19",
+    "symfony/var-dumper": "^5.1"
   },
   "scripts": {
     "post-install-cmd": [

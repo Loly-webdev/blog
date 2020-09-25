@@ -17,7 +17,11 @@
     </div>
 </main>
 <footer class="fixed-bottom bg-dark text-secondary">
+    {% if session.role == 'admin' %}
     {{ include('back/partial/_footerBack.html.twig') }}
+    {% else %}
+    {{ include('/partial/_footer.html.twig') }}
+    {% endif %}
 </footer>
 </body>
 </html>

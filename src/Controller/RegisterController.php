@@ -17,7 +17,7 @@ use Core\Traits\Controller\AddControllerTrait;
  */
 class RegisterController extends DefaultAbstractController
 {
-    use AddControllerTrait;
+    use AddControllerTrait { AddControllerTrait::postSave as basePostSave; }
 
     public static  $entityLabel = "inscription";
     private static $key         = 'user';
@@ -35,7 +35,7 @@ class RegisterController extends DefaultAbstractController
 
     public function postSave($saved, $entity): void
     {
-        //parent::postSave($saved, $entity);
+        $this->basePostSave($saved, $entity);
 
         if ($saved) {
             $this->mailInfo($entity);

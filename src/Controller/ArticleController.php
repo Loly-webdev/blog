@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-use App\Controller\FormValidator\FormArticleValidator;
-use App\Entity\Article;
 use App\Repository\{ArticleRepository, CommentRepository};
 use Core\DefaultAbstract\{DefaultAbstractEntity, LoggedAbstractController};
 use Core\Exception\CoreException;
-use Core\Traits\Controller\{AddControllerTrait, DeleteControllerTrait, EditControllerTrait, SeeControllerTrait};
+use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
 /**
@@ -73,21 +71,6 @@ class ArticleController extends LoggedAbstractController
         $data['comments'] = $comments;
 
         return $data;
-    }
-
-    /**
-     * Give params to addAction
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getAddParam(): array
-    {
-        return [
-            new FormArticleValidator(),
-            new Article(),
-            new ArticleRepository(),
-            'admin/article/formArticle.html.twig'
-        ];
     }
 
     /**

@@ -7,6 +7,7 @@ use Core\DefaultControllerInterface;
 use Core\Exception\CoreException;
 use Core\Provider\TwigProvider;
 use Core\Request;
+use Core\Session;
 
 /**
  * Class DefaultAbstractController
@@ -80,7 +81,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         $defaultPath = VIEW_ROOT;
         $viewFolder  = $viewFolder ?? $this->getFolderView();
         $view        = TwigProvider::getTwig()
-                                   ->render($viewFolder . $viewName, $params);
+                                   ->render($viewFolder . $viewName, $params+['session'=>Session::getData()]);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {

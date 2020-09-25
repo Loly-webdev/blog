@@ -16,6 +16,7 @@ trait AddControllerTrait
 {
     /**
      * Insert action of controller
+     * @throws Exception
      */
     public function addAction(): void
     {
@@ -88,7 +89,7 @@ trait AddControllerTrait
     public function preSave(?array $formValues, $entity): void
     {
         if (method_exists($this, 'postHydrate')) {
-            $this->postHydrate($entity);
+            $this->postHydrate($formValues, $entity);
         }
 
         if ($entity->hasId()) {
