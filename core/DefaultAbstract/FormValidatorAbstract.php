@@ -90,15 +90,19 @@ abstract class FormValidatorAbstract
             // If the required field is empty or null in the form 'populated' then we stop
             if ((false === isset($formValues[$fieldToValidate])) || ('' === $formValues[$fieldToValidate])) {
                 $this->addError($fieldToValidate, $errorMessage);
+
+                $isValid = false;
             }
         }
 
         $tokenValid = Session::isValidToken($this->getFormName(), $formValues['token']);
         if (false === $tokenValid) {
             $this->addError('token', 'Une erreur s\'est produite, merci de rafraichir la page.');
+
+            $isValid = false;
         }
 
-       return true;
+       return $isValid ?? true;
     }
 
     /**
