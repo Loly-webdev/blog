@@ -95,7 +95,7 @@ abstract class FormValidatorAbstract
 
         $tokenValid = Session::isValidToken($this->getFormName(), $formValues['token']);
         if (false === $tokenValid) {
-            $this->addError('', 'Une erreur s\'est produite, merci de rafraichir la page.');
+            $this->addError('token', 'Une erreur s\'est produite, merci de rafraichir la page.');
         }
 
        return true;

@@ -37,6 +37,8 @@ class AuthenticationController extends DefaultAbstractController
     {
         $formValidator = new FormAuthenticationValidator();
         $token         = Session::generateToken(static::$key);
+        $status  = "danger";
+        $message = "Echec de l'authentification.\n";
 
         if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
 
@@ -48,11 +50,7 @@ class AuthenticationController extends DefaultAbstractController
                 // Redirect to userAdminController
                 $this->redirectTo('user');
             }
-
-            $status  = "danger";
-            $message = "Echec de l'authentification.\n";
         }
-
         $errors = implode(" ", $formValidator->getErrors()) . "\n";
 
         $this->renderView(
