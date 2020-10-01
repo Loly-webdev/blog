@@ -37,9 +37,7 @@ class Helper
      */
     public static function encodePassword(string $password)
     {
-        $salt = ConfigurationProvider::getInstance()->getSalt();
-
-        return password_hash($password . $salt, PASSWORD_ARGON2ID);
+        return password_hash($password, PASSWORD_ARGON2ID);
     }
 
     /**
@@ -53,8 +51,6 @@ class Helper
         string $passwordUser
     ): bool
     {
-        $salt = ConfigurationProvider::getInstance()->getSalt();
-
-        return password_verify($passwordSubmitted . $salt, $passwordUser);
+        return password_verify($passwordSubmitted, $passwordUser);
     }
 }

@@ -20,7 +20,7 @@ class TwigProvider
     public static function getTwig()
     {
         $config = ConfigurationProvider::getInstance();
-        $debug  = $config::getTwigConfig();
+        $debug  = $config::getTwigConfig()['debug'];
 
         if (null === static::$twig) {
             $loader       = new FilesystemLoader('template/');

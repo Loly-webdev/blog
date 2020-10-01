@@ -40,6 +40,7 @@ class AuthenticationController extends DefaultAbstractController
 
         if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
 
+            //dump(AccountService::retrieveAccount($formValidator->getFormValues()));
             if (null !== $user = AccountService::retrieveAccount($formValidator->getFormValues())) {
                 assert($user instanceof User);
                 $this->addUserInSession($user);
@@ -49,8 +50,10 @@ class AuthenticationController extends DefaultAbstractController
             }
 
             $status  = "danger";
-            $message = "Echec de l'authentification";
+            $message = "Echec de l'authentification.\n";
         }
+
+        $errors = implode(" ", $formValidator->getErrors()) . "\n";
 
         $this->renderView(
             'formAuthentication.html.twig',
@@ -58,7 +61,7 @@ class AuthenticationController extends DefaultAbstractController
                 'status'        => $status ?? '',
                 'statusMessage' => $message ?? '',
                 'tokenValue'    => $token,
-                // 'errors' => $formValidator->getErrors() ?? ['']
+                'errors'        => $errors ?? ''
             ]
         );
     }

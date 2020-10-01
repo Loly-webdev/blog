@@ -2,10 +2,10 @@
     <span class="far fa-newspaper"></span>
     Derniers billets du blog :
 </h2>
-<div class="container mx-auto">
+<div class="card-deck mx-auto">
     <div class="row">
         {% for article in articles %}
-            <div class="card col-md p-0 my-3 mx-2">
+            <div class="card col-md p-0 m-2">
                 <div class="card-header">
                     <h4 class="card-title text-uppercase">{{ article.title }}</h4>
                 </div>
