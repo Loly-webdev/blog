@@ -79,14 +79,6 @@ class ConfigurationProvider
     /**
      * @return string
      */
-    public function getSalt(): string
-    {
-        return static::$config['salt'] ?? '';
-    }
-
-    /**
-     * @return string
-     */
     public function getMyMail(): string
     {
         return static::$config['myMail'] ?? '';

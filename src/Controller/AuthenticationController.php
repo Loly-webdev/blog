@@ -51,7 +51,6 @@ class AuthenticationController extends DefaultAbstractController
                 $this->redirectTo('user');
             }
         }
-        $errors = implode(" ", $formValidator->getErrors()) . "\n";
 
         $this->renderView(
             'formAuthentication.html.twig',
@@ -59,7 +58,7 @@ class AuthenticationController extends DefaultAbstractController
                 'status'        => $status ?? '',
                 'statusMessage' => $message ?? '',
                 'tokenValue'    => $token,
-                'errors'        => $errors ?? ''
+                'errors'        => $formValidator->getMessageErrors()
             ]
         );
     }

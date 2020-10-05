@@ -10,7 +10,7 @@
                 {% if statusMessage == true %}
                     {{ statusMessage }}
                 {% endif %}
-                {% if errors == true %}
+                {% if errors is not null %}
                     {{ errors }}
                 {% endif %}
             </div>

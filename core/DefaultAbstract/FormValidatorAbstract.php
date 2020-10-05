@@ -83,14 +83,12 @@ abstract class FormValidatorAbstract
         $fieldsToValidate[]  = 'token';
         $formValues          = $this->getFormValues();
         $formValues['token'] = Session::getValue($key);
-        $errorMessage = null;
 
         // We go through the required fields
         foreach ($fieldsToValidate as $fieldToValidate) {
             // If the required field is empty or null in the form 'populated' then we stop
             if ((false === isset($formValues[$fieldToValidate])) || ('' === $formValues[$fieldToValidate])) {
-                $this->addError($fieldToValidate, $errorMessage);
-
+                $this->addError($fieldToValidate, "Une erreur s'est produite sur le champ $fieldToValidate, merci de rafraîchir la page.");
                 $isValid = false;
             }
         }
@@ -98,7 +96,6 @@ abstract class FormValidatorAbstract
         $tokenValid = Session::isValidToken($this->getFormName(), $formValues['token']);
         if (false === $tokenValid) {
             $this->addError('token', 'Une erreur s\'est produite, merci de rafraichir la page.');
-
             $isValid = false;
         }
 
@@ -115,11 +112,21 @@ abstract class FormValidatorAbstract
 
     /**
      * @param string $fieldNameInvalid
-     * @param        $errorMessage
+     * @param string $errorMessage
      */
-    public function addError(string $fieldNameInvalid, $errorMessage): void
+    public function addError(string $fieldNameInvalid, string $errorMessage): void
     {
         $this->formErrors[$fieldNameInvalid] = $errorMessage;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessageErrors(): ?string
+    {
+        return $this->getErrors()
+            ? implode(" ", $this->getErrors()). "\n"
+            : null;
     }
 
     /**

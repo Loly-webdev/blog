@@ -52,15 +52,13 @@ class ContactController extends DefaultAbstractController
         $key   = 'contact';
         $token = Session::generateToken($key);
 
-        $errors = implode(" ", $formValidator->getErrors()) . "\n";
-
         $this->renderView(
             'contact.html.twig',
             [
                 'user'       => $user ?? new User(),
                 'status'     => $status ?? [''],
                 'tokenValue' => $token,
-                'errors'     => $errors ?? ''
+                'errors'     => $formValidator->getMessageErrors()
             ],
             $viewFolder ?? 'front/'
         );
