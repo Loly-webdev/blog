@@ -81,13 +81,16 @@ class CommentController extends LoggedAbstractController
     }
 
     /**
-     * @param Comment $entity
+     * @param Comment    $entity
      * @param array|null $formValues
      *
      * @return void
      * @throws CoreException
      */
-    public function postHydrate(?array $formValues,Comment $entity): void
+    public function postHydrate(
+        ?array $formValues,
+        Comment $entity
+    ): void
     {
         $entity->setArticleId(
             $this->getRequest()->getParamAsInt('articleId')

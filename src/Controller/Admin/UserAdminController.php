@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
+use Core\Traits\Controller\AddUserControllerTrait;
 use Core\Traits\Controller\DeleteControllerTrait;
 use Core\Traits\Controller\EditControllerTrait;
 use Exception;
@@ -21,13 +22,13 @@ class UserAdminController extends LoggedAbstractController
 {
     use AddControllerTrait,
         EditControllerTrait,
-        DeleteControllerTrait;
+        DeleteControllerTrait,
+        AddUserControllerTrait;
 
     /**
      * @var string
      */
-    public static  $entityLabel = "utilisateur";
-    private static $key         = 'user';
+    public static $entityLabel = "utilisateur";
 
     /**
      * Action by default
@@ -93,6 +94,11 @@ class UserAdminController extends LoggedAbstractController
         ];
     }
 
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
     public function preDelete(array $viewData): array
     {
         $viewData['page']     = '/Admin/userAdmin/userList?_page=1';

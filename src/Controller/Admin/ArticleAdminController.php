@@ -58,6 +58,9 @@ class ArticleAdminController extends LoggedAbstractController
         ];
     }
 
+    /**
+     * @param $entity
+     */
     public function postSave($entity): void
     {
         $this->mailFunction($entity);
@@ -106,6 +109,11 @@ class ArticleAdminController extends LoggedAbstractController
         ];
     }
 
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
     public function preDelete(array $viewData): array
     {
         $viewData['page']     = '/Admin/articleAdmin?_page=1';

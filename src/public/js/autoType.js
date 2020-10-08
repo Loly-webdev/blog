@@ -1,5 +1,4 @@
 /* ANIMATION TITLE */
-
 function autoType(elementClass, typingSpeed) {
     let typed = $(elementClass);
     typed.css({
@@ -8,8 +7,11 @@ function autoType(elementClass, typingSpeed) {
     });
     typed.prepend('<div class="cursor" style="right: initial; left:0;"></div>');
     typed = typed.find(".text-js");
-    const text = typed.text().trim().split('');
-    const amntOfChars = text.length;
+
+    const
+        text = typed.text().trim().split(''),
+        amntOfChars = text.length;
+
     let newString = "";
     typed.text("|");
     setTimeout(function () {

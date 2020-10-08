@@ -37,8 +37,8 @@ class AuthenticationController extends DefaultAbstractController
     {
         $formValidator = new FormAuthenticationValidator();
         $token         = Session::generateToken(static::$key);
-        $status  = "danger";
-        $message = "Echec de l'authentification.\n";
+        $status        = "danger";
+        $message       = "Echec de l'authentification.\n";
 
         if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
 

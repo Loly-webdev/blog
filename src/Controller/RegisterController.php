@@ -6,10 +6,10 @@ use App\Controller\FormValidator\FormRegisterValidator;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\Email;
-use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
+use Core\Traits\Controller\AddUserControllerTrait;
 
 /**
  * Class RegisterController
@@ -17,10 +17,12 @@ use Core\Traits\Controller\AddControllerTrait;
  */
 class RegisterController extends DefaultAbstractController
 {
-    use AddControllerTrait { AddControllerTrait::postSave as basePostSave; }
+    use AddUserControllerTrait,
+        AddControllerTrait {
+        AddControllerTrait::postSave as basePostSave;
+    }
 
-    public static  $entityLabel = "inscription";
-    private static $key         = 'user';
+    public static $entityLabel = "inscription";
 
     /**
      * Action by default
@@ -33,6 +35,10 @@ class RegisterController extends DefaultAbstractController
         );
     }
 
+    /**
+     * @param $saved
+     * @param $entity
+     */
     public function postSave($saved, $entity): void
     {
         $this->basePostSave($saved, $entity);
@@ -72,40 +78,5 @@ class RegisterController extends DefaultAbstractController
             new UserRepository(),
             'formRegister.html.twig'
         ];
-    }
-
-    /**
-     * @param      $formValues
-     * @param User $entity
-     *
-     * @throws CoreException
-     */
-    public function postHydrate($formValues, User $entity): void
-    {
-        $entity->setRole($entity->role());
-        $this->check($formValues, $entity);
-    }
-
-    /**
-     * @param array|mixed[] $formValues
-     * @param object        $entity
-     *
-     * @throws CoreException
-     */
-    public function check(array $formValues, object $entity): void
-    {
-        $email    = $formValues['mail'] ?? '';
-        $password = $formValues['password'] ?? '';
-
-        if (false === Helper::checkEmail($email)) {
-            throw new CoreException("l'adresse $email n'est pas valide");
-        }
-
-        if ($formValues['password'] !== $formValues['password2']) {
-            throw new CoreException("Les deux mot de passe ne sont pas identique");
-        }
-
-        $entity->setMail($email)
-               ->setPassword($password);
     }
 }

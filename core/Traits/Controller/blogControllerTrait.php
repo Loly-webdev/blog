@@ -35,9 +35,9 @@ trait blogControllerTrait
     public function preRenderView(array $data, DefaultAbstractEntity $entity): array
     {
         // Load comments associate to the articleId
-        $comments         = (new CommentRepository())->search(
+        $comments = (new CommentRepository())->search(
             [
-                'approved' => 'oui',
+                'approved'  => 'oui',
                 'articleId' => $entity->getId()
             ]
         );

@@ -8,11 +8,12 @@
         {% if status == true %}
             <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
         {% endif %}
-        <form action="/register/add" method="POST" class="needs-validation p-4 starter-template rounded shadow" novalidate>
+        <form action="/register/add" method="POST" class="needs-validation p-4 starter-template rounded shadow"
+              novalidate>
             <div class="col">
                 {{ include('partial/_formRegister.html.twig') }}
-            <button type="submit" class="p-2 mt-4 btn btn-success">
-                     Envoyer
+                <button type="submit" class="p-2 mt-4 btn btn-success">
+                    Envoyer
                     <span class="fas fa-share"></span>
                 </button>
             </div>

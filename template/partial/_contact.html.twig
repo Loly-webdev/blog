@@ -12,7 +12,8 @@
                 <div class="form-group col-md-6">
                     <label for="name" class="mt-3 mb-2 text-secondary font-weight-bold">Nom :</label>
                     {% if session.logged == true %}
-                        <input class="form-control-plaintext text-center font-weight-bold h5 text-info" id="name" name="contact[nameUser]" placeholder="Nom" type="text"
+                        <input class="form-control-plaintext text-center font-weight-bold h5 text-info" id="name"
+                               name="contact[nameUser]" placeholder="Nom" type="text"
                                value="{{ user . login }}"
                                readonly/>
                     {% else %}
@@ -26,7 +27,8 @@
                 <div class="form-group col-md-6">
                     <label for="email" class="mt-3 mb-2 text-secondary font-weight-bold">E-mail :</label>
                     {% if session.logged == true %}
-                        <input class="form-control-plaintext text-center font-weight-bold h5 text-info" id="email" name="contact[email]" placeholder="Email" type="email"
+                        <input class="form-control-plaintext text-center font-weight-bold h5 text-info" id="email"
+                               name="contact[email]" placeholder="Email" type="email"
                                value="{{ user . mail }}"
                                readonly/>
                     {% else %}

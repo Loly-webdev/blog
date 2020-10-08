@@ -99,7 +99,7 @@ abstract class FormValidatorAbstract
             $isValid = false;
         }
 
-       return $isValid ?? true;
+        return $isValid ?? true;
     }
 
     /**
@@ -125,16 +125,8 @@ abstract class FormValidatorAbstract
     public function getMessageErrors(): ?string
     {
         return $this->getErrors()
-            ? implode(" ", $this->getErrors()). "\n"
+            ? implode(" ", $this->getErrors()) . "\n"
             : null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSubmitted(): bool
-    {
-        return null !== Request::getInstance()->getParam($this->getFormName());
     }
 
     /**
@@ -143,5 +135,13 @@ abstract class FormValidatorAbstract
     public function getErrors(): array
     {
         return $this->formErrors;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSubmitted(): bool
+    {
+        return null !== Request::getInstance()->getParam($this->getFormName());
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\utils;
 
-use Core\Provider\ConfigurationProvider;
-
 /**
  * Class Helper
  * @package App\utils

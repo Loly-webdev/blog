@@ -39,7 +39,10 @@ final class Session
      *
      * @return void
      */
-    public static function setValue(string $key, $value): void
+    public static function setValue(
+        string $key,
+        $value
+    ): void
     {
         $_SESSION[$key] = $value;
     }
@@ -53,7 +56,10 @@ final class Session
      *
      * @return bool
      */
-    public static function isValidToken($key, $value): bool
+    public static function isValidToken(
+        $key,
+        $value
+    ): bool
     {
         $isValidToken = static::getValue($key) === $value;
 
@@ -72,7 +78,10 @@ final class Session
      *
      * @return mixed|null
      */
-    public static function getValue(string $key, $defaultValue = null)
+    public static function getValue(
+        string $key,
+        $defaultValue = null
+    )
     {
         $data = static::getData();
 

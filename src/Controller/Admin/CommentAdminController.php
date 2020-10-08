@@ -72,10 +72,15 @@ class CommentAdminController extends LoggedAbstractController
         ];
     }
 
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
     public function preDelete(array $viewData): array
     {
-        $viewData['page'] = '/Admin/commentAdmin?_page=1';
-        $viewData['namePage'] = 'Retour à la liste des commentaires';
+        $viewData['page']     = '/Admin/userAdmin?_page=1';
+        $viewData['namePage'] = 'Retour à la liste des commentaires à approuver';
 
         return $viewData;
     }

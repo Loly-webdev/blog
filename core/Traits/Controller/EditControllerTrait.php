@@ -49,7 +49,7 @@ trait EditControllerTrait
         }
 
         $entity = $repository->findOneById($entityId);
-        $data = $this->getRequest()->getParam($entityName);
+        $data   = $this->getRequest()->getParam($entityName);
 
         if (!isset($entity)) {
             throw new CoreException('Désolé nous rencontrons un problème avec votre demande.');

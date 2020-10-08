@@ -81,7 +81,7 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         $defaultPath = VIEW_ROOT;
         $viewFolder  = $viewFolder ?? $this->getFolderView();
         $view        = TwigProvider::getTwig()
-                                   ->render($viewFolder . $viewName, $params+['session'=>Session::getData()]);
+                                   ->render($viewFolder . $viewName, $params + ['session' => Session::getData()]);
 
         //check if the view exist or return of exception
         if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
