@@ -38,3 +38,6 @@ you can check requirements on :
 ## For Argon2iD to have PHP 7.4
 
 ## Please change data to env.yml
+
+## Please charge database 
+with le file : 'blog.sql' in 'config/bdd/blog.sql'
