@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\Traits\Entity\blogEntityTrait;
 
 /**
  * Class comment
@@ -10,9 +11,8 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
  */
 class Comment extends DefaultAbstractEntity
 {
+    use blogEntityTrait;
 
-    protected $author    = '';
-    protected $content   = '';
     protected $articleId = '';
     protected $approved  = 'non';
 
@@ -37,14 +37,6 @@ class Comment extends DefaultAbstractEntity
     }
 
     /**
-     * @return string
-     */
-    public function getAuthor(): string
-    {
-        return $this->author;
-    }
-
-    /**
      * @param string $author
      *
      * @return Comment
@@ -54,14 +46,6 @@ class Comment extends DefaultAbstractEntity
         $this->author = $author;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
     }
 
     /**
