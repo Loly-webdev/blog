@@ -63,43 +63,6 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     }
 
     /**
-     * Method to see the views of the site
-     *
-     * @param string      $viewName
-     * @param array       $params
-     * @param string|null $viewFolder
-     *
-     * @return void
-     * @throws CoreException
-     */
-    public function renderView(
-        string $viewName,
-        array $params = [],
-        string $viewFolder = null
-    ): void
-    {
-        $defaultPath = VIEW_ROOT;
-        $viewFolder  = $viewFolder ?? $this->getFolderView();
-        $view        = TwigProvider::getTwig()
-                                   ->render($viewFolder . $viewName, $params + ['session' => Session::getData()]);
-
-        //check if the view exist or return of exception
-        if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
-            throw new CoreException("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
-        }
-        echo $view;
-    }
-
-    /**
-     * Path to repository of views
-     * @return string
-     */
-    public function getFolderView(): string
-    {
-        return 'front/';
-    }
-
-    /**
      * redirect method
      *
      * @param string $route
@@ -140,5 +103,66 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
         $data['paginationPath'] = $paginationPath;
 
         return $data;
+    }
+
+    /**
+     * @param string $message
+     * @param string $viewName
+     *
+     * @return array|null
+     * @throws CoreException
+     */
+    public function errorFlashMessage(
+        string $message,
+        string $viewName
+    ): ?array
+    {
+        $viewData = [
+            'status'        => 'danger',
+            'statusMessage' => $message
+        ];
+
+        $this->renderView(
+            $viewName,
+            $viewData
+        );
+        exit();
+    }
+
+    /**
+     * Method to see the views of the site
+     *
+     * @param string      $viewName
+     * @param array       $params
+     * @param string|null $viewFolder
+     *
+     * @return void
+     * @throws CoreException
+     */
+    public function renderView(
+        string $viewName,
+        array $params = [],
+        string $viewFolder = null
+    ): void
+    {
+        $defaultPath = VIEW_ROOT;
+        $viewFolder  = $viewFolder ?? $this->getFolderView();
+        $view        = TwigProvider::getTwig()
+                                   ->render($viewFolder . $viewName, $params + ['session' => Session::getData()]);
+
+        //check if the view exist or return of exception
+        if (false === file_exists($defaultPath . $viewFolder . $viewName)) {
+            throw new CoreException("La vue $defaultPath . $viewFolder . $viewName n'existe pas.");
+        }
+        echo $view;
+    }
+
+    /**
+     * Path to repository of views
+     * @return string
+     */
+    public function getFolderView(): string
+    {
+        return 'front/';
     }
 }

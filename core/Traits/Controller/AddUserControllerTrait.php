@@ -35,36 +35,22 @@ trait AddUserControllerTrait
         $email    = $formValues['mail'] ?? '';
         $password = $formValues['password'] ?? '';
 
+        $viewName = 'formRegister.html.twig';
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+            $viewName = 'admin/user/formUser.html.twig';
+        }
+
         if (false === Helper::checkEmail($email)) {
             $message = "l'adresse $email n'est pas valide";
-            $this->errorMessage($message);
-
-            exit();
+            $this->errorFlashMessage($message, $viewName);
         }
 
         if ($formValues['password'] !== $formValues['password2']) {
             $message = "Les mots de passe ne sont pas identique";
-            $this->errorMessage($message);
-
-            exit();
+            $this->errorFlashMessage($message, $viewName);
         }
 
         $entity->setMail($email)
                ->setPassword($password);
-    }
-
-    public function errorMessage(string $message): ?array
-    {
-        $viewData = [
-            'status'        => 'danger',
-            'statusMessage' => $message,
-            'page'          => '/Admin/userAdmin/userList?_page=1',
-            'namePage'      => 'Retour à la liste des membres'
-        ];
-
-        return $this->renderView(
-            'admin/message.html.twig',
-            $viewData
-        );
     }
 }
