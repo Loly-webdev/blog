@@ -35,22 +35,17 @@ class ContactController extends DefaultAbstractController
         }
 
         $formValidator = new FormContactValidator();
-
         if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
             $formValues = $formValidator->getFormValues();
             $nameUser   = Helper::secureText($formValues['nameUser']);
             $emailUser  = $formValues['email'] ?? '';
 
-            if (false === Helper::checkEmail($emailUser)) {
-                $formValidator->addError('emailUser', "l'adresse $emailUser n'est pas valide");
-            }
-
+            $this->mailValid($formValidator, $emailUser);
             $fields = $this->prepareFields($formValues, $nameUser, $emailUser);
             $status = static::statusMessage($emailUser, $fields['subject'], $fields['message']);
         }
 
-        $key   = 'contact';
-        $token = Session::generateToken($key);
+        $token = Session::generateToken('contact');
 
         $this->renderView(
             'contact.html.twig',
@@ -106,5 +101,16 @@ class ContactController extends DefaultAbstractController
             'Le mail à été envoyé avec succès',
             'une erreur est survenue, le mail n\'a pas pu être envoyé'
         );
+    }
+
+    /**
+     * @param $formValidator
+     * @param $emailUser
+     */
+    public function mailValid($formValidator, $emailUser): void
+    {
+            if (false === Helper::checkEmail($emailUser)) {
+                $formValidator->addError('emailUser', "l'adresse $emailUser n'est pas valide");
+        }
     }
 }
