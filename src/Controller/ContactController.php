@@ -8,6 +8,7 @@ use App\Service\Email;
 use App\Service\Message;
 use App\utils\Helper;
 use Core\DefaultAbstract\DefaultAbstractController;
+use Core\DefaultAbstract\FormValidatorAbstract;
 use Core\Exception\CoreException;
 use Core\Session;
 use Exception;
@@ -104,10 +105,10 @@ class ContactController extends DefaultAbstractController
     }
 
     /**
-     * @param $formValidator
-     * @param $emailUser
+     * @param FormValidatorAbstract $formValidator
+     * @param string $emailUser
      */
-    public function mailValid($formValidator, $emailUser): void
+    public function mailValid(FormValidatorAbstract $formValidator, string $emailUser): void
     {
             if (false === Helper::checkEmail($emailUser)) {
                 $formValidator->addError('emailUser', "l'adresse $emailUser n'est pas valide");

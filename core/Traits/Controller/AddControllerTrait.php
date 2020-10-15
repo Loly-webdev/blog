@@ -82,7 +82,7 @@ trait AddControllerTrait
 
     /**
      * @param array|null $formValues
-     * @param            $entity
+     * @param DefaultAbstractEntity $entity
      *
      * @return void
      */

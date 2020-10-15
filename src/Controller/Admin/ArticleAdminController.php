@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Controller\FormValidator\FormArticleValidator;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
@@ -59,9 +60,9 @@ class ArticleAdminController extends LoggedAbstractController
     }
 
     /**
-     * @param $entity
+     * @param DefaultAbstractEntity $entity
      */
-    public function postSave($entity): void
+    public function postSave(DefaultAbstractEntity $entity): void
     {
         $this->mailFunction($entity);
     }

@@ -74,13 +74,13 @@ final class Session
      * and returns the value or returns the default value.
      *
      * @param string $key
-     * @param null   $defaultValue
+     * @param bool   $defaultValue
      *
      * @return mixed|null
      */
     public static function getValue(
         string $key,
-        $defaultValue = null
+        $defaultValue = false
     )
     {
         $data = static::getData();

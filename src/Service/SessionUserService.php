@@ -17,7 +17,7 @@ final class SessionUserService
      */
     public static function hasLogged(): bool
     {
-        return Session::getValue('logged', false);
+        return Session::getValue('logged');
     }
 
     /**

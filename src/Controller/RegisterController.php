@@ -36,10 +36,10 @@ class RegisterController extends DefaultAbstractController
     }
 
     /**
-     * @param $saved
-     * @param $entity
+     * @param mixed $saved
+     * @param User $entity
      */
-    public function postSave($saved, $entity): void
+    public function postSave($saved, User $entity): void
     {
         $this->basePostSave($saved, $entity);
 
@@ -49,7 +49,7 @@ class RegisterController extends DefaultAbstractController
     }
 
     /**
-     * @param $entity
+     * @param User $entity
      *
      * @return bool
      */
