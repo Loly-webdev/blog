@@ -37,12 +37,11 @@ class AuthenticationController extends DefaultAbstractController
     {
         $formValidator = new FormAuthenticationValidator();
         $token         = Session::generateToken(static::$key);
-        $status        = "danger";
+        $status        = 'danger';
         $message       = "Echec de l'authentification.\n";
 
-        if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
+        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
-            //dump(AccountService::retrieveAccount($formValidator->getFormValues()));
             if (null !== $user = AccountService::retrieveAccount($formValidator->getFormValues())) {
                 assert($user instanceof User);
                 $this->addUserInSession($user);

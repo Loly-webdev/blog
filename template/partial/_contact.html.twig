@@ -3,7 +3,7 @@
     Contactez-moi :
 </h3>
 <div class="container mb-5">
-    {% if status.status == true %}
+    {% if status.status is not empty %}
         <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
     {% endif %}
     <form action="" method="POST" class="needs-validation p-4 starter-template rounded shadow" novalidate>

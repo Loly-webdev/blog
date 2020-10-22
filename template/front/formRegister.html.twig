@@ -5,7 +5,7 @@
         Inscription :
     </h3>
     <div class="container mb-5">
-        {% if status == true %}
+        {% if status is not empty %}
             <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
         {% endif %}
         <form action="/register/add" method="POST" class="needs-validation p-4 starter-template rounded shadow"

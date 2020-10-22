@@ -4,7 +4,7 @@
         <span class="far fa-newspaper"></span>
         Modification de l'article : {{ article.title }}
     </h3>
-    {% if status == true %}
+    {% if status is not empty %}
         <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
     {% endif %}
     <form action="" method="POST" class="p-4 starter-template rounded shadow">
