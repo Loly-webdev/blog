@@ -117,4 +117,12 @@ class CommentController extends LoggedAbstractController
 
         return Email::sendMail($user->getMail(), $subject, $message);
     }
+
+    /**
+     * @param $entity
+     */
+    public function postSave($entity): void
+    {
+        $this->mailFunction($entity);
+    }
 }

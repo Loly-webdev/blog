@@ -133,6 +133,13 @@ trait AddControllerTrait
      */
     public function postSave($saved, $entity): void
     {
+        if (method_exists($this, 'mailApproved')) {
+            $this->mailApproved();
+        }
+
+        if (method_exists($this, 'mailInfo')) {
+            $this->mailInfo($entity);
+        }
     }
 
     /**

@@ -77,8 +77,8 @@ abstract class FormValidatorAbstract
      */
     public function isValid(): bool
     {
-        $fieldsToValidate    = $this->getFormFieldToValidate();
-        $formValues          = $this->getFormValues();
+        $fieldsToValidate = $this->getFormFieldToValidate();
+        $formValues       = $this->getFormValues();
 
         $tokenValid = Session::isValidToken($this->getFormName());
         if (false === $tokenValid) {

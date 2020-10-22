@@ -37,15 +37,11 @@ class RegisterController extends DefaultAbstractController
 
     /**
      * @param mixed $saved
-     * @param User $entity
+     * @param User  $entity
      */
     public function postSave($saved, User $entity): void
     {
         $this->basePostSave($saved, $entity);
-
-        if ($saved) {
-            $this->mailInfo($entity);
-        }
     }
 
     /**

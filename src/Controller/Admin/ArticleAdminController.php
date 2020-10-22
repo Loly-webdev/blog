@@ -60,14 +60,6 @@ class ArticleAdminController extends LoggedAbstractController
     }
 
     /**
-     * @param $entity
-     */
-    public function postSave($entity): void
-    {
-        $this->mailFunction($entity);
-    }
-
-    /**
      * @param array $data
      *
      * @return array
