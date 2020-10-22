@@ -3,6 +3,7 @@
 namespace Core\Traits\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\utils\Helper;
 use Core\Exception\CoreException;
 
@@ -40,6 +41,8 @@ trait AddUserControllerTrait
             $viewName = 'admin/user/formUser.html.twig';
         }
 
+        $this->checkUserExist($formValues, $viewName, $email);
+
         if (false === Helper::checkEmail($email)) {
             $message = "l'adresse $email n'est pas valide";
             $this->errorFlashMessage($message, $viewName);
@@ -52,5 +55,27 @@ trait AddUserControllerTrait
 
         $entity->setMail($email)
                ->setPassword($password);
+    }
+
+    /**
+     * @param array  $formValues
+     * @param string $viewName
+     * @param string $email
+     */
+    public function checkUserExist(array $formValues, string $viewName, string $email): void
+    {
+        $user = new UserRepository();
+        $login   = $formValues['login'] ?? '';
+        $userByLogin = $user->search(['login'  => $login]);
+        $userByMail = $user->search(['mail'  => $email]);
+
+        if (!empty($userByLogin)) {
+            $message = "Le login $login existe déjà ";
+            $this->errorFlashMessage($message, $viewName);
+        }
+        if (!empty($userByMail)) {
+            $message = "Un compte avec l'adresse $email existe déjà";
+            $this->errorFlashMessage($message, $viewName);
+        }
     }
 }
