@@ -59,7 +59,7 @@ final class Session
     {
         $fieldsToValidate[]  = 'token';
         $formValues['token'] = static::getValue($key);
-        $isValidToken = static::getValue($key) === $formValues['token'];
+        $isValidToken        = static::getValue($key) === $formValues['token'];
 
         if ($isValidToken) {
             unset($_SESSION[$key]);

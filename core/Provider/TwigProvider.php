@@ -34,7 +34,7 @@ class TwigProvider
             );
 
             // To debug
-            if ($debug === true) {
+            if ($debug) {
                 static::$twig->addExtension(new DebugExtension());
             }
         }
