@@ -51,7 +51,7 @@ final class Session
      * verifie si la valeur est bonne
      * et si valid supprime le token apres
      *
-     * @param string $key
+     * @param $key
      *
      * @return bool
      */
@@ -59,7 +59,7 @@ final class Session
     {
         $fieldsToValidate[]  = 'token';
         $formValues['token'] = static::getValue($key);
-        $isValidToken        = static::getValue($key) === $formValues['token'];
+        $isValidToken = static::getValue($key) === $formValues['token'];
 
         if ($isValidToken) {
             unset($_SESSION[$key]);
@@ -72,7 +72,7 @@ final class Session
      * and returns the value or returns the default value.
      *
      * @param string $key
-     * @param bool   $defaultValue
+     * @param $defaultValue
      *
      * @return mixed|null
      */

@@ -81,12 +81,12 @@ trait AddControllerTrait
     }
 
     /**
-     * @param array|null $formValues
+     * @param array|null            $formValues
      * @param DefaultAbstractEntity $entity
      *
      * @return void
      */
-    public function preSave(?array $formValues, $entity): void
+    public function preSave(?array $formValues, DefaultAbstractEntity $entity): void
     {
         if (method_exists($this, 'postHydrate')) {
             $this->postHydrate($formValues, $entity);
