@@ -74,26 +74,24 @@ abstract class DefaultAbstractController implements DefaultControllerInterface
     }
 
     /**
-     * @param $queryValues
-     * @param $data
-     * @param $paginationPath
-     * @param $entityName
+     * @param array  $queryValues
+     * @param array  $data
+     * @param string $paginationPath
+     * @param string $entityName
      *
      * @return array
      */
     public function pagination(
-        $queryValues,
-        $data,
-        $paginationPath,
-        $entityName
+        array $queryValues,
+        array $data,
+        string $paginationPath,
+        string $entityName
     ): array
     {
-        $nbEntity    = count($queryValues);
-        $perPage     = 3;
-        $nbPage      = ceil($nbEntity / $perPage);
-        $currentPage = Request::getInstance()->getParamAsInt('_page');
-
-        $cPage = $currentPage ?? 1;
+        $nbEntity = count($queryValues);
+        $perPage  = 3;
+        $nbPage   = ceil($nbEntity / $perPage);
+        $cPage    = Request::getInstance()->getParamAsInt('_page') ?? 1;
 
         $entities = array_slice($queryValues, ($cPage - 1) * $perPage, $perPage);
 

@@ -16,12 +16,12 @@ trait AddUserControllerTrait
     private static $key = 'user';
 
     /**
-     * @param      $formValues
-     * @param User $entity
+     * @param array $formValues
+     * @param User  $entity
      *
      * @throws CoreException
      */
-    public function postHydrate($formValues, User $entity): void
+    public function postHydrate(array $formValues, User $entity): void
     {
         $entity->setRole($entity->role());
         $this->check($formValues, $entity);
@@ -64,10 +64,10 @@ trait AddUserControllerTrait
      */
     public function checkUserExist(array $formValues, string $viewName, string $email): void
     {
-        $user = new UserRepository();
-        $login   = $formValues['login'] ?? '';
-        $userByLogin = $user->search(['login'  => $login]);
-        $userByMail = $user->search(['mail'  => $email]);
+        $user        = new UserRepository();
+        $login       = $formValues['login'] ?? '';
+        $userByLogin = $user->search(['login' => $login]);
+        $userByMail  = $user->search(['mail' => $email]);
 
         if (!empty($userByLogin)) {
             $message = "Le login $login existe déjà ";

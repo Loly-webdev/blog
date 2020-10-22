@@ -73,16 +73,18 @@ abstract class FormValidatorAbstract
     }
 
     /**
-     * @param $key
-     *
      * @return bool
      */
-    public function isValid($key): bool
+    public function isValid(): bool
     {
         $fieldsToValidate    = $this->getFormFieldToValidate();
-        $fieldsToValidate[]  = 'token';
         $formValues          = $this->getFormValues();
-        $formValues['token'] = Session::getValue($key);
+
+        $tokenValid = Session::isValidToken($this->getFormName());
+        if (false === $tokenValid) {
+            $this->addError('token', 'Une erreur s\'est produite, merci de rafraichir la page.');
+            $isValid = false;
+        }
 
         // We go through the required fields
         foreach ($fieldsToValidate as $fieldToValidate) {
@@ -91,12 +93,6 @@ abstract class FormValidatorAbstract
                 $this->addError($fieldToValidate, "Une erreur s'est produite sur le champ $fieldToValidate, merci de rafraîchir la page.");
                 $isValid = false;
             }
-        }
-
-        $tokenValid = Session::isValidToken($this->getFormName(), $formValues['token']);
-        if (false === $tokenValid) {
-            $this->addError('token', 'Une erreur s\'est produite, merci de rafraichir la page.');
-            $isValid = false;
         }
 
         return $isValid ?? true;
