@@ -3,9 +3,15 @@
     <p class="h4 pb-4 pt-2 text-success">
         {{ message }}
     </p>
-    <h3 class="mb-5 text-uppercase">
+    {% if comments is not null %}
+        <h3 class="mb-5 text-uppercase">
         <span class="far fa-comments"></span>
         liste des commentaires en attente d'approbation :
     </h3>
     {{ include('back/admin/partial/_commentApproved.html.twig') }}
+    {% else %}
+        <p class="h5 p-4 bg-blue rounded shadow text-success font-weight-bold">
+            Il n'y a pas de commentaire à approuver pour le moment.
+        </p>
+    {% endif %}
 {% endblock %}
