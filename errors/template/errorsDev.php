@@ -20,8 +20,8 @@
 <body class="p-0">
 <main class="mx-4 mb-4 p-2 text-center">
     <div class="container-fluid mx-auto">
-        <h3 class="text-uppercase font-weight-bold text-info">Franchement, déchirer une page web, c'est pas sérieux
-            !</h3>
+        <h3 class="text-uppercase font-weight-bold text-info">Franchement, déchirer une page web, c'est pas sérieux !
+        </h3>
         <img alt="Page d'erreur" src="/public/images/error_code.jpg">
         <h3 class="text-info">Détail de l'erreur : </h3>
         <p class="h4 p-2">

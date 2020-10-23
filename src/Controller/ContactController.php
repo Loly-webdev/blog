@@ -36,7 +36,7 @@ class ContactController extends DefaultAbstractController
         }
 
         $formValidator = new FormContactValidator();
-        if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
+        if ($formValidator->isSubmitted() && $formValidator->isValid()) {
             $formValues = $formValidator->getFormValues();
             $nameUser   = Helper::secureText($formValues['nameUser']);
             $emailUser  = $formValues['email'] ?? '';

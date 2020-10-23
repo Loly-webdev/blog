@@ -16,6 +16,9 @@ use Exception;
  */
 class AuthenticationController extends DefaultAbstractController
 {
+    /**
+     * @var string
+     */
     public static $key = 'formAuthentication';
 
     /**

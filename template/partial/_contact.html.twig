@@ -27,13 +27,21 @@
                 <div class="form-group col-md-6">
                     <label for="email" class="mt-3 mb-2 text-secondary font-weight-bold">E-mail :</label>
                     {% if session.logged == true %}
-                        <input class="form-control-plaintext text-center font-weight-bold h5 text-info" id="email"
+                        <input class="form-control-plaintext text-center font-weight-bold h6 text-info" id="email"
                                name="contact[email]" placeholder="Email" type="email"
                                value="{{ user . mail }}"
                                readonly/>
                     {% else %}
-                        <input class="form-control" id="email" name="contact[email]" placeholder="Email" type="email"
-                               required/>
+                        <div class="input-group mb-2 mr-sm-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text h-100">
+                                    <span class="fas fa-at"></span>
+                                </div>
+                            </div>
+                            <input class="form-control" id="email" name="contact[email]" placeholder="Email"
+                                   type="email"
+                                   required/>
+                        </div>
                     {% endif %}
                     <div class="invalid-feedback">
                         ce champs n'est pas rempli correctement.
