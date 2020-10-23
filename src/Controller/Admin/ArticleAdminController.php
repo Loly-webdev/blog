@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Controller\FormValidator\FormArticleValidator;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;

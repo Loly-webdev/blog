@@ -119,9 +119,9 @@ class CommentController extends LoggedAbstractController
     }
 
     /**
-     * @param $entity
+     * @param bool $entity
      */
-    public function postSave($entity): void
+    public function postSave(bool $entity): void
     {
         $this->mailFunction($entity);
     }

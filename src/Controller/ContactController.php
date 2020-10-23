@@ -19,8 +19,6 @@ use Exception;
  */
 class ContactController extends DefaultAbstractController
 {
-    private static $key = 'contact';
-
     /**
      * Action by default
      * Show form to contact
@@ -58,6 +56,20 @@ class ContactController extends DefaultAbstractController
             ],
             $viewFolder ?? 'front/'
         );
+    }
+
+    /**
+     * @param FormValidatorAbstract $formValidator
+     * @param string                $emailUser
+     */
+    public function mailValid(
+        FormValidatorAbstract $formValidator,
+        string $emailUser
+    ): void
+    {
+        if (false === Helper::checkEmail($emailUser)) {
+            $formValidator->addError('emailUser', "l'adresse $emailUser n'est pas valide");
+        }
     }
 
     /**
@@ -102,16 +114,5 @@ class ContactController extends DefaultAbstractController
             'Le mail à été envoyé avec succès',
             'une erreur est survenue, le mail n\'a pas pu être envoyé'
         );
-    }
-
-    /**
-     * @param FormValidatorAbstract $formValidator
-     * @param string $emailUser
-     */
-    public function mailValid(FormValidatorAbstract $formValidator, string $emailUser): void
-    {
-            if (false === Helper::checkEmail($emailUser)) {
-                $formValidator->addError('emailUser', "l'adresse $emailUser n'est pas valide");
-        }
     }
 }

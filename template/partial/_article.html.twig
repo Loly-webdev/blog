@@ -2,10 +2,10 @@
     <span class="far fa-newspaper"></span>
     Derniers billets du blog :
 </h2>
-    <div class="row row-cols-1 row-cols-md-3">
-        {% for article in articles %}
-            <div class="col mb-4">
-                <div class="card h-100">
+<div class="row row-cols-1 row-cols-md-3">
+    {% for article in articles %}
+        <div class="col mb-4">
+            <div class="card h-100">
                 <div class="card-header">
                     <h4 class="card-title text-uppercase">{{ article.title }}</h4>
                 </div>
@@ -22,6 +22,6 @@
                     {{ article.updatedAt|date("d/m/Y") }}
                 </div>
             </div>
-            </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
+</div>
