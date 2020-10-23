@@ -7,7 +7,6 @@ use App\Entity\Comment;
 use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Service\Email;
-use Core\DefaultAbstract\DefaultAbstractEntity;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
@@ -120,9 +119,9 @@ class CommentController extends LoggedAbstractController
     }
 
     /**
-     * @param DefaultAbstractEntity $entity
+     * @param $entity
      */
-    public function postSave(DefaultAbstractEntity $entity): void
+    public function postSave($entity): void
     {
         $this->mailFunction($entity);
     }
