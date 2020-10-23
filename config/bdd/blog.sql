@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 12 oct. 2020 à 09:31
+-- Généré le :  ven. 23 oct. 2020 à 08:15
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.4.0
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `article`
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `articleId` (`articleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `comment`
@@ -97,8 +97,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role` varchar(30) CHARACTER SET utf8 NOT NULL,
   `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updatedAt` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login` (`login`,`mail`)
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
@@ -106,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `login`, `password`, `mail`, `role`, `createdAt`, `updatedAt`) VALUES
 (1, 'Loly', '$argon2id$v=19$m=65536,t=4,p=1$d0cwdVRER0FvS3dEbU94UA$UjL5NYDe2Od6m10VlfoGFT2E70i38THCZc3Ph/w5Zvk', 'eloise.ruiz.rodriguez@gmail.com', 'admin', '2020-10-01 10:44:47', '2020-10-01 08:44:47'),
-(2, 'Plop', '$argon2id$v=19$m=65536,t=4,p=1$aTVwdTIvOE5ScDNUZTNlcg$xO19hcH6hYnUn6FUzDXfjvBADA5zmN4dDTmnDOnFW00', 'loly909@hotmail.fr', '', '2020-09-19 10:57:45', '2020-09-19 08:57:45');
+(2, 'Plop', '$argon2id$v=19$m=65536,t=4,p=1$SlVPU0gyd1pIMDE2MGRKNw$55epmkSa4sOyjrhPx5B2zzA9bifkiAchv7sSd1JDcOE', 'loly909@hotmail.fr', 'user', '2020-09-19 10:57:45', '2020-10-22 15:51:53');
 
 --
 -- Contraintes pour les tables déchargées
