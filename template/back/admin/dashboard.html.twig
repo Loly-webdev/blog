@@ -5,10 +5,10 @@
     </p>
     {% if comments is not empty %}
         <h3 class="mb-5 text-uppercase">
-        <span class="far fa-comments"></span>
-        liste des commentaires en attente d'approbation :
-    </h3>
-    {{ include('back/admin/partial/_commentApproved.html.twig') }}
+            <span class="far fa-comments"></span>
+            liste des commentaires en attente d'approbation :
+        </h3>
+        {{ include('back/admin/partial/_commentApproved.html.twig') }}
     {% else %}
         <p class="h5 p-4 bg-blue rounded shadow text-success font-weight-bold">
             Il n'y a pas de commentaire à approuver pour le moment.
