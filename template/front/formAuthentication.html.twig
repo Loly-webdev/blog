@@ -28,9 +28,9 @@
                         </div>
                         <input class="form-control" id="login" name="formAuthentication[login]" type="text"
                                placeholder="Identifiant" required/>
-                    </div>
-                    <div class="invalid-feedback">
-                        ce champs n'est pas rempli correctement.
+                        <div class="invalid-feedback">
+                            ce champs n'est pas rempli correctement.
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -43,9 +43,9 @@
                         </div>
                         <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
                                minlength="3" placeholder="Mot de passe" required/>
-                    </div>
-                    <div class="invalid-feedback">
-                        ce champs n'est pas rempli correctement.
+                        <div class="invalid-feedback">
+                            ce champs n'est pas rempli correctement.
+                        </div>
                     </div>
                 </div>
                 <input class="form-control" type="hidden" name="formAuthentication[token]" value="{{ tokenValue }}"/>
