@@ -2,7 +2,16 @@
 body {
     font-family: "Roboto", sans-serif;
     letter-spacing: 1px;
-    margin: 7rem 0 !important;
+    text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+}
+
+body,
+main,
+.space {
+    min-height: 90vh;
 }
 
 form,
@@ -16,7 +25,7 @@ nav img {
 }
 
 /* ABOUT */
-#about img {
+#about {
     border-radius: 70% 90% 90% 70% / 80% 90% 70% 80%;
     max-width: 65%;
 }
@@ -64,14 +73,4 @@ nav img {
     z-index: 10;
     filter: saturate(6);
     -webkit-filter: saturate(6);
-}
-
-/*blog*/
-.panel-heading {
-    width: 82%;
-}
-
-/* dashboard */
-#dashboard {
-    top: 50px;
 }

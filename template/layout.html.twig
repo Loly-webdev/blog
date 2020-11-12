@@ -3,12 +3,18 @@
 <head>
     {{ include('partial/_head.html.twig') }}
 </head>
-<body class="p-0 bg-light">
+<body class="p-0 m-0 bg-light">
 <header>
     {{ include('partial/_nav.html.twig') }}
 </header>
-<main class="mx-4 mb-4 p-2 text-center">
-    {% block content %}{% endblock %}
+<main class="mt-5 mx-0 p-0 text-center bg-light">
+    <div class="space row container-fluid p-0 m-0">
+        <div class="px-0 mx-auto mb-5 pb-2">
+            <div class="container mx-auto my-5 p-4">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
 </main>
 <footer class="fixed-bottom bg-dark text-secondary">
     {{ include('partial/_footer.html.twig') }}

@@ -5,21 +5,50 @@
         Connexion :
     </h3>
     <div class="container mb-5">
-        {% if status == true %}
-            <div class="alert alert-{{ status }}">{{ statusMessage }}</div>
+        {% if status is not empty %}
+            <div class="alert alert-{{ status }}">
+                {% if statusMessage == true %}
+                    {{ statusMessage }}
+                {% endif %}
+                {% if errors is not null %}
+                    {{ errors }}
+                {% endif %}
+            </div>
         {% endif %}
-        <form action="/authentication/login" method="POST" class="p-4 starter-template rounded shadow">
+        <form action="/authentication/login" method="POST" class="needs-validation p-4 starter-template rounded shadow"
+              novalidate>
             <div class="col">
                 <div class="form-group">
                     <label for="login" class="mt-3 mb-2 text-secondary font-weight-bold">Identifiant :</label>
-                    <input class="form-control" id="login" name="formAuthentication[login]" type="text"
-                           placeholder="Identifiant" required/>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text h-100">
+                                <span class="far fa-id-card"></span>
+                            </div>
+                        </div>
+                        <input class="form-control" id="login" name="formAuthentication[login]" type="text"
+                               placeholder="Identifiant" required/>
+                        <div class="invalid-feedback">
+                            ce champs n'est pas rempli correctement.
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="pass" class="mt-3 mb-2 text-secondary font-weight-bold">Mot de passe :</label>
-                    <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
-                           minlength="3" placeholder="Mot de passe" required/>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text h-100">
+                                <span class="fas fa-unlock-alt"></span>
+                            </div>
+                        </div>
+                        <input class="form-control" id="pass" name="formAuthentication[password]" type="password"
+                               minlength="3" placeholder="Mot de passe" required/>
+                        <div class="invalid-feedback">
+                            ce champs n'est pas rempli correctement.
+                        </div>
+                    </div>
                 </div>
+                <input class="form-control" type="hidden" name="formAuthentication[token]" value="{{ tokenValue }}"/>
                 <button type="submit" class="p-2 mt-4 btn btn-success">
                     Connexion
                     <span class="fas fa-sign-in-alt"></span>

@@ -8,6 +8,7 @@ use App\Service\AccountService;
 use Core\DefaultAbstract\DefaultAbstractController;
 use Core\Exception\CoreException;
 use Core\Session;
+use Exception;
 
 /**
  * Class AuthenticationController
@@ -15,6 +16,11 @@ use Core\Session;
  */
 class AuthenticationController extends DefaultAbstractController
 {
+    /**
+     * @var string
+     */
+    public static $key = 'formAuthentication';
+
     /**
      * Action by default
      * @throws CoreException
@@ -28,10 +34,14 @@ class AuthenticationController extends DefaultAbstractController
 
     /**
      * @throws CoreException
+     * @throws Exception
      */
     public function loginAction(): void
     {
         $formValidator = new FormAuthenticationValidator();
+        $token         = Session::generateToken(static::$key);
+        $status        = 'danger';
+        $message       = "Echec de l'authentification.\n";
 
         if ($formValidator->isSubmitted() && $formValidator->isValid()) {
 
@@ -42,16 +52,15 @@ class AuthenticationController extends DefaultAbstractController
                 // Redirect to userAdminController
                 $this->redirectTo('user');
             }
-
-            $status  = "danger";
-            $message = "Echec de l'authentification";
         }
 
         $this->renderView(
             'formAuthentication.html.twig',
             [
                 'status'        => $status ?? '',
-                'statusMessage' => $message ?? ''
+                'statusMessage' => $message ?? '',
+                'tokenValue'    => $token,
+                'errors'        => $formValidator->getMessageErrors()
             ]
         );
     }
@@ -65,6 +74,7 @@ class AuthenticationController extends DefaultAbstractController
     {
         Session::setValue('logged', true);
         Session::setValue('id', $user->getId());
+        Session::setValue('role', $user->getRole());
     }
 
     /**

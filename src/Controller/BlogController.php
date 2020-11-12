@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\{ArticleRepository, CommentRepository};
-use Core\DefaultAbstract\{DefaultAbstractController, DefaultAbstractEntity};
-use Core\Traits\Controller\{SeeControllerTrait};
+use App\Repository\ArticleRepository;
+use Core\DefaultAbstract\DefaultAbstractController;
+use Core\Traits\Controller\{blogControllerTrait, SeeControllerTrait};
 use Exception;
 
 /**
@@ -13,9 +13,8 @@ use Exception;
  */
 class BlogController extends DefaultAbstractController
 {
-    use SeeControllerTrait;
-
-    public static $entityLabel = "article";
+    use SeeControllerTrait,
+        blogControllerTrait;
 
     /**
      * Action by default
@@ -28,45 +27,15 @@ class BlogController extends DefaultAbstractController
         $articles = (new ArticleRepository())->find();
 
         if ($this->isLogged()) {
-            $this->redirectTo('articleAdmin');
+            $this->redirectTo('article');
         }
 
         $this->renderView(
             '/article/articles.html.twig',
             [
                 'articles' => $articles,
-                'page' => 'blog'
+                'page'     => 'blog'
             ]
         );
-    }
-
-    /**
-     * Give params to seeAction
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getSeeParam(): array
-    {
-        return [
-            'articleId',
-            'article',
-            new ArticleRepository(),
-            'article/articleById.html.twig',
-        ];
-    }
-
-    /**
-     * @param array|mixed[]         $data
-     * @param DefaultAbstractEntity $entity
-     *
-     * @return array|mixed[]
-     */
-    public function preRenderView(array $data, DefaultAbstractEntity $entity): array
-    {
-        // Load comments associate to the articleId
-        $comments         = (new CommentRepository())->find(['articleId' => $entity->getId()]);
-        $data['comments'] = $comments;
-
-        return $data;
     }
 }

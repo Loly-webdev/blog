@@ -1,40 +1,84 @@
-<div class="dashboard mt-4 w-25 fixed-bottom flex-sm-row bg-dark">
-    <p class="mt-5 px-2">
-        <a class="h4 text-decoration-none" href="/Admin/userAdmin">
-            <span class="fas fa-tachometer-alt"></span>
-            Tableau de bord
-        </a>
-    </p>
-    <div class="h5 container flex-column panel-group rounded" id="accordion" role="tablist"
-         aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading m-auto"
-                 role="tab" id="headingOne">
-                <h5 class="panel-title">
-                    <a class="text-decoration-none text-light font-weight-bold" role="button"
-                       data-toggle="collapse"
-                       data-parent="#accordion" href="#collapseOne"
-                       aria-expanded="true" aria-controls="collapseOne">
-                        <span class="far fa-newspaper"></span>
-                        Blog
-                    </a>
-                </h5>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                 aria-labelledby="headingOne">
-                <div class="panel-body">
-                    <p>
-                    <a class="text-decoration-none text-info" href="/Admin/articleAdmin">
-                        <span class="far fa-newspaper"></span>
-                        Voir les articles
-                    </a>
-                    </p>
-                    <p>
-                        <a class="text-decoration-none text-info" href="/Admin/articleAdmin/add">
-                            <span class="far fa-newspaper"></span>
-                            Ajouter un article
+<div class="menu col-md-3 bg-dark px-5 py-3">
+    <div class="mx-auto px-3">
+        <p class="mt-5">
+            <a class="h4 text-decoration-none" href="/Admin/userAdmin?_page=1">
+                <span class="fas fa-tachometer-alt"></span>
+                Tableau de bord
+            </a>
+        </p>
+        <div class="h5 container-fluid flex-column panel-group" id="accordion" role="tablist"
+             aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading m-auto"
+                     role="tab" id="headingOne">
+                    <h5 class="panel-title">
+                        <a class="text-decoration-none text-info font-weight-bold" role="button"
+                           data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseOne"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            <span class="fas fa-user-cog"></span>
+                            Membres
+                            <span class="fas fa-angle-down"></span>
                         </a>
-                    </p>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingOne">
+                    <div class="panel-body mt-3">
+                        <p>
+                            <a class="text-decoration-none" href="/Admin/userAdmin/add">
+                                <span class="fas fa-user-plus"></span>
+                                Ajouter un membre
+                            </a>
+                        </p>
+                        <p>
+                            <a class="text-decoration-none" href="/Admin/userAdmin/userList?_page=1">
+                                <span class="fas fa-users"></span>
+                                Voir les membres
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="h5 container flex-column panel-group rounded" id="accordion" role="tablist"
+             aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading m-auto"
+                     role="tab" id="headingTwo">
+                    <h5 class="panel-title">
+                        <a class="text-decoration-none text-info font-weight-bold" role="button"
+                           data-toggle="collapse"
+                           data-parent="#accordion" href="#collapseTwo"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            <span class="fas fa-blog"></span>
+                            Blog
+                            <span class="fas fa-angle-down"></span>
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingTwo">
+                    <div class="panel-body mt-3">
+                        <p>
+                            <a class="text-decoration-none" href="/Admin/articleAdmin/add">
+                                <span class="fas fa-feather-alt"></span>
+                                Ajouter un article
+                            </a>
+                        </p>
+                        <p>
+                            <a class="text-decoration-none" href="/Admin/articleAdmin?_page=1">
+                                <span class="far fa-newspaper"></span>
+                                Voir les articles
+                            </a>
+                        </p>
+                        <p>
+                            <a class="text-decoration-none" href="/Admin/commentAdmin?_page=1">
+                                <span class="far fa-comments"></span>
+                                voir les commentaires
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

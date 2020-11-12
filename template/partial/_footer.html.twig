@@ -1,5 +1,5 @@
 <div class="row d-flex pt-3 px-2">
-    <div class="col-md-6 mb-1">
+    <div class="mb-1">
         <!--Copyright-->
         <p class="text-center h6">
             <span class="fa fa-copyright"></span>
@@ -8,23 +8,5 @@
             Dans le cadre de ma formation avec OpenClassrooms.
         </p>
     </div>
-    <div class="col-md-6">
-        <!-- Connexion -->
-        <div class="text-center pt-1 pb-3">
-            <a href="/authentication" class="btn btn-outline-success">
-                <span class="fas fa-sign-in-alt"></span>
-                Connection
-            </a>
-        </div>
-    </div>
 </div>
-<!-- script jquery -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-        crossorigin="anonymous">
-</script>
-<!-- script bootstrap -->
-<script type="text/javascript" src="/vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- scripts js -->
-<script src="/public/js/navItemActive.js"></script>
-<script src="/public/js/autotype.js"></script>
+{{ include('/partial/_script.html.twig') }}

@@ -2,13 +2,16 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\RegisterController;
+use App\Controller\FormValidator\FormRegisterValidator;
 use App\Entity\User;
-use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
-use Core\Traits\Controller\SeeControllerTrait;
+use Core\Traits\Controller\AddControllerTrait;
+use Core\Traits\Controller\AddUserControllerTrait;
+use Core\Traits\Controller\DeleteControllerTrait;
+use Core\Traits\Controller\EditControllerTrait;
 use Exception;
 
 /**
@@ -17,12 +20,15 @@ use Exception;
  */
 class UserAdminController extends LoggedAbstractController
 {
-    use SeeControllerTrait;
+    use AddControllerTrait,
+        EditControllerTrait,
+        DeleteControllerTrait,
+        AddUserControllerTrait;
 
     /**
      * @var string
      */
-    public static $entityLabel = "profil";
+    public static $entityLabel = "utilisateur";
 
     /**
      * Action by default
@@ -40,29 +46,23 @@ class UserAdminController extends LoggedAbstractController
             $this->redirectTo('home');
         }
 
-        $login = $user->getLogin();
+        $login    = $user->getLogin();
+        $viewData = [
+            'message' => "Ravi de te revoir $status $login !"
+        ];
+
+        $queryValues = (new CommentRepository())->search(['approved' => 'non']);
+        $viewData    = $this->pagination(
+            $queryValues,
+            $viewData,
+            "/Admin/userAdmin?_page=",
+            'comments'
+        );
 
         $this->renderView(
             'admin/dashboard.html.twig',
-            [
-                'message' => "Ravi de te revoir $status $login !",
-            ]
+            $viewData
         );
-    }
-
-    /**
-     * Give params to seeAction
-     * @return array|mixed[]
-     * @throws Exception
-     */
-    public function getSeeParam(): array
-    {
-        return [
-            'userId',
-            'user',
-            new UserRepository(),
-            'profile/profile.html.twig'
-        ];
     }
 
     /**
@@ -76,7 +76,7 @@ class UserAdminController extends LoggedAbstractController
             'userId',
             new UserRepository(),
             'user',
-            'profile/editProfile.html.twig'
+            'admin/user/editUser.html.twig'
         ];
     }
 
@@ -87,25 +87,58 @@ class UserAdminController extends LoggedAbstractController
      */
     public function getDeleteParam(): array
     {
-        new RegisterController();
         return [
             new UserRepository(),
             'userId',
-            'formRegister.html.twig',
+            'admin/message.html.twig'
         ];
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    public function preDelete(array $viewData): array
+    {
+        $viewData['page']     = '/Admin/userAdmin/userList?_page=1';
+        $viewData['namePage'] = 'Retour à la liste des membres';
+
+        return $viewData;
     }
 
     /**
      * @return void
      * @throws CoreException
      */
-    public function profileAction(): void
+    public function userListAction(): void
     {
-        $this->renderView(
-            'profile/profile.html.twig',
-            [
-                'user' => $this->getUserLogged()
-            ]
+        $viewData = [];
+
+        $queryValues = (new UserRepository())->find();
+        $viewData    = $this->pagination(
+            $queryValues,
+            $viewData,
+            "/Admin/userAdmin/userList?_page=",
+            'users'
         );
+
+        $this->renderView(
+            'admin/user/users.html.twig',
+            $viewData
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getAddParam(): array
+    {
+        return [
+            new FormRegisterValidator(),
+            new User(),
+            new UserRepository(),
+            'admin/user/formUser.html.twig'
+        ];
     }
 }

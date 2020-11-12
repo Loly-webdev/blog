@@ -3,7 +3,9 @@
 namespace Core\Traits\Controller;
 
 use App\Service\Message;
+use Core\Session;
 use Core\DefaultAbstract\{DefaultAbstractEntity, DefaultAbstractRepository, FormValidatorAbstract};
+use Exception;
 use LogicException;
 
 /**
@@ -14,6 +16,7 @@ trait AddControllerTrait
 {
     /**
      * Insert action of controller
+     * @throws Exception
      */
     public function addAction(): void
     {
@@ -31,32 +34,44 @@ trait AddControllerTrait
      * Method to add entity
      *
      * @param FormValidatorAbstract     $formValidator
-     * @param DefaultAbstractEntity     $entityClass
+     * @param DefaultAbstractEntity     $entity
      * @param DefaultAbstractRepository $repository
      * @param string                    $viewTemplate
+     *
+     * @throws Exception
      */
     protected function addEntity(
         FormValidatorAbstract $formValidator,
-        DefaultAbstractEntity $entityClass,
+        DefaultAbstractEntity $entity,
         DefaultAbstractRepository $repository,
         string $viewTemplate
     ): void
     {
-        $formSubmitted = $formValidator;
-        if ($formSubmitted->isSubmitted() && $formSubmitted->isValid()) {
-            $formSubmitted = $formSubmitted->getFormValues();
-            $entity        = $entityClass->hydrate($formSubmitted);
-            $this->checkForm($entityClass);
-            $status = static::statusMessage($repository, $entity);
-        }
+        $formErrors = $formValidator->isSubmitted() && $formValidator->isValid(static::$key)
+            ? $formValidator->getErrors()
+            : [];
+
+        $token = Session::generateToken(static::$key);
 
         $data = [
-            'status'        => $status['status'] ?? '',
-            'statusMessage' => $status['statusMessage'] ?? ''
+            'status'        => '',
+            'StatusMessage' => '',
+            'tokenValue'    => $token,
+            'formErrors'    => $formErrors
         ];
 
-        if (method_exists($this, 'prePost')) {
-            $data = $this->prePost($data);
+        if ($formValidator->isSubmitted() && $formValidator->isValid(static::$key)) {
+            $formValues = $formValidator->getFormValues();
+            $entity->hydrate($formValues);
+
+            $this->preSave($formValues, $entity);
+            $saved = $this->save($repository, $entity);
+            $data  = static::prepareMessage($saved);
+            $this->postSave($saved, $entity);
+        }
+
+        if (method_exists($this, 'preRenderView')) {
+            $data = $this->preRenderView($data, $entity);
         }
 
         $this->renderView(
@@ -66,14 +81,15 @@ trait AddControllerTrait
     }
 
     /**
-     * @param $entity
+     * @param array|null            $formValues
+     * @param DefaultAbstractEntity $entity
      *
      * @return void
      */
-    public function checkForm($entity): void
+    public function preSave(?array $formValues, DefaultAbstractEntity $entity): void
     {
         if (method_exists($this, 'postHydrate')) {
-            $this->postHydrate($entity);
+            $this->postHydrate($formValues, $entity);
         }
 
         if ($entity->hasId()) {
@@ -82,17 +98,65 @@ trait AddControllerTrait
     }
 
     /**
-     * @param $repository
-     * @param $entity
+     * @param DefaultAbstractRepository $repository
+     * @param DefaultAbstractEntity     $entity
+     *
+     * @return bool
+     */
+    final public function save(
+        DefaultAbstractRepository $repository,
+        DefaultAbstractEntity $entity
+    ): bool
+    {
+        return $repository->insert($entity);
+    }
+
+    /**
+     * @param $saved
      *
      * @return array
      */
-    public static function statusMessage($repository, $entity): array
+    public static function prepareMessage($saved): array
     {
         return Message::getMessage(
-            $repository->insert($entity),
+            $saved,
             'Votre ' . static::$entityLabel . ' à bien était enregistré !',
             'Désolé, une erreur est survenue. Si l\'erreur persiste veuillez prendre contact avec l\'administrateur.'
         );
+    }
+
+    /**
+     * @param $saved
+     * @param $entity
+     *
+     * @return void
+     */
+    public function postSave($saved, $entity): void
+    {
+        if (method_exists($this, 'mailApproved')) {
+            $this->mailApproved();
+        }
+
+        if (method_exists($this, 'mailInfo')) {
+            $this->mailInfo($entity);
+        }
+    }
+
+    /**
+     * Methods for sending information or approval emails.
+     *
+     * @param $entity
+     *
+     * @return void
+     */
+    public function mailFunction($entity): void
+    {
+        if (method_exists($this, 'mailApproved')) {
+            $this->mailApproved();
+        }
+
+        if (method_exists($this, 'mailInfo')) {
+            $this->mailInfo($entity);
+        }
     }
 }

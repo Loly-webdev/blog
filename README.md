@@ -1,13 +1,11 @@
 # Project
 
 # Framework Installation
-
-you can check requirements on :
- - http://project/requirements.php
-
 ## Clone git project
+https://github.com/Loly-webdev/blog
 
 ## Install composer
+https://getcomposer.org/download/
 
 ## Add vhost
 
@@ -32,9 +30,9 @@ you can check requirements on :
     - https://zoomadmin.com/HowToInstall/UbuntuPackage/php-yaml
 
 ## Configure .env file
+Please change data to env.yml
  
 ## Load database file
+with le file : 'blog.sql' in 'config/bdd/blog.sql'
 
 ## For Argon2iD to have PHP 7.4
-
-## Please change data to env.yml

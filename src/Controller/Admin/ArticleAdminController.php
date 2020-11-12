@@ -18,17 +18,28 @@ class ArticleAdminController extends LoggedAbstractController
         EditControllerTrait,
         DeleteControllerTrait;
 
-    public static $entityLabel = "article";
+    public static  $entityLabel = "article";
+    private static $key         = 'article';
 
+    /**
+     * @return mixed|void
+     * @throws CoreException
+     */
     public function indexAction()
     {
-        $articles = (new ArticleRepository())->find();
+        $viewData = [];
+
+        $queryValues = (new ArticleRepository())->find();
+        $viewData    = $this->pagination(
+            $queryValues,
+            $viewData,
+            "/Admin/articleAdmin?_page=",
+            'articles'
+        );
 
         $this->renderView(
             'admin/article/articles.html.twig',
-            [
-                'articles' => $articles
-            ]
+            $viewData
         );
     }
 
@@ -53,7 +64,7 @@ class ArticleAdminController extends LoggedAbstractController
      * @return array
      * @throws CoreException
      */
-    public function prePost(array $data): array
+    public function preRenderView(array $data): array
     {
         $user         = $this->getUserLogged();
         $data['user'] = $user;
@@ -86,7 +97,20 @@ class ArticleAdminController extends LoggedAbstractController
         return [
             new ArticleRepository(),
             'articleId',
-            'admin/article/formArticle.html.twig'
+            'admin/message.html.twig'
         ];
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    public function preDelete(array $viewData): array
+    {
+        $viewData['page']     = '/Admin/articleAdmin?_page=1';
+        $viewData['namePage'] = 'Retour à la liste des articles';
+
+        return $viewData;
     }
 }

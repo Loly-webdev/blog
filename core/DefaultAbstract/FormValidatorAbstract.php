@@ -3,6 +3,7 @@
 namespace Core\DefaultAbstract;
 
 use Core\Request;
+use Core\Session;
 
 /**
  * Class FormValidatorAbstract
@@ -18,6 +19,8 @@ abstract class FormValidatorAbstract
     protected $formValues = [];
     // List of required fields
     protected $formFieldsToValidate = [];
+    // List of errors
+    protected $formErrors = [];
 
     /**
      * FormValidatorAbstract constructor.
@@ -77,14 +80,21 @@ abstract class FormValidatorAbstract
         $fieldsToValidate = $this->getFormFieldToValidate();
         $formValues       = $this->getFormValues();
 
+        $tokenValid = Session::isValidToken($this->getFormName());
+        if (false === $tokenValid) {
+            $this->addError('token', 'Une erreur s\'est produite, merci de rafraichir la page.');
+            $isValid = false;
+        }
+
         // We go through the required fields
         foreach ($fieldsToValidate as $fieldToValidate) {
             // If the required field is empty or null in the form 'populated' then we stop
-            if (false === isset($formValues[$fieldToValidate]) || '' === $formValues[$fieldToValidate]) {
+            if ((false === isset($formValues[$fieldToValidate])) || ('' === $formValues[$fieldToValidate])) {
+                $this->addError($fieldToValidate, "Une erreur s'est produite sur le champ $fieldToValidate, merci de rafraîchir la page.");
                 $isValid = false;
-                break;
             }
         }
+
         return $isValid ?? true;
     }
 
@@ -94,6 +104,33 @@ abstract class FormValidatorAbstract
     public function getFormValues(): array
     {
         return $this->formValues;
+    }
+
+    /**
+     * @param string $fieldNameInvalid
+     * @param string $errorMessage
+     */
+    public function addError(string $fieldNameInvalid, string $errorMessage): void
+    {
+        $this->formErrors[$fieldNameInvalid] = $errorMessage;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessageErrors(): ?string
+    {
+        return $this->getErrors()
+            ? implode(" ", $this->getErrors()) . "\n"
+            : null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->formErrors;
     }
 
     /**

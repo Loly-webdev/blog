@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\Traits\Entity\blogEntityTrait;
 
 /**
  * Class Article
@@ -10,10 +11,10 @@ use Core\DefaultAbstract\DefaultAbstractEntity;
  */
 class Article extends DefaultAbstractEntity
 {
+    use blogEntityTrait;
+
     protected $title = '';
-    protected $author = '';
-    protected $hat = '';
-    protected $content = '';
+    protected $hat   = '';
 
     /**
      * @return string
@@ -33,14 +34,6 @@ class Article extends DefaultAbstractEntity
         $this->title = $title;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAuthor(): string
-    {
-        return $this->author;
     }
 
     /**
@@ -73,14 +66,6 @@ class Article extends DefaultAbstractEntity
         $this->hat = $hat;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
     }
 
     /**

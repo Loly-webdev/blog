@@ -2,27 +2,26 @@
     <span class="far fa-newspaper"></span>
     Derniers billets du blog :
 </h2>
-<div class="container mx-auto">
+<div class="row row-cols-1 row-cols-md-3">
     {% for article in articles %}
-        <div class="p-4 my-2 rounded bg-blue shadow">
-            <h3 class="text-uppercase">{{ article.title }}</h3>
-            <div class="p-2 my-3 mx-2 bg-light text-dark font-weight-bold rounded">
-                <p class="font-weight-bold h4">
-                    {{ article.hat }}
-                </p>
-            </div>
-            <div class="py-2 my-3 mx-auto w-75 border-top border-bottom border-info">
-                <p class="h6 text-secondary font-italic">
-                    <span class="font-weight-bold">Dernière modification : </span>{{ article.updatedAt|date("m/d/Y") }}
-                </p>
-            </div>
-            <div class="text-center p-2 mt-3">
-                <a href="/{{ page }}/see?articleId={{ article.id }}" class="p-2 btn btn-primary">
-                    Voir l'article
-                    <span class="fas fa-angle-double-right"></span>
-                </a>
+        <div class="col mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h4 class="card-title text-uppercase">{{ article.title }}</h4>
+                </div>
+                <div class="card-body bg-blue">
+                    <h5 class="card-subtitle mb-2 text-muted">{{ article.hat }}</h5>
+                </div>
+                <div class="card-footer text-muted">
+                    <a href="/{{ page }}/see?articleId={{ article.id }}" class="p-2 my-2 btn btn-primary">
+                        Voir l'article
+                        <span class="fas fa-angle-double-right"></span>
+                    </a>
+                    <br>
+                    <span class="font-weight-bold">Dernière modification le :</span>
+                    {{ article.updatedAt|date("d/m/Y") }}
+                </div>
             </div>
         </div>
-        <br>
     {% endfor %}
 </div>

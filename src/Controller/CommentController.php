@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Controller\FormValidator\FormCommentValidator;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Repository\CommentRepository;
+use App\Service\Email;
 use Core\DefaultAbstract\LoggedAbstractController;
 use Core\Exception\CoreException;
 use Core\Traits\Controller\AddControllerTrait;
-use Core\Traits\Controller\DeleteControllerTrait;
-use Core\Traits\Controller\EditControllerTrait;
 use Core\Traits\Controller\SeeControllerTrait;
 use Exception;
 
@@ -20,11 +20,10 @@ use Exception;
 class CommentController extends LoggedAbstractController
 {
     use SeeControllerTrait,
-        AddControllerTrait,
-        EditControllerTrait,
-        DeleteControllerTrait;
+        AddControllerTrait;
 
-    public static $entityLabel = "commentaire";
+    public static  $entityLabel = 'commentaire';
+    private static $key         = 'comment';
 
     /**
      * Action by default
@@ -48,7 +47,7 @@ class CommentController extends LoggedAbstractController
             'commentId',
             'comment',
             new CommentRepository(),
-            'comment/comment.html.twig'
+            'comment/comments.html.twig'
         ];
     }
 
@@ -73,7 +72,7 @@ class CommentController extends LoggedAbstractController
      * @return array
      * @throws CoreException
      */
-    public function prePost(array $data): array
+    public function preRenderView(array $data): array
     {
         $user         = $this->getUserLogged();
         $data['user'] = $user;
@@ -82,43 +81,48 @@ class CommentController extends LoggedAbstractController
     }
 
     /**
-     * @param Comment $entity
+     * @param Comment    $entity
+     * @param array|null $formValues
      *
      * @return void
+     * @throws CoreException
      */
-    public function postHydrate($entity): void
+    public function postHydrate(
+        ?array $formValues,
+        Comment $entity
+    ): void
     {
         $entity->setArticleId(
             $this->getRequest()->getParamAsInt('articleId')
         );
+
+        $user = $this->getUserLogged();
+        assert($user instanceof User);
+        $entity->setAuthor($user->getLogin());
     }
 
     /**
-     * Give params to edit Action
-     * @return array|mixed[]
-     * @throws Exception
+     * @return bool
+     * @throws CoreException
      */
-    public function getEditParam(): array
+    public function mailApproved(): bool
     {
-        return [
-            'commentId',
-            new CommentRepository(),
-            'comment',
-            'comment/editComment.html.twig'
-        ];
+        $user = $this->getUserLogged();
+        assert($user instanceof User);
+        $nameUser = $user->getLogin();
+
+        $subject = 'Nouveau commentaire à approuver';
+        $message = '<br>Vous avez un nouveau commentaire à approuvé, de ' . $nameUser .
+                   '<br> <a href="http://blog/Admin/userAdmin?_page=1">Voir les commentaires à approuver >></a>';
+
+        return Email::sendMail($user->getMail(), $subject, $message);
     }
 
     /**
-     * Give params to deleteAction
-     * @return array|mixed[]
-     * @throws Exception
+     * @param bool $entity
      */
-    public function getDeleteParam(): array
+    public function postSave(bool $entity): void
     {
-        return [
-            new CommentRepository(),
-            'commentId',
-            'comment/formComment.html.twig'
-        ];
+        $this->mailFunction($entity);
     }
 }

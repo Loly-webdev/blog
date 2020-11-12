@@ -1,40 +1,8 @@
-{% extends "back/layoutBack.html.twig" %}
+{% extends "back/admin/layoutAdmin.html.twig" %}
 {% block content %}
-    <div class="container mx-auto">
-        <div class="p-3 mt-5 rounded bg-blue shadow">
-            <p class="h5 p-2 text-secondary font-italic">
-                <span class="h4 font-weight-bold text-secondary font-italic">Auteur :</span>
-                {{ comment.author }}
-                <br class="mb-2">
-                <span class="font-weight-bold">Créer le : </span>{{ comment.createdAt }}
-                <br>
-                <span class="font-weight-bold">Dernière mise à jour : </span>{{ comment.updatedAt }}
-            </p>
-            <div class="p-3 mb-3 mx-2 bg-white text-dark rounded-bottom">
-                <p class="h4">
-                    {{ comment.content }}
-                </p>
-            </div>
-            <div class="row d-flex p-2 my-2 mx-auto">
-                <div class="col-md-6 text-center py-2">
-                    <a href="/comment/edit?commentId={{ comment.id }}" class="p-2 btn btn-info">
-                        <span class="fas fa-edit"></span>
-                        Éditer
-                    </a>
-                </div>
-                <div class="col-md-6 text-center py-2">
-                    <a href="/comment/delete?commentId={{ comment.id }}" class="p-2 btn btn-danger">
-                        <span class="fas fa-trash-alt"></span>
-                        Supprimer
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="p-3 mt-4 mb-5 mx-auto w-50 border-top border-bottom border-info">
-        <a href="../../../../index.php" class="m-2 p-2 btn btn-primary">
-            <span class="fas fa-angle-double-left"></span>
-            Retour à la liste des billets
-        </a>
-    </div>
+    <h3 class="mb-5 text-uppercase">
+        <span class="far fa-comments"></span>
+        liste des commentaires du blog :
+    </h3>
+    {{ include('back/admin/partial/_commentApproved.html.twig') }}
 {% endblock %}

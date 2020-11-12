@@ -14,19 +14,22 @@ abstract class Email extends DefaultAbstractController
     /**
      * @param string $emailUser
      * @param string $subject
-     * @param string $message
+     * @param string $messageContent
      *
      * @return bool
      */
     public static function sendMail(
         string $emailUser,
         string $subject,
-        string $message
+        string $messageContent
     ): bool
     {
         $myMail = ConfigurationProvider::getInstance()->getMyMail();
 
         $header = static::getDefaultHeader($emailUser);
+
+        $message = 'MESSAGE DU SITE BlogLWD '
+                   . $messageContent;
 
         return mail($myMail, $subject, $message, $header);
     }
@@ -43,5 +46,28 @@ abstract class Email extends DefaultAbstractController
                . "Content-type: text/html; charset=UTF-8\r\n"
                . "From: $emailUser\r\n"
                . "Reply-To: $emailUser\r\n";
+    }
+
+    /**
+     * @param string $emailUser
+     * @param string $subject
+     * @param string $messageContent
+     *
+     * @return bool
+     */
+    public static function infoMail(
+        string $emailUser,
+        string $subject,
+        string $messageContent
+    ): bool
+    {
+        $myMail = ConfigurationProvider::getInstance()->getMyMail();
+
+        $header = static::getDefaultHeader($myMail);
+
+        $message = 'MESSAGE DU SITE BlogLWD '
+                   . $messageContent;
+
+        return mail($emailUser, $subject, $message, $header);
     }
 }

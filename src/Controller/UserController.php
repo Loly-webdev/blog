@@ -41,7 +41,7 @@ class UserController extends LoggedAbstractController
             'userId',
             'user',
             new UserRepository(),
-            'profile/profile.html.twig'
+            'user/user.html.twig'
         ];
     }
 
@@ -52,7 +52,7 @@ class UserController extends LoggedAbstractController
     public function profileAction(): void
     {
         $this->renderView(
-            'profile/profile.html.twig',
+            'user/user.html.twig',
             [
                 'user' => $this->getUserLogged()
             ]

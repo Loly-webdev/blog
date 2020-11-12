@@ -21,7 +21,7 @@ class Message
         string $error
     ): array
     {
-        $isValid = ('' !== $value && true === $value);
+        $isValid = true === $value;
 
         return [
             'status'        => $isValid ? 'success' : 'danger',

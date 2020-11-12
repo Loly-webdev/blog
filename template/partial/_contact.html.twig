@@ -3,35 +3,68 @@
     Contactez-moi :
 </h3>
 <div class="container mb-5">
-    {% if status.status == true %}
+    {% if status.status is not empty %}
         <div class="alert alert-{{ status . status }}">{{ status . statusMessage }}</div>
     {% endif %}
-    <form action="" method="POST" class="p-4 starter-template rounded shadow">
+    <form action="" method="POST" class="needs-validation p-4 starter-template rounded shadow" novalidate>
         <div class="col">
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="name" class="mt-3 mb-2 text-secondary font-weight-bold">Nom :</label>
-                    <input class="form-control" id="name" name="contact[nameUser]" placeholder="Nom" type="text"
-                           value="{{ user . login }}"
-                           required/>
+                    {% if session.logged == true %}
+                        <input class="form-control-plaintext text-center font-weight-bold h5 text-info" id="name"
+                               name="contact[nameUser]" placeholder="Nom" type="text"
+                               value="{{ user . login }}"
+                               readonly/>
+                    {% else %}
+                        <input class="form-control" id="name" name="contact[nameUser]" placeholder="Nom" type="text"
+                               required/>
+                    {% endif %}
+                    <div class="invalid-feedback">
+                        ce champs n'est pas rempli correctement.
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="email" class="mt-3 mb-2 text-secondary font-weight-bold">E-mail :</label>
-                    <input class="form-control" id="email" name="contact[email]" placeholder="Email" type="email"
-                           value="{{ user . mail }}"
-                           required/>
+                    {% if session.logged == true %}
+                        <input class="form-control-plaintext text-center font-weight-bold h6 text-info" id="email"
+                               name="contact[email]" placeholder="Email" type="email"
+                               value="{{ user . mail }}"
+                               readonly/>
+                    {% else %}
+                        <div class="input-group mb-2 mr-sm-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text h-100">
+                                    <span class="fas fa-at"></span>
+                                </div>
+                            </div>
+                            <input class="form-control" id="email" name="contact[email]" placeholder="Email"
+                                   type="email"
+                                   required/>
+                            <div class="invalid-feedback">
+                                ce champs n'est pas rempli correctement.
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="form-group">
                 <label for="subject" class="mt-3 mb-2 text-secondary font-weight-bold">Sujet :</label>
                 <input class="form-control" id="subject" name="contact[subject]" placeholder="Sujet" type="text"
                        required/>
+                <div class="invalid-feedback">
+                    ce champs n'est pas rempli correctement.
+                </div>
             </div>
             <div class="form-group">
                 <label for="message" class="mt-3 mb-2 text-secondary font-weight-bold">Message :</label>
                 <textarea class="form-control" id="message" name="contact[message]" placeholder="Message"
                           rows="7" required></textarea>
+                <div class="invalid-feedback">
+                    ce champs n'est pas rempli correctement.
+                </div>
             </div>
+            <input type="hidden" name="contact[token]" value="{{ tokenValue }}"/>
             <button type="submit" class="p-2 mt-4 btn btn-success">
                 Envoyer
                 <span class="fas fa-share"></span>

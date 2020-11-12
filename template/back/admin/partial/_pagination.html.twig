@@ -1,0 +1,80 @@
+{% if lastPage > 1 %}
+    {# the number of first and last pages to be displayed #}
+    {% set extremePagesLimit = 5 %}
+    {# the number of pages that are displayed around the active page #}
+    {% set nearbyPagesLimit = 2 %}
+    <div class="mt-3">
+        <ul class="pagination pagination-sm justify-content-center">
+            {% if currentPage > 1 %}
+                <li class="page-item">
+                    <a class='page-link' href="{{ paginationPath }}{{ currentPage-1 }}">
+                        <span class="fas fa-angle-left"></span>
+                    </a>
+                </li>
+
+                {% for i in range(1, extremePagesLimit) if ( i < currentPage - nearbyPagesLimit ) %}
+                    <li class="page-item">
+                        <a class='page-link' href="{{ paginationPath }}{{ i }}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endfor %}
+
+                {% if extremePagesLimit + 1 < currentPage - nearbyPagesLimit or (lastPage - extremePagesLimit) > (currentPage + nearbyPagesLimit) %}
+                    <li class="disabled page-item">
+                        <a href="#">
+                            <span class="fas fa-ellipsis-h"></span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for i in range(currentPage-nearbyPagesLimit, currentPage-1) if ( i > 0 ) %}
+                    <li class="page-item">
+                        <a class='page-link' href="{{ paginationPath }}{{ i }}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endfor %}
+            {% elseif showAlwaysFirstAndLast %}
+                <li class="page-item">
+                    <a class='page-link' href="#">
+                        Previous
+                    </a>
+                </li>
+            {% endif %}
+            <li class="active page-item">
+                <a class="page-link" href="#">
+                    {{ currentPage }}
+                </a>
+            </li>
+            {% if currentPage < lastPage %}
+                {% for i in range(currentPage+1, currentPage + nearbyPagesLimit) if ( i <= lastPage ) %}
+                    <li class="page-item">
+                        <a class='page-link' href="{{ paginationPath }}{{ i }}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endfor %}
+                {% for i in range(lastPage - extremePagesLimit+1, lastPage) if ( i > currentPage + nearbyPagesLimit ) %}
+                    <li class="page-item">
+                        <a class='page-link' href="{{ paginationPath }}{{ i }}">
+                            {{ i }}
+                        </a>
+                    </li>
+                {% endfor %}
+
+                <li class="page-item">
+                    <a class='page-link' href="{{ paginationPath }}{{ currentPage+1 }}">
+                        <span class="fas fa-angle-right"></span>
+                    </a>
+                </li>
+            {% elseif showAlwaysFirstAndLast %}
+                <li class="page-item">
+                    <a class='page-link' href="{{ paginationPath }}{{ currentPage+1 }}">
+                        Next
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}

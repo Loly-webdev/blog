@@ -36,5 +36,4 @@ abstract class AccountService extends DefaultAbstractController
 
         return $accountIsValid ? $user : null;
     }
-
 }

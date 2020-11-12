@@ -3,24 +3,37 @@
 namespace App\Entity;
 
 use Core\DefaultAbstract\DefaultAbstractEntity;
+use Core\Traits\Entity\blogEntityTrait;
 
 /**
- * Class Comment
+ * Class comment
  * @package App\Entity
  */
 class Comment extends DefaultAbstractEntity
 {
+    use blogEntityTrait;
 
-    protected $author;
-    protected $content;
-    protected $articleId;
+    protected $articleId = '';
+    protected $approved  = 'non';
 
     /**
      * @return string
      */
-    public function getAuthor(): string
+    public function getApproved(): string
     {
-        return $this->author;
+        return $this->approved;
+    }
+
+    /**
+     * @param string $approved
+     *
+     * @return Comment
+     */
+    public function setApproved(string $approved): Comment
+    {
+        $this->approved = $approved;
+
+        return $this;
     }
 
     /**
@@ -33,14 +46,6 @@ class Comment extends DefaultAbstractEntity
         $this->author = $author;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
     }
 
     /**

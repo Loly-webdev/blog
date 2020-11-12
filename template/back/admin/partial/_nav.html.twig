@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+<nav class="p-3 navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/home">
         <img class="d-inline-block align-top" alt="logo du blog Eloïse" src="/public/images/logo_blanc.png">
     </a>
@@ -15,10 +15,12 @@
                     Accueil
                 </a>
             </li>
-            <li><a class="nav-link" href="/authentication/logout">
-                    <span class="fas fa-power-off"></span>
-                    Deconnexion
-                </a></li>
         </ul>
+        <div class="text-center m-1">
+            <a href="/authentication/logout" class="btn btn-outline-danger">
+                <span class="fas fa-power-off"></span>
+                Deconnexion
+            </a>
+        </div>
     </div>
 </nav>
