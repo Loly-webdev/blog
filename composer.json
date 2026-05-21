@@ -16,7 +16,7 @@
     }
   },
   "require": {
-    "twig/twig": "^2.0",
+    "twig/twig": "^3.26",
     "ext-pdo": "*",
     "ext-yaml": "*",
     "ext-dom": "*",
